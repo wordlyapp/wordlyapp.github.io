@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordly Learn</title>
     
+    <!-- Google AdSense / Eigendom Verificatie -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6951847135196559" crossorigin="anonymous"></script>
+
     <link rel="icon" type="image/jpeg" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
     <link rel="apple-touch-icon" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
 
@@ -742,7 +745,6 @@
                 return;
             }
 
-            // Maak account aan met standaard lege voortgang
             accounts[user] = {
                 password: pass,
                 data: {
@@ -780,7 +782,6 @@
                 return;
             }
 
-            // Sla op wie er is ingelogd zodat het onthouden wordt tot uitloggen
             currentLoggedInUser = user;
             localStorage.setItem('wordly_logged_in', user);
 
@@ -788,14 +789,13 @@
             document.getElementById('login-pass').value = "";
             msg.innerText = "";
 
-            // Verberg landing page en laad de app
             initializeAppForUser();
         }
 
         function logoutUser() {
             localStorage.removeItem('wordly_logged_in');
             currentLoggedInUser = null;
-            location.reload(); // Herlaad om de landing page weer te tonen
+            location.reload();
         }
         // --- EINDE AUTH LOGICA ---
 
@@ -944,7 +944,6 @@
         }
 
         window.onload = function() {
-            // Controleer of er al iemand is ingelogd op dit apparaat
             if (currentLoggedInUser) {
                 let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
                 if (accounts[currentLoggedInUser]) {
@@ -964,7 +963,6 @@
         };
 
         function initializeAppForUser() {
-            // Verberg de gehele landing page overlay
             document.getElementById('landing-page').classList.add('hidden');
             updateUIStrings();
             renderChapterTabs();
