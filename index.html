@@ -728,7 +728,7 @@
                 <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="logo-img"> Wordly Learn
             </div>
             <div style="display: flex; gap: 10px;">
-                <button type="button" class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="openAuthModal()">Start Now</button>
+                <button type="button" class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="document.getElementById('auth-modal').classList.remove('hidden'); document.getElementById('auth-email').focus();">Start Now</button>
             </div>
         </header>
 
@@ -738,7 +738,7 @@
                 <h1>The smartest and most fun way to learn languages for free.</h1>
                 <p>Master vocabulary easily on any device with bite-sized lessons, interactive paths, and fun achievements designed to keep you motivated every single day.</p>
                 <div class="landing-buttons">
-                    <button type="button" class="btn" onclick="openAuthModal()">Start Now</button>
+                    <button type="button" class="btn" onclick="document.getElementById('auth-modal').classList.remove('hidden'); document.getElementById('auth-email').focus();">Start Now</button>
                 </div>
             </div>
 
@@ -1543,7 +1543,7 @@
         // Extra klikbeveiliging: de Start Now-knoppen openen het venster ook
         // als een browser inline onclick onverwacht blokkeert.
         document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('button[onclick="openAuthModal()"]')
+            document.querySelectorAll('button[onclick="document.getElementById('auth-modal').classList.remove('hidden'); document.getElementById('auth-email').focus();"]')
                 .forEach(button => {
                     button.addEventListener('click', (event) => {
                         event.preventDefault();
