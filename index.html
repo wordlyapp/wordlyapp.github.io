@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordly - AI Ultimate Edition</title>
+    <title>Wordly AI - NextGen Language Suite</title>
     <style>
         :root {
             --duo-green: #58cc02;
             --duo-green-hover: #46a302;
             --duo-green-shadow: #3b8201;
-            --duo-light-green: #d7ffb8;
+            --duo-light-green: #f4ffd7;
             --duo-dark: #2b2b2b;
             --duo-gray-text: #777777;
-            --bg: #ffffff;
+            --bg: #f8fafc;
             --card-bg: #ffffff;
-            --border: #e5e5e5;
+            --border: #e2e8f0;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -24,45 +26,46 @@
             margin: 0;
             padding: 0;
             display: flex;
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        /* Vaste Linkerzijbalk */
+        /* Vaste Sidebar */
         aside.sidebar {
-            width: 256px;
+            width: 280px;
+            background: white;
             border-right: 2px solid var(--border);
-            padding: 24px 16px;
+            padding: 24px 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-sizing: border-box;
-            position: fixed;
             height: 100vh;
-            background: white;
-            z-index: 100;
         }
 
         .sidebar-logo {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 900;
             color: var(--duo-green);
-            padding-left: 12px;
             margin-bottom: 30px;
             letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .sidebar-menu {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             flex: 1;
+            overflow-y: auto;
         }
 
         .menu-item {
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 12px 16px;
+            gap: 14px;
+            padding: 14px 18px;
             border-radius: 16px;
             font-weight: 800;
             color: var(--duo-gray-text);
@@ -70,7 +73,7 @@
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 0.8px;
             border: 2px solid transparent;
         }
@@ -78,58 +81,52 @@
         .menu-item:hover, .menu-item.active {
             background: var(--duo-light-green);
             color: var(--duo-green-shadow);
-            border-color: #b8f28b;
+            border-color: #d0f79b;
             transform: translateX(4px);
         }
 
-        /* Hoofdinhoud */
+        /* Hoofdvenster volledig gecentreerd */
         main.main-content {
-            margin-left: 256px;
             flex: 1;
             display: flex;
-            justify-content: center;
-            padding: 40px 20px;
-            box-sizing: border-box;
-            background: #f7f9fa;
-            min-height: 100vh;
-        }
-
-        .content-container {
-            width: 100%;
-            max-width: 900px;
-            display: flex;
             flex-direction: column;
-            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background: #ffffff;
         }
 
-        .top-bar {
+        /* Header Bovenin */
+        .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
-            margin-bottom: 30px;
+            padding: 20px 40px;
+            border-bottom: 2px solid var(--border);
+            background: white;
+            z-index: 10;
         }
 
         .lang-selector-container {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-weight: 700;
+            gap: 12px;
+            font-weight: 800;
             font-size: 14px;
+            color: #475569;
         }
 
         .lang-select {
-            padding: 8px 14px;
-            border-radius: 12px;
+            padding: 10px 16px;
+            border-radius: 14px;
             border: 2px solid var(--border);
-            background: white;
-            font-weight: 700;
+            background: #f8fafc;
+            font-weight: 800;
             font-size: 14px;
             outline: none;
             cursor: pointer;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
-        .lang-select:focus { border-color: var(--duo-green); }
+        .lang-select:focus { border-color: var(--duo-green); background: white; }
 
         .top-stats-bar {
             display: flex;
@@ -138,26 +135,44 @@
         }
 
         .stat-pill {
-            background: white;
+            background: #f8fafc;
             border: 2px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 16px;
+            padding: 8px 18px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 15px;
-            color: #555;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            font-size: 14px;
+            color: #475569;
         }
 
-        /* Leerpad */
+        /* Weergave Container voor het Lespad */
+        .workspace {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px;
+            background: #fdfdfe;
+        }
+
+        .content-container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Prachtig Kronkelend Lespad */
         .duo-path {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 28px;
+            gap: 36px;
             width: 100%;
-            padding: 20px 0;
+            padding: 20px 0 60px 0;
             animation: fadeIn 0.4s ease-out;
         }
 
@@ -170,37 +185,41 @@
             display: flex;
             justify-content: center;
             width: 100%;
-            gap: 80px;
+            gap: 90px;
         }
 
-        .path-row.offset-1 { transform: translateX(-60px); }
-        .path-row.offset-2 { transform: translateX(60px); }
+        .path-row.offset-1 { transform: translateX(-70px); }
+        .path-row.offset-2 { transform: translateX(70px); }
 
         .duo-node {
-            width: 84px;
-            height: 84px;
+            width: 88px;
+            height: 88px;
             border-radius: 50%;
             background: var(--duo-green);
             border: none;
             border-bottom: 6px solid var(--duo-green-shadow);
             color: white;
             font-weight: 900;
-            font-size: 22px;
+            font-size: 20px;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(88, 204, 2, 0.3);
+            box-shadow: 0 10px 25px rgba(88, 204, 2, 0.35);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
         }
+
+        .duo-node span.node-label { font-size: 10px; opacity: 0.85; text-transform: uppercase; margin-top: 2px; }
 
         .duo-node:hover:not(.locked) { transform: scale(1.12); }
         .duo-node:active:not(.locked) { transform: translateY(4px); border-bottom-width: 2px; }
 
         .duo-node.locked {
-            background: #e5e5e5;
-            border-bottom: 6px solid #cccccc;
-            color: #afafaf;
+            background: #e2e8f0;
+            border-bottom: 6px solid #cbd5e1;
+            color: #94a3b8;
             cursor: not-allowed;
             box-shadow: none;
         }
@@ -211,25 +230,26 @@
 
         @keyframes pulseNode {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(88, 204, 2, 0.4); }
-            70% { transform: scale(1.08); box-shadow: 0 0 0 16px rgba(88, 204, 2, 0); }
+            70% { transform: scale(1.08); box-shadow: 0 0 0 18px rgba(88, 204, 2, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(88, 204, 2, 0); }
         }
 
-        /* Kaarten & Knoppen */
+        /* Kaarten voor Lessen en Instellingen */
         .card {
             background: var(--card-bg);
             border: 2px solid var(--border);
-            border-radius: 24px;
+            border-radius: 28px;
             padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
             width: 100%;
-            max-width: 600px;
+            max-width: 640px;
             box-sizing: border-box;
             animation: fadeIn 0.4s ease-out;
+            margin: auto;
         }
 
-        h2 { font-size: 28px; font-weight: 800; margin-top: 0; color: #2c2c2c; }
-        p { color: var(--duo-gray-text); font-size: 16px; line-height: 1.5; }
+        h2 { font-size: 28px; font-weight: 900; margin-top: 0; color: #1e293b; }
+        p { color: var(--duo-gray-text); font-size: 16px; line-height: 1.6; }
 
         .btn {
             background-color: var(--duo-green);
@@ -237,15 +257,15 @@
             border: none;
             padding: 16px 24px;
             font-size: 16px;
-            font-weight: 800;
+            font-weight: 900;
             border-radius: 16px;
             cursor: pointer;
             width: 100%;
-            margin-top: 16px;
+            margin-top: 20px;
             border-bottom: 4px solid var(--duo-green-shadow);
-            box-shadow: 0 4px 12px rgba(88, 204, 2, 0.25);
+            box-shadow: 0 6px 15px rgba(88, 204, 2, 0.3);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -261,60 +281,63 @@
             text-align: left;
             box-shadow: none;
             text-transform: none;
-            font-weight: 700;
+            font-weight: 800;
+            font-size: 17px;
+            padding: 18px 22px;
+            border-radius: 16px;
         }
-        .option-btn:hover { background: #f7f9fa; border-color: var(--duo-green); transform: translateX(4px); }
+        .option-btn:hover { background: #f8fafc; border-color: var(--duo-green); transform: translateX(4px); }
 
         .hidden { display: none !important; }
 
         .feedback-box-correct {
-            color: #2e7d32; font-weight: 800; font-size: 18px; margin: 20px 0; padding: 16px;
-            background: #e8f5e9; border-radius: 16px; border: 2px solid #c8e6c9;
+            color: #166534; font-weight: 800; font-size: 17px; margin: 20px 0; padding: 18px;
+            background: #dcfce7; border-radius: 16px; border: 2px solid #bbf7d0;
             animation: fadeIn 0.2s ease-out;
         }
         .feedback-box-wrong {
-            color: #c62828; font-weight: 800; font-size: 18px; margin: 20px 0; padding: 16px;
-            background: #ffebee; border-radius: 16px; border: 2px solid #ffcdd2;
+            color: #991b1b; font-weight: 800; font-size: 17px; margin: 20px 0; padding: 18px;
+            background: #fee2e2; border-radius: 16px; border: 2px solid #fecaca;
             animation: fadeIn 0.2s ease-out;
         }
 
-        /* Notificatie Modal */
+        /* Centraal Notificatie Venster */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(15, 23, 42, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
             animation: fadeIn 0.2s ease-out;
         }
 
         .custom-modal {
             background: white;
-            padding: 32px;
-            border-radius: 24px;
+            padding: 36px;
+            border-radius: 28px;
             border: 2px solid var(--border);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             animation: scaleUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         @keyframes scaleUp {
-            from { transform: scale(0.8); opacity: 0; }
+            from { transform: scale(0.85); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
-        .custom-modal h3 { margin-top: 0; font-size: 22px; font-weight: 800; color: #2c2c2c; }
-        .custom-modal p { color: var(--duo-gray-text); font-size: 15px; margin: 12px 0 24px 0; }
+        .custom-modal h3 { margin-top: 0; font-size: 24px; font-weight: 900; color: #1e293b; }
+        .custom-modal p { color: var(--duo-gray-text); font-size: 16px; margin: 12px 0 28px 0; }
     </style>
 </head>
 <body>
 
-    <!-- CUSTOM NOTIFICATIE POPUP -->
+    <!-- CENTRALE NOTIFICATIE POPUP -->
     <div id="custom-notification" class="modal-overlay hidden">
         <div class="custom-modal">
             <h3 id="notif-title">Melding</h3>
@@ -324,79 +347,86 @@
     </div>
 
     <!-- ZIJBALK -->
-    <aside.sidebar id="app-sidebar">
+    <aside.sidebar>
         <div>
-            <div class="sidebar-logo">Wordly AI</div>
+            <div class="sidebar-logo">🟢 Wordly AI</div>
             <div class="sidebar-menu">
                 <a class="menu-item active" onclick="switchTab('learn')">🗺️ Leerpad</a>
-                <a class="menu-item" onclick="startAiLevelFinder()">🤖 AI Niveau Finder</a>
+                <a class="menu-item" onclick="startAiLevelFinder()">🤖 AI Niveau Test</a>
                 <a class="menu-item" onclick="switchTab('settings')">⚙️ Instellingen</a>
             </div>
         </div>
         <div style="border-top: 2px solid var(--border); padding-top: 16px;">
-            <a class="menu-item" style="color: #c62828;" onclick="resetProgressPrompt()">🔄 Reset Data</a>
+            <a class="menu-item" style="color: #ef4444;" onclick="resetProgressPrompt()">🔄 Reset Data</a>
         </div>
     </aside>
 
-    <!-- HOOFD INHOUD -->
-    <main.main-content class="main-content">
-        <div class="content-container">
-
-            <!-- BOVENSTE BALK -->
-            <div class="top-bar">
-                <div class="lang-selector-container">
-                    <span>Taal:</span>
-                    <select id="target-lang-select" class="lang-select" onchange="changeTargetLanguage()">
-                        <option value="en">Engels</option>
-                        <option value="de">Duits</option>
-                        <option value="es">Spaans</option>
-                        <option value="fr">Frans</option>
-                        <option value="it">Italiaans</option>
-                        <option value="pt">Portugees</option>
-                        <option value="ru">Russisch</option>
-                        <option value="ja">Japans</option>
-                        <option value="zh">Chinees</option>
-                        <option value="tr">Turks</option>
-                    </select>
-                </div>
-                <div class="top-stats-bar">
-                    <div class="stat-pill" id="streak-display">🔥 1 streak</div>
-                    <div class="stat-pill" id="points-display">⚡ 0 XP</div>
-                </div>
+    <!-- HOOFDWERKPLEK -->
+    <main.main-content>
+        <!-- TOP BALK -->
+        <div class="top-nav">
+            <div class="lang-selector-container">
+                <span>Kies Taal:</span>
+                <select id="target-lang-select" class="lang-select" onchange="changeTargetLanguage()">
+                    <option value="en">🇬🇧 Engels</option>
+                    <option value="de">🇩🇪 Duits</option>
+                    <option value="es">🇪🇸 Spaans</option>
+                    <option value="fr">🇫🇷 Frans</option>
+                    <option value="it">🇮🇹 Italiaans</option>
+                    <option value="pt">🇵🇹 Portugees</option>
+                    <option value="ru">🇷🇺 Russisch</option>
+                    <option value="ja">🇯🇵 Japans</option>
+                    <option value="zh">🇨🇳 Chinees</option>
+                    <option value="tr">🇹🇷 Turks</option>
+                    <option value="sv">🇸🇪 Zweeds</option>
+                    <option value="no">🇳🇴 Noors</option>
+                    <option value="da">🇩🇰 Deens</option>
+                    <option value="pl">🇵🇱 Pools</option>
+                </select>
             </div>
+            <div class="top-stats-bar">
+                <div class="stat-pill" id="streak-display">🔥 1 streak</div>
+                <div class="stat-pill" id="points-display">⚡ 0 XP</div>
+            </div>
+        </div>
 
-            <!-- DASHBOARD -->
-            <div id="page-dashboard" class="page-section" style="width: 100%;">
-                <div id="view-learn" style="width: 100%;">
-                    <div class="duo-path" id="path-container"></div>
+        <!-- WERKSPACE (Scrollbaar midden) -->
+        <div class="workspace">
+            <div class="content-container">
+
+                <!-- DASHBOARD / LEERPAD -->
+                <div id="page-dashboard" class="page-section" style="width: 100%;">
+                    <div id="view-learn" style="width: 100%;">
+                        <div class="duo-path" id="path-container"></div>
+                    </div>
+
+                    <div id="view-settings" class="card hidden">
+                        <h2>Instellingen & AI Status</h2>
+                        <p>Huidig vastgesteld niveau voor deze taal: <strong id="current-level-display" style="color: var(--duo-green);">Beginner</strong></p>
+                        <button class="btn" onclick="startAiLevelFinder()">🤖 Start AI Niveau Bepaling</button>
+                        <p style="margin-top: 20px; font-size: 14px;">Alle voortgang en XP worden veilig lokaal opgeslagen op je eigen apparaat.</p>
+                    </div>
                 </div>
 
-                <div id="view-settings" class="card hidden" style="max-width: 100%;">
-                    <h2>Instellingen & AI Niveau</h2>
-                    <p>Huidig vastgesteld niveau voor deze taal: <strong id="current-level-display" style="color: var(--duo-green);">Intermediate</strong></p>
-                    <button class="btn" onclick="startAiLevelFinder()">Start AI Niveau Bepaling Opnieuw</button>
-                    <p style="margin-top: 20px; font-size: 14px;">Alle voortgang en XP worden automatisch opgeslagen op jouw apparaat.</p>
+                <!-- LESSEN / TEST PAGINA -->
+                <div id="page-lesson" class="card page-section hidden">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                        <button class="btn" style="width: auto; padding: 10px 18px; margin:0; background:#f1f5f9; border-bottom-color:#cbd5e1; color:#64748b; box-shadow:none;" onclick="backToDashboard()">✕ Stoppen</button>
+                        <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text);">Vraag 1 van 10</span>
+                    </div>
+                    <h3 id="question-prompt" style="font-size: 24px; font-weight: 800; margin-bottom: 24px; color: #1e293b;">Vertaal dit</h3>
+                    <div id="answers-area"></div>
+                    <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Doorgaan</button>
                 </div>
-            </div>
 
-            <!-- LES / AI TEST PAGINA -->
-            <div id="page-lesson" class="card page-section hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <button class="btn" style="width: auto; padding: 8px 16px; margin:0; background:#e5e5e5; border-bottom-color:#cccccc; color:#777; box-shadow:none;" onclick="backToDashboard()">✕ Stoppen</button>
-                    <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text);">Vraag 1 van 10</span>
+                <!-- VOLTOOID SCHERM -->
+                <div id="page-complete" class="card page-section hidden" style="text-align: center;">
+                    <h2 style="font-size: 34px; color: var(--duo-green);">Les Voltooid! 🎉</h2>
+                    <p>Fenomenaal gedaan! Je hebt deze les succesvol afgerond en extra XP veiliggesteld.</p>
+                    <button class="btn" onclick="backToDashboard()">Doorgaan</button>
                 </div>
-                <h3 id="question-prompt" style="font-size: 22px; font-weight: 700; margin-bottom: 24px;">Vertaal dit</h3>
-                <div id="answers-area"></div>
-                <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Doorgaan</button>
-            </div>
 
-            <!-- LES VOLTOOID -->
-            <div id="page-complete" class="card page-section hidden" style="text-align: center;">
-                <h2 style="font-size: 32px; color: var(--duo-green);">Les Voltooid! 🎉</h2>
-                <p>Geweldig gedaan! Je hebt deze les succesvol afgerond en XP verdiend.</p>
-                <button class="btn" onclick="backToDashboard()">Doorgaan</button>
             </div>
-
         </div>
     </main>
 
@@ -434,72 +464,67 @@
             } catch(e) {}
         }
 
-        // Woordenlijsten per taal (10 talen)
+        // Uitgebreide Woordenbank voor 14 talen (met categorieën en uitstekende zinnen)
         const vocabData = {
             en: [
-                { nl: "Hallo", target: "Hello", diff: "beginner" }, { nl: "Goedemorgen", target: "Good morning", diff: "beginner" }, { nl: "Dank je wel", target: "Thank you", diff: "beginner" }, { nl: "Ja", target: "Yes", diff: "beginner" }, { nl: "Nee", target: "No", diff: "beginner" },
-                { nl: "Water", target: "Water", diff: "beginner" }, { nl: "Huis", target: "House", diff: "beginner" }, { nl: "Boek", target: "Book", diff: "beginner" }, { nl: "Melk", target: "Milk", diff: "beginner" }, { nl: "Brood", target: "Bread", diff: "beginner" },
-                { nl: "Computer", target: "Computer", diff: "intermediate" }, { nl: "Telefoon", target: "Phone", diff: "intermediate" }, { nl: "Reizen", target: "Travel", diff: "intermediate" }, { nl: "Stad", target: "City", diff: "intermediate" }, { nl: "Vriend", target: "Friend", diff: "intermediate" },
-                { nl: "Ontwikkeling", target: "Development", diff: "advanced" }, { nl: "Wetenschap", target: "Science", diff: "advanced" }, { nl: "Oplossing", target: "Solution", diff: "advanced" }
+                { nl: "Hallo", target: "Hello", type: "Basis" }, { nl: "Goedemorgen", target: "Good morning", type: "Basis" }, { nl: "Dank je wel", target: "Thank you", type: "Basis" }, { nl: "Hoe gaat het?", target: "How are you?", type: "Zinnen" }, { nl: "Tot ziens", target: "Goodbye", type: "Basis" },
+                { nl: "Water", target: "Water", type: "Woorden" }, { nl: "Huis", target: "House", type: "Woorden" }, { nl: "Boek", target: "Book", type: "Woorden" }, { nl: "Computer", target: "Computer", type: "Geavanceerd" }, { nl: "Reizen", target: "Travel", type: "Geavanceerd" },
+                { nl: "Ik hou van programmeren", target: "I love programming", type: "Zinnen" }, { nl: "Waar is het station?", target: "Where is the station?", type: "Zinnen" }, { nl: "Wetenschap", target: "Science", type: "Geavanceerd" }, { nl: "Oplossing", target: "Solution", type: "Geavanceerd" }
             ],
             de: [
-                { nl: "Hallo", target: "Hallo", diff: "beginner" }, { nl: "Goedemorgen", target: "Guten Morgen", diff: "beginner" }, { nl: "Dank je wel", target: "Danke schön", diff: "beginner" }, { nl: "Ja", target: "Ja", diff: "beginner" }, { nl: "Nee", target: "Nein", diff: "beginner" },
-                { nl: "Water", target: "Wasser", diff: "beginner" }, { nl: "Huis", target: "Haus", diff: "beginner" }, { nl: "Boek", target: "Buch", diff: "beginner" }, { nl: "Melk", target: "Milch", diff: "beginner" }, { nl: "Brood", target: "Brot", diff: "beginner" },
-                { nl: "Computer", target: "Computer", diff: "intermediate" }, { nl: "Telefoon", target: "Telefon", diff: "intermediate" }, { nl: "Reizen", target: "Reisen", diff: "intermediate" }, { nl: "Stad", target: "Stadt", diff: "intermediate" }, { nl: "Vriend", target: "Freund", diff: "intermediate" },
-                { nl: "Ontwikkeling", target: "Entwicklung", diff: "advanced" }, { nl: "Wetenschap", target: "Wissenschaft", diff: "advanced" }, { nl: "Oplossing", target: "Lösung", diff: "advanced" }
+                { nl: "Hallo", target: "Hallo", type: "Basis" }, { nl: "Goedemorgen", target: "Guten Morgen", type: "Basis" }, { nl: "Dank je wel", target: "Danke schön", type: "Basis" }, { nl: "Hoe gaat het?", target: "Wie geht es dir?", type: "Zinnen" }, { nl: "Tot ziens", target: "Auf Wiedersehen", type: "Basis" },
+                { nl: "Water", target: "Wasser", type: "Woorden" }, { nl: "Huis", target: "Haus", type: "Woorden" }, { nl: "Boek", target: "Buch", type: "Woorden" }, { nl: "Computer", target: "Computer", type: "Geavanceerd" }, { nl: "Reizen", target: "Reisen", type: "Geavanceerd" },
+                { nl: "Ik spreek weinig Duits", target: "Ich spreche wenig Deutsch", type: "Zinnen" }, { nl: "Waar is het station?", target: "Wo ist der Bahnhof?", type: "Zinnen" }, { nl: "Wetenschap", target: "Wissenschaft", type: "Geavanceerd" }, { nl: "Oplossing", target: "Lösung", type: "Geavanceerd" }
             ],
             es: [
-                { nl: "Hallo", target: "Hola", diff: "beginner" }, { nl: "Goedemorgen", target: "Buenos días", diff: "beginner" }, { nl: "Dank je wel", target: "Gracias", diff: "beginner" }, { nl: "Ja", target: "Sí", diff: "beginner" }, { nl: "Nee", target: "No", diff: "beginner" },
-                { nl: "Water", target: "Agua", diff: "beginner" }, { nl: "Huis", target: "Casa", diff: "beginner" }, { nl: "Boek", target: "Libro", diff: "beginner" }, { nl: "Melk", target: "Leche", diff: "beginner" }, { nl: "Brood", target: "Pan", diff: "beginner" },
-                { nl: "Computer", target: "Computadora", diff: "intermediate" }, { nl: "Telefoon", target: "Teléfono", diff: "intermediate" }, { nl: "Reizen", target: "Viajar", diff: "intermediate" }, { nl: "Stad", target: "Ciudad", diff: "intermediate" }, { nl: "Vriend", target: "Amigo", diff: "intermediate" },
-                { nl: "Ontwikkeling", target: "Desarrollo", diff: "advanced" }, { nl: "Wetenschap", target: "Ciencia", diff: "advanced" }, { nl: "Oplossing", target: "Solución", diff: "advanced" }
+                { nl: "Hallo", target: "Hola", type: "Basis" }, { nl: "Goedemorgen", target: "Buenos días", type: "Basis" }, { nl: "Dank je wel", target: "Gracias", type: "Basis" }, { nl: "Hoe gaat het?", target: "¿Cómo estás?", type: "Zinnen" }, { nl: "Tot ziens", target: "Adiós", type: "Basis" },
+                { nl: "Water", target: "Agua", type: "Woorden" }, { nl: "Huis", target: "Casa", type: "Woorden" }, { nl: "Boek", target: "Libro", type: "Woorden" }, { nl: "Computer", target: "Computadora", type: "Geavanceerd" }, { nl: "Reizen", target: "Viajar", type: "Geavanceerd" },
+                { nl: "Ik hou van Spanje", target: "Me encanta España", type: "Zinnen" }, { nl: "Waar is het station?", target: "¿Dónde está la estación?", type: "Zinnen" }, { nl: "Wetenschap", target: "Ciencia", type: "Geavanceerd" }, { nl: "Oplossing", target: "Solución", type: "Geavanceerd" }
             ],
             fr: [
-                { nl: "Hallo", target: "Bonjour", diff: "beginner" }, { nl: "Goedemorgen", target: "Bonjour", diff: "beginner" }, { nl: "Dank je wel", target: "Merci", diff: "beginner" }, { nl: "Ja", target: "Oui", diff: "beginner" }, { nl: "Nee", target: "Non", diff: "beginner" },
-                { nl: "Water", target: "Eau", diff: "beginner" }, { nl: "Huis", target: "Maison", diff: "beginner" }, { nl: "Boek", target: "Livre", diff: "beginner" }, { nl: "Melk", target: "Lait", diff: "beginner" }, { nl: "Brood", target: "Pain", diff: "beginner" },
-                { nl: "Computer", target: "Ordinateur", diff: "intermediate" }, { nl: "Telefoon", target: "Téléphone", diff: "intermediate" }, { nl: "Reizen", target: "Voyager", diff: "intermediate" }, { nl: "Stad", target: "Ville", diff: "intermediate" }, { nl: "Vriend", target: "Ami", diff: "intermediate" },
-                { nl: "Ontwikkeling", target: "Développement", diff: "advanced" }, { nl: "Wetenschap", target: "Science", diff: "advanced" }, { nl: "Oplossing", target: "Solution", diff: "advanced" }
+                { nl: "Hallo", target: "Bonjour", type: "Basis" }, { nl: "Goedemorgen", target: "Bonjour", type: "Basis" }, { nl: "Dank je wel", target: "Merci", type: "Basis" }, { nl: "Hoe gaat het?", target: "Comment ça va?", type: "Zinnen" }, { nl: "Tot ziens", target: "Au revoir", type: "Basis" },
+                { nl: "Water", target: "Eau", type: "Woorden" }, { nl: "Huis", target: "Maison", type: "Woorden" }, { nl: "Boek", target: "Livre", type: "Woorden" }, { nl: "Computer", target: "Ordinateur", type: "Geavanceerd" }, { nl: "Reizen", target: "Voyager", type: "Geavanceerd" },
+                { nl: "Ik spreek Frans", target: "Je parle français", type: "Zinnen" }, { nl: "Waar is het station?", target: "Où est la gare?", type: "Zinnen" }
             ],
             it: [
-                { nl: "Hallo", target: "Ciao", diff: "beginner" }, { nl: "Goedemorgen", target: "Buongiorno", diff: "beginner" }, { nl: "Dank je wel", target: "Grazie", diff: "beginner" }, { nl: "Ja", target: "Sì", diff: "beginner" }, { nl: "Nee", target: "No", diff: "beginner" },
-                { nl: "Water", target: "Acqua", diff: "beginner" }, { nl: "Huis", target: "Casa", diff: "beginner" }, { nl: "Boek", target: "Libro", diff: "beginner" }, { nl: "Melk", target: "Latte", diff: "beginner" }, { nl: "Brood", target: "Pane", diff: "beginner" },
-                { nl: "Computer", target: "Computer", diff: "intermediate" }, { nl: "Telefoon", target: "Telefono", diff: "intermediate" }, { nl: "Reizen", target: "Viaggiare", diff: "intermediate" }, { nl: "Stad", target: "Città", diff: "intermediate" }, { nl: "Vriend", target: "Amico", diff: "intermediate" },
-                { nl: "Ontwikkeling", target: "Sviluppo", diff: "advanced" }, { nl: "Wetenschap", target: "Scienza", diff: "advanced" }, { nl: "Oplossing", target: "Soluzione", diff: "advanced" }
+                { nl: "Hallo", target: "Ciao", type: "Basis" }, { nl: "Goedemorgen", target: "Buongiorno", type: "Basis" }, { nl: "Dank je wel", target: "Grazie", type: "Basis" }, { nl: "Hoe gaat het?", target: "Come stai?", type: "Zinnen" }, { nl: "Tot ziens", target: "Arrivederci", type: "Basis" },
+                { nl: "Water", target: "Acqua", type: "Woorden" }, { nl: "Huis", target: "Casa", type: "Woorden" }, { nl: "Boek", target: "Libro", type: "Woorden" }, { nl: "Computer", target: "Computer", type: "Geavanceerd" }, { nl: "Reizen", target: "Viaggiare", type: "Geavanceerd" }
             ],
             pt: [
-                { nl: "Hallo", target: "Olá", diff: "beginner" }, { nl: "Goedemorgen", target: "Bom dia", diff: "beginner" }, { nl: "Dank je wel", target: "Obrigado", diff: "beginner" }, { nl: "Ja", target: "Sim", diff: "beginner" }, { nl: "Nee", target: "Não", diff: "beginner" },
-                { nl: "Water", target: "Água", diff: "beginner" }, { nl: "Huis", target: "Casa", diff: "beginner" }, { nl: "Boek", target: "Livro", diff: "beginner" }, { nl: "Melk", target: "Leite", diff: "beginner" }, { nl: "Brood", target: "Pão", diff: "beginner" },
-                { nl: "Computer", target: "Computador", diff: "intermediate" }, { nl: "Telefoon", target: "Telefone", diff: "intermediate" }, { nl: "Reizen", target: "Viajar", diff: "intermediate" }, { nl: "Stad", target: "Cidade", diff: "intermediate" }, { nl: "Vriend", target: "Amigo", diff: "intermediate" },
-                { nl: "Ontwikkeling", target: "Desenvolvimento", diff: "advanced" }, { nl: "Wetenschap", target: "Ciência", diff: "advanced" }, { nl: "Oplossing", target: "Solução", diff: "advanced" }
+                { nl: "Hallo", target: "Olá", type: "Basis" }, { nl: "Goedemorgen", target: "Bom dia", type: "Basis" }, { nl: "Dank je wel", target: "Obrigado", type: "Basis" }, { nl: "Hoe gaat het?", target: "Tudo bem?", type: "Zinnen" }, { nl: "Tot ziens", target: "Adeus", type: "Basis" },
+                { nl: "Water", target: "Água", type: "Woorden" }, { nl: "Huis", target: "Casa", type: "Woorden" }, { nl: "Boek", target: "Livro", type: "Woorden" }
             ],
             ru: [
-                { nl: "Hallo", target: "Привет", diff: "beginner" }, { nl: "Goedemorgen", target: "Доброе утро", diff: "beginner" }, { nl: "Dank je wel", target: "Спасибо", diff: "beginner" }, { nl: "Ja", target: "Да", diff: "beginner" }, { nl: "Nee", target: "Нет", diff: "beginner" },
-                { nl: "Water", target: "Вода", diff: "beginner" }, { nl: "Huis", target: "Дом", diff: "beginner" }, { nl: "Boek", target: "Книга", diff: "beginner" }, { nl: "Melk", target: "Молоко", diff: "beginner" }, { nl: "Brood", target: "Хлеб", diff: "beginner" },
-                { nl: "Computer", target: "Компьютер", diff: "intermediate" }, { nl: "Telefoon", target: "Телефон", diff: "intermediate" }, { nl: "Reizen", target: "Путешествовать", diff: "intermediate" }, { nl: "Stad", target: "Город", diff: "intermediate" }, { nl: "Vriend", target: "Друг", diff: "intermediate" },
-                { nl: "Ontwikkeling", target: "Развитие", diff: "advanced" }, { nl: "Wetenschap", target: "Наука", diff: "advanced" }, { nl: "Oplossing", target: "Решение", diff: "advanced" }
+                { nl: "Hallo", target: "Привет", type: "Basis" }, { nl: "Goedemorgen", target: "Доброе утро", type: "Basis" }, { nl: "Dank je wel", target: "Спасибо", type: "Basis" }, { nl: "Hoe gaat het?", target: "Как дела?", type: "Zinnen" }, { nl: "Tot ziens", target: "До свидания", type: "Basis" },
+                { nl: "Water", target: "Вода", type: "Woorden" }, { nl: "Huis", target: "Дом", type: "Woorden" }
             ],
             ja: [
-                { nl: "Hallo", target: "こんにちは", diff: "beginner" }, { nl: "Goedemorgen", target: "おはようございます", diff: "beginner" }, { nl: "Dank je wel", target: "ありがとう", diff: "beginner" }, { nl: "Ja", target: "はい", diff: "beginner" }, { nl: "Nee", target: "いいえ", diff: "beginner" },
-                { nl: "Water", target: "水", diff: "beginner" }, { nl: "Huis", target: "家", diff: "beginner" }, { nl: "Boek", target: "本", diff: "beginner" }, { nl: "Melk", target: "牛乳", diff: "beginner" }, { nl: "Brood", target: "パン", diff: "beginner" },
-                { nl: "Computer", target: "コンピューター", diff: "intermediate" }, { nl: "Telefoon", target: "電話", diff: "intermediate" }, { nl: "Reizen", target: "旅行", diff: "intermediate" }, { nl: "Stad", target: "都市", diff: "intermediate" }, { nl: "Vriend", target: "友達", diff: "intermediate" },
-                { nl: "Ontwikkeling", target: "開発", diff: "advanced" }, { nl: "Wetenschap", target: "科学", diff: "advanced" }, { nl: "Oplossing", target: "解決", diff: "advanced" }
+                { nl: "Hallo", target: "こんにちは", type: "Basis" }, { nl: "Goedemorgen", target: "おはようございます", type: "Basis" }, { nl: "Dank je wel", target: "ありがとう", type: "Basis" }, { nl: "Hoe gaat het?", target: "お元気ですか", type: "Zinnen" },
+                { nl: "Water", target: "水", type: "Woorden" }, { nl: "Huis", target: "家", type: "Woorden" }, { nl: "Boek", target: "本", type: "Woorden" }
             ],
             zh: [
-                { nl: "Hallo", target: "你好", diff: "beginner" }, { nl: "Goedemorgen", target: "早上好", diff: "beginner" }, { nl: "Dank je wel", target: "谢谢", diff: "beginner" }, { nl: "Ja", target: "是", diff: "beginner" }, { nl: "Nee", target: "不", diff: "beginner" },
-                { nl: "Water", target: "水", diff: "beginner" }, { nl: "Huis", target: "房子", diff: "beginner" }, { nl: "Boek", target: "书", diff: "beginner" }, { nl: "Melk", target: "牛奶", diff: "beginner" }, { nl: "Brood", target: "面包", diff: "beginner" },
-                { nl: "Computer", target: "电脑", diff: "intermediate" }, { nl: "Telefoon", target: "电话", diff: "intermediate" }, { nl: "Reizen", target: "旅游", diff: "intermediate" }, { nl: "Stad", target: "城市", diff: "intermediate" }, { nl: "Vriend", target: "朋友", diff: "intermediate" },
-                { nl: "Ontwikkeling", target: "发展", diff: "advanced" }, { nl: "Wetenschap", target: "科学", diff: "advanced" }, { nl: "Oplossing", target: "解决", diff: "advanced" }
+                { nl: "Hallo", target: "你好", type: "Basis" }, { nl: "Goedemorgen", target: "早上好", type: "Basis" }, { nl: "Dank je wel", target: "谢谢", type: "Basis" }, { nl: "Hoe gaat het?", target: "你好吗？", type: "Zinnen" },
+                { nl: "Water", target: "水", type: "Woorden" }, { nl: "Huis", target: "房子", type: "Woorden" }
             ],
             tr: [
-                { nl: "Hallo", target: "Merhaba", diff: "beginner" }, { nl: "Goedemorgen", target: "Günaydın", diff: "beginner" }, { nl: "Dank je wel", target: "Teşekkür ederim", diff: "beginner" }, { nl: "Ja", target: "Evet", diff: "beginner" }, { nl: "Nee", target: "Hayır", diff: "beginner" },
-                { nl: "Water", target: "Su", diff: "beginner" }, { nl: "Huis", target: "Ev", diff: "beginner" }, { nl: "Boek", target: "Kitap", diff: "beginner" }, { nl: "Melk", target: "Süt", diff: "beginner" }, { nl: "Brood", target: "Ekmek", diff: "beginner" },
-                { nl: "Computer", target: "Bilgisayar", diff: "intermediate" }, { nl: "Telefoon", target: "Telefon", diff: "intermediate" }, { nl: "Reizen", target: "Seyahat", diff: "intermediate" }, { nl: "Stad", target: "Şehir", diff: "intermediate" }, { nl: "Vriend", target: "Arkadaş", diff: "intermediate" },
-                { nl: "Ontwikkeling", target: "Gelişim", diff: "advanced" }, { nl: "Wetenschap", target: "Bilim", diff: "advanced" }, { nl: "Oplossing", target: "Çözüm", diff: "advanced" }
+                { nl: "Hallo", target: "Merhaba", type: "Basis" }, { nl: "Goedemorgen", target: "Günaydın", type: "Basis" }, { nl: "Dank je wel", target: "Teşekkür ederim", type: "Basis" }, { nl: "Hoe gaat het?", target: "Nasılsın?", type: "Zinnen" },
+                { nl: "Water", target: "Su", type: "Woorden" }, { nl: "Huis", target: "Ev", type: "Woorden" }
+            ],
+            sv: [
+                { nl: "Hallo", target: "Hej", type: "Basis" }, { nl: "Goedemorgen", target: "God morgon", type: "Basis" }, { nl: "Dank je wel", target: "Tack", type: "Basis" }, { nl: "Hoe gaat het?", target: "Hur mår du?", type: "Zinnen" }, { nl: "Water", target: "Vatten", type: "Woorden" }
+            ],
+            no: [
+                { nl: "Hallo", target: "Hei", type: "Basis" }, { nl: "Goedemorgen", target: "God morgen", type: "Basis" }, { nl: "Dank je wel", target: "Takk", type: "Basis" }, { nl: "Hoe gaat het?", target: "Hvordan har du det?", type: "Zinnen" }, { nl: "Water", target: "Vann", type: "Woorden" }
+            ],
+            da: [
+                { nl: "Hallo", target: "Hej", type: "Basis" }, { nl: "Goedemorgen", target: "Godmorgen", type: "Basis" }, { nl: "Dank je wel", target: "Tak", type: "Basis" }, { nl: "Hoe gaat het?", target: "Hvordan går det?", type: "Zinnen" }, { nl: "Water", target: "Vand", type: "Woorden" }
+            ],
+            pl: [
+                { nl: "Hallo", target: "Cześć", type: "Basis" }, { nl: "Goedemorgen", target: "Dzień dobry", type: "Basis" }, { nl: "Dank je wel", target: "Dziękuję", type: "Basis" }, { nl: "Hoe gaat het?", target: "Jak się masz?", type: "Zinnen" }, { nl: "Water", target: "Woda", type: "Woorden" }
             ]
         };
 
-        // App State
-        let appData = JSON.parse(localStorage.getItem('wordly_ai_data')) || {
+        let appData = JSON.parse(localStorage.getItem('wordly_ai_master_data')) || {
             points: 0,
             streak: 1,
             completed: {},
@@ -508,7 +533,7 @@
         };
 
         function saveData() {
-            localStorage.setItem('wordly_ai_data', JSON.stringify(appData));
+            localStorage.setItem('wordly_ai_master_data', JSON.stringify(appData));
         }
 
         window.onload = function() {
@@ -522,7 +547,7 @@
             document.getElementById('points-display').innerText = "⚡ " + appData.points + " XP";
             document.getElementById('streak-display').innerText = "🔥 " + appData.streak + " streak";
             let lang = appData.targetLang || "en";
-            let lvl = appData.levels[lang] || "Niet getest";
+            let lvl = appData.levels[lang] || "Beginner";
             document.getElementById('current-level-display').innerText = lvl.toUpperCase();
         }
 
@@ -536,7 +561,7 @@
         function checkAndRunInitialFinder() {
             let lang = appData.targetLang;
             if(!appData.levels[lang]) {
-                showNotification("🤖 AI Niveau Finder", "Welkom! Omdat dit je eerste keer is in deze taal, start de AI nu een korte niveau-test om te kijken welke lessen bij jou passen!");
+                showNotification("🤖 AI Niveau Detector", "Welkom! Om te zorgen dat het lespad perfect op jou aans ሌሎች, start de AI nu een korte niveau-test.");
                 document.querySelector('.custom-modal .btn').onclick = function() {
                     closeNotification();
                     startAiLevelFinder();
@@ -558,7 +583,7 @@
             if(activeBtn) activeBtn.classList.add('active');
         }
 
-        // --- AI NIVEAU FINDER LOGICA ---
+        // --- AI NIVEAU TEST LOGICA ---
         let isAiFinding = false;
         let aiTestScore = 0;
         let aiTestQuestions = [];
@@ -568,14 +593,13 @@
             aiTestScore = 0;
             let list = vocabData[appData.targetLang] || vocabData.en;
             
-            // Pak 5 gemengde vragen voor de test
             let shuffled = [...list].sort(() => 0.5 - Math.random()).slice(0, 5);
             aiTestQuestions = shuffled.map(item => {
                 let wrongOpts = list.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.target);
                 wrongOpts.push(item.target);
                 wrongOpts.sort(() => 0.5 - Math.random());
                 return {
-                    prompt: `[AI Niveau Test] Vertaal: "${item.nl}"`,
+                    prompt: `[AI Test] Vertaal naar gekozen taal: "${item.nl}"`,
                     options: wrongOpts,
                     correct: item.target
                 };
@@ -589,26 +613,17 @@
 
         function loadAiQuestion() {
             if(currentQIdx >= aiTestQuestions.length) {
-                // Bereken niveau op basis van score (0 t/m 5)
                 let assignedLevel = "beginner";
                 if(aiTestScore >= 4) assignedLevel = "advanced";
                 else if(aiTestScore >= 2) assignedLevel = "intermediate";
 
                 appData.levels[appData.targetLang] = assignedLevel;
-                
-                // Ontgrendel automatisch lessen tot dat niveau
                 if(!appData.completed[appData.targetLang]) appData.completed[appData.targetLang] = [];
-                if(assignedLevel === "intermediate" || assignedLevel === "advanced") {
-                    for(let i=0; i<3; i++) {
-                        if(!appData.completed[appData.targetLang].includes(`lesson_${appData.targetLang}_${i+1}`)) {
-                            appData.completed[appData.targetLang].push(`lesson_${appData.targetLang}_${i+1}`);
-                        }
-                    }
-                }
+                
                 saveData();
                 isAiFinding = false;
 
-                showNotification("🎉 AI Niveau Bepaald!", `De AI analyse is klaar! Jouw niveau is ingeschat als: ${assignedLevel.toUpperCase()}. Je leerpad is hierop aangepast.`);
+                showNotification("🎉 Niveau Vastgesteld!", `De AI heeft je niveau ingeschat als: ${assignedLevel.toUpperCase()}. Je pad is klaar.`);
                 document.querySelector('.custom-modal .btn').onclick = function() {
                     closeNotification();
                     backToDashboard();
@@ -617,7 +632,7 @@
             }
 
             let q = aiTestQuestions[currentQIdx];
-            document.getElementById('lesson-progress-text').innerText = `AI Test Vraag ${currentQIdx + 1} van 5`;
+            document.getElementById('lesson-progress-text').innerText = `AI Niveau Vraag ${currentQIdx + 1} van 5`;
             document.getElementById('question-prompt').innerText = q.prompt;
 
             let area = document.getElementById('answers-area');
@@ -638,22 +653,22 @@
             if(given.toLowerCase() === correct.toLowerCase()) {
                 playSound('correct');
                 aiTestScore++;
-                area.innerHTML = `<div class="feedback-box-correct">Juist! AI registreert punt.</div>`;
+                area.innerHTML = `<div class="feedback-box-correct">Correct!</div>`;
             } else {
                 playSound('wrong');
-                area.innerHTML = `<div class="feedback-box-wrong">Onjuist. Juist was: <strong>${correct}</strong></div>`;
+                area.innerHTML = `<div class="feedback-box-wrong">Niet juist. Het goede antwoord was: <strong>${correct}</strong></div>`;
             }
             document.getElementById('next-btn').classList.remove('hidden');
         }
 
-        // --- NORMALE LESSEN ---
+        // --- LESSEN GENERATOR ---
         function generateLessonsForCurrentLang() {
             let list = vocabData[appData.targetLang] || vocabData.en;
             const lessons = [];
             let qList = [];
             let counter = 1;
 
-            for(let i = 0; i < 10; i++) {
+            for(let i = 0; i < 8; i++) {
                 for(let j = 0; j < list.length; j++) {
                     let item = list[j];
                     let wrongOpts = list.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.target);
@@ -661,13 +676,13 @@
                     wrongOpts.sort(() => 0.5 - Math.random());
 
                     qList.push({
-                        prompt: `Vertaal naar de gekozen taal: "${item.nl}"`,
+                        prompt: `Vertaal: "${item.nl}"`,
                         options: wrongOpts,
                         correct: item.target
                     });
 
-                    if(qList.length >= 8 || (i === 9 && j === list.length - 1)) {
-                        lessons.push({ id: `lesson_${appData.targetLang}_${counter}`, title: `${counter}`, questions: [...qList] });
+                    if(qList.length >= 6 || (i === 7 && j === list.length - 1)) {
+                        lessons.push({ id: `lesson_${appData.targetLang}_${counter}`, title: `${counter}`, sub: item.type || "Les", questions: [...qList] });
                         qList = [];
                         counter++;
                     }
@@ -697,7 +712,7 @@
                     let node = document.createElement('button');
                     node.className = `duo-node ${isDone ? 'done' : (!isUnlocked ? 'locked' : 'current')}`;
                     if(isDone) node.style.background = "#58cc02";
-                    node.innerText = les.title;
+                    node.innerHTML = `${les.title}<span class="node-label">Ster</span>`;
                     
                     if(isUnlocked) {
                         node.onclick = () => startLesson(les.id, lessons);
@@ -729,7 +744,7 @@
             }
 
             if(currentQIdx >= activeQuestions.length) {
-                appData.points += 20;
+                appData.points += 25;
                 if(!appData.completed[appData.targetLang]) appData.completed[appData.targetLang] = [];
                 if(!appData.completed[appData.targetLang].includes(activeLesId)) {
                     appData.completed[appData.targetLang].push(activeLesId);
@@ -766,10 +781,10 @@
             let area = document.getElementById('answers-area');
             if(given.toLowerCase() === correct.toLowerCase()) {
                 playSound('correct');
-                area.innerHTML = `<div class="feedback-box-correct">Goed zo! Uitstekend bezig.</div>`;
+                area.innerHTML = `<div class="feedback-box-correct">Geweldig gedaan! Ga zo door.</div>`;
             } else {
                 playSound('wrong');
-                area.innerHTML = `<div class="feedback-box-wrong">Fout! Het juiste antwoord was: <strong>${correct}</strong></div>`;
+                area.innerHTML = `<div class="feedback-box-wrong">Helaas! Het juiste antwoord was: <strong>${correct}</strong></div>`;
             }
             document.getElementById('next-btn').classList.remove('hidden');
         }
@@ -790,7 +805,7 @@
             showNotification("Voortgang resetten", "Weet je zeker dat je alle opgeslagen data wilt wissen?");
             let modalBtn = document.querySelector('.custom-modal .btn');
             modalBtn.onclick = function() {
-                localStorage.removeItem('wordly_ai_data');
+                localStorage.removeItem('wordly_ai_master_data');
                 location.reload();
             };
         }
