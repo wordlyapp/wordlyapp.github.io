@@ -8,9 +8,8 @@
     <!-- Google AdSense / Eigendom Verificatie -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6951847135196559" crossorigin="anonymous"></script>
 
-    <!-- Okta / Auth0 Sign-In Widget CSS & JS CDN -->
-    <script src="https://global.oktacdn.com/okta-signin-widget/7.2.1/js/okta-sign-in.min.js"></script>
-    <link href="https://global.oktacdn.com/okta-signin-widget/7.2.1/css/okta-sign-in.min.css" type="text/css" rel="stylesheet"/>
+    <!-- Auth0 SPA JS SDK -->
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
 
     <link rel="icon" type="image/jpeg" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
     <link rel="apple-touch-icon" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
@@ -159,13 +158,6 @@
             font-weight: 700;
             color: var(--duo-gray-text);
             line-height: 1.4;
-        }
-
-        /* Okta Widget Container Wrapper */
-        #okta-login-container {
-            width: 100%;
-            max-width: 450px;
-            margin: 20px auto;
         }
 
         header.top-nav {
@@ -679,14 +671,14 @@
 </head>
 <body>
 
-    <!-- LANDING PAGE & AUTHENTICATIE SCHERM -->
+    <!-- LANDING PAGE & AUTH0 AUTHENTICATIE SCHERM -->
     <div id="landing-page">
         <header class="landing-header-bar">
             <div class="logo-area">
                 <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="logo-img"> Wordly Learn
             </div>
             <div style="display: flex; gap: 10px;">
-                <button class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="startAuth()">Start Now</button>
+                <button class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="startAuth0Login()">Start Now</button>
             </div>
         </header>
 
@@ -696,12 +688,9 @@
                 <h1>The smartest and most fun way to learn languages for free.</h1>
                 <p>Master vocabulary easily on any device with bite-sized lessons, interactive paths, and fun achievements designed to keep you motivated every single day.</p>
                 <div class="landing-buttons">
-                    <button class="btn" onclick="startAuth()">Start Now</button>
+                    <button class="btn" onclick="startAuth0Login()">Start Now</button>
                 </div>
             </div>
-
-            <!-- Auth Widget Render Container -->
-            <div id="okta-login-container" class="hidden"></div>
 
             <div class="landing-features-section" id="landing-features-container">
                 <div class="feature-box">
@@ -904,64 +893,83 @@
     </main>
 
     <script>
-        // --- AUTHENTICATIE LOGICA MET WORDLYAPP.NL & AUTH0 ---
+        // --- AUTH0 & ACCOUNT LOGICA ---
+        let auth0Client = null;
         let currentLoggedInUser = localStorage.getItem('wordly_logged_in') || null;
 
-        // Initialize Auth0 Widget (geconfigureerd voor wordlyapp.nl)
-        const oktaSignIn = new OktaSignIn({
-            baseUrl: 'dev-lql5ujqw06xmyjoo.us.auth0.com',
-            clientId: 'Zh28r6Lsy7SNi7cNqXaVXRRYmZyPoYn8',
-            redirectUri: 'https://wordlyapp.nl',
-            authParams: {
-                pkce: true,
-                defaultScope: ['openid', 'email', 'profile']
-            }
-        });
-
-        function startAuth() {
-            document.getElementById('landing-hero-box').classList.add('hidden');
-            document.getElementById('landing-features-container').classList.add('hidden');
-            document.getElementById('okta-login-container').classList.remove('hidden');
-
-            oktaSignIn.renderEl(
-                { el: '#okta-login-container' },
-                function (res) {
-                    if (res.status === 'SUCCESS') {
-                        let userEmail = res.session.userLogin || res.claims?.email || "user@wordlyapp.nl";
-                        currentLoggedInUser = userEmail;
-                        localStorage.setItem('wordly_logged_in', userEmail);
-
-                        let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-                        if (!accounts[userEmail]) {
-                            accounts[userEmail] = {
-                                data: {
-                                    points: 0,
-                                    streak: 1,
-                                    fromLang: "nl",
-                                    toLang: "en",
-                                    activeChapter: 0,
-                                    languageProgress: {},
-                                    mistakes: []
-                                }
-                            };
-                            localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
-                        }
-
-                        oktaSignIn.remove();
-                        showLangPromptModal();
+        async function initAuth0() {
+            try {
+                auth0Client = await auth0.createAuth0Client({
+                    domain: 'dev-lql5ujqw06xmyjoo.us.auth0.com',
+                    clientId: 'Zh28r6Lsy7SNi7cNqXaVXRRYmZyPoYn8',
+                    authorizationParams: {
+                        redirect_uri: window.location.origin
                     }
-                },
-                function (err) {
-                    console.error("Auth login error: ", err);
+                });
+
+                // Check of we terugkomen van Auth0 met een redirect (code / state parameters in URL)
+                const query = window.location.search;
+                if (query.includes("code=") && query.includes("state=")) {
+                    await auth0Client.handleRedirectCallback();
+                    window.history.replaceState({}, document.title, window.location.pathname);
                 }
-            );
+
+                const isAuthenticated = await auth0Client.isAuthenticated();
+                if (isAuthenticated) {
+                    const user = await auth0Client.getUser();
+                    currentLoggedInUser = user.email || user.name || "user@auth0";
+                    localStorage.setItem('wordly_logged_in', currentLoggedInUser);
+                    
+                    setupUserData(currentLoggedInUser);
+                    showLangPromptModal();
+                } else if (currentLoggedInUser) {
+                    setupUserData(currentLoggedInUser);
+                    initializeAppForUser();
+                }
+            } catch (err) {
+                console.error("Auth0 initialization error:", err);
+            }
         }
 
-        function logoutUser() {
-            oktaSignIn.signOut().catch(() => {});
+        async function startAuth0Login() {
+            if (!auth0Client) return;
+            try {
+                await auth0Client.loginWithRedirect();
+            } catch (err) {
+                console.error("Auth0 login error:", err);
+            }
+        }
+
+        async function logoutUser() {
             localStorage.removeItem('wordly_logged_in');
             currentLoggedInUser = null;
-            location.reload();
+            if (auth0Client) {
+                auth0Client.logout({
+                    logoutParams: {
+                        returnTo: window.location.origin
+                    }
+                });
+            } else {
+                location.reload();
+            }
+        }
+
+        function setupUserData(userEmail) {
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+            if (!accounts[userEmail]) {
+                accounts[userEmail] = {
+                    data: {
+                        points: 0,
+                        streak: 1,
+                        fromLang: "nl",
+                        toLang: "en",
+                        activeChapter: 0,
+                        languageProgress: {},
+                        mistakes: []
+                    }
+                };
+                localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
+            }
         }
 
         // --- PROFIEL MODAL FUNCTIES ---
@@ -1206,9 +1214,9 @@
                 /* Ch 6: Korte Zinnen */ [["Hoe gaat het?", "How are you?"], ["Ik ben blij.", "I am happy."], ["Wat zeg je?", "What do you say?"], ["Waar is dit?", "Where is this?"], ["Ik begrijp het.", "I understand."], ["Spreek je Engels?", "Do you speak English?"], ["Hoe laat is het?", "What time is it?"], ["Ik ben moe.", "I am tired."], ["Tot zo!", "See you soon!"], ["Het is goed.", "It is good."]],
                 /* Ch 7: Korte Zinnen */ [["Waar woon je?", "Where do you live?"], ["What is je naam?", "What is your name?"], ["Ik kom uit Nederland.", "I am from the Netherlands."], ["Heb je een hond?", "Do you have a dog?"], ["Het weer is mooi.", "The weather is nice."], ["Ik hou van lezen.", "I love reading."], ["Waar is de winkel?", "Where is the shop?"], ["Ik ben hongerig.", "I am hungry."], ["Dit is heel leuk.", "This is very fun."], ["Mag ik een glas water?", "May I have a glass of water?"]],
                 /* Ch 8: Korte Zinnen */ [["Kun je mij helpen?", "Can you help me?"], ["Hoeveel kost dit?", "How much does this cost?"], ["Waar is het station?", "Where is the station?"], ["Ik zoek een hotel.", "I am looking for a hotel."], ["Wanneer vertrekt de bus?", "When does the bus leave?"], ["Heb je een tafel voor twee?", "Do you have a table for two?"], ["Ik wil graag betalen.", "I would like to pay."], ["Waar is het toilet?", "Where is the restroom?"], ["Kan ik met pin betalen?", "Can I pay by card?"], ["Een fijne dag nog!", "Have a nice day!"]],
-                /* Ch 9: Korte Zinnen */ [["Wat wil je drinken?", "What do you want to drink?"], ["Ik wil graag koffie.", "I would like coffee."], ["Het smaakt erg goed.", "It tastes very good."], ["De rekening alstublieft.", "The check please."], ["Is dit gerecht vegetarisch?", "Is this dish vegetarian?"], ["Ik heb honger.", "I am hungry."], ["Smakelijk eten!", "Enjoy your meal!"], ["Dit is te warm.", "This is too hot."], ["Ik lust geen vis.", "I don't like fish."], ["breng me de kaart aub.", "Bring me the menu please."]],
+                /* Ch 9: Korte Zinnen */ [["Wat wil je drinken?", "What do you want to drink?"], ["Ik wil graag koffie.", "I would like coffee."], ["Het smaakt erg goed.", "It tastes very good."], ["De rekening alstublieft.", "The check please."], ["Is dit gerecht vegetarisch?", "Is this dish vegetarian?"], ["Ik heb honger.", "I am hungry."], ["Smakelijk eten!", "Enjoy your meal!"], ["Dit is te warm.", "This is too hot."], ["Ik lust geen fish.", "I don't like fish."], ["breng me de kaart aub.", "Bring me the menu please."]],
                 /* Ch 10: Lange Zinnen */ [["Ik wil graag een treinkaartje naar Amsterdam kopen.", "I would like to buy a train ticket to Amsterdam."], ["Vliegt het vliegtuig morgen op tijd naar Londen?", "Does the plane fly to London on time tomorrow?"], ["We hebben een mooi hotel geboekt in het centrum.", "We have booked a nice hotel in the city center."], ["Waar kan ik mijn bagage achterlaten op het station?", "Where can I leave my luggage at the station?"], ["De vakantie in het buitenland was fantastisch.", "The vacation abroad was fantastic."], ["Reizen met de trein is comfortabel en snel.", "Traveling by train is comfortable and fast."], ["Vergeet je paspoort en je tickets niet mee te nemen.", "Don't forget to take your passport and tickets."], ["Het verkeer op de snelweg is erg druk vanochtend.", "The traffic on the highway is very busy this morning."], ["Wij gaan volgend jaar naar Spanje op vakantie.", "We are going to Spain for vacation next year."], ["Kun je mij de weg wijzen naar het vliegveld?", "Can you show me the way to the airport?"]],
-                /* Ch 11: Lange Zinnen */ [["Ik werk elke dag van negen tot vijf uur op kantoor.", "I work in the office every day from nine to five."], ["Mijn collega helpt mij altijd met moeilijke projecten.", "My colleague always helps me with difficult projects."], ["We hebben morgen een belangrijke vergadering met de baas.", "We have an important meeting with the boss tomorrow."], ["De nieuwe computer werkt veel sneller dan de oude.", "The new computer works much faster than the old one."], ["Ik moet vandaag een lang rapport schrijven voor school.", "I have to write a long report for school today."], ["Kan ik deze documenten per e-mail naar jou versturen?", "Can I send these documents to you by email?"], ["De pauze duurt gelukkig een halfuur op deze middag.", "Fortunately, the break lasts half an hour this afternoon."], ["Hij studeert hard om zijn examen te halen.", "He is studying hard to pass his exam."], ["Onze leraar legt de moeilijke lessen heel rustig uit.", "Our teacher explains the difficult lessons very calmly."], ["Ik ben erg trots op mijn prestatie van deze week.", "I am very proud of my achievement this week."]],
+                /* Ch 11: Lange Zinnen */ [["Ik werk elke dag van negen tot vijf uur op kantoor.", "I work in the office every day from nine to five."], ["Mijn collega helpt mij altijd met moeilijke projecten.", "My colleague always helps me with difficult projects."], ["We hebben morgen een belangrijke vergadering met de baas.", "We have an important meeting with the boss tomorrow."], ["De nieuwe computer werkt veel sneller dan de oude.", "The new computer works much faster than the old one."], ["Ik moet vandaag een lang rapport schrijven voor school.", "I have to write a long report for school today."], ["Kan ik deze documenten per e-mail naar jou versturen?", "Can I send these documents to you by email?"], ["De pauze duurt gelukkig een halfuur op deze middag.", "Fortunately, the break lasts half an hour this afternoon."], ["Hij studeert hard om zijn examen te halen.", "He is studying hard to pass his exam."], ["Onze leraar legt de moeilijke lessen heel rustig uit.", "Our teacher explains the difficult lessons very calmly."], ["Ik ben erg trots op mijn prestatie van deze week.", "I am very proud of my achievement this week. "]],
                 /* Ch 12: Lange Zinnen */ [["In het weekend speel ik graag videospellen met mijn broer.", "On the weekend I like playing video games with my brother."], ["Voetbal is mijn favoriete sport om naar te kijken op tv.", "Football is my favorite sport to watch on TV."], ["We gaan vanavond samen een spannende film bekijken.", "We are going to watch an exciting movie together tonight."], ["Muziek luisteren helpt mij om lekker te ontspannen.", "Listening to music helps me to relax nicely."], ["Zij leest elke avond een spannend boek in bed.", "She reads an exciting book in bed every evening."], ["Mijn vrienden organiseren een groot feest in de tuin.", "My friends are organizing a big party in the garden."], ["Het schilderen van dit mooie landschap kost veel tijd.", "Painting this beautiful landscape takes a lot of time."], ["We wandelen elke zondag door het groene bos.", "We walk through the green forest every Sunday."], ["Fotografie is een fantastische en creatieve hobby.", "Photography is a fantastic and creative hobby."], ["Ik verzamel oude postzegels uit verschillende landen.", "I collect old stamps from different countries."]],
                 /* Ch 13: Lange Zinnen */ [["Er was eens een kleine kat die door het bos liep.", "Once upon a time there was a small cat walking through the forest."], ["Het weer veranderde plotseling van zonnig naar heftige regen.", "The weather suddenly changed from sunny to heavy rain."], ["Hij vond een oude schat onder een grote boom.", "He found an old treasure under a big tree."], ["De vriendelijke koningin lachte naar alle bewoners.", "The friendly queen smiled at all the residents."], ["Vogels zongen vrolijk hun liedjes in de ochtend.", "Birds happily sang their songs in the morning."], ["Een magische reis bracht hen naar verre werelden.", "A magical journey took them to distant worlds."], ["Sterren schenen helder aan de donkere nachthemel.", "Stars shone brightly in the dark night sky."], ["Het avontuur begon toen de klok twaalf uur sloeg.", "The adventure began when the clock struck twelve."], ["Dieren in de rimbaai beleefden spannende momenten.", "Animals in the jungle experienced exciting moments."], ["Dit mooie verhaal eindigt met een gelukkig einde.", "This beautiful story ends with a happy ending."]],
                 /* Ch 14: Lange Zinnen */ [["Mijn hele familie komt volgende week gezellig op bezoek.", "My whole family is coming over for a cozy visit next week."], ["Mijn broer en zus spelen altijd samen in de tuin.", "My brother and sister always play together in the garden."], ["Onze ouders koken elke avond een heerlijke maaltijd.", "Our parents cook a delicious meal every evening."], ["Samen lachen we om de grappige verhalen van opa.", "Together we laugh at grandpa's funny stories."], ["Mijn oma bakt de allerlekkerste koekjes voor ons.", "My grandma bakes the most delicious cookies for us."], ["Een goede vriend is goud waard in moeilijke tijden.", "A good friend is worth their weight in gold in difficult times."], ["We vieren mijn verjaardag met al onze goede vrienden.", "We celebrate my birthday with all our good friends."], ["Kinderen rennen vrolijk rond tijdens het schoolpleinfeest.", "Children run around happily during the school yard party."], ["De familieband is het belangrijkste wat er bestaat.", "Family ties are the most important thing that exists."], ["Iemand houdt ontzettend veel van mijn lieve familie.", "I love my sweet family immensely."]],
@@ -1251,17 +1259,7 @@
         }
 
         window.onload = function() {
-            if (currentLoggedInUser) {
-                let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-                if (accounts[currentLoggedInUser]) {
-                    appData = accounts[currentLoggedInUser].data;
-                    if(!appData.mistakes) appData.mistakes = [];
-                    initializeAppForUser();
-                } else {
-                    currentLoggedInUser = null;
-                    localStorage.removeItem('wordly_logged_in');
-                }
-            }
+            initAuth0();
 
             window.onclick = function(event) {
                 if (!event.target.closest('.custom-dropdown-container')) {
@@ -1273,6 +1271,13 @@
         function initializeAppForUser() {
             document.getElementById('landing-page').classList.add('hidden');
             document.getElementById('lang-prompt-modal').classList.add('hidden');
+            
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+            if (accounts[currentLoggedInUser] && accounts[currentLoggedInUser].data) {
+                appData = accounts[currentLoggedInUser].data;
+                if(!appData.mistakes) appData.mistakes = [];
+            }
+
             updateUIStrings();
             renderChapterTabs();
             updateDashboardStats();
