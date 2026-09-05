@@ -625,6 +625,45 @@
 
         .hidden { display: none !important; }
 
+        /* --- ZIN OPBOUWEN STYLING --- */
+        .antwoord-zone {
+            min-height: 60px;
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px;
+            margin-bottom: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            background-color: #fafafa;
+        }
+        .woordbank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        button.woord-btn {
+            background-color: var(--duo-green);
+            color: white;
+            border: none;
+            border-bottom: 3px solid var(--duo-green-shadow);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 800;
+            transition: var(--transition);
+            width: auto;
+            margin-top: 0;
+            text-transform: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        button.woord-btn:hover { filter: brightness(1.05); }
+
         /* --- ZWARTE KAT MASCOT TUSSENSCHERM --- */
         .cat-interstitial-card {
             background: #1e1e1e;
@@ -901,7 +940,7 @@
                     <div class="progress-bar-container">
                         <div id="lesson-progress-bar" class="progress-bar-fill"></div>
                     </div>
-                    <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text); font-size: 12px;">1/5</span>
+                    <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text); font-size: 12px;">1/7</span>
                 </div>
                 <h3 id="question-prompt" class="question-title">Translate this</h3>
                 
@@ -910,7 +949,7 @@
                 <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Continue</button>
             </div>
 
-            <!-- Zwarte Kat Tussenscherm (Geen pop-up tijdens vragen, verschijnt netjes bij voltooide les) -->
+            <!-- Zwarte Kat Tussenscherm -->
             <div id="page-cat-interstitial" class="card page-section hidden" style="text-align: center;">
                 <div class="cat-interstitial-card">
                     <div class="cat-avatar-large">🐈‍⬛</div>
@@ -1272,7 +1311,6 @@
             ]
         };
 
-        // Uitgebreide masterDatabase met 15 hoofdstukken per taal (Woorden -> Korte Zinnen -> Lange Zinnen)
         const masterDatabase = {
             "en": [
                 /* Ch 1: Woorden */ [["Hallo", "Hello"], ["Hoi", "Hi"], ["Goedemorgen", "Good morning"], ["Goedemiddag", "Good afternoon"], ["Goedenavond", "Good evening"], ["Welterusten", "Good night"], ["Dank je wel", "Thank you"], ["Hartelijk dank", "Many thanks"], ["Tot ziens", "Goodbye"], ["Tot morgen", "See you tomorrow"]],
@@ -1288,11 +1326,10 @@
                 /* Ch 11: Lange Zinnen */ [["Ik werk elke dag van negen tot vijf uur op kantoor.", "I work in the office every day from nine to five."], ["Mijn collega helpt mij altijd met moeilijke projecten.", "My colleague always helps me with difficult projects."], ["We hebben morgen een belangrijke vergadering met de baas.", "We have an important meeting with the boss tomorrow."], ["De nieuwe computer werkt veel sneller dan de oude.", "The new computer works much faster than the old one."], ["Ik moet vandaag een lang rapport schrijven voor school.", "I have to write a long report for school today."], ["Kan ik deze documenten per e-mail naar jou versturen?", "Can I send these documents to you by email?"], ["De pauze duurt gelukkig een halfuur op deze middag.", "Fortunately, the break lasts half an hour this afternoon."], ["Hij studeert hard om zijn examen te halen.", "He is studying hard to pass his exam."], ["Onze leraar legt de moeilijke lessen heel rustig uit.", "Our teacher explains the difficult lessons very calmly."], ["Ik ben erg trots op mijn prestatie van deze week.", "I am very proud of my achievement this week."]],
                 /* Ch 12: Lange Zinnen */ [["In het weekend speel ik graag videospellen met mijn broer.", "On the weekend I like playing video games with my brother."], ["Voetbal is mijn favoriete sport om naar te kijken op tv.", "Football is my favorite sport to watch on TV."], ["We gaan vanavond samen een spannende film bekijken.", "We are going to watch an exciting movie together tonight."], ["Muziek luisteren helpt mij om lekker te ontspannen.", "Listening to music helps me to relax nicely."], ["Zij leest elke avond een spannend boek in bed.", "She reads an exciting book in bed every evening."], ["Mijn vrienden organiseren een groot feest in de tuin.", "My friends are organizing a big party in the garden."], ["Het schilderen van dit mooie landschap kost veel tijd.", "Painting this beautiful landscape takes a lot of time."], ["We wandelen elke zondag door het groene bos.", "We walk through the green forest every Sunday."], ["Fotografie is een fantastische en creatieve hobby.", "Photography is a fantastic and creative hobby."], ["Ik verzamel oude postzegels uit verschillende landen.", "I collect old stamps from different countries."]],
                 /* Ch 13: Lange Zinnen */ [["Er was eens een kleine kat die door het bos liep.", "Once upon a time there was a small cat walking through the forest."], ["Het weer veranderde plotseling van zonnig naar heftige regen.", "The weather suddenly changed from sunny to heavy rain."], ["Hij vond een oude schat onder een grote boom.", "He found an old treasure under a big tree."], ["De vriendelijke koningin lachte naar alle bewoners.", "The friendly queen smiled at all the residents."], ["Vogels zongen vrolijk hun liedjes in de ochtend.", "Birds happily sang their songs in the morning."], ["Een magische reis bracht hen naar verre werelden.", "A magical journey took them to distant worlds."], ["Sterren schenen helder aan de donkere nachthemel.", "Stars shone brightly in the dark night sky."], ["Het avontuur begon toen de klok twaalf uur sloeg.", "The adventure began when the clock struck twelve."], ["Dieren in de rimbaai beleefden spannende momenten.", "Animals in the jungle experienced exciting moments."], ["Dit mooie verhaal eindigt met een gelukkig einde.", "This beautiful story ends with a happy ending."]],
-                /* Ch 14: Lange Zinnen */ [["Mijn hele familie komt volgende week gezellig op bezoek.", "My whole family is coming over for a cozy visit next week."], ["Mijn broer en zus spelen altijd samen in de tuin.", "My brother and sister always play together in the garden."], ["Onze ouders koken elke avond een heerlijke maaltijd.", "Our parents cook a delicious meal every evening."], ["Samen lachen we om de grappige verhalen van opa.", "Together we laugh at grandpa's funny stories."], ["Mijn oma bakt de allerlekkerste koekjes voor ons.", "My grandma bakes the most delicious cookies for us."], ["Een goede vriend is goud waard in moeilijke tijden.", "A good friend is worth their weight in gold in difficult times."], ["We vieren mijn verjaardag met al onze goede vrienden.", "We celebrate my birthday with all our good friends."], ["Kinderen rennen vrolijk rond tijdens het schoolpleinfeest.", "Children run around happily during the school yard party."], ["De familieband is het belangrijkste wat er bestaat.", "Family ties are the most important thing that exists."], ["Ik houd ontzettend veel van mijn lieve familie.", "I love my sweet family immensely."]],
-                /* Ch 15: Lange Zinnen (Toets) */ [["Dit is de laatste test om te bewijzen wat je kunt leren.", "This is the final test to prove what you can learn."], ["Elke taal openbaart een nieuwe wereld van mogelijkheden.", "Every language reveals a new world of possibilities."], ["Met doorzettingsvermogen bereik je al je grote doelen.", "With perseverance you achieve all your big goals."], ["Blijf altijd oefenen om je vaardigheden te verbeteren.", "Always keep practicing to improve your skills."], ["De zwarte kat kijkt trots mee naar jouw resultaten.", "The black cat proudly watches your results."], ["Je hebt nu alle vijftien hoofdstukken doorend", "You have now gone through all fifteen chapters."], ["Taalonderwijs was nog nooit zo leuk en interactief.", "Language education has never been so fun and interactive."], ["Geniet van jouw welverdiende punten en hoge streak.", "Enjoy your well-deserved points and high streak."], ["Dit is het begin van jouw meertalige toekomst.", "This is the beginning of your multilingual future."], ["Gefeliciteerd met het voltooien van het gehele traject!", "Congratulations on completing the entire journey!"]]
+                /* Ch 14: Lange Zinnen */ [["Mijn hele familie komt volgende week gezellig op bezoek.", "My whole family is coming over for a cozy visit next week."], ["Mijn broer en zus spelen altijd samen in de tuin.", "My brother and sister always play together in the garden."], ["Onze ouders koken elke avond een heerlijke maaltijd.", "Our parents cook a delicious meal every evening."], ["Samen lachen we om de grappige verhalen van opa.", "Together we laugh at grandpa's funny stories."], ["Mijn oma bakt de allerlekkerste koekjes voor ons.", "My grandma bakes the most delicious cookies for us."], ["Een goede vriend is goud waard in moeilijke tijden.", "A good friend is worth their weight in gold in difficult times."], ["We vieren mijn verjaardag met al onze goede vrienden.", "We celebrate my birthday with all our good friends."], ["Kinderen rennen vrolijk rond tijdens het schoolpleinfeest.", "Children run around happily during the school yard party."], ["De familieband is het belangrijkste wat er bestaat.", "Family ties are the most important thing that exists."], ["Iemand houdt ontzettend veel van mijn lieve familie.", "I love my sweet family immensely."]],
+                /* Ch 15: Lange Zinnen (Toets) */ [["Dit is de laatste test om te bewijzen wat je kunt leren.", "This is the final test to prove what you can learn."], ["Elke taal openbaart een nieuwe wereld van mogelijkheden.", "Every language reveals a new world of possibilities."], ["Met doorzettingsvermogen bereik je al je grote doelen.", "With perseverance you achieve all your big goals."], ["Blijf altijd oefenen om je vaardigheden te verbeteren.", "Always keep practicing to improve your skills."], ["De zwarte kat kijkt trots mee naar jouw resultaten.", "The black cat proudly watches your results."], ["Je hebt nu alle vijftien hoofdstukken doorgelopen", "You have now gone through all fifteen chapters."], ["Taalonderwijs was nog nooit zo leuk en interactief.", "Language education has never been so fun and interactive."], ["Geniet van jouw welverdiende punten en hoge streak.", "Enjoy your well-deserved points and high streak."], ["Dit is het begin van jouw meertalige toekomst.", "This is the beginning of your multilingual future."], ["Gefeliciteerd met het voltooien van het gehele traject!", "Congratulations on completing the entire journey!"]]
             ],
             "de": [
-                /* Ch 1-5 Woorden, Ch 6-9 Korte zinnen, Ch 10-15 Lange zinnen */
                 Array(10).fill(["Hallo", "Hallo"]), Array(10).fill(["Appel", "Apfel"]), Array(10).fill(["Trein", "Zug"]), Array(10).fill(["Vader", "Vater"]), Array(10).fill(["Huis", "Haus"]),
                 Array(10).fill(["Hoe gaat het?", "Wie geht es dir?"]), Array(10).fill(["Waar woon je?", "Wo wohnst du?"]), Array(10).fill(["Kun je helpen?", "Kannst du helfen?"]), Array(10).fill(["Wat wil je drinken?", "Was möchtest du trinken?"]), Array(10).fill(["Ik wil graag een treinkaartje kopen.", "Ich möchte eine Fahrkarte kaufen."]),
                 Array(10).fill(["Ik werk op kantoor.", "Ich arbeite im Büro."]), Array(10).fill(["Ik speel graag voetbal.", "Ich spiele gerne Fußball."]), Array(10).fill(["Es war einmal eine kleine Katze.", "Es war einmal eine kleine Katze."]), Array(10).fill(["Meine ganze Familie kommt zu Besuch.", "Meine ganze Familie kommt zu Besuch."]), Array(10).fill(["Herzlichen Glückwunsch!", "Herzlichen Glückwunsch!"])
@@ -1450,7 +1487,7 @@
         function renderChapterTabs() {
             let container = document.getElementById('chapter-tabs-container');
             container.innerHTML = "";
-            for(let i = 0; i < 15; i++) { // Aangepast naar 15 hoofdstukken
+            for(let i = 0; i < 15; i++) {
                 let unlocked = isChapterUnlocked(i);
                 let tab = document.createElement('button');
                 tab.className = `chapter-tab ${appData.activeChapter === i ? 'active' : ''} ${!unlocked ? 'locked-tab' : ''}`;
@@ -1567,27 +1604,27 @@
             let fullWordList = getChapterWordList();
             activeQuestions = [];
 
-            // Aangepast: Les 3 en 4 krijgen korte zinnetjes, en de toets bevat specifiek 3 zinnen die gelinkt zijn aan het hoofdstuk[cite: 4]
             if(isExam) {
                 let shuffledPool = [...fullWordList].sort(() => 0.5 - Math.random());
                 let count = Math.min(10, shuffledPool.length);
                 for(let q = 0; q < count; q++) {
                     let item = shuffledPool[q];
-                    // Pak specifiek 3 zinnen uit de pool als garantie voor de lesrelevante toets-items
-                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+                    activeQuestions.push({ type: 'mc', q: item[0], a: item[1], opts: item[2] });
                 }
-            } else if (lessonIdx === 2 || lessonIdx === 3) {
-                // Les 3 en 4 specifieke korte zinnetjes selectie
-                let subset = fullWordList.slice(0, Math.min(5, fullWordList.length));
-                subset.forEach(item => {
-                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
-                });
             } else {
+                // 5 normabele meerkeuzevragen
                 let chunkSize = 4;
                 let startIndex = (lessonIdx * chunkSize) % fullWordList.length;
                 for(let q = 0; q < 5; q++) {
                     let item = fullWordList[(startIndex + q) % fullWordList.length];
-                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+                    activeQuestions.push({ type: 'mc', q: item[0], a: item[1], opts: item[2] });
+                }
+                // 2 extra bonus vragen aan het einde met zin opbouwen
+                for(let q = 0; q < 2; q++) {
+                    let item = fullWordList[(startIndex + 5 + q) % fullWordList.length];
+                    let sentence = item[1];
+                    let words = sentence.split(' ');
+                    activeQuestions.push({ type: 'sentence', q: item[0], a: sentence, words: words });
                 }
             }
 
@@ -1610,12 +1647,16 @@
             if(mistakesList.length > 0) {
                 mistakesList.forEach(m => {
                     let item = fullWordList.find(w => w[0] === m.q) || fullWordList[0];
-                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+                    activeQuestions.push({ type: 'mc', q: item[0], a: item[1], opts: item[2] });
                 });
             } else {
-                for(let q = 0; q < 4; q++) {
+                for(let q = 0; q < 5; q++) {
                     let item = fullWordList[q % fullWordList.length];
-                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+                    activeQuestions.push({ type: 'mc', q: item[0], a: item[1], opts: item[2] });
+                }
+                for(let q = 0; q < 2; q++) {
+                    let item = fullWordList[(5 + q) % fullWordList.length];
+                    activeQuestions.push({ type: 'sentence', q: item[0], a: item[1], words: item[1].split(' ') });
                 }
             }
 
@@ -1652,7 +1693,6 @@
                 saveData();
                 updateDashboardStats();
 
-                // Toon de zwarte kat direct bij de afronding van de opdracht/les i.p.v. tijdens de vragen[cite: 4]
                 triggerCatInterstitial();
                 return;
             }
@@ -1662,27 +1702,101 @@
             document.getElementById('lesson-progress-bar').style.width = `${progressPercent}%`;
             document.getElementById('lesson-progress-text').innerText = `${currentQIdx + 1}/${activeQuestions.length}`;
             
-            let promptText = t("lessonPrompt");
-            if(isCurrentExam) promptText = t("examPrompt");
-            if(isCurrentReview) promptText = t("reviewPrompt");
-
-            document.getElementById('question-prompt').innerText = `${promptText} "${qObj.q}"`;
-
             let area = document.getElementById('answers-area');
             area.innerHTML = "";
             document.getElementById('next-btn').classList.add('hidden');
 
-            let otherOpts = qObj.opts.filter(opt => opt.toLowerCase() !== qObj.a.toLowerCase());
-            otherOpts.sort(() => 0.5 - Math.random());
-            let shuffledOpts = [qObj.a, ...otherOpts.slice(0, 3)].sort(() => 0.5 - Math.random());
+            if (qObj.type === 'sentence') {
+                document.getElementById('question-prompt').innerText = `✨ BONUS: Bouw de zin voor: "${qObj.q}"`;
 
-            shuffledOpts.forEach(opt => {
-                let btn = document.createElement('button');
-                btn.className = "btn option-btn";
-                btn.innerText = opt;
-                btn.onclick = () => checkMcAnswer(opt, qObj.a, qObj.q);
-                area.appendChild(btn);
-            });
+                let antwoordZone = document.createElement('div');
+                antwoordZone.className = 'antwoord-zone';
+                antwoordZone.id = 'antwoordZone';
+                area.appendChild(antwoordZone);
+
+                let woordBank = document.createElement('div');
+                woordBank.className = 'woordbank';
+                woordBank.id = 'woordBank';
+                
+                let shuffledWords = [...qObj.words].sort(() => 0.5 - Math.random());
+                shuffledWords.forEach(w => {
+                    let wBtn = document.createElement('button');
+                    wBtn.className = 'woord-btn';
+                    wBtn.innerText = w;
+                    wBtn.onclick = () => verplaatsWoord(wBtn);
+                    woordBank.appendChild(wBtn);
+                });
+                area.appendChild(woordBank);
+
+                let checkBtn = document.createElement('button');
+                checkBtn.className = 'btn';
+                checkBtn.innerText = 'Controleer zin';
+                checkBtn.onclick = () => controleerZinBonus(qObj.a, qObj.q);
+                area.appendChild(checkBtn);
+
+                let resDiv = document.createElement('div');
+                resDiv.id = 'resultaatZin';
+                resDiv.style.marginTop = '10px';
+                resDiv.style.fontWeight = 'bold';
+                area.appendChild(resDiv);
+
+            } else {
+                let promptText = t("lessonPrompt");
+                if(isCurrentExam) promptText = t("examPrompt");
+                if(isCurrentReview) promptText = t("reviewPrompt");
+
+                document.getElementById('question-prompt').innerText = `${promptText} "${qObj.q}"`;
+
+                let otherOpts = qObj.opts.filter(opt => opt.toLowerCase() !== qObj.a.toLowerCase());
+                otherOpts.sort(() => 0.5 - Math.random());
+                let shuffledOpts = [qObj.a, ...otherOpts.slice(0, 3)].sort(() => 0.5 - Math.random());
+
+                shuffledOpts.forEach(opt => {
+                    let btn = document.createElement('button');
+                    btn.className = "btn option-btn";
+                    btn.innerText = opt;
+                    btn.onclick = () => checkMcAnswer(opt, qObj.a, qObj.q);
+                    area.appendChild(btn);
+                });
+            }
+        }
+
+        function verplaatsWoord(button) {
+            const antwoordZone = document.getElementById('antwoordZone');
+            const woordBank = document.getElementById('woordBank');
+
+            if (button.parentElement.id === 'woordBank') {
+                antwoordZone.appendChild(button);
+            } else {
+                woordBank.appendChild(button);
+            }
+            let resDiv = document.getElementById('resultaatZin');
+            if(resDiv) resDiv.innerText = '';
+        }
+
+        function controleerZinBonus(juisteZin, questionText) {
+            const antwoordZone = document.getElementById('antwoordZone');
+            const woorden = antwoordZone.getElementsByClassName('woord-btn');
+            let gekozenZin = Array.from(woorden).map(b => b.innerText).join(' ');
+            
+            const resultaatDiv = document.getElementById('resultaatZin');
+
+            if (gekozenZin === juisteZin) {
+                resultaatDiv.style.color = '#278500';
+                resultaatDiv.innerText = "Goed zo! De zin klopt helemaal! 🎉";
+                document.querySelectorAll('.woord-btn, .btn').forEach(b => { if(b.id !== 'next-btn') b.disabled = true; });
+                appData.mistakes = (appData.mistakes || []).filter(m => m.q !== questionText);
+                saveData();
+                document.getElementById('next-btn').classList.remove('hidden');
+            } else {
+                resultaatDiv.style.color = '#ea2b2b';
+                resultaatDiv.innerText = `Niet helemaal juist. Het moest zijn: "${juisteZin}"`;
+                if(!appData.mistakes) appData.mistakes = [];
+                if(!appData.mistakes.some(m => m.q === questionText)) {
+                    appData.mistakes.push({ q: questionText, a: juisteZin });
+                }
+                saveData();
+            }
         }
 
         function checkMcAnswer(given, correct, questionText) {
