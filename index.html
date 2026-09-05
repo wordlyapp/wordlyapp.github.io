@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordly - Ultimate Green Edition</title>
+    <title>Wordly - Ultimate Edition</title>
     <style>
         :root {
             --duo-green: #58cc02;
@@ -27,7 +27,7 @@
             min-height: 100vh;
         }
 
-        /* Vaste Linkerzijbalk in Groen Thema */
+        /* Vaste Linkerzijbalk */
         aside.sidebar {
             width: 256px;
             border-right: 2px solid var(--border);
@@ -68,7 +68,7 @@
             color: var(--duo-gray-text);
             text-decoration: none;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
             font-size: 14px;
             letter-spacing: 0.8px;
@@ -79,6 +79,7 @@
             background: var(--duo-light-green);
             color: var(--duo-green-shadow);
             border-color: #b8f28b;
+            transform: translateX(4px);
         }
 
         /* Hoofdinhoud */
@@ -101,13 +102,39 @@
             align-items: center;
         }
 
-        /* Stats Balk */
-        .top-stats-bar {
+        /* Stats Balk & Taal Keuze Bovenin */
+        .top-bar {
             display: flex;
-            gap: 20px;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
             width: 100%;
             margin-bottom: 30px;
+        }
+
+        .lang-selector-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .lang-select {
+            padding: 8px 14px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            background: white;
+            font-weight: 700;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .lang-select:focus { border-color: var(--duo-green); }
+
+        .top-stats-bar {
+            display: flex;
+            gap: 15px;
             font-weight: 800;
         }
 
@@ -121,9 +148,10 @@
             gap: 8px;
             font-size: 15px;
             color: #555;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
 
-        /* Het Kronkelende Groene Leerpad */
+        /* Het Kronkelende Groene Leerpad met Vloeiende Animatie */
         .duo-path {
             display: flex;
             flex-direction: column;
@@ -131,6 +159,12 @@
             gap: 28px;
             width: 100%;
             padding: 20px 0;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .path-row {
@@ -158,10 +192,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.15s ease;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .duo-node:hover:not(.locked) { transform: scale(1.1); }
+        .duo-node:hover:not(.locked) { transform: scale(1.12); }
         .duo-node:active:not(.locked) { transform: translateY(4px); border-bottom-width: 2px; }
 
         .duo-node.locked {
@@ -173,7 +207,7 @@
         }
 
         .duo-node.current {
-            animation: pulseNode 1.5s infinite;
+            animation: pulseNode 2s infinite;
         }
 
         @keyframes pulseNode {
@@ -188,10 +222,11 @@
             border: 2px solid var(--border);
             border-radius: 24px;
             padding: 40px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             width: 100%;
             max-width: 600px;
             box-sizing: border-box;
+            animation: fadeIn 0.4s ease-out;
         }
 
         h2 { font-size: 28px; font-weight: 800; margin-top: 0; color: #2c2c2c; }
@@ -212,10 +247,10 @@
             box-shadow: 0 4px 12px rgba(88, 204, 2, 0.25);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            transition: all 0.1s;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .btn:hover { filter: brightness(1.05); }
+        .btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
         .btn:active { transform: translateY(3px); border-bottom-width: 1px; box-shadow: none; }
 
         .option-btn {
@@ -229,49 +264,77 @@
             text-transform: none;
             font-weight: 700;
         }
-        .option-btn:hover { background: #f7f9fa; border-color: var(--duo-green); }
+        .option-btn:hover { background: #f7f9fa; border-color: var(--duo-green); transform: translateX(4px); }
 
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            font-size: 16px;
-            box-sizing: border-box;
-            margin-top: 8px;
-            margin-bottom: 16px;
-            outline: none;
-            background: #f7f9fa;
-        }
-        input:focus { border-color: var(--duo-green); background: white; }
-
-        label { font-weight: 700; font-size: 14px; color: #555; display: block; margin-bottom: 4px; }
         .hidden { display: none !important; }
 
         .feedback-box-correct {
             color: #2e7d32; font-weight: 800; font-size: 18px; margin: 20px 0; padding: 16px;
             background: #e8f5e9; border-radius: 16px; border: 2px solid #c8e6c9;
+            animation: fadeIn 0.2s ease-out;
         }
         .feedback-box-wrong {
             color: #c62828; font-weight: 800; font-size: 18px; margin: 20px 0; padding: 16px;
             background: #ffebee; border-radius: 16px; border: 2px solid #ffcdd2;
+            animation: fadeIn 0.2s ease-out;
         }
+
+        /* Eigen Custom Notificatie Popup (In plaats van lelijke browser alerts) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .custom-modal {
+            background: white;
+            padding: 32px;
+            border-radius: 24px;
+            border: 2px solid var(--border);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            animation: scaleUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .custom-modal h3 { margin-top: 0; font-size: 22px; font-weight: 800; color: #2c2c2c; }
+        .custom-modal p { color: var(--duo-gray-text); font-size: 15px; margin: 12px 0 24px 0; }
     </style>
 </head>
 <body>
 
+    <!-- CUSTOM NOTIFICATIE POPUP (GUI) -->
+    <div id="custom-notification" class="modal-overlay hidden">
+        <div class="custom-modal">
+            <h3 id="notif-title">Melding</h3>
+            <p id="notif-text">Dit is een notificatie tekst.</p>
+            <button class="btn" onclick="closeNotification()" style="margin-top: 0;">Okay</button>
+        </div>
+    </div>
+
     <!-- ZIJBALK -->
-    <aside.sidebar id="app-sidebar" class="hidden">
+    <aside.sidebar id="app-sidebar">
         <div>
             <div class="sidebar-logo">Wordly</div>
             <div class="sidebar-menu">
                 <a class="menu-item active" onclick="switchTab('learn')">🗺️ Leerpad</a>
-                <a class="menu-item" onclick="switchTab('shop')">🛒 Winkel</a>
                 <a class="menu-item" onclick="switchTab('settings')">⚙️ Instellingen</a>
             </div>
         </div>
         <div style="border-top: 2px solid var(--border); padding-top: 16px;">
-            <a class="menu-item" style="color: #c62828;" onclick="logout()">🚪 Uitloggen</a>
+            <a class="menu-item" style="color: #c62828;" onclick="resetProgressPrompt()">🔄 Reset Data</a>
         </div>
     </aside>
 
@@ -279,52 +342,38 @@
     <main.main-content class="main-content">
         <div class="content-container">
 
-            <!-- PAGE: AUTH -->
-            <div id="page-auth" class="card page-section">
-                <h2 id="auth-title">Inloggen bij Wordly</h2>
-                <p id="auth-desc">Voer je gegevens in om al je voortgang en XP veilig op te slaan.</p>
-                
-                <label>Gebruikersnaam</label>
-                <input type="text" id="auth-user" placeholder="Je gebruikersnaam...">
-                
-                <label>Wachtwoord</label>
-                <input type="password" id="auth-pass" placeholder="Je wachtwoord...">
-
-                <button class="btn" id="auth-btn" onclick="handleAuth()">Inloggen</button>
-                <button class="btn" style="background: transparent; color: var(--duo-green); border: none; box-shadow: none;" onclick="toggleAuthMode()" id="auth-switch">Geen account? Maak er een aan</button>
-            </div>
-
-            <!-- PAGE: DASHBOARD -->
-            <div id="page-dashboard" class="page-section hidden" style="width: 100%;">
+            <!-- BOVENSTE BALK (Taal & Stats) -->
+            <div class="top-bar">
+                <div class="lang-selector-container">
+                    <span>Oefenertaal:</span>
+                    <select id="target-lang-select" class="lang-select" onchange="changeTargetLanguage()">
+                        <option value="en">Engels</option>
+                        <option value="de">Duits</option>
+                        <option value="es">Spaans</option>
+                        <option value="nl">Nederlands</option>
+                    </select>
+                </div>
                 <div class="top-stats-bar">
-                    <div class="stat-pill" id="user-display">👤 Guest</div>
                     <div class="stat-pill" id="streak-display">🔥 1 streak</div>
                     <div class="stat-pill" id="points-display">⚡ 0 XP</div>
                 </div>
+            </div>
 
+            <!-- PAGE: DASHBOARD (Leerpad) -->
+            <div id="page-dashboard" class="page-section" style="width: 100%;">
                 <div id="view-learn" style="width: 100%;">
                     <div class="duo-path" id="path-container"></div>
                 </div>
 
-                <div id="view-shop" class="card hidden" style="max-width: 100%;">
-                    <h2>Wordly Winkel</h2>
-                    <p>Besteed je hard verdiende XP aan extra opties!</p>
-                    <div style="margin-top: 20px; background: #f7f9fa; padding: 20px; border-radius: 16px; border: 2px solid var(--border);">
-                        <strong>Naam Aanpassen</strong>
-                        <p style="font-size: 14px; margin: 8px 0;">Geef jezelf een gloednieuwe gebruikersnaam.</p>
-                        <button class="btn" style="margin-top: 0;" onclick="changeNamePrompt()">Wijzig Naam</button>
-                    </div>
-                </div>
-
                 <div id="view-settings" class="card hidden" style="max-width: 100%;">
                     <h2>Instellingen</h2>
-                    <label>Niveau Selecteren</label>
+                    <label style="font-weight: 700; font-size: 14px; color: #555; display: block; margin-bottom: 4px;">Niveau Selecteren</label>
                     <select id="settings-level" onchange="updateLevel()" style="width:100%; padding:16px; border-radius:16px; border:2px solid var(--border); margin-top:8px; font-size:16px; background:#f7f9fa; outline:none;">
                         <option value="beginner">Beginner (Basis)</option>
                         <option value="intermediate">Intermediate (Alledaags)</option>
                         <option value="advanced">Advanced (Uitgebreid)</option>
                     </select>
-                    <button class="btn" style="background: #c62828; border-bottom-color: #8e0000; margin-top: 30px;" onclick="deleteAccount()">Account Verwijderen</button>
+                    <p style="margin-top: 20px; font-size: 14px;">Alle voortgang, XP en streaks worden automatisch en veilig opgeslagen op jouw eigen apparaat (browser).</p>
                 </div>
             </div>
 
@@ -342,7 +391,7 @@
             <!-- PAGE: COMPLETE -->
             <div id="page-complete" class="card page-section hidden" style="text-align: center;">
                 <h2 style="font-size: 32px; color: var(--duo-green);">Les Voltooid! 🎉</h2>
-                <p>Geweldig gedaan! Je hebt deze les succesvol afgerond en XP verdiend.</p>
+                <p>Geweldig gedaan! Je hebt deze les succesvol afgerond en extra XP verdiend.</p>
                 <button class="btn" onclick="backToDashboard()">Doorgaan</button>
             </div>
 
@@ -350,6 +399,17 @@
     </main>
 
     <script>
+        // Custom Notificatie Systeem
+        function showNotification(title, text) {
+            document.getElementById('notif-title').innerText = title;
+            document.getElementById('notif-text').innerText = text;
+            document.getElementById('custom-notification').classList.remove('hidden');
+        }
+
+        function closeNotification() {
+            document.getElementById('custom-notification').classList.add('hidden');
+        }
+
         // Audio Systeem
         let audioCtx = null;
         function playSound(type) {
@@ -374,118 +434,67 @@
             } catch(e) {}
         }
 
-        // Enorme uitgebreide databank met honderden opdrachten
-        const database = [];
-        const wordsEn = [
-            "Hello", "Good morning", "Thank you", "Yes", "No", "Water", "House", "Book", "Milk", "Bread", 
-            "Apple", "Cat", "Dog", "Car", "Sun", "Moon", "School", "Friend", "Family", "Music",
-            "Computer", "Phone", "Travel", "City", "Country", "Window", "Door", "Table", "Chair", "Garden",
-            "Running", "Reading", "Writing", "Playing", "Cooking", "Working", "Sleeping", "Walking", "Flying", "Swimming"
-        ];
-        const wordsNl = [
-            "Hallo", "Goedemorgen", "Dank je wel", "Ja", "Nee", "Water", "Huis", "Boek", "Melk", "Brood", 
-            "Appel", "Kat", "Hond", "Auto", "Zon", "Maan", "School", "Vriend", "Familie", "Muziek",
-            "Computer", "Telefoon", "Reizen", "Stad", "Land", "Raam", "Deur", "Tafel", "Stoel", "Tuin",
-            "Rennen", "Lezen", "Schrijven", "Spelen", "Koken", "Werken", "Slapen", "Wandelen", "Vliegen", "Zwemmen"
-        ];
-
-        // Genereer 200+ unieke oefeningen over meerdere eenheden
-        for(let i = 0; i < 15; i++) {
-            for(let j = 0; j < wordsEn.length; j++) {
-                database.push({ 
-                    en: wordsEn[j] + (i > 0 ? ` (${i+1})` : ""), 
-                    nl: wordsNl[j] + (i > 0 ? ` (${i+1})` : "") 
-                });
-            }
-        }
-
-        function generateLessons() {
-            const lessons = [];
-            let qList = [];
-            let counter = 1;
-            for(let i = 0; i < database.length; i++) {
-                let item = database[i];
-                let wrongOpts = database.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.en);
-                wrongOpts.push(item.en);
-                wrongOpts.sort(() => 0.5 - Math.random());
-
-                qList.push({
-                    prompt: `Vertaal naar het Engels: "${item.nl}"`,
-                    options: wrongOpts,
-                    correct: item.en
-                });
-
-                // Elke les bevat 10 vragen voor een langere, uitdagende speelduur
-                if(qList.length >= 10 || i === database.length - 1) {
-                    lessons.push({ id: `lesson_${counter}`, title: `${counter}`, questions: [...qList] });
-                    qList = [];
-                    counter++;
-                }
-            }
-            return lessons;
-        }
-
-        let isLoginMode = true;
-        let currentUser = null;
-
-        window.onload = function() {
-            let session = localStorage.getItem('wordly_session');
-            if (session) {
-                let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-                if (accounts[session]) {
-                    currentUser = accounts[session];
-                    openDashboard();
-                    return;
-                }
-            }
-            showPage('page-auth');
+        // Woordenlijsten per taal (Nederlands naar doelstaal)
+        const vocabData = {
+            en: [
+                { nl: "Hallo", target: "Hello" }, { nl: "Goedemorgen", target: "Good morning" }, { nl: "Dank je wel", target: "Thank you" }, { nl: "Ja", target: "Yes" }, { nl: "Nee", target: "No" },
+                { nl: "Water", target: "Water" }, { nl: "Huis", target: "House" }, { nl: "Boek", target: "Book" }, { nl: "Melk", target: "Milk" }, { nl: "Brood", target: "Bread" },
+                { nl: "Appel", target: "Apple" }, { nl: "Kat", target: "Cat" }, { nl: "Hond", target: "Dog" }, { nl: "Auto", target: "Car" }, { nl: "Zon", target: "Sun" },
+                { nl: "Computer", target: "Computer" }, { nl: "Telefoon", target: "Phone" }, { nl: "Reizen", target: "Travel" }, { nl: "Stad", target: "City" }, { nl: "Vriend", target: "Friend" }
+            ],
+            de: [
+                { nl: "Hallo", target: "Hallo" }, { nl: "Goedemorgen", target: "Guten Morgen" }, { nl: "Dank je wel", target: "Danke schön" }, { nl: "Ja", target: "Ja" }, { nl: "Nee", target: "Nein" },
+                { nl: "Water", target: "Wasser" }, { nl: "Huis", target: "Haus" }, { nl: "Boek", target: "Buch" }, { nl: "Melk", target: "Milch" }, { nl: "Brood", target: "Brot" },
+                { nl: "Appel", target: "Apfel" }, { nl: "Kat", target: "Katze" }, { nl: "Hond", target: "Hund" }, { nl: "Auto", target: "Auto" }, { nl: "Zon", target: "Sonne" },
+                { nl: "Computer", target: "Computer" }, { nl: "Telefoon", target: "Telefon" }, { nl: "Reizen", target: "Reisen" }, { nl: "Stad", target: "Stadt" }, { nl: "Vriend", target: "Freund" }
+            ],
+            es: [
+                { nl: "Hallo", target: "Hola" }, { nl: "Goedemorgen", target: "Buenos días" }, { nl: "Dank je wel", target: "Gracias" }, { nl: "Ja", target: "Sí" }, { nl: "Nee", target: "No" },
+                { nl: "Water", target: "Agua" }, { nl: "Huis", target: "Casa" }, { nl: "Boek", target: "Libro" }, { nl: "Melk", target: "Leche" }, { nl: "Brood", target: "Pan" },
+                { nl: "Appel", target: "Manzana" }, { nl: "Kat", target: "Gato" }, { nl: "Hond", target: "Perro" }, { nl: "Auto", target: "Coche" }, { nl: "Zon", target: "Sol" },
+                { nl: "Computer", target: "Computadora" }, { nl: "Telefoon", target: "Teléfono" }, { nl: "Reizen", target: "Viajar" }, { nl: "Stad", target: "Ciudad" }, { nl: "Vriend", target: "Amigo" }
+            ],
+            nl: [
+                { nl: "Hallo", target: "Hallo" }, { nl: "Goedemorgen", target: "Goedemorgen" }, { nl: "Dank je wel", target: "Dank je wel" }, { nl: "Ja", target: "Ja" }, { nl: "Nee", target: "Nee" },
+                { nl: "Water", target: "Water" }, { nl: "Huis", target: "Huis" }, { nl: "Boek", target: "Boek" }, { nl: "Melk", target: "Melk" }, { nl: "Brood", target: "Brood" },
+                { nl: "Appel", target: "Appel" }, { nl: "Kat", target: "Kat" }, { nl: "Hond", target: "Hond" }, { nl: "Auto", target: "Auto" }, { nl: "Zon", target: "Zon" },
+                { nl: "Computer", target: "Computer" }, { nl: "Telefoon", target: "Telefoon" }, { nl: "Reizen", target: "Reizen" }, { nl: "Stad", target: "Stad" }, { nl: "Vriend", target: "Vriend" }
+            ]
         };
 
-        function showPage(id) {
-            document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-            let sidebar = document.getElementById('app-sidebar');
-            if(id === 'page-auth') sidebar.classList.add('hidden');
-            else sidebar.classList.remove('hidden');
+        // App State (Opgeslagen in localStorage)
+        let appData = JSON.parse(localStorage.getItem('wordly_local_data')) || {
+            points: 0,
+            streak: 1,
+            completed: [],
+            level: "intermediate",
+            targetLang: "en"
+        };
+
+        function saveData() {
+            localStorage.setItem('wordly_local_data', JSON.stringify(appData));
         }
 
-        function toggleAuthMode() {
-            isLoginMode = !isLoginMode;
-            document.getElementById('auth-title').innerText = isLoginMode ? "Inloggen bij Wordly" : "Account Aanmaken";
-            document.getElementById('auth-btn').innerText = isLoginMode ? "Inloggen" : "Account Aanmaken";
-            document.getElementById('auth-switch').innerText = isLoginMode ? "Geen account? Maak er een aan" : "Al een account? Log hier in";
-        }
-
-        function handleAuth() {
-            let u = document.getElementById('auth-user').value.trim();
-            let p = document.getElementById('auth-pass').value.trim();
-            if(!u || !p) return alert("Vul alstublieft alle velden in.");
-
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if (isLoginMode) {
-                if(!accounts[u] || accounts[u].pass !== p) return alert("Onjuiste gebruikersnaam of wachtwoord.");
-                currentUser = accounts[u];
-            } else {
-                if(accounts[u]) return alert("Deze gebruikersnaam bestaat al.");
-                currentUser = { user: u, pass: p, points: 0, streak: 1, completed: [], level: "intermediate" };
-                accounts[u] = currentUser;
-                localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
-            }
-            localStorage.setItem('wordly_session', currentUser.user);
-            openDashboard();
-        }
-
-        function openDashboard() {
-            document.getElementById('user-display').innerText = "👤 " + currentUser.user;
-            document.getElementById('points-display').innerText = "⚡ " + currentUser.points + " XP";
-            document.getElementById('streak-display').innerText = "🔥 " + currentUser.streak + " streak";
-            document.getElementById('settings-level').value = currentUser.level || "intermediate";
+        window.onload = function() {
+            document.getElementById('target-lang-select').value = appData.targetLang || "en";
+            document.getElementById('settings-level').value = appData.level || "intermediate";
+            updateDashboardStats();
             renderPath();
-            showPage('page-dashboard');
+        };
+
+        function updateDashboardStats() {
+            document.getElementById('points-display').innerText = "⚡ " + appData.points + " XP";
+            document.getElementById('streak-display').innerText = "🔥 " + appData.streak + " streak";
+        }
+
+        function changeTargetLanguage() {
+            appData.targetLang = document.getElementById('target-lang-select').value;
+            saveData();
+            renderPath();
         }
 
         function switchTab(tab) {
-            ['learn', 'shop', 'settings'].forEach(t => {
+            ['learn', 'settings'].forEach(t => {
                 let el = document.getElementById(`view-${t}`);
                 if(el) el.classList.add('hidden');
                 let btn = document.querySelector(`[onclick="switchTab('${t}')"]`);
@@ -496,10 +505,39 @@
             if(activeBtn) activeBtn.classList.add('active');
         }
 
+        function generateLessonsForCurrentLang() {
+            let list = vocabData[appData.targetLang] || vocabData.en;
+            const lessons = [];
+            let qList = [];
+            let counter = 1;
+
+            for(let i = 0; i < 10; i++) {
+                for(let j = 0; j < list.length; j++) {
+                    let item = list[j];
+                    let wrongOpts = list.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.target);
+                    wrongOpts.push(item.target);
+                    wrongOpts.sort(() => 0.5 - Math.random());
+
+                    qList.push({
+                        prompt: `Vertaal naar de gekozen taal: "${item.nl}"`,
+                        options: wrongOpts,
+                        correct: item.target
+                    });
+
+                    if(qList.length >= 8 || (i === 9 && j === list.length - 1)) {
+                        lessons.push({ id: `lesson_${appData.targetLang}_${counter}`, title: `${counter}`, questions: [...qList] });
+                        qList = [];
+                        counter++;
+                    }
+                }
+            }
+            return lessons;
+        }
+
         function renderPath() {
             let container = document.getElementById('path-container');
             container.innerHTML = "";
-            let lessons = generateLessons();
+            let lessons = generateLessonsForCurrentLang();
             let pattern = [1, 2, 1, 2, 1];
             let idx = 0, pIdx = 0;
 
@@ -510,8 +548,8 @@
 
                 for(let i = 0; i < count && idx < lessons.length; i++) {
                     let les = lessons[idx];
-                    let isDone = currentUser.completed.includes(les.id);
-                    let isUnlocked = idx === 0 || currentUser.completed.includes(lessons[idx-1].id);
+                    let isDone = appData.completed.includes(les.id);
+                    let isUnlocked = idx === 0 || appData.completed.includes(lessons[idx-1].id);
 
                     let node = document.createElement('button');
                     node.className = `duo-node ${isDone ? 'done' : (!isUnlocked ? 'locked' : 'current')}`;
@@ -535,16 +573,19 @@
             activeLesId = id;
             activeQuestions = allLessons.find(l => l.id === id).questions;
             currentQIdx = 0;
-            showPage('page-lesson');
+            document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-lesson').classList.remove('hidden');
             loadQuestion();
         }
 
         function loadQuestion() {
             if(currentQIdx >= activeQuestions.length) {
-                currentUser.points += 20;
-                if(!currentUser.completed.includes(activeLesId)) currentUser.completed.push(activeLesId);
-                saveUser();
-                showPage('page-complete');
+                appData.points += 15;
+                if(!appData.completed.includes(activeLesId)) appData.completed.push(activeLesId);
+                saveData();
+                updateDashboardStats();
+                document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
+                document.getElementById('page-complete').classList.remove('hidden');
                 return;
             }
             let q = activeQuestions[currentQIdx];
@@ -581,43 +622,26 @@
             loadQuestion();
         }
 
-        function backToDashboard() { openDashboard(); }
-
-        function saveUser() {
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            accounts[currentUser.user] = currentUser;
-            localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
+        function backToDashboard() {
+            updateDashboardStats();
+            renderPath();
+            document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-dashboard').classList.remove('hidden');
         }
 
         function updateLevel() {
-            currentUser.level = document.getElementById('settings-level').value;
-            saveUser();
+            appData.level = document.getElementById('settings-level').value;
+            saveData();
         }
 
-        function logout() {
-            localStorage.removeItem('wordly_session');
-            showPage('page-auth');
-        }
-
-        function deleteAccount() {
-            if(!confirm("Weet je zeker dat je jouw account wilt verwijderen?")) return;
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            delete accounts[currentUser.user];
-            localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
-            logout();
-        }
-
-        function changeNamePrompt() {
-            let newName = prompt("Nieuwe gebruikersnaam:");
-            if(!newName) return;
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if(accounts[newName]) return alert("Deze naam is al bezet.");
-            delete accounts[currentUser.user];
-            currentUser.user = newName;
-            accounts[newName] = currentUser;
-            localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
-            localStorage.setItem('wordly_session', newName);
-            openDashboard();
+        function resetProgressPrompt() {
+            showNotification("Voortgang resetten", "Weet je zeker dat je alle opgeslagen voortgang wilt wissen?");
+            // Voeg actie toe aan de knop of maak een simpele herbevestiging via eigen melding
+            let modalBtn = document.querySelector('.custom-modal .btn');
+            modalBtn.onclick = function() {
+                localStorage.removeItem('wordly_local_data');
+                location.reload();
+            };
         }
     </script>
 </body>
