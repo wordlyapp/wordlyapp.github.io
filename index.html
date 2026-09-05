@@ -593,6 +593,27 @@
         }
         button.woord-btn:hover { filter: brightness(1.05); }
 
+        /* --- ZWARTE KAT MASCOT TUSSENSCHERM --- */
+        .cat-interstitial-card {
+            background: #1e1e1e;
+            color: #ffffff;
+            padding: 30px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+            border-bottom: 6px solid #000;
+        }
+        .cat-avatar-large {
+            font-size: 64px;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: catBounce 1s infinite alternate ease-in-out;
+        }
+        @keyframes catBounce {
+            0% { transform: translateY(0) rotate(-5deg); }
+            100% { transform: translateY(-8px) rotate(5deg); }
+        }
+
         /* --- LEADERBOARD STYLING --- */
         .leaderboard-container {
             width: 100%;
@@ -679,6 +700,10 @@
                 <div class="feature-box">
                     <h3>🎮 Gamified Learning Path</h3>
                     <p>Earn XP, maintain daily streaks, climb the competitive leaderboards, and unlock exciting new chapters.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>🐈‍⬛ Smart Mascot Guidance</h3>
+                    <p>Our friendly black cat mascot reviews your progress between lessons with fun remarks!</p>
                 </div>
                 <div class="feature-box">
                     <h3>🛠️ Mistakes & Profiles</h3>
@@ -834,6 +859,16 @@
                 <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Continue</button>
             </div>
 
+            <!-- Zwarte Kat Tussenscherm -->
+            <div id="page-cat-interstitial" class="card page-section hidden" style="text-align: center;">
+                <div class="cat-interstitial-card">
+                    <div class="cat-avatar-large">🐈‍⬛</div>
+                    <h3 style="font-size: 20px; font-weight: 900; margin-bottom: 10px;">Opdracht Voltooid!</h3>
+                    <p id="cat-interstitial-text" style="font-size: 14px; font-weight: 800; margin-bottom: 20px; line-height: 1.5;"></p>
+                    <button class="btn" onclick="resumeAfterCat()">Doorgaan</button>
+                </div>
+            </div>
+
             <!-- Les Voltooid Scherm -->
             <div id="page-complete" class="card page-section hidden" style="text-align: center;">
                 <h2 id="complete-title-text" style="font-size: 22px; font-weight: 900; color: var(--duo-green); margin-bottom: 8px;">Lesson Completed! 🎉</h2>
@@ -872,7 +907,6 @@
                     }
                 });
 
-                // Check of we terugkomen van Auth0 met een redirect
                 const query = window.location.search;
                 if (query.includes("code=") && query.includes("state=")) {
                     await auth0Client.handleRedirectCallback();
@@ -937,7 +971,6 @@
             }
         }
 
-        // --- PROFIEL MODAL FUNCTIES ---
         function openProfileModal() {
             document.getElementById('prof-user').innerText = currentLoggedInUser || "Onbekend";
             document.getElementById('prof-streak').innerText = appData.streak;
@@ -1026,7 +1059,14 @@
                 sameLangText: "De brontaal en doeltaal mogen niet hetzelfde zijn!",
                 lockTitle: "Hoofdstuk Vergrendeld", lockText: "Je moet eerst alle lessen van het vorige hoofdstuk afronden!",
                 nodeLockTitle: "Vergrendeld", nodeLockText: "Voltooi eerst de vorige les in dit hoofdstuk!",
-                lbTitle: "Leaderboard", lbBack: "Terug"
+                lbTitle: "Leaderboard", lbBack: "Terug",
+                catQuotes: [
+                    "Miauwerd! Jij hebt deze les geweldig afgerond!",
+                    "Purrr... Wat een fantastische prestatie zeg!",
+                    "Een echte kampioen geeft nooit op, les succesvol voltooid!",
+                    "Hou vol! Je hebt deze sessie glansrijk doorstaan!",
+                    "Mijn zwarte klauwen zeggen: fantastisch gedaan!"
+                ]
             },
             en: {
                 labelFrom: "From:", labelTo: "To:", stop: "✕ Stop", logout: "Log out",
@@ -1038,7 +1078,14 @@
                 sameLangText: "Source and target languages cannot be the same!",
                 lockTitle: "Chapter Locked", lockText: "You must complete all lessons of the previous chapter first!",
                 nodeLockTitle: "Locked", nodeLockText: "Complete the previous lesson in this chapter first!",
-                lbTitle: "Leaderboard", lbBack: "Back"
+                lbTitle: "Leaderboard", lbBack: "Back",
+                catQuotes: [
+                    "Meow! You successfully finished this lesson!",
+                    "Purrr... What a fantastic achievement!",
+                    "A true champion never gives up!",
+                    "Keep going! Lesson successfully completed!",
+                    "My black claws say: spot on performance!"
+                ]
             },
             de: {
                 labelFrom: "Von:", labelTo: "Nach:", stop: "✕ Stopp", logout: "Abmelden",
@@ -1050,7 +1097,14 @@
                 sameLangText: "Quell- und Zielsprache dürfen nicht identisch sein!",
                 lockTitle: "Kapitel gesperrt", lockText: "Du musst erst alle Lektionen des vorherigen Kapitels abschließen!",
                 nodeLockTitle: "Gesperrt", nodeLockText: "Schließe zuerst die vorherige Lektion ab!",
-                lbTitle: "Bestenliste", lbBack: "Zurück"
+                lbTitle: "Bestenliste", lbBack: "Zurück",
+                catQuotes: [
+                    "Miau! Lektion erfolgreich abgeschlossen!",
+                    "Purrr... Was für eine tolle Leistung!",
+                    "Ein wahrer Champion gibt nie auf!",
+                    "Weiter so! Du machst das großartig!",
+                    "Meine schwarzen Pfoten sagen: exzellent!"
+                ]
             },
             fr: {
                 labelFrom: "De:", labelTo: "Vers:", stop: "✕ Quitter", logout: "Déconnexion",
@@ -1062,7 +1116,14 @@
                 sameLangText: "La langue source et la langue cible ne peuvent pas être identiques !",
                 lockTitle: "Chapitre verrouillé", lockText: "Vous devez d'abord terminer toutes les leçons du chapitre précédent !",
                 nodeLockTitle: "Verrouillé", nodeLockText: "Terminez d'abord la leçon précédente de ce chapitre !",
-                lbTitle: "Classement", lbBack: "Retour"
+                lbTitle: "Classement", lbBack: "Retour",
+                catQuotes: [
+                    "Miaou ! Leçon brillamment terminée !",
+                    "Purrr... Quelle excellente réussite !",
+                    "Un vrai champion n'abandonne jamais !",
+                    "Continue comme ça !",
+                    "Mes pattes noires approuvent ce résultat !"
+                ]
             },
             es: {
                 labelFrom: "De:", labelTo: "A:", stop: "✕ Salir", logout: "Cerrar sesión",
@@ -1074,7 +1135,14 @@
                 sameLangText: "¡El idioma de origen y destino no pueden ser el mismo!",
                 lockTitle: "Capítulo bloqueado", lockText: "¡Debes completar todas lecciones del capítulo anterior primero!",
                 nodeLockTitle: "Bloqueado", nodeLockText: "¡Completa primero la lección anterior de este capítulo!",
-                lbTitle: "Clasificación", lbBack: "Volver"
+                lbTitle: "Clasificación", lbBack: "Volver",
+                catQuotes: [
+                    "¡Miau! ¡Lección superada con éxito!",
+                    "Purrr... ¡Qué gran logro!",
+                    "¡Un verdadero campeón nunca se rinde!",
+                    "¡Sigue así, vas genial!",
+                    "¡Mis garras negras aplauden tu éxito!"
+                ]
             }
         };
 
@@ -1141,16 +1209,16 @@
                 /* Ch 3 */ [["Trein", "Train"], ["Station", "Station"], ["Bus", "Bus"], ["Auto", "Car"], ["Vliegtuig", "Plane"], ["Fiets", "Bike"], ["Hotel", "Hotel"], ["Luchthaven", "Airport"], ["Schip", "Ship"], ["Taxi", "Taxi"]],
                 /* Ch 4 */ [["Vader", "Father"], ["Moeder", "Mother"], ["Broer", "Brother"], ["Zus", "Sister"], ["Zoon", "Son"], ["Dochter", "Daughter"], ["Vriend", "Friend"], ["Man", "Man"], ["Vrouw", "Woman"], ["Kind", "Child"]],
                 /* Ch 5 */ [["Huis", "House"], ["Kamer", "Room"], ["Keuken", "Kitchen"], ["Badkamer", "Bathroom"], ["Bed", "Bed"], ["Tafel", "Table"], ["Stoel", "Chair"], ["Deur", "Door"], ["Raam", "Window"], ["Dak", "Roof"]],
-                /* Ch 6 */ [["Hoe gaat het?", "How are you?"], ["Ik ben blij.", "I am happy."], ["Wat zeg je?", "What do you say?"], ["Waar is dit?", "Where is this?"], ["Ik begrijp het.", "I understand."], ["Spreek je Engels?", "Do you speak English?"], ["Hoe laat is het?", "What time is it?"], ["Ik ben moe.", "I am tired."], ["Tot zo!", "See you soon!"], ["Het is goed.", "It is good."]],
-                /* Ch 7 */ [["Waar woon je?", "Where do you live?"], ["What is je naam?", "What is your name?"], ["Ik kom uit Nederland.", "I am from the Netherlands."], ["Heb je een hond?", "Do you have a dog?"], ["Het weer is mooi.", "The weather is nice."], ["Ik hou van lezen.", "I love reading."], ["Waar is de winkel?", "Where is the shop?"], ["Ik ben hongerig.", "I am hungry."], ["Dit is heel leuk.", "This is very fun."], ["Mag ik een glas water?", "May I have a glass of water?"]],
+                /* Ch 6 */ [["Hoe gaat het?", "How are you?"], ["Ik ben blij.", "I am happy."], ["Wat zeg je?", "What do you say?"], ["Waar is this?", "Where is this?"], ["Ik begrijp het.", "I understand."], ["Spreek je Engels?", "Do you speak English?"], ["Hoe laat is het?", "What time is it?"], ["Ik ben moe.", "I am tired."], ["Tot zo!", "See you soon!"], ["Het is goed.", "It is good."]],
+                /* Ch 7 */ [["Waar woon je?", "Where do you live?"], ["Wat is je naam?", "What is your name?"], ["Ik kom uit Nederland.", "I am from the Netherlands."], ["Heb je een hond?", "Do you have a dog?"], ["Het weer is mooi.", "The weather is nice."], ["Ik hou van lezen.", "I love reading."], ["Waar is de winkel?", "Where is the shop?"], ["Ik ben hongerig.", "I am hungry."], ["Dit is heel leuk.", "This is very fun."], ["Mag ik een glas water?", "May I have a glass of water?"]],
                 /* Ch 8 */ [["Kun je mij helpen?", "Can you help me?"], ["Hoeveel kost dit?", "How much does this cost?"], ["Waar is het station?", "Where is the station?"], ["Ik zoek een hotel.", "I am looking for a hotel."], ["Wanneer vertrekt de bus?", "When does the bus leave?"], ["Heb je een tafel voor twee?", "Do you have a table for two?"], ["Ik wil graag betalen.", "I would like to pay."], ["Waar is het toilet?", "Where is the restroom?"], ["Kan ik met pin betalen?", "Can I pay by card?"], ["Een fijne dag nog!", "Have a nice day!"]],
-                /* Ch 9 */ [["Wat wil je drinken?", "What do you want to drink?"], ["Ik wil graag koffie.", "I would like coffee."], ["Het smaakt erg goed.", "It tastes very good."], ["De rekening alstublieft.", "The check please."], ["Is dit gerecht vegetarisch?", "Is this dish vegetarian?"], ["Ik heb honger.", "I am hungry."], ["Smakelijk eten!", "Enjoy your meal!"], ["Dit is te warm.", "This is too hot."], ["Ik lust geen fish.", "I don't like fish."], ["breng me de kaart aub.", "Bring me the menu please."]],
+                /* Ch 9 */ [["Wat wil je drinken?", "What do you want to drink?"], ["Ik wil graag koffie.", "I would like coffee."], ["Het smaakt erg goed.", "It tastes very good."], ["De rekening alstublieft.", "The check please."], ["Is dit gerecht vegetarisch?", "Is this dish vegetarian?"], ["Ik heb honger.", "I am hungry."], ["Smakelijk eten!", "Enjoy your meal!"], ["Dit is te warm.", "This is too hot."], ["Ik lust geen vis.", "I don't like fish."], ["Breng me de kaart aub.", "Bring me the menu please."]],
                 /* Ch 10 */ [["Ik wil graag een treinkaartje naar Amsterdam kopen.", "I would like to buy a train ticket to Amsterdam."], ["Vliegt het vliegtuig morgen op tijd naar Londen?", "Does the plane fly to London on time tomorrow?"], ["We hebben een mooi hotel geboekt in het centrum.", "We have booked a nice hotel in the city center."], ["Waar kan ik mijn bagage achterlaten op het station?", "Where can I leave my luggage at the station?"], ["De vakantie in het buitenland was fantastisch.", "The vacation abroad was fantastic."], ["Reizen met de trein is comfortabel en snel.", "Traveling by train is comfortable and fast."], ["Vergeet je paspoort en je tickets niet mee te nemen.", "Don't forget to take your passport and tickets."], ["Het verkeer op de snelweg is erg druk vanochtend.", "The traffic on the highway is very busy this morning."], ["Wij gaan volgend jaar naar Spanje op vakantie.", "We are going to Spain for vacation next year."], ["Kun je mij de weg wijzen naar het vliegveld?", "Can you show me the way to the airport?"]],
-                /* Ch 11 */ [["Ik werk elke dag van negen tot vijf uur op kantoor.", "I work in the office every day from nine to five."], ["Mijn collega helpt mij altijd met moeilijke projecten.", "My colleague always helps me with difficult projects."], ["We hebben morgen een belangrijke vergadering met de baas.", "We have an important meeting with the boss tomorrow."], ["De nieuwe computer werkt veel sneller dan de oude.", "The new computer works much faster than the old one."], ["Ik moet vandaag een lang rapport schrijven voor school.", "I have to write a long report for school today."], ["Kan ik deze documenten per e-mail naar jou versturen?", "Can I send these documents to you by email?"], ["De pauze duurt gelukkig een halfuur op deze middag.", "Fortunately, the break lasts half an hour this afternoon."], ["Hij studeert hard om zijn examen te halen.", "He is studying hard to pass his exam."], ["Onze leraar legt de moeilijke lessen heel rustig uit.", "Our teacher explains the difficult lessons very calmly."], ["Ik ben erg trots op mijn prestatie van deze week.", "I am very proud of my achievement this week. "]],
+                /* Ch 11 */ [["Ik werk elke dag van negen tot vijf uur op kantoor.", "I work in the office every day from nine to five."], ["Mijn collega helpt mij altijd met moeilijke projecten.", "My colleague always helps me with difficult projects."], ["We hebben morgen een belangrijke vergadering met de baas.", "We have an important meeting with the boss tomorrow."], ["De nieuwe computer werkt veel sneller dan de oude.", "The new computer works much faster than the old one."], ["Ik moet vandaag een lang rapport schrijven voor school.", "I have to write a long report for school today."], ["Kan ik deze documenten per e-mail naar jou versturen?", "Can I send these documents to you by email?"], ["De pauze duurt gelukkig een halfuur op deze middag.", "Fortunately, the break lasts half an hour this afternoon."], ["Hij studeert hard om zijn examen te halen.", "He is studying hard to pass his exam."], ["Onze leraar legt de moeilijke lessen heel rustig uit.", "Our teacher explains the difficult lessons very calmly."], ["Ik ben erg trots op mijn prestatie van deze week.", "I am very proud of my achievement this week."]],
                 /* Ch 12 */ [["In het weekend speel ik graag videospellen met mijn broer.", "On the weekend I like playing video games with my brother."], ["Voetbal is mijn favoriete sport om naar te kijken op tv.", "Football is my favorite sport to watch on TV."], ["We gaan vanavond samen een spannende film bekijken.", "We are going to watch an exciting movie together tonight."], ["Muziek luisteren helpt mij om lekker te ontspannen.", "Listening to music helps me to relax nicely."], ["Zij leest elke avond een spannend boek in bed.", "She reads an exciting book in bed every evening."], ["Mijn vrienden organiseren een groot feest in de tuin.", "My friends are organizing a big party in the garden."], ["Het schilderen van dit mooie landschap kost veel tijd.", "Painting this beautiful landscape takes a lot of time."], ["We wandelen elke zondag door het groene bos.", "We walk through the green forest every Sunday."], ["Fotografie is een fantastische en creatieve hobby.", "Photography is a fantastic and creative hobby."], ["Ik verzamel oude postzegels uit verschillende landen.", "I collect old stamps from different countries."]],
                 /* Ch 13 */ [["Er was eens een kleine kat die door het bos liep.", "Once upon a time there was a small cat walking through the forest."], ["Het weer veranderde plotseling van zonnig naar heftige regen.", "The weather suddenly changed from sunny to heavy rain."], ["Hij vond een oude schat onder een grote boom.", "He found an old treasure under a big tree."], ["De vriendelijke koningin lachte naar alle bewoners.", "The friendly queen smiled at all the residents."], ["Vogels zongen vrolijk hun liedjes in de ochtend.", "Birds happily sang their songs in the morning."], ["Een magische reis bracht hen naar verre werelden.", "A magical journey took them to distant worlds."], ["Sterren schenen helder aan de donkere nachthemel.", "Stars shone brightly in the dark night sky."], ["Het avontuur begon toen de klok twaalf uur sloeg.", "The adventure began when the clock struck twelve."], ["Dieren in de rimbaai beleefden spannende momenten.", "Animals in the jungle experienced exciting moments."], ["Dit mooie verhaal eindigt met een gelukkig einde.", "This beautiful story ends with a happy ending."]],
-                /* Ch 14 */ [["Mijn hele familie komt volgende week gezellig op bezoek.", "My whole family is coming over for a cozy visit next week."], ["Mijn broer en zus spelen altijd samen in de tuin.", "My brother and sister always play together in the garden."], ["Onze ouders koken elke avond een heerlijke maaltijd.", "Our parents cook a delicious meal every evening."], ["Samen lachen we om de grappige verhalen van opa.", "Together we laugh at grandpa's funny stories."], ["Mijn oma bakt de allerlekkerste koekjes voor ons.", "My grandma bakes the most delicious cookies for us."], ["Een goede vriend is goud waard in moeilijke tijden.", "A good friend is worth their weight in gold in difficult times."], ["We vieren mijn verjaardag met al onze goede vrienden.", "We celebrate my birthday with all our good friends."], ["Kinderen rennen vrolijk rond tijdens het schoolpleinfeest.", "Children run around happily during the school yard party."], ["De familieband is het belangrijkste wat er bestaat.", "Family ties are the most important thing that exists."], ["Iemand houdt ontzettend veel van mijn lieve familie.", "I love my sweet family immensely."]],
-                /* Ch 15 */ [["Dit is de laatste test om te bewijzen wat je kunt leren.", "This is the final test to prove what you can learn."], ["Elke taal openbaart een nieuwe wereld van mogelijkheden.", "Every language reveals a new world of possibilities."], ["Met doorzettingsvermogen bereik je al je grote doelen.", "With perseverance you achieve all your big goals."], ["Blijf altijd oefenen om je vaardigheden te verbeteren.", "Always keep practicing to improve your skills."], ["De zwarte kat kijkt trots mee naar jouw resultaten.", "The black cat proudly watches your results."], ["Je hebt nu alle vijftien hoofdstukken doorgelopen", "You have now gone through all fifteen chapters."], ["Taalonderwijs was nog nooit zo leuk en interactief.", "Language education has never been so fun and interactive."], ["Geniet van jouw welverdiende punten en hoge streak.", "Enjoy your well-deserved points and high streak."], ["This is the beginning of your multilingual future.", "This is the beginning of your multilingual future."], ["Gefeliciteerd met het voltooien van het gehele traject!", "Congratulations on completing the entire journey!"]]
+                /* Ch 14 */ [["Mijn hele familie komt volgende week gezellig op bezoek.", "My whole family is coming over for a cozy visit next week."], ["Mijn broer en zus spelen altijd samen in de tuin.", "My brother and sister always play together in the garden."], ["Onze ouders koken elke avond een heerlijke maaltijd.", "Our parents cook a delicious meal every evening."], ["Samen lachen we om de grappige verhalen van opa.", "Together we laugh at grandpa's funny stories."], ["Mijn oma bakt de allerlekkerste koekjes voor ons.", "My grandma bakes the most delicious cookies for us."], ["Een goede vriend is goud waard in moeilijke tijden.", "A good friend is worth their weight in gold in difficult times."], ["We vieren mijn verjaardag met al onze goede vrienden.", "We celebrate my birthday with all our good friends."], ["Kinderen rennen vrolijk rond tijdens het schoolpleinfeest.", "Children run around happily during the school yard party."], ["De familieband is het belangrijkste wat er bestaat.", "Family ties are the most important thing that exists."], ["Ik houd ontzettend veel van mijn lieve familie.", "I love my sweet family immensely."]],
+                /* Ch 15 */ [["Dit is de laatste test om te bewijzen wat je kunt leren.", "This is the final test to prove what you can learn."], ["Elke taal openbaart een nieuwe wereld van mogelijkheden.", "Every language reveals a new world of possibilities."], ["Met doorzettingsvermogen bereik je al je grote doelen.", "With perseverance you achieve all your big goals."], ["Blijf altijd oefenen om je vaardigheden te verbeteren.", "Always keep practicing to improve your skills."], ["De zwarte kat kijkt trots mee naar jouw resultaten.", "The black cat proudly watches your results."], ["Je hebt nu alle vijftien hoofdstukken doorgelopen.", "You have now gone through all fifteen chapters."], ["Taalonderwijs was nog nooit zo leuk en interactief.", "Language education has never been so fun and interactive."], ["Geniet van jouw welverdiende punten en hoge streak.", "Enjoy your well-deserved points and high streak."], ["Dit is het begin van jouw meertalige toekomst.", "This is the beginning of your multilingual future."], ["Gefeliciteerd met het voltooien van het gehele traject!", "Congratulations on completing the entire journey!"]]
             ],
             "de": [
                 Array(10).fill(["Hallo", "Hallo"]), Array(10).fill(["Appel", "Apfel"]), Array(10).fill(["Trein", "Zug"]), Array(10).fill(["Vader", "Vater"]), Array(10).fill(["Huis", "Haus"]),
@@ -1447,7 +1515,7 @@
             }
 
             currentQIdx = 0;
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-lesson').classList.remove('hidden');
             
             loadQuestion();
@@ -1479,9 +1547,23 @@
             }
 
             currentQIdx = 0;
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-lesson').classList.remove('hidden');
             loadQuestion();
+        }
+
+        function triggerCatInterstitial() {
+            let quotes = uiTranslations[appData.fromLang]?.catQuotes || uiTranslations["nl"].catQuotes;
+            let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            
+            document.getElementById('cat-interstitial-text').innerText = randomQuote;
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-cat-interstitial').classList.remove('hidden');
+        }
+
+        function resumeAfterCat() {
+            document.getElementById('page-cat-interstitial').classList.add('hidden');
+            document.getElementById('page-complete').classList.remove('hidden');
         }
 
         function loadQuestion() {
@@ -1497,9 +1579,7 @@
                 saveData();
                 updateDashboardStats();
 
-                // Direct naar het voltooid scherm (zonder kat)
-                document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
-                document.getElementById('page-complete').classList.remove('hidden');
+                triggerCatInterstitial();
                 return;
             }
 
@@ -1590,7 +1670,8 @@
             if (gekozenZin === juisteZin) {
                 resultaatDiv.style.color = '#278500';
                 resultaatDiv.innerText = "Goed zo! De zin klopt helemaal! 🎉";
-                document.querySelectorAll('.woord-btn, .btn').forEach(b => { if(b.id !== 'next-btn') b.disabled = true; });
+                // FIX: Alleen de woord- en controleknop disablen, de 'next-btn' wordt explicit via class beheerd
+                document.querySelectorAll('.woord-btn').forEach(b => b.disabled = true);
                 appData.mistakes = (appData.mistakes || []).filter(m => m.q !== questionText);
                 saveData();
                 document.getElementById('next-btn').classList.remove('hidden');
@@ -1620,6 +1701,7 @@
                 }
             }
             saveData();
+            // FIX: Verwijder 'hidden' zodat de doorgaan knop altijd netjes verschijnt
             document.getElementById('next-btn').classList.remove('hidden');
         }
 
@@ -1631,12 +1713,12 @@
         function backToDashboard() {
             updateDashboardStats();
             renderPath();
-            document.querySelectorAll('#page-lesson, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-dashboard').classList.remove('hidden');
         }
 
         function openLeaderboard() {
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-leaderboard').classList.remove('hidden');
             renderLeaderboardData();
         }
