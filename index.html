@@ -64,7 +64,6 @@
             gap: 10px;
         }
 
-        /* Styling voor het logo in de header */
         .logo-img {
             width: 36px;
             height: 36px;
@@ -681,6 +680,133 @@
             }
         };
 
+        // Hoofdstuknamen en beschrijvingen vertaald voor alle brontalen
+        const chapterNamesMulti = {
+            nl: [
+                "Hoofdstuk 1: Basis & Introductie",
+                "Hoofdstuk 2: Eten & Drinken",
+                "Hoofdstuk 3: Reizen & Vervoer",
+                "Hoofdstuk 4: Familie & Mensen",
+                "Hoofdstuk 5: Huis & Omgeving",
+                "Hoofdstuk 6: Kleuren & Cijfers",
+                "Hoofdstuk 7: Dieren in de Natuur",
+                "Hoofdstuk 8: Hobby's & Sport",
+                "Hoofdstuk 9: School & Werk",
+                "Hoofdstuk 10: Tijd & Weer"
+            ],
+            en: [
+                "Chapter 1: Basics & Introduction",
+                "Chapter 2: Food & Drinks",
+                "Chapter 3: Travel & Transport",
+                "Chapter 4: Family & People",
+                "Chapter 5: House & Environment",
+                "Chapter 6: Colors & Numbers",
+                "Chapter 7: Animals in Nature",
+                "Chapter 8: Hobbies & Sport",
+                "Chapter 9: School & Work",
+                "Chapter 10: Time & Weather"
+            ],
+            de: [
+                "Kapitel 1: Grundlagen & Einführung",
+                "Kapitel 2: Essen & Trinken",
+                "Kapitel 3: Reisen & Transport",
+                "Kapitel 4: Familie & Personen",
+                "Kapitel 5: Haus & Umgebung",
+                "Kapitel 6: Farben & Zahlen",
+                "Kapitel 7: Tiere in der Natur",
+                "Kapitel 8: Hobbys & Sport",
+                "Kapitel 9: Schule & Arbeit",
+                "Kapitel 10: Zeit & Wetter"
+            ],
+            fr: [
+                "Chapitre 1 : Bases & Introduction",
+                "Chapitre 2 : Manger & Boire",
+                "Chapitre 3 : Voyage & Transport",
+                "Chapitre 4 : Famille & Personnes",
+                "Chapitre 5 : Maison & Environnement",
+                "Chapitre 6 : Couleurs & Nombres",
+                "Chapitel 7 : Animaux dans la nature",
+                "Chapitre 8 : Loisirs & Sport",
+                "Chapitre 9 : École & Travail",
+                "Chapitre 10 : Temps & Météo"
+            ],
+            es: [
+                "Capítulo 1: Básicos e Introducción",
+                "Capítulo 2: Comida y Bebida",
+                "Capítulo 3: Viajes y Transporte",
+                "Capítulo 4: Familia y Personas",
+                "Capítulo 5: Casa y Entorno",
+                "Capítulo 6: Colores y Números",
+                "Capítulo 7: Animales en la Naturaleza",
+                "Capítulo 8: Aficiones y Deporte",
+                "Capítulo 9: Escuela y Trabajo",
+                "Capítulo 10: Tiempo y Clima"
+            ]
+        };
+
+        const chapterDescriptionsMulti = {
+            nl: [
+                "Leer fundamentele woorden en simpele begroetingen.",
+                "Alles over lekker eten, drinken en boodschappen doen.",
+                "Vervoermiddelen, stations en reizen naar het buiteland.",
+                "Familieleden, vrienden en relaties beschrijven.",
+                "Kamers, meubels en je eigen woning.",
+                "De mooiste kleuren en getallen tellen.",
+                "Dieren in het wild en huisdieren.",
+                "Sporten, games spelen en ontspanning.",
+                "Nuttige woorden voor op school en tijdens je werk.",
+                "Het weer vandaag en besef van tijd."
+            ],
+            en: [
+                "Learn fundamental words and simple greetings.",
+                "All about great food, drinks, and grocery shopping.",
+                "Means of transport, stations, and traveling abroad.",
+                "Describe family members, friends, and relationships.",
+                "Rooms, furniture, and your own home.",
+                "The most beautiful colors and counting numbers.",
+                "Wild animals and pets.",
+                "Sports, playing games, and relaxation.",
+                "Useful words for school and during your work.",
+                "The weather today and awareness of time."
+            ],
+            de: [
+                "Lerne grundlegende Wörter und einfache Begrüßungen.",
+                "Alles über gutes Essen, Trinken und Einkaufen.",
+                "Verkehrsmittel, Bahnhöfe und Auslandsreisen.",
+                "Familienmitglieder, Freunde und Beziehungen beschreiben.",
+                "Zimmer, Möbel und dein eigenes Zuhause.",
+                "Die schönsten Farben und Zahlen zählen.",
+                "Tiere in freier Wildbahn und Haustiere.",
+                "Sport, Spiele spielen und Entspannung.",
+                "Nützliche Wörter für Schule und Arbeit.",
+                "Das Wetter heute und Zeitgefühl."
+            ],
+            fr: [
+                "Apprenez des mots fondamentaux et des salutations simples.",
+                "Tout sur la nourriture, les boissons et les courses.",
+                "Moyens de transport, gares et voyages à l'étranger.",
+                "Décrire les membres de la famille, les amis et les relations.",
+                "Pièces, meubles et votre propre maison.",
+                "Les plus belles couleurs et compter les nombres.",
+                "Animaux sauvages et animaux de compagnie.",
+                "Sports, jeux et détente.",
+                "Mots utiles pour l'école et le travail.",
+                "La météo d'aujourd'hui et la notion du temps."
+            ],
+            es: [
+                "Aprende palabras fundamentales y saludos sencillos.",
+                "Todo sobre buena comida, bebida y compras.",
+                "Medios de transporte, estaciones y viajes al extranjero.",
+                "Describe a miembros de la familia, amigos y relaciones.",
+                "Habitaciones, muebles y tu propio hogar.",
+                "Los colores más bonitos y contar números.",
+                "Animales salvajes y mascotas.",
+                "Deportes, videojuegos y relajación.",
+                "Palabras útiles para la escuela y el trabajo.",
+                "El tiempo hoy y la conciencia del tiempo."
+            ]
+        };
+
         function t(key) {
             let lang = appData.fromLang;
             if (uiTranslations[lang] && uiTranslations[lang][key]) {
@@ -739,32 +865,6 @@
                 Array(10).fill(["Tijd", "Tiempo"])
             ]
         };
-
-        const chapterNames = [
-            "Hoofdstuk 1: Basis & Introductie",
-            "Hoofdstuk 2: Eten & Drinken",
-            "Hoofdstuk 3: Reizen & Vervoer",
-            "Hoofdstuk 4: Familie & Mensen",
-            "Hoofdstuk 5: Huis & Omgeving",
-            "Hoofdstuk 6: Kleuren & Cijfers",
-            "Hoofdstuk 7: Dieren in de Natuur",
-            "Hoofdstuk 8: Hobby's & Sport",
-            "Hoofdstuk 9: School & Werk",
-            "Hoofdstuk 10: Tijd & Weer"
-        ];
-
-        const chapterDescriptions = [
-            "Leer fundamentele woorden en simpele begroetingen.",
-            "Alles over lekker eten, drinken en boodschappen doen.",
-            "Vervoermiddelen, stations en reizen naar het buiteland.",
-            "Familieleden, vrienden en relaties beschrijven.",
-            "Kamers, meubels en je eigen woning.",
-            "De mooiste kleuren en getallen tellen.",
-            "Dieren in het wild en huisdieren.",
-            "Sporten, games spelen en ontspanning.",
-            "Nuttige woorden voor op school en tijdens je werk.",
-            "Het weer vandaag en besef van tijd."
-        ];
 
         let appData = JSON.parse(localStorage.getItem('wordly_learn_v9')) || {
             points: 0,
@@ -842,8 +942,13 @@
         function updateDashboardStats() {
             document.getElementById('points-display').innerText = appData.points;
             document.getElementById('streak-display').innerText = appData.streak;
-            document.getElementById('chapter-title-display').innerText = chapterNames[appData.activeChapter];
-            document.getElementById('chapter-desc-display').innerText = chapterDescriptions[appData.activeChapter];
+            
+            let lang = appData.fromLang;
+            let titles = chapterNamesMulti[lang] || chapterNamesMulti["nl"];
+            let descs = chapterDescriptionsMulti[lang] || chapterDescriptionsMulti["nl"];
+
+            document.getElementById('chapter-title-display').innerText = titles[appData.activeChapter];
+            document.getElementById('chapter-desc-display').innerText = descs[appData.activeChapter];
         }
 
         function getActivePairKey() {
