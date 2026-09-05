@@ -8,7 +8,7 @@
     <!-- Google AdSense / Eigendom Verificatie -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6951847135196559" crossorigin="anonymous"></script>
 
-    <!-- Okta Sign-In Widget CSS & JS CDN -->
+    <!-- Okta / Auth0 Sign-In Widget CSS & JS CDN -->
     <script src="https://global.oktacdn.com/okta-signin-widget/7.2.1/js/okta-sign-in.min.js"></script>
     <link href="https://global.oktacdn.com/okta-signin-widget/7.2.1/css/okta-sign-in.min.css" type="text/css" rel="stylesheet"/>
 
@@ -679,14 +679,14 @@
 </head>
 <body>
 
-    <!-- LANDING PAGE & OKTA AUTHENTICATIE SCHERM -->
+    <!-- LANDING PAGE & AUTHENTICATIE SCHERM -->
     <div id="landing-page">
         <header class="landing-header-bar">
             <div class="logo-area">
                 <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="logo-img"> Wordly Learn
             </div>
             <div style="display: flex; gap: 10px;">
-                <button class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="startOktaAuth()">Start Now</button>
+                <button class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="startAuth()">Start Now</button>
             </div>
         </header>
 
@@ -696,11 +696,11 @@
                 <h1>The smartest and most fun way to learn languages for free.</h1>
                 <p>Master vocabulary easily on any device with bite-sized lessons, interactive paths, and fun achievements designed to keep you motivated every single day.</p>
                 <div class="landing-buttons">
-                    <button class="btn" onclick="startOktaAuth()">Start Now</button>
+                    <button class="btn" onclick="startAuth()">Start Now</button>
                 </div>
             </div>
 
-            <!-- Okta Widget Render Container -->
+            <!-- Auth Widget Render Container -->
             <div id="okta-login-container" class="hidden"></div>
 
             <div class="landing-features-section" id="landing-features-container">
@@ -904,21 +904,21 @@
     </main>
 
     <script>
-        // --- OKTA & ACCOUNT LOGICA ---
+        // --- AUTHENTICATIE LOGICA MET WORDLYAPP.NL & AUTH0 ---
         let currentLoggedInUser = localStorage.getItem('wordly_logged_in') || null;
 
-        // Initialize Okta Sign-In Widget
+        // Initialize Auth0 Widget (geconfigureerd voor wordlyapp.nl)
         const oktaSignIn = new OktaSignIn({
-            baseUrl: 'dev-lql5ujqw06xmyjoo.us.auth0.com', // Replace with your Okta domain e.g., https://dev-123456.okta.com
-            clientId: 'Zh28r6Lsy7SNi7cNqXaVXRRYmZyPoYn8',         // Replace with your Okta Client ID
-            redirectUri: window.location.origin,
+            baseUrl: 'dev-lql5ujqw06xmyjoo.us.auth0.com',
+            clientId: 'Zh28r6Lsy7SNi7cNqXaVXRRYmZyPoYn8',
+            redirectUri: 'https://wordlyapp.nl',
             authParams: {
                 pkce: true,
                 defaultScope: ['openid', 'email', 'profile']
             }
         });
 
-        function startOktaAuth() {
+        function startAuth() {
             document.getElementById('landing-hero-box').classList.add('hidden');
             document.getElementById('landing-features-container').classList.add('hidden');
             document.getElementById('okta-login-container').classList.remove('hidden');
@@ -927,12 +927,10 @@
                 { el: '#okta-login-container' },
                 function (res) {
                     if (res.status === 'SUCCESS') {
-                        // Successfully authenticated through Okta
-                        let userEmail = res.session.userLogin || res.claims?.email || "user@okta";
+                        let userEmail = res.session.userLogin || res.claims?.email || "user@wordlyapp.nl";
                         currentLoggedInUser = userEmail;
                         localStorage.setItem('wordly_logged_in', userEmail);
 
-                        // Initialize user data container if not present
                         let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
                         if (!accounts[userEmail]) {
                             accounts[userEmail] = {
@@ -954,7 +952,7 @@
                     }
                 },
                 function (err) {
-                    console.error("Okta login error: ", err);
+                    console.error("Auth login error: ", err);
                 }
             );
         }
