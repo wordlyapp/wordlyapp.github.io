@@ -719,7 +719,23 @@
             align-items: center;
             z-index: 5000;
         }
-    </style>
+    
+        .profile-compact-modal {
+            width: min(360px, calc(100vw - 28px)) !important;
+            max-width: 360px !important;
+            max-height: min(520px, calc(100vh - 40px));
+            overflow-y: auto;
+            box-sizing: border-box;
+            padding: 22px !important;
+        }
+        @media (max-width: 600px) {
+            .profile-compact-modal {
+                width: calc(100vw - 24px) !important;
+                max-height: calc(100vh - 24px);
+                padding: 18px !important;
+            }
+        }
+</style>
 </head>
 <body>
 
@@ -841,67 +857,21 @@
         </div>
     </div>
 
-    <!-- ACCOUNT MODAL -->
+    <!-- PROFIEL MODAL -->
     <div id="profile-modal" class="modal-overlay hidden">
-        <div class="custom-modal" style="max-width: 430px; text-align:left;">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-                <div>
-                    <h3 style="margin-bottom:3px;">Account</h3>
-                    <p style="margin-bottom:0;">Manage your Wordly account and settings.</p>
-                </div>
-                <button class="auth-close" onclick="closeProfileModal()" aria-label="Close">×</button>
-            </div>
+        <div class="custom-modal profile-compact-modal">
+            <button class="auth-close" onclick="closeProfileModal()" aria-label="Close" style="float:right;">×</button>
+            <h3 id="profile-username-title">Profile</h3>
+            <p id="profile-details-text">Your statistics and progress</p>
 
-            <div style="margin-top:18px;display:flex;flex-direction:column;gap:10px;">
-                <label style="font-size:12px;font-weight:900;">Username</label>
-                <input id="account-username" class="auth-input" type="text" autocomplete="username" placeholder="Username">
-
-                <label style="font-size:12px;font-weight:900;">Email</label>
-                <input id="account-email" class="auth-input" type="email" autocomplete="email" placeholder="Email">
-
-                <div style="margin-top:5px;padding-top:14px;border-top:2px solid var(--border);">
-                    <div style="font-size:14px;font-weight:900;margin-bottom:8px;">Learning languages</div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-                        <div>
-                            <label style="font-size:11px;font-weight:900;">From</label>
-                            <select id="account-from-lang" class="auth-input" style="width:100%;">
-                                <option value="nl">Dutch</option>
-                                <option value="en">English</option>
-                                <option value="de">German</option>
-                                <option value="fr">French</option>
-                                <option value="es">Spanish</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label style="font-size:11px;font-weight:900;">Learn</label>
-                            <select id="account-to-lang" class="auth-input" style="width:100%;">
-                                <option value="nl">Dutch</option>
-                                <option value="en">English</option>
-                                <option value="de">German</option>
-                                <option value="fr">French</option>
-                                <option value="es">Spanish</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top:5px;padding-top:14px;border-top:2px solid var(--border);">
-                    <div style="font-size:14px;font-weight:900;margin-bottom:8px;">Change password</div>
-                    <input id="account-new-password" class="auth-input" type="password" autocomplete="new-password" placeholder="New password (6+ characters)">
-                </div>
-
-                <div id="account-error" class="auth-error"></div>
-
-                <button class="btn" onclick="saveAccountSettings()">Save changes</button>
-                <button class="btn" style="background:#fff;color:#d32f2f;border-color:#f0b5b5;" onclick="logoutUser()">Log out</button>
-                <button style="border:0;background:transparent;color:#d32f2f;font-family:inherit;font-weight:900;cursor:pointer;padding:8px;" onclick="deleteMyAccount()">Delete account</button>
-            </div>
-
-            <div style="margin-top:12px;background:#f7f7f7;padding:11px;border-radius:var(--radius-sm);font-size:12px;font-weight:800;">
+            <div style="background:#f7f7f7;padding:12px;border-radius:var(--radius-sm);border:2px solid var(--border);margin-bottom:15px;text-align:left;font-size:13px;font-weight:800;line-height:1.8;">
+                <div>👤 User: <span id="prof-user" style="color:var(--duo-green);"></span></div>
                 <div>🔥 Streak: <span id="prof-streak"></span> days</div>
                 <div>🏆 Total XP: <span id="prof-xp"></span></div>
                 <div>📚 Active Chapter: <span id="prof-chapter"></span></div>
             </div>
+
+            <button class="btn" onclick="closeProfileModal()">Close</button>
         </div>
     </div>
 
@@ -956,7 +926,7 @@
                 <div class="stat-pill" onclick="openLeaderboard()">🏆 <span id="points-display">0</span> XP</div>
                 <div class="stat-pill" title="Aantal online Wordly-accounts">👥 <span id="registered-count">—</span></div>
             </div>
-            <button class="action-btn profile-btn" onclick="openAccountModal()">Account</button>
+            <button class="action-btn profile-btn" onclick="openProfileModal()">Profile</button>
             <button class="action-btn logout-btn" id="logout-btn-text" onclick="logoutUser()">Log out</button>
         </div>
     </header>
@@ -1188,7 +1158,7 @@
                     activeChapter: 0,
                     languageProgress: {},
                     mistakes: [],
-                    name: user.displayName || (user.email || 'Player').split('@')[0],
+                    name: cleanAccountName(user.displayName || (user.email || 'Player').split('@')[0]),
                     email: user.email || '',
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -1239,8 +1209,7 @@
 
         function cleanLeaderboardName(name) {
             let cleaned = String(name ?? '').trim();
-            // Legacy bug could create names such as NaNrik. Remove only a leading NaN
-            // so a legitimate name containing "nan" elsewhere is not destroyed.
+            // Never show the old broken "NaN" prefix in the leaderboard.
             cleaned = cleaned.replace(/^nan(?:\s*[-:]?\s*)/i, '').trim();
             if (!cleaned || /^nan$/i.test(cleaned)) cleaned = 'Player';
             return cleaned;
@@ -1270,18 +1239,17 @@
             currentLoggedInUser = user.displayName || user.email || 'Player';
         }
 
-        function openAccountModal() {
-            if (!currentFirebaseUser) return;
+        function openProfileModal() {
             const data = appData || {};
-            document.getElementById('account-username').value =
-                cleanAccountName(currentFirebaseUser.displayName || currentLoggedInUser || (currentFirebaseUser.email || '').split('@')[0] || 'Player');
-            document.getElementById('account-email').value = currentFirebaseUser.email || '';
-            document.getElementById('account-from-lang').value = data.fromLang || 'nl';
-            document.getElementById('account-to-lang').value = data.toLang || 'en';
-            document.getElementById('account-new-password').value = '';
-            document.getElementById('account-error').innerText = '';
-            document.getElementById('prof-streak').innerText = data.streak ?? 1;
-            document.getElementById('prof-xp').innerText = data.points ?? 0;
+            const name = cleanAccountName(
+                (currentFirebaseUser && currentFirebaseUser.displayName) ||
+                currentLoggedInUser ||
+                (currentFirebaseUser && currentFirebaseUser.email ? currentFirebaseUser.email.split('@')[0] : '') ||
+                'Player'
+            );
+            document.getElementById('prof-user').innerText = name;
+            document.getElementById('prof-streak').innerText = data.streak ?? 0;
+            document.getElementById('prof-xp').innerText = Number(data.points) || 0;
             document.getElementById('prof-chapter').innerText = (Number(data.activeChapter) || 0) + 1;
             document.getElementById('profile-modal').classList.remove('hidden');
         }
@@ -1292,105 +1260,9 @@
 
         function cleanAccountName(name) {
             let cleaned = String(name ?? '').trim();
-            // Remove the old broken "NaN" prefix from legacy accounts.
             cleaned = cleaned.replace(/^nan(?:\s*[-:]?\s*)/i, '').trim();
             if (!cleaned || /^nan$/i.test(cleaned)) return 'Player';
             return cleaned;
-        }
-
-        async function saveAccountSettings() {
-            if (!currentFirebaseUser || !db || !auth) return;
-
-            const errorBox = document.getElementById('account-error');
-            errorBox.style.color = '#d32f2f';
-            errorBox.innerText = '';
-
-            const username = cleanAccountName(document.getElementById('account-username').value);
-            const email = document.getElementById('account-email').value.trim();
-            const fromLang = document.getElementById('account-from-lang').value;
-            const toLang = document.getElementById('account-to-lang').value;
-            const newPassword = document.getElementById('account-new-password').value;
-
-            if (username.length < 2) {
-                errorBox.innerText = 'Username must be at least 2 characters.';
-                return;
-            }
-            if (!email || !email.includes('@')) {
-                errorBox.innerText = 'Enter a valid email address.';
-                return;
-            }
-            if (fromLang === toLang) {
-                errorBox.innerText = 'Source and learning language cannot be the same.';
-                return;
-            }
-            if (newPassword && newPassword.length < 6) {
-                errorBox.innerText = 'New password must be at least 6 characters.';
-                return;
-            }
-
-            try {
-                const oldEmail = currentFirebaseUser.email || '';
-                const oldName = currentFirebaseUser.displayName || currentLoggedInUser || '';
-
-                if (username !== oldName) {
-                    await currentFirebaseUser.updateProfile({ displayName: username });
-                }
-
-                if (email !== oldEmail) {
-                    await currentFirebaseUser.updateEmail(email);
-                }
-
-                if (newPassword) {
-                    await currentFirebaseUser.updatePassword(newPassword);
-                }
-
-                appData.fromLang = fromLang;
-                appData.toLang = toLang;
-                currentLoggedInUser = username;
-
-                await db.collection('users').doc(currentFirebaseUser.uid).set({
-                    name: username,
-                    email: email,
-                    fromLang: fromLang,
-                    toLang: toLang,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                }, { merge: true });
-
-                await updateLeaderboardEntry(appData.points, username);
-                applyLanguageUI();
-                updateLanguageSelectors();
-
-                errorBox.style.color = 'var(--duo-green-hover)';
-                errorBox.innerText = 'Account updated successfully.';
-                document.getElementById('account-new-password').value = '';
-            } catch (error) {
-                console.error('Account update error:', error);
-                if (error.code === 'auth/requires-recent-login') {
-                    errorBox.innerText = 'For security, please log out and sign in again before changing your email or password.';
-                } else {
-                    errorBox.innerText = friendlyAuthError(error);
-                }
-            }
-        }
-
-        async function deleteMyAccount() {
-            if (!currentFirebaseUser) return;
-            if (!confirm('Delete your Wordly account and all saved progress? This cannot be undone.')) return;
-
-            try {
-                const uid = currentFirebaseUser.uid;
-                await db.collection('leaderboard').doc(uid).delete();
-                await db.collection('users').doc(uid).delete();
-                await currentFirebaseUser.delete();
-                location.reload();
-            } catch (error) {
-                console.error('Delete account error:', error);
-                const box = document.getElementById('account-error');
-                box.style.color = '#d32f2f';
-                box.innerText = error.code === 'auth/requires-recent-login'
-                    ? 'For security, please log out and sign in again before deleting your account.'
-                    : friendlyAuthError(error);
-            }
         }
 
         const flags = {
@@ -2250,7 +2122,7 @@
             renderLeaderboardData();
         }
 
-        async function renderLeaderboardData() {
+        async async function renderLeaderboardData() {
             const container = document.getElementById('lb-list-container');
             container.innerHTML = '<div style="padding:20px;text-align:center;font-weight:800;color:#777;">Leaderboard laden…</div>';
 
