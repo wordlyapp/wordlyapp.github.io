@@ -12,6 +12,7 @@
             --card-bg: #ffffff;
             --text: #2d2d2d;
             --border: #f0decc;
+            --card-shadow: 0 12px 32px rgba(255, 117, 24, 0.08);
         }
 
         body {
@@ -30,61 +31,104 @@
             width: 100%;
             background: var(--card-bg);
             border-bottom: 2px solid var(--border);
-            padding: 15px 25px;
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-sizing: border-box;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
         .logo {
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 800;
             color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            letter-spacing: -0.5px;
         }
 
-        .fox-mascot {
-            width: 38px;
-            height: 38px;
-            background: var(--primary);
-            border-radius: 50% 50% 40% 40%;
+        .cat-mascot {
+            width: 48px;
+            height: 48px;
+            background: #1a1a1a;
+            border-radius: 50% 50% 42% 42%;
             position: relative;
             display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .fox-mascot::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: 2px;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 14px solid var(--primary);
-            transform: rotate(-10deg);
+        .cat-mascot.bounce {
+            transform: scale(1.15) rotate(5deg);
         }
 
-        .fox-mascot::after {
+        .cat-mascot.shake {
+            animation: shakeAnim 0.4s ease-in-out;
+        }
+
+        @keyframes shakeAnim {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px) rotate(-5deg); }
+            75% { transform: translateX(6px) rotate(5deg); }
+        }
+
+        .cat-mascot::before {
             content: '';
             position: absolute;
-            top: -8px;
-            right: 2px;
+            top: -10px;
+            left: 4px;
             width: 0;
             height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 14px solid var(--primary);
-            transform: rotate(10deg);
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 14px solid #1a1a1a;
+            transform: rotate(-15deg);
+        }
+
+        .cat-mascot::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: 4px;
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 14px solid #1a1a1a;
+            transform: rotate(15deg);
+        }
+
+        .cat-eyes {
+            position: absolute;
+            top: 18px;
+            left: 11px;
+            width: 26px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cat-eye {
+            width: 5px;
+            height: 7px;
+            background: #fff;
+            border-radius: 50%;
+            transition: height 0.2s;
+        }
+
+        .cat-mascot.blink .cat-eye {
+            height: 1px;
+            transform: translateY(3px);
         }
 
         main {
-            max-width: 650px;
+            max-width: 800px;
             width: 100%;
-            padding: 25px;
+            padding: 40px 20px;
             box-sizing: border-box;
             flex: 1;
             display: flex;
@@ -95,34 +139,51 @@
         .card {
             background: var(--card-bg);
             border: 2px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 24px rgba(255, 117, 24, 0.06);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
         }
 
         h2 { 
             margin-top: 0; 
-            font-size: 24px;
+            font-size: 28px;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 24px;
         }
 
         .btn {
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 14px 22px;
+            padding: 16px 24px;
             font-size: 16px;
             font-weight: 700;
-            border-radius: 14px;
+            border-radius: 16px;
             cursor: pointer;
             width: 100%;
-            margin-top: 15px;
-            transition: background 0.15s ease;
+            margin-top: 16px;
+            transition: all 0.2s ease;
             border-bottom: 4px solid var(--primary-hover);
+            box-shadow: 0 4px 12px rgba(255, 117, 24, 0.2);
+        }
+
+        .btn:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
         }
 
         .btn:active {
             transform: translateY(2px);
             border-bottom-width: 2px;
+            box-shadow: none;
         }
 
         .option-btn {
@@ -130,8 +191,9 @@
             color: var(--text);
             border: 2px solid var(--border);
             border-bottom: 4px solid #d4c0ab;
-            margin: 10px 0;
+            margin: 12px 0;
             text-align: left;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .option-btn:hover {
@@ -141,14 +203,16 @@
 
         input[type="text"], input[type="password"] {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             border: 2px solid var(--border);
-            border-radius: 14px;
+            border-radius: 16px;
             font-size: 16px;
             box-sizing: border-box;
-            margin-top: 10px;
+            margin-top: 8px;
+            margin-bottom: 16px;
             outline: none;
             background: #fafafa;
+            transition: border-color 0.2s;
         }
 
         input[type="text"]:focus, input[type="password"]:focus {
@@ -158,75 +222,171 @@
 
         select {
             width: 100%;
-            padding: 14px;
-            border-radius: 14px;
+            padding: 16px;
+            border-radius: 16px;
             border: 2px solid var(--border);
-            margin: 10px 0 25px 0;
+            margin: 8px 0 24px 0;
             font-size: 16px;
             background: white;
             outline: none;
+            cursor: pointer;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #444;
+            display: block;
+            margin-bottom: 4px;
         }
 
         .hidden { display: none !important; }
         
-        .stats {
+        .top-stats {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .stat-badge {
             font-weight: 700;
-            color: #666;
+            color: #555;
             background: #fff3ed;
-            padding: 8px 14px;
-            border-radius: 10px;
+            padding: 10px 18px;
+            border-radius: 12px;
             border: 1px solid var(--border);
+            font-size: 15px;
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 24px;
+            padding-right: 8px;
+        }
+
+        .lesson-item {
+            background: #fafafa;
+            border: 2px solid var(--border);
+            padding: 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            min-height: 90px;
+            transition: all 0.2s;
+            box-sizing: border-box;
+        }
+
+        .lesson-item:hover:not(.done) {
+            background: #fff3ed;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .lesson-item.done {
+            background: #f0f0f0;
+            border-color: #ddd;
+            color: #888;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .lesson-status {
+            font-size: 13px;
+            font-weight: 600;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        .lesson-item.done .lesson-status {
+            color: #2e7d32;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            color: #777;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: #fff3ed;
+            color: var(--primary);
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .shop-item {
+            background: #fafafa;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .feedback-correct {
             color: #2e7d32;
             font-weight: 700;
             font-size: 18px;
-            margin: 15px 0;
+            margin: 20px 0;
+            padding: 16px;
+            background: #e8f5e9;
+            border-radius: 12px;
         }
 
         .feedback-wrong {
             color: #c62828;
             font-weight: 700;
             font-size: 18px;
-            margin: 15px 0;
-        }
-
-        .lesson-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 350px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-
-        .lesson-item {
-            background: #fafafa;
-            border: 2px solid var(--border);
-            padding: 14px;
+            margin: 20px 0;
+            padding: 16px;
+            background: #ffebee;
             border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .lesson-item:hover {
-            background: #fff3ed;
-            border-color: var(--primary);
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">
-            <div class="fox-mascot"></div>
-            Wordly
+        <div class="logo-area">
+            <div class="cat-mascot" id="mascot">
+                <div class="cat-eyes">
+                    <div class="cat-eye"></div>
+                    <div class="cat-eye"></div>
+                </div>
+            </div>
+            <div class="logo">Wordly</div>
         </div>
-        <div class="stats" id="stats-display">Lessons: 0</div>
+        <div class="top-stats">
+            <div class="stat-badge" id="points-display">Points: 0</div>
+            <div class="stat-badge" id="stats-display">Completed: 0</div>
+        </div>
     </header>
 
     <main>
@@ -237,11 +397,11 @@
             <label id="lbl-user">Username</label>
             <input type="text" id="auth-user" placeholder="Enter username...">
             
-            <label id="lbl-pass" style="margin-top: 15px; display: block;">Password</label>
+            <label id="lbl-pass">Password</label>
             <input type="password" id="auth-pass" placeholder="Enter password...">
 
             <button class="btn" id="auth-btn" onclick="handleAuth()">Create Account</button>
-            <button class="btn" style="background: transparent; color: var(--primary); border: none; box-shadow: none; margin-top: 5px;" onclick="toggleAuthMode()" id="auth-switch">Already have an account? Log in</button>
+            <button class="btn" style="background: transparent; color: var(--primary); border: none; box-shadow: none; margin-top: 8px;" onclick="toggleAuthMode()" id="auth-switch">Already have an account? Log in</button>
         </div>
 
         <div id="screen-lang-ui" class="card hidden">
@@ -252,6 +412,15 @@
                 <option value="nl">Nederlands</option>
             </select>
             <button class="btn" id="btn-save-ui" onclick="saveUILanguage()">Continue</button>
+        </div>
+
+        <div id="screen-level" class="card hidden">
+            <h2 id="level-title">How proficient are you?</h2>
+            <p id="level-desc">Select your current level to tailor your lessons.</p>
+            
+            <button class="btn option-btn" onclick="setProficiency('beginner')">Beginner (Little to no experience)</button>
+            <button class="btn option-btn" onclick="setProficiency('intermediate')">Intermediate (Pretty good)</button>
+            <button class="btn option-btn" onclick="setProficiency('advanced')">Advanced (Very good)</button>
         </div>
 
         <div id="screen-goal" class="card hidden">
@@ -265,16 +434,64 @@
         </div>
 
         <div id="screen-dashboard" class="card hidden">
-            <h2 id="dash-title">Choose Course</h2>
-            <select id="course-select" onchange="loadLessonsList()"></select>
-            <div class="lesson-grid" id="lessons-list-container"></div>
-            <button class="btn" style="background: #888; border-bottom-color: #555;" onclick="logout()">Log out</button>
+            <div class="nav-tabs">
+                <button class="tab-btn active" id="tab-learn" onclick="switchTab('learn')">Learn</button>
+                <button class="tab-btn" id="tab-tourney" onclick="switchTab('tourney')">Tournaments</button>
+                <button class="tab-btn" id="tab-shop" onclick="switchTab('shop')">Shop</button>
+                <button class="tab-btn" id="tab-settings" onclick="switchTab('settings')">Settings</button>
+            </div>
+
+            <div id="view-learn">
+                <h2 id="dash-title">Choose Course</h2>
+                <select id="course-select" onchange="loadLessonsList()"></select>
+                <div class="lesson-grid" id="lessons-list-container"></div>
+            </div>
+
+            <div id="view-tourney" class="hidden">
+                <h2>Tournaments</h2>
+                <p>Compete against bots or real users. Requires at least 125 points to enter!</p>
+                <div id="tourney-content">
+                    <button class="btn" onclick="joinTournament()">Join Tournament (-125 Points entry fee)</button>
+                </div>
+            </div>
+
+            <div id="view-shop" class="hidden">
+                <h2>Point Shop</h2>
+                <p>Spend your hard-earned points on custom themes, profile upgrades, and features.</p>
+                <div class="shop-grid">
+                    <div class="shop-item">
+                        <div>
+                            <strong>Custom Themes</strong>
+                            <p style="font-size: 14px; margin: 8px 0;">Unlock layout customizer for your account profile.</p>
+                        </div>
+                        <button class="btn" onclick="buyItem('theme', 50)">Buy (50 pts)</button>
+                    </div>
+                    <div class="shop-item">
+                        <div>
+                            <strong>Username Change</strong>
+                            <p style="font-size: 14px; margin: 8px 0;">Rename your account display handle anytime.</p>
+                        </div>
+                        <button class="btn" onclick="buyItem('rename', 100)">Buy (100 pts)</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-settings" class="hidden">
+                <h2>Account Settings</h2>
+                <p>Manage your account settings and security preferences.</p>
+                <label>Change Username</label>
+                <input type="text" id="settings-username" placeholder="New username...">
+                <button class="btn" onclick="updateUsername()">Update Username</button>
+                
+                <button class="btn" style="background: #c62828; border-bottom-color: #8e0000; margin-top: 24px;" onclick="deleteAccount()">Delete Account</button>
+                <button class="btn" style="background: #888; border-bottom-color: #555; margin-top: 12px;" onclick="logout()">Log out</button>
+            </div>
         </div>
 
         <div id="screen-lesson" class="card hidden">
             <div id="question-container">
                 <h3 id="question-title">Question</h3>
-                <p id="question-text" style="font-size: 19px; font-weight: 600;"></p>
+                <p id="question-text" style="font-size: 20px; font-weight: 600;"></p>
                 <div id="answers-area"></div>
             </div>
             <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Next</button>
@@ -282,7 +499,7 @@
 
         <div id="screen-complete" class="card hidden" style="text-align: center;">
             <h2 id="complete-title">Great job!</h2>
-            <p id="complete-desc">You successfully completed this lesson.</p>
+            <p id="complete-desc">You successfully completed this lesson and earned points.</p>
             <button class="btn" id="btn-back-dash" onclick="backToDashboard()">Back to Lessons</button>
         </div>
     </main>
@@ -318,9 +535,21 @@
             }
         }
 
+        const mascotEl = document.getElementById('mascot');
+        function triggerMascot(anim) {
+            mascotEl.classList.add(anim);
+            setTimeout(() => mascotEl.classList.remove(anim), 500);
+        }
+
+        setInterval(() => {
+            mascotEl.classList.add('blink');
+            setTimeout(() => mascotEl.classList.remove('blink'), 180);
+        }, 4000);
+
         const translations = {
             en: {
-                lessonsCount: "Lessons: ",
+                lessonsCount: "Completed: ",
+                pointsCount: "Points: ",
                 createAccount: "Create Account",
                 login: "Log In",
                 authDesc: "Sign up with a private local account to start learning.",
@@ -338,12 +567,12 @@
                 nextBtn: "Next",
                 checkBtn: "Check",
                 completeTitle: "Great job!",
-                completeDesc: "You successfully completed this lesson.",
-                backDash: "Back to Lessons",
-                goals: { Travel: "Travel", School: "School", Fun: "For Fun", Other: "I do not know" }
+                completeDesc: "You successfully completed this lesson and earned points.",
+                backDash: "Back to Lessons"
             },
             nl: {
-                lessonsCount: "Lessen: ",
+                lessonsCount: "Voltooid: ",
+                pointsCount: "Punten: ",
                 createAccount: "Account Aanmaken",
                 login: "Inloggen",
                 authDesc: "Maak een privé lokaal account aan om te beginnen.",
@@ -361,46 +590,64 @@
                 nextBtn: "Volgende",
                 checkBtn: "Controleer",
                 completeTitle: "Geweldig gedaan!",
-                completeDesc: "Je hebt deze les succesvol afgerond.",
-                backDash: "Terug naar Lessen",
-                goals: { Travel: "Reizen", School: "School", Fun: "Voor de leuk", Other: "Weet ik niet" }
+                completeDesc: "Je hebt deze les succesvol afgerond en punten verdiend.",
+                backDash: "Terug naar Lessen"
             }
         };
 
-        const wordBankEN_NL = [
-            { en: "Dog", nl: "Hond" }, { en: "Cat", nl: "Kat" }, { en: "House", nl: "Huis" }, { en: "Water", nl: "Water" },
-            { en: "Book", nl: "Boek" }, { en: "Apple", nl: "Appel" }, { en: "Car", nl: "Auto" }, { en: "Tree", nl: "Boom" },
-            { en: "Milk", nl: "Melk" }, { en: "Bread", nl: "Brood" }, { en: "Sun", nl: "Zon" }, { en: "Moon", nl: "Maan" },
-            { en: "Star", nl: "Ster" }, { en: "Fish", nl: "Vis" }, { en: "Bird", nl: "Vogel" }, { en: "Door", nl: "Deur" },
-            { en: "Window", nl: "Raam" }, { en: "Table", nl: "Tafel" }, { en: "Chair", nl: "Stoel" }, { en: "Pen", nl: "Pen" },
-            { en: "Paper", nl: "Papier" }, { en: "Road", nl: "Weg" }, { en: "City", nl: "Stad" }, { en: "Country", nl: "Land" },
-            { en: "Friend", nl: "Vriend" }, { en: "Family", nl: "Familie" }, { en: "Time", nl: "Tijd" }, { en: "Day", nl: "Dag" },
-            { en: "Night", nl: "Nacht" }, { en: "Food", nl: "Eten" }
+        const rawDataEN_NL = [
+            { en: "The brown dog runs quickly across the green street.", nl: "De bruine hond rent snel over de groene straat.", difficulty: 5 },
+            { en: "She reads an interesting book in her cozy room.", nl: "Zij leest een interessant boek in haar gezellige kamer.", difficulty: 6 },
+            { en: "We are traveling to a wonderful city this summer.", nl: "Wij reizen deze zomer naar een prachtige stad.", difficulty: 7 },
+            { en: "He drinks cold water after playing football outside.", nl: "Hij drinkt koud water nadat hij buiten voetbal speelde.", difficulty: 6 },
+            { en: "My friendly cat sleeps peacefully on the warm sofa.", nl: "Mijn vriendelijke kat slaapt vredig op de warme bank.", difficulty: 5 },
+            { en: "They bought fresh apples and warm bread at the market.", nl: "Zij kochten verse appels en warm brood op de markt.", difficulty: 7 },
+            { en: "A small bird sits on top of the tall wooden fence.", nl: "Een kleine vogel zit boven op de hoge houten schutting.", difficulty: 6 },
+            { en: "The bright sun warms the earth during bright mornings.", nl: "De heldere zon verwarmt de aarde tijdens heldere ochtenden.", difficulty: 7 },
+            { en: "Can you please open the heavy wooden door for me?", nl: "Kun je alsjeblieft de zware houten deur voor mij openen?", difficulty: 8 },
+            { en: "Children play happily together in the school yard.", nl: "Kinderen spelen vrolijk samen op het schoolplein.", difficulty: 5 },
+            { en: "He drives his fast red car down the long highway.", nl: "Hij rijdt in zijn snelle rode auto over de lange snelweg.", difficulty: 6 },
+            { en: "The bright star shines brightly in the dark night sky.", nl: "De heldere ster schijnt helder aan de donkere nachthemel.", difficulty: 7 },
+            { en: "Fresh milk tastes delicious with breakfast every morning.", nl: "Verse melk smaakt elke ochtend heerlijk bij het ontbijt.", difficulty: 6 },
+            { en: "Clean windows let warm sunlight into the living room.", nl: "Schone ramen laten warm zonlicht de woonkamer binnen.", difficulty: 6 },
+            { en: "He sits at the large wooden table writing a letter.", nl: "Hij zit aan de grote houten tafel en schrijft een brief.", difficulty: 7 },
+            { en: "Take a blue pen and write your answers on paper.", nl: "Pak een blauwe pen en schrijf je antwoorden op papier.", difficulty: 6 },
+            { en: "My close friend has a wonderful family in Amsterdam.", nl: "Mijn beste vriend heeft een prachtige familie in Amsterdam.", difficulty: 6 },
+            { en: "Time flies fast when you are enjoying yourself completely.", nl: "Tijd vliegt snel als je je volledig aan het vermaken bent.", difficulty: 8 },
+            { en: "Delicious food makes every social gathering much better.", nl: "Heerlijk eten maakt elke sociale bijeenkomst veel beter.", difficulty: 6 },
+            { en: "We enjoy peaceful moments during quiet evening hours.", nl: "Wij genieten van vredige momenten tijdens stille avonduren.", difficulty: 7 }
         ];
 
-        function generateLessons(direction) {
+        function generateLessons(direction, proficiency) {
+            let filtered = rawDataEN_NL;
+            if (proficiency === 'beginner') filtered = rawDataEN_NL.slice(0, 10);
+            if (proficiency === 'intermediate') filtered = rawDataEN_NL.slice(5, 17);
+            if (proficiency === 'advanced') filtered = rawDataEN_NL.slice(10, 20);
+
             const lessons = [];
             let currentQList = [];
             let lessonCounter = 1;
 
-            for (let i = 0; i < wordBankEN_NL.length; i++) {
-                let item = wordBankEN_NL[i];
-                let promptText = direction === "nl-en" ? `Vertaal naar het Engels: '${item.nl}'` : `Translate to Dutch: '${item.en}'`;
-                let correctAns = direction === "nl-en" ? item.en.toLowerCase() : item.nl.toLowerCase();
-                let wrongOpts = wordBankEN_NL.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3);
+            for (let i = 0; i < filtered.length; i++) {
+                let item = filtered[i];
+                let promptText = direction === "nl-en" ? `Translate to English: "${item.nl}"` : `Vertaal naar het Nederlands: "${item.en}"`;
+                let correctAns = direction === "nl-en" ? item.en : item.nl;
+                let wrongOpts = rawDataEN_NL.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3);
                 let options = wrongOpts.map(x => direction === "nl-en" ? x.en : x.nl);
-                options.push(direction === "nl-en" ? item.en : item.nl);
+                options.push(correctAns);
                 options.sort(() => 0.5 - Math.random());
 
                 currentQList.push({
                     type: "multiple-choice",
                     prompt: promptText,
                     options: options,
-                    correct: direction === "nl-en" ? item.en : item.nl
+                    correct: correctAns,
+                    difficulty: item.difficulty
                 });
 
-                if (currentQList.length >= 5 || i === wordBankEN_NL.length - 1) {
+                if (currentQList.length >= 3 || i === filtered.length - 1) {
                     lessons.push({
+                        id: `lesson_${direction}_${lessonCounter}`,
                         title: `Lesson ${lessonCounter}`,
                         questions: [...currentQList]
                     });
@@ -411,23 +658,13 @@
             return lessons;
         }
 
-        const courses = {
-            "nl-en": {
-                name: "Nederlands - Engels",
-                lessons: generateLessons("nl-en")
-            },
-            "en-nl": {
-                name: "Engels - Nederlands",
-                lessons: generateLessons("en-nl")
-            }
-        };
-
         let isLoginMode = false;
         let currentUser = null;
         let currentUI = "en";
         let currentCourseKey = "en-nl";
-        let currentLessonIndex = 0;
+        let activeLessonId = null;
         let currentQuestionIndex = 0;
+        let lessonEarnedPoints = 0;
 
         function toggleAuthMode() {
             isLoginMode = !isLoginMode;
@@ -454,7 +691,19 @@
                 if (accounts[user]) {
                     return alert("Username already exists.");
                 }
-                currentUser = { user, pass, ui: "en", goal: "", completed: 0 };
+                currentUser = { 
+                    user, 
+                    pass, 
+                    ui: "en", 
+                    proficiency: "intermediate",
+                    goal: "", 
+                    points: 0,
+                    completedLessons: [],
+                    inventory: [],
+                    uiSet: false,
+                    levelSet: false,
+                    goalSet: false
+                };
                 accounts[user] = currentUser;
                 localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
             }
@@ -462,6 +711,8 @@
             document.getElementById('screen-auth').classList.add('hidden');
             if (!currentUser.uiSet) {
                 document.getElementById('screen-lang-ui').classList.remove('hidden');
+            } else if (!currentUser.levelSet) {
+                document.getElementById('screen-level').classList.remove('hidden');
             } else if (!currentUser.goalSet) {
                 document.getElementById('screen-goal').classList.remove('hidden');
             } else {
@@ -477,6 +728,15 @@
             updateUIText();
 
             document.getElementById('screen-lang-ui').classList.add('hidden');
+            document.getElementById('screen-level').classList.remove('hidden');
+        }
+
+        function setProficiency(level) {
+            currentUser.proficiency = level;
+            currentUser.levelSet = true;
+            saveUser();
+
+            document.getElementById('screen-level').classList.add('hidden');
             document.getElementById('screen-goal').classList.remove('hidden');
         }
 
@@ -497,21 +757,29 @@
 
         function updateUIText() {
             const t = translations[currentUI];
-            document.getElementById('stats-display').innerText = t.lessonsCount + (currentUser ? currentUser.completed : 0);
+            document.getElementById('points-display').innerText = t.pointsCount + currentUser.points;
+            document.getElementById('stats-display').innerText = t.lessonsCount + currentUser.completedLessons.length;
         }
 
         function openDashboard() {
             updateUIText();
+            document.getElementById('settings-username').value = currentUser.user;
             const select = document.getElementById('course-select');
-            select.innerHTML = "";
-            for (const key in courses) {
-                let opt = document.createElement('option');
-                opt.value = key;
-                opt.innerText = courses[key].name;
-                select.appendChild(opt);
-            }
+            select.innerHTML = `
+                <option value="en-nl">English - Nederlands</option>
+                <option value="nl-en">Nederlands - Engels</option>
+            `;
             loadLessonsList();
             document.getElementById('screen-dashboard').classList.remove('hidden');
+        }
+
+        function switchTab(tab) {
+            ['learn', 'tourney', 'shop', 'settings'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).classList.remove('active');
+            });
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).classList.add('active');
         }
 
         function loadLessonsList() {
@@ -520,38 +788,52 @@
             const container = document.getElementById('lessons-list-container');
             container.innerHTML = "";
 
-            courses[courseKey].lessons.forEach((lesson, index) => {
+            const lessons = generateLessons(courseKey, currentUser.proficiency);
+            lessons.forEach((lesson) => {
+                const isDone = currentUser.completedLessons.includes(lesson.id);
                 let div = document.createElement('div');
-                div.className = "lesson-item";
-                div.innerHTML = `<span>${lesson.title}</span> <span>Start ➔</span>`;
-                div.onclick = () => startLesson(index);
+                div.className = `lesson-item ${isDone ? 'done' : ''}`;
+                div.innerHTML = `
+                    <span><strong>${lesson.title}</strong></span>
+                    <span class="lesson-status">${isDone ? 'Done' : 'Start ➔'}</span>
+                `;
+                if (!isDone) {
+                    div.onclick = () => startLesson(lesson.id, lessons);
+                }
                 container.appendChild(div);
             });
         }
 
-        function startLesson(lessonIndex) {
-            currentLessonIndex = lessonIndex;
+        let activeLessonData = [];
+        function startLesson(lessonId, lessonsArray) {
+            activeLessonId = lessonId;
+            const lesson = lessonsArray.find(l => l.id === lessonId);
+            activeLessonData = lesson.questions;
             currentQuestionIndex = 0;
+            lessonEarnedPoints = 0;
+
             document.getElementById('screen-dashboard').classList.add('hidden');
             document.getElementById('screen-lesson').classList.remove('hidden');
             loadQuestion();
         }
 
         function loadQuestion() {
-            const lesson = courses[currentCourseKey].lessons[currentLessonIndex];
-
-            if (currentQuestionIndex >= lesson.questions.length) {
-                currentUser.completed++;
+            if (currentQuestionIndex >= activeLessonData.length) {
+                currentUser.points += lessonEarnedPoints;
+                if (!currentUser.completedLessons.includes(activeLessonId)) {
+                    currentUser.completedLessons.push(activeLessonId);
+                }
                 saveUser();
                 updateUIText();
+                triggerMascot('bounce');
                 
                 document.getElementById('screen-lesson').classList.add('hidden');
                 document.getElementById('screen-complete').classList.remove('hidden');
                 return;
             }
 
-            const q = lesson.questions[currentQuestionIndex];
-            document.getElementById('question-title').innerText = `${lesson.title} - Question ${currentQuestionIndex + 1} of ${lesson.questions.length}`;
+            const q = activeLessonData[currentQuestionIndex];
+            document.getElementById('question-title').innerText = `Question ${currentQuestionIndex + 1} of ${activeLessonData.length}`;
             document.getElementById('question-text').innerText = q.prompt;
             
             const area = document.getElementById('answers-area');
@@ -562,21 +844,24 @@
                 let btn = document.createElement('button');
                 btn.className = "btn option-btn";
                 btn.innerText = option;
-                btn.onclick = () => checkAnswer(option, q.correct);
+                btn.onclick = () => checkAnswer(option, q.correct, q.difficulty);
                 area.appendChild(btn);
             });
         }
 
-        function checkAnswer(given, correct) {
+        function checkAnswer(given, correct, difficulty) {
             const area = document.getElementById('answers-area');
-            const t = translations[currentUI];
             
             if (given === correct) {
                 playSound('correct');
-                area.innerHTML = `<div class="feedback-correct">${currentUI === 'nl' ? 'Goed zo!' : 'Correct!'}</div>`;
+                triggerMascot('bounce');
+                let pts = Math.min(10, Math.max(3, difficulty));
+                lessonEarnedPoints += pts;
+                area.innerHTML = `<div class="feedback-correct">Correct! (+${pts} points)</div>`;
             } else {
                 playSound('wrong');
-                area.innerHTML = `<div class="feedback-wrong">${currentUI === 'nl' ? 'Bijna! Het juiste antwoord is: ' : 'Almost! The correct answer is: '} ${correct}</div>`;
+                triggerMascot('shake');
+                area.innerHTML = `<div class="feedback-wrong">Incorrect! The correct answer was: ${correct}</div>`;
             }
 
             document.getElementById('next-btn').classList.remove('hidden');
@@ -593,9 +878,72 @@
             loadLessonsList();
         }
 
+        function joinTournament() {
+            if (currentUser.points < 125) {
+                return alert("You need at least 125 points to enter a tournament.");
+            }
+            currentUser.points -= 125;
+            
+            let tourneyScore = Math.floor(Math.random() * 80) + 20;
+            let rank = Math.floor(Math.random() * 5) + 1;
+            
+            let reward = 0;
+            if (rank <= 3) {
+                reward = 95;
+                currentUser.points += 95;
+            } else if (tourneyScore >= 50) {
+                reward = 50;
+                currentUser.points += 50;
+            }
+
+            saveUser();
+            updateUIText();
+
+            alert(`Tournament ended!\nYour score: ${tourneyScore}\nRank: #${rank}\nReward earned: ${reward} points!`);
+        }
+
+        function buyItem(itemType, cost) {
+            if (currentUser.points < cost) {
+                return alert("Not enough points!");
+            }
+            if (currentUser.inventory.includes(itemType)) {
+                return alert("You already own this item!");
+            }
+            currentUser.points -= cost;
+            currentUser.inventory.push(itemType);
+            saveUser();
+            updateUIText();
+            alert("Purchase successful!");
+        }
+
+        function updateUsername() {
+            if (!currentUser.inventory.includes('rename')) {
+                return alert("You must buy the Username Change perk from the shop first (100 points).");
+            }
+            const newName = document.getElementById('settings-username').value.trim();
+            if (!newName) return alert("Enter a valid username.");
+
+            let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
+            if (accounts[newName]) return alert("Username already taken.");
+
+            delete accounts[currentUser.user];
+            currentUser.user = newName;
+            accounts[newName] = currentUser;
+            localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
+            alert("Username updated successfully!");
+        }
+
+        function deleteAccount() {
+            if (!confirm("Are you sure you want to delete your account? This action cannot be undone.")) return;
+            let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
+            delete accounts[currentUser.user];
+            localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
+            logout();
+        }
+
         function logout() {
             currentUser = null;
-            document.getElementById('screen-dashboard').classList.add('hidden');
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
             document.getElementById('screen-auth').classList.remove('hidden');
         }
     </script>
