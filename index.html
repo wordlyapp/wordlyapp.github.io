@@ -615,7 +615,6 @@
             let from = appData.fromLang;
             let to = appData.toLang;
 
-            // Bepaal de 'hoofdtaal' (meestal Nederlands, of anders via NL als brug)
             let chapterIdx = appData.activeChapter;
 
             if (from === "nl" && masterDatabase[to]) {
@@ -635,7 +634,6 @@
                     return [termA, termB, allOpts];
                 });
             } else {
-                // Twee vreemde talen (bijv. Engels -> Frans): we gebruiken Nederlands als tussenbrug
                 let fromPairs = masterDatabase[from] ? (masterDatabase[from][chapterIdx] || masterDatabase[from][0]) : [];
                 let toPairs = masterDatabase[to] ? (masterDatabase[to][chapterIdx] || masterDatabase[to][0]) : [];
 
@@ -643,14 +641,12 @@
                 for (let i = 0; i < Math.min(fromPairs.length, toPairs.length); i++) {
                     let wordInNL = fromPairs[i][0];
                     let wordFrom = fromPairs[i][1];
-                    // Zoek het equivalent in 'to' op basis van het Nederlandse woord
                     let match = toPairs.find(p => p[0].toLowerCase() === wordInNL.toLowerCase());
                     let wordTo = match ? match[1] : fromPairs[i][1];
                     let allToOpts = toPairs.map(p => p[1]);
                     combined.push([wordFrom, wordTo, allToOpts]);
                 }
                 if (combined.length === 0) {
-                    // Fallback als er even geen data is
                     return [["Hello", "Bonjour", ["Bonjour", "Salut", "Adieu", "Merci"]]];
                 }
                 return combined;
@@ -702,7 +698,6 @@
             updateDashboardStats();
             renderPath();
 
-            // Sluit dropdowns als je ergens anders op klikt
             window.onclick = function(event) {
                 if (!event.target.closest('.custom-dropdown-container')) {
                     document.querySelectorAll('.lang-menu-content').forEach(menu => menu.classList.remove('show'));
@@ -711,7 +706,6 @@
         };
 
         function toggleMenu(menuId) {
-            // Sluit eerst alle andere menus
             document.querySelectorAll('.lang-menu-content').forEach(m => {
                 if(m.id !== menuId) m.classList.remove('show');
             });
@@ -903,7 +897,11 @@
             area.innerHTML = "";
             document.getElementById('next-btn').classList.add('hidden');
 
-            let shuffledOpts = [...qObj.opts].sort(() => 0.5 - Math.random());
+            // Zorg dat het juiste antwoord er altijd bij zit en selecteer maximaal 3 foute opties (totaal max 4)
+            let otherOpts = qObj.opts.filter(opt => opt.toLowerCase() !== qObj.a.toLowerCase());
+            otherOpts.sort(() => 0.5 - Math.random());
+            let shuffledOpts = [qObj.a, ...otherOpts.slice(0, 3)].sort(() => 0.5 - Math.random());
+
             shuffledOpts.forEach(opt => {
                 let btn = document.createElement('button');
                 btn.className = "btn option-btn";
