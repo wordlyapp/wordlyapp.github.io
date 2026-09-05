@@ -38,7 +38,6 @@
             overflow: hidden;
         }
 
-        /* Top Navigation */
         header.top-nav {
             width: 100%;
             display: flex;
@@ -66,7 +65,6 @@
             gap: 12px;
         }
 
-        /* Language Pair Switcher UI */
         .lang-switcher {
             display: flex;
             align-items: center;
@@ -128,7 +126,6 @@
         }
         .reset-btn:hover { background: #fecaca; }
 
-        /* Workspace */
         main.workspace {
             flex: 1;
             width: 100%;
@@ -148,7 +145,6 @@
             align-items: center;
         }
 
-        /* Chapter Tabs & Header */
         .chapter-header {
             width: 100%;
             text-align: center;
@@ -189,7 +185,12 @@
             color: var(--duo-green);
         }
 
-        /* Path Styling */
+        .chapter-tab.locked-tab {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f0f0f0;
+        }
+
         .duo-path {
             display: flex;
             flex-direction: column;
@@ -252,7 +253,6 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(88, 204, 2, 0); }
         }
 
-        /* Lesson Card UI */
         .card {
             background: var(--card-bg);
             border: 2px solid var(--border);
@@ -314,7 +314,6 @@
             line-height: 1.4;
         }
 
-        /* Buttons & Options */
         .btn {
             background-color: var(--duo-green);
             color: white;
@@ -351,14 +350,7 @@
             border-radius: var(--radius-sm);
         }
         .option-btn:hover { background: #f7f7f7; border-color: #cfcfcf; }
-        .option-btn.selected {
-            background: #ddf4ff;
-            border-color: var(--accent-blue);
-            border-bottom-color: var(--accent-blue-shadow);
-            color: #0484c7;
-        }
 
-        /* Builder Elements */
         .word-bank {
             display: flex;
             flex-wrap: wrap;
@@ -400,7 +392,6 @@
             align-content: center;
         }
 
-        /* Feedbacks */
         .feedback-box-correct {
             color: #278500; font-weight: 900; font-size: 15px; margin: 12px 0; padding: 14px;
             background: var(--duo-light-green); border-radius: var(--radius-sm); border: 2px solid #b8f270;
@@ -412,7 +403,6 @@
 
         .hidden { display: none !important; }
 
-        /* Custom Modal */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -440,7 +430,6 @@
 </head>
 <body>
 
-    <!-- Notification Modal -->
     <div id="custom-notification" class="modal-overlay hidden">
         <div class="custom-modal">
             <h3 id="notif-title">Melding</h3>
@@ -449,15 +438,13 @@
         </div>
     </div>
 
-    <!-- Top Nav -->
     <header class="top-nav">
         <div class="logo-area">
             🟢 Wordly AI
         </div>
         <div class="nav-controls">
-            <!-- Taal Naar Taal Wisselaar -->
             <div class="lang-switcher">
-                <span>Leer:</span>
+                <span>Van:</span>
                 <img id="from-flag" class="flag-icon" src="" alt="">
                 <select id="from-lang-select" onchange="changeLanguagePair()">
                     <option value="nl">Nederlands</option>
@@ -465,7 +452,7 @@
                     <option value="ru">Russisch</option>
                     <option value="es">Spaans</option>
                 </select>
-                <span>➔</span>
+                <span>Naar:</span>
                 <img id="to-flag" class="flag-icon" src="" alt="">
                 <select id="to-lang-select" onchange="changeLanguagePair()">
                     <option value="en">Engels</option>
@@ -485,26 +472,19 @@
         </div>
     </header>
 
-    <!-- Workspace -->
     <main class="workspace">
         <div class="content-container">
-
-            <!-- Dashboard / Leerpad -->
             <div id="page-dashboard" style="width: 100%;">
                 <div class="chapter-header">
                     <h2 id="chapter-title-display">Hoofdstuk 1: Basis & Introductie</h2>
                     <p id="chapter-desc-display">Leer fundamentele woorden en simpele zinnen.</p>
                 </div>
 
-                <!-- Hoofdstuk Navigatie Tabbladen -->
-                <div class="chapter-tabs" id="chapter-tabs-container">
-                    <!-- Wordt dynamisch gevuld (10 hoofdstukken) -->
-                </div>
+                <div class="chapter-tabs" id="chapter-tabs-container"></div>
 
                 <div class="duo-path" id="path-container"></div>
             </div>
 
-            <!-- Lessen / Vragen Scherm -->
             <div id="page-lesson" class="card page-section hidden">
                 <div class="lesson-top-bar">
                     <button class="back-btn" onclick="backToDashboard()">✕ Stoppen</button>
@@ -520,7 +500,6 @@
                 <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Doorgaan</button>
             </div>
 
-            <!-- Voltooid Scherm -->
             <div id="page-complete" class="card page-section hidden" style="text-align: center;">
                 <h2 style="font-size: 26px; font-weight: 900; color: var(--duo-green); margin-bottom: 10px;">Les Voltooid! 🎉</h2>
                 <p id="complete-text" style="color: var(--duo-gray-text); font-size: 15px; font-weight: 700; margin-bottom: 24px;">Geweldig gepresteerd!</p>
@@ -540,102 +519,54 @@
             fr: "https://flagcdn.com/w40/fr.png"
         };
 
-        // Uitgebreide woordenschat per talenpaar en per thema/hoofdstuk
-        const dictionaryDatabase = {
+        const globalMultilingualDatabase = {
             "nl-en": [
-                // Hoofdstuk 1: Basis & Introductie
-                [
-                    { q: "Hallo", a: "Hello", type: "mc", opts: ["Hello", "Goodbye", "Please", "Thanks"] },
-                    { q: "Goedemorgen", a: "Good morning", type: "mc", opts: ["Good night", "Good morning", "Hello", "See you"] },
-                    { q: "Dank je wel", a: "Thank you", type: "mc", opts: ["Please", "Thank you", "Sorry", "Yes"] },
-                    { q: "Tot ziens", a: "Goodbye", type: "mc", opts: ["Hello", "Good morning", "Goodbye", "Welcome"] },
-                    { q: "Ja", a: "Yes", type: "mc", opts: ["No", "Yes", "Maybe", "Please"] },
-                    { q: "Nee", a: "No", type: "mc", opts: ["Yes", "No", "Thanks", "Ok"] },
-                    { q: "Alsjeblieft", a: "Please", type: "mc", opts: ["Please", "Thanks", "Sorry", "Hello"] },
-                    { q: "Ik ben blij", a: "I am happy", type: "builder", words: ["I", "am", "happy"] }
-                ],
-                // Hoofdstuk 2: Eten & Drinken
-                [
-                    { q: "Appel", a: "Apple", type: "mc", opts: ["Banana", "Apple", "Water", "Bread"] },
-                    { q: "Water", a: "Water", type: "mc", opts: ["Milk", "Water", "Juice", "Wine"] },
-                    { q: "Brood", a: "Bread", type: "mc", opts: ["Cheese", "Bread", "Butter", "Meat"] },
-                    { q: "Melk", a: "Milk", type: "mc", opts: ["Water", "Milk", "Tea", "Coffee"] },
-                    { q: "Ik drink water", a: "I drink water", type: "builder", words: ["I", "drink", "water"] },
-                    { q: "De appel is lekker", a: "The apple is tasty", type: "builder", words: ["The", "apple", "is", "tasty"] },
-                    { q: "Koffie of thee?", a: "Coffee or tea?", type: "mc", opts: ["Coffee or tea?", "Milk and water", "Bread and cheese", "Apple juice"] }
-                ],
-                // Hoofdstuk 3: Reizen & Vervoer
-                [
-                    { q: "Trein", a: "Train", type: "mc", opts: ["Bus", "Train", "Car", "Plane"] },
-                    { q: "Station", a: "Station", type: "mc", opts: ["Airport", "Station", "Hotel", "Street"] },
-                    { q: "Waar is de trein?", a: "Where is the train?", type: "builder", words: ["Where", "is", "the", "train"] },
-                    { q: "Ik reis naar Londen", a: "I travel to London", type: "builder", words: ["I", "travel", "to", "London"] },
-                    { q: "Auto", a: "Car", type: "mc", opts: ["Bike", "Car", "Train", "Boat"] }
-                ],
-                // Hoofdstuk 4: Familie & Mensen
-                [
-                    { q: "Moeder", a: "Mother", type: "mc", opts: ["Father", "Mother", "Sister", "Brother"] },
-                    { q: "Vader", a: "Father", type: "mc", opts: ["Father", "Son", "Daughter", "Friend"] },
-                    { q: "Broer en zus", a: "Brother and sister", type: "builder", words: ["Brother", "and", "sister"] },
-                    { q: "Dit is mijn familie", a: "This is my family", type: "builder", words: ["This", "is", "my", "family"] }
-                ],
-                // Hoofdstuk 5: Huis & Omgeving
-                [
-                    { q: "Huis", a: "House", type: "mc", opts: ["Car", "House", "School", "Park"] },
-                    { q: "Kamer", a: "Room", type: "mc", opts: ["Door", "Room", "Window", "Wall"] },
-                    { q: "Mijn huis is groot", a: "My house is big", type: "builder", words: ["My", "house", "is", "big"] }
-                ],
-                // Hoofdstuk 6: Kleuren & Cijfers
-                [
-                    { q: "Rood", a: "Red", type: "mc", opts: ["Blue", "Red", "Green", "Yellow"] },
-                    { q: "Groen", a: "Green", type: "mc", opts: ["Green", "Black", "White", "Red"] },
-                    { q: "Een", a: "One", type: "mc", opts: ["Two", "One", "Three", "Four"] },
-                    { q: "Twee", a: "Two", type: "builder", words: ["Two", "red", "apples"] }
-                ],
-                // Hoofdstuk 7: Dieren in de Natuur
-                [
-                    { q: "Hond", a: "Dog", type: "mc", opts: ["Cat", "Dog", "Bird", "Fish"] },
-                    { q: "Kat", a: "Cat", type: "mc", opts: ["Dog", "Cat", "Horse", "Cow"] },
-                    { q: "De hond blaft", a: "The dog barks", type: "builder", words: ["The", "dog", "barks"] }
-                ],
-                // Hoofdstuk 8: Hobby's & Sport
-                [
-                    { q: "Voetbal", a: "Football", type: "mc", opts: ["Tennis", "Football", "Swimming", "Running"] },
-                    { q: "Ik speel spelletjes", a: "I play games", type: "builder", words: ["I", "play", "games"] }
-                ],
-                // Hoofdstuk 9: School & Werk
-                [
-                    { q: "School", a: "School", type: "mc", opts: ["Office", "School", "Library", "Shop"] },
-                    { q: "Boek", a: "Book", type: "mc", opts: ["Pen", "Book", "Paper", "Desk"] },
-                    { q: "Ik leer Engels", a: "I learn English", type: "builder", words: ["I", "learn", "English"] }
-                ],
-                // Hoofdstuk 10: Tijd & Weer
-                [
-                    { q: "Vandaag", a: "Today", type: "mc", opts: ["Tomorrow", "Yesterday", "Today", "Now"] },
-                    { q: "Het is warm", a: "It is warm", type: "builder", words: ["It", "is", "warm", "today"] }
-                ]
+                [ { q: "Hallo", a: "Hello", opts: ["Hello", "Goodbye", "Please", "Thanks"] }, { q: "Goedemorgen", a: "Good morning", opts: ["Good night", "Good morning", "Hello", "See you"] }, { q: "Dank je wel", a: "Thank you", opts: ["Please", "Thank you", "Sorry", "Yes"] }, { q: "Tot ziens", a: "Goodbye", opts: ["Hello", "Good morning", "Goodbye", "Welcome"] }, { q: "Ik ben blij", a: "I am happy", type: "builder", words: ["I", "am", "happy"] } ],
+                [ { q: "Appel", a: "Apple", opts: ["Banana", "Apple", "Water", "Bread"] }, { q: "Water", a: "Water", opts: ["Milk", "Water", "Juice", "Wine"] }, { q: "Brood", a: "Bread", opts: ["Cheese", "Bread", "Butter", "Meat"] }, { q: "Ik drink water", a: "I drink water", type: "builder", words: ["I", "drink", "water"] } ],
+                [ { q: "Trein", a: "Train", opts: ["Bus", "Train", "Car", "Plane"] }, { q: "Station", a: "Station", opts: ["Airport", "Station", "Hotel", "Street"] }, { q: "Waar is de trein?", a: "Where is the train?", type: "builder", words: ["Where", "is", "the", "train"] } ],
+                [ { q: "Moeder", a: "Mother", opts: ["Father", "Mother", "Sister", "Brother"] }, { q: "Vader", a: "Father", opts: ["Father", "Son", "Daughter", "Friend"] }, { q: "Dit is mijn familie", a: "This is my family", type: "builder", words: ["This", "is", "my", "family"] } ],
+                [ { q: "Huis", a: "House", opts: ["Car", "House", "School", "Park"] }, { q: "Kamer", a: "Room", opts: ["Door", "Room", "Window", "Wall"] }, { q: "Mijn huis is groot", a: "My house is big", type: "builder", words: ["My", "house", "is", "big"] } ],
+                [ { q: "Rood", a: "Red", opts: ["Blue", "Red", "Green", "Yellow"] }, { q: "Groen", a: "Green", opts: ["Green", "Black", "White", "Red"] }, { q: "Twee rode appels", a: "Two red apples", type: "builder", words: ["Two", "red", "apples"] } ],
+                [ { q: "Hond", a: "Dog", opts: ["Cat", "Dog", "Bird", "Fish"] }, { q: "Kat", a: "Cat", opts: ["Dog", "Cat", "Horse", "Cow"] }, { q: "De hond blaft", a: "The dog barks", type: "builder", words: ["The", "dog", "barks"] } ],
+                [ { q: "Voetbal", a: "Football", opts: ["Tennis", "Football", "Swimming", "Running"] }, { q: "Ik speel spelletjes", a: "I play games", type: "builder", words: ["I", "play", "games"] } ],
+                [ { q: "School", a: "School", opts: ["Office", "School", "Library", "Shop"] }, { q: "Boek", a: "Book", opts: ["Pen", "Book", "Paper", "Desk"] }, { q: "Ik leer Engels", a: "I learn English", type: "builder", words: ["I", "learn", "English"] } ],
+                [ { q: "Vandaag", a: "Today", opts: ["Tomorrow", "Yesterday", "Today", "Now"] }, { q: "Het is warm", a: "It is warm today", type: "builder", words: ["It", "is", "warm", "today"] } ]
             ],
-            // Standaard fallback set voor andere talenparen
-            "default": [
-                [
-                    { q: "Hallo / Привет / Hola", a: "Hello", type: "mc", opts: ["Hello", "Bye", "Yes", "No"] },
-                    { q: "Ja / Да / Sí", a: "Yes", type: "mc", opts: ["No", "Yes", "Maybe", "Ok"] },
-                    { q: "Ik ga / Я иду / Voy", a: "I go", type: "builder", words: ["I", "go", "now"] }
-                ],
-                [
-                    { q: "Water / Вода / Agua", a: "Water", type: "mc", opts: ["Milk", "Water", "Juice", "Bread"] },
-                    { q: "Eten / Еда / Comida", a: "Food", type: "mc", opts: ["Food", "Drink", "Water", "Apple"] }
-                ],
-                [
-                    { q: "Huis / Дом / Casa", a: "House", type: "mc", opts: ["Car", "House", "Tree", "Road"] }
-                ],
-                [{ q: "Auto / Машина / Coche", a: "Car", type: "mc", opts: ["Car", "Train", "Bus", "Bike"] }],
-                [{ q: "Koffie / Кофе / Café", a: "Coffee", type: "mc", opts: ["Tea", "Coffee", "Milk", "Water"] }],
-                [{ q: "Hond / Собака / Perro", a: "Dog", type: "mc", opts: ["Cat", "Dog", "Bird", "Fish"] }],
-                [{ q: "Boek / Книга / Libro", a: "Book", type: "mc", opts: ["Pen", "Book", "Paper", "Desk"] }],
-                [{ q: "Rood / Красный / Rojo", a: "Red", type: "mc", opts: ["Blue", "Red", "Green", "Yellow"] }],
-                [{ q: "Groot / Большой / Grande", a: "Big", type: "mc", opts: ["Small", "Big", "Fast", "Slow"] }],
-                [{ q: "Tijd / Время / Tiempo", a: "Time", type: "mc", opts: ["Day", "Time", "Night", "Hour"] }]
+            "ru-en": [
+                [ { q: "Привет", a: "Hello", opts: ["Hello", "Goodbye", "Please", "Thanks"] }, { q: "Доброе утро", a: "Good morning", opts: ["Good night", "Good morning", "Hello", "See you"] }, { q: "Спасибо", a: "Thank you", opts: ["Please", "Thank you", "Sorry", "Yes"] }, { q: "Я счастлив", a: "I am happy", type: "builder", words: ["I", "am", "happy"] } ],
+                [ { q: "Яблоко", a: "Apple", opts: ["Banana", "Apple", "Water", "Bread"] }, { q: "Вода", a: "Water", opts: ["Milk", "Water", "Juice", "Wine"] }, { q: "Я пью воду", a: "I drink water", type: "builder", words: ["I", "drink", "water"] } ],
+                [ { q: "Поезд", a: "Train", opts: ["Bus", "Train", "Car", "Plane"] }, { q: "Станция", a: "Station", opts: ["Airport", "Station", "Hotel", "Street"] }, { q: "Где поезд?", a: "Where is the train?", type: "builder", words: ["Where", "is", "the", "train"] } ],
+                [ { q: "Мать", a: "Mother", opts: ["Father", "Mother", "Sister", "Brother"] }, { q: "Отец", a: "Father", opts: ["Father", "Son", "Daughter", "Friend"] } ],
+                [ { q: "Дом", a: "House", opts: ["Car", "House", "School", "Park"] }, { q: "Комната", a: "Room", opts: ["Door", "Room", "Window", "Wall"] } ],
+                [ { q: "Красный", a: "Red", opts: ["Blue", "Red", "Green", "Yellow"] }, { q: "Зеленый", a: "Green", opts: ["Green", "Black", "White", "Red"] } ],
+                [ { q: "Собака", a: "Dog", opts: ["Cat", "Dog", "Bird", "Fish"] }, { q: "Кошка", a: "Cat", opts: ["Dog", "Cat", "Horse", "Cow"] } ],
+                [ { q: "Футбол", a: "Football", opts: ["Tennis", "Football", "Swimming", "Running"] } ],
+                [ { q: "Школа", a: "School", opts: ["Office", "School", "Library", "Shop"] }, { q: "Книга", a: "Book", opts: ["Pen", "Book", "Paper", "Desk"] } ],
+                [ { q: "Сегодня", a: "Today", opts: ["Tomorrow", "Yesterday", "Today", "Now"] } ]
+            ],
+            "en-ru": [
+                [ { q: "Hello", a: "Привет", opts: ["Привет", "Пока", "Спасибо", "Да"] }, { q: "Good morning", a: "Доброе утро", opts: ["Доброе утро", "Спокойной ночи", "Привет", "Пока"] }, { q: "Thank you", a: "Спасибо", opts: ["Пожалуйста", "Спасибо", "Извините", "Да"] } ],
+                [ { q: "Apple", a: "Яблоко", opts: ["Банан", "Яблоко", "Вода", "Хлеб"] }, { q: "Water", a: "Вода", opts: ["Молоко", "Вода", "Сок", "Вино"] } ],
+                [ { q: "Train", a: "Поезд", opts: ["Автобус", "Поезд", "Машина", "Самолет"] } ],
+                [ { q: "Mother", a: "Мать", opts: ["Отец", "Мать", "Сестра", "Брат"] } ],
+                [ { q: "House", a: "Дом", opts: ["Машина", "Дом", "Школа", "Парк"] } ],
+                [ { q: "Red", a: "Красный", opts: ["Синий", "Красный", "Зеленый", "Желтый"] } ],
+                [ { q: "Dog", a: "Собака", opts: ["Кошка", "Собака", "Птица", "Рыба"] } ],
+                [ { q: "Football", a: "Футбол", opts: ["Теннис", "Футбол", "Плавание", "Бег"] } ],
+                [ { q: "School", a: "Школа", opts: ["Офис", "Школа", "Библиотека", "Магазин"] } ],
+                [ { q: "Today", a: "Сегодня", opts: ["Завтра", "Вчера", "Сегодня", "Сейчас"] } ]
+            ],
+            "en-es": [
+                [ { q: "Hello", a: "Hola", opts: ["Hola", "Adiós", "Por favor", "Gracias"] }, { q: "Good morning", a: "Buenos días", opts: ["Buenas noches", "Buenos días", "Hola", "Adiós"] }, { q: "Thank you", a: "Gracias", opts: ["Por favor", "Gracias", "Lo siento", "Sí"] } ],
+                [ { q: "Apple", a: "Manzana", opts: ["Plátano", "Manzana", "Agua", "Pan"] }, { q: "Water", a: "Agua", opts: ["Leche", "Agua", "Jugo", "Vino"] } ],
+                [ { q: "Train", a: "Tren", opts: ["Autobús", "Tren", "Coche", "Avión"] } ],
+                [ { q: "Mother", a: "Madre", opts: ["Padre", "Madre", "Hermana", "Hermano"] } ],
+                [ { q: "House", a: "Casa", opts: ["Coche", "Casa", "Escuela", "Parque"] } ],
+                [ { q: "Red", a: "Rojo", opts: ["Azul", "Rojo", "Verde", "Amarillo"] } ],
+                [ { q: "Dog", a: "Perro", opts: ["Gato", "Perro", "Pájaro", "Pez"] } ],
+                [ { q: "Football", a: "Fútbol", opts: ["Tenis", "Fútbol", "Natación", "Correr"] } ],
+                [ { q: "School", a: "Escuela", opts: ["Oficina", "Escuela", "Biblioteca", "Tienda"] } ],
+                [ { q: "Today", a: "Hoy", opts: ["Mañana", "Ayer", "Hoy", "Ahora"] } ]
             ]
         };
 
@@ -655,7 +586,7 @@
         const chapterDescriptions = [
             "Leer fundamentele woorden en simpele begroetingen.",
             "Alles over lekker eten, drinken en boodschappen doen.",
-            "Vervoermiddelen, stations en reizen naar het buitenland.",
+            "Vervoermiddelen, stations en reizen naar het buitendland.",
             "Familieleden, vrienden en relaties beschrijven.",
             "Kamers, meubels en je eigen woning.",
             "De mooiste kleuren en getallen tellen.",
@@ -665,7 +596,7 @@
             "Het weer vandaag en besef van tijd."
         ];
 
-        let appData = JSON.parse(localStorage.getItem('wordly_ai_v4')) || {
+        let appData = JSON.parse(localStorage.getItem('wordly_ai_v5')) || {
             points: 0,
             streak: 1,
             fromLang: "nl",
@@ -675,7 +606,7 @@
         };
 
         function saveData() {
-            localStorage.setItem('wordly_ai_v4', JSON.stringify(appData));
+            localStorage.setItem('wordly_ai_v5', JSON.stringify(appData));
         }
 
         window.onload = function() {
@@ -693,10 +624,23 @@
         }
 
         function changeLanguagePair() {
-            appData.fromLang = document.getElementById('from-lang-select').value;
-            appData.toLang = document.getElementById('to-lang-select').value;
+            let newFrom = document.getElementById('from-lang-select').value;
+            let newTo = document.getElementById('to-lang-select').value;
+            
+            if(newFrom === newTo) {
+                showNotification("Let op", "De brontaal en doelaang mogen niet hetzelfde zijn!");
+                document.getElementById('from-lang-select').value = appData.fromLang;
+                document.getElementById('to-lang-select').value = appData.toLang;
+                return;
+            }
+
+            appData.fromLang = newFrom;
+            appData.toLang = newTo;
+            appData.activeChapter = 0; // Terug naar hoofdstuk 1 bij taalwissel
             updateFlags();
             saveData();
+            renderChapterTabs();
+            updateDashboardStats();
             renderPath();
         }
 
@@ -707,14 +651,34 @@
             document.getElementById('chapter-desc-display').innerText = chapterDescriptions[appData.activeChapter];
         }
 
+        function getActivePairKey() {
+            return `${appData.fromLang}-${appData.toLang}`;
+        }
+
+        // Bepaalt of een hoofdstuk ontgrendeld is (Hoofdstuk N is pas open als Hoofdstuk N-1 volledig is afgerond)
+        function isChapterUnlocked(chapterIndex) {
+            if(chapterIndex === 0) return true;
+            let pairKey = getActivePairKey();
+            let prevChapterKey = `${pairKey}_ch${chapterIndex - 1}`;
+            let completedLessons = appData.completed[prevChapterKey] || [];
+            // Stel dat elk hoofdstuk 6 lessen heeft
+            return completedLessons.length >= 6;
+        }
+
         function renderChapterTabs() {
             let container = document.getElementById('chapter-tabs-container');
             container.innerHTML = "";
             for(let i = 0; i < 10; i++) {
+                let unlocked = isChapterUnlocked(i);
                 let tab = document.createElement('button');
-                tab.className = `chapter-tab ${appData.activeChapter === i ? 'active' : ''}`;
+                tab.className = `chapter-tab ${appData.activeChapter === i ? 'active' : ''} ${!unlocked ? 'locked-tab' : ''}`;
                 tab.innerText = `H${i+1}`;
+                
                 tab.onclick = () => {
+                    if(!unlocked) {
+                        showNotification("Hoofdstuk Vergrendeld", "Je moet eerst alle lessen van het vorige hoofdstuk volledig afronden om dit hoofdstuk te ontgrendelen!");
+                        return;
+                    }
                     appData.activeChapter = i;
                     saveData();
                     updateDashboardStats();
@@ -725,8 +689,12 @@
         }
 
         function getActiveQuestionsList() {
-            let pairKey = `${appData.fromLang}-${appData.toLang}`;
-            let chapters = dictionaryDatabase[pairKey] || dictionaryDatabase["nl-en"];
+            let pairKey = getActivePairKey();
+            let chapters = globalMultilingualDatabase[pairKey];
+            if(!chapters) {
+                // Slimme generieke fallback als exacte taalcombinatie ontbreekt in database
+                chapters = globalMultilingualDatabase["nl-en"];
+            }
             return chapters[appData.activeChapter] || chapters[0];
         }
 
@@ -736,9 +704,10 @@
             container.innerHTML = "";
             
             let questionsPool = getActiveQuestionsList();
-            let totalLessonsInChapter = 6; // 6 lessen per hoofdstuk
-            let pattern = [1, 2, 1, 2, 1, 2];
-            let langCompleted = appData.completed[`${appData.fromLang}-${appData.toLang}_ch${appData.activeChapter}`] || [];
+            let totalLessonsInChapter = 6;
+            let pairKey = getActivePairKey();
+            let currentKey = `${pairKey}_ch${appData.activeChapter}`;
+            let langCompleted = appData.completed[currentKey] || [];
 
             for(let i = 0; i < totalLessonsInChapter; i++) {
                 let row = document.createElement('div');
@@ -754,6 +723,10 @@
                 
                 if(isUnlocked) {
                     node.onclick = () => startLesson(i, questionsPool);
+                } else {
+                    node.onclick = () => {
+                        showNotification("Les Vergrendeld", "Voltooi eerst de vorige les in dit hoofdstuk!");
+                    };
                 }
 
                 row.appendChild(node);
@@ -765,7 +738,6 @@
 
         function startLesson(lessonIdx, pool) {
             activeLessonIdx = lessonIdx;
-            // Genereer 5 tot 6 vragen per les op basis van de pool
             activeQuestions = [];
             for(let q = 0; q < 5; q++) {
                 let base = pool[(lessonIdx + q) % pool.length];
@@ -782,7 +754,8 @@
         function loadQuestion() {
             if(currentQIdx >= activeQuestions.length) {
                 appData.points += 20;
-                let key = `${appData.fromLang}-${appData.toLang}_ch${appData.activeChapter}`;
+                let pairKey = getActivePairKey();
+                let key = `${pairKey}_ch${appData.activeChapter}`;
                 if(!appData.completed[key]) appData.completed[key] = [];
                 if(!appData.completed[key].includes(activeLessonIdx)) {
                     appData.completed[key].push(activeLessonIdx);
@@ -806,7 +779,9 @@
             area.innerHTML = "";
             document.getElementById('next-btn').classList.add('hidden');
 
-            if(qObj.type === 'mc') {
+            if(qObj.type === 'builder') {
+                renderSentenceBuilder(qObj);
+            } else {
                 let shuffledOpts = [...qObj.opts].sort(() => 0.5 - Math.random());
                 shuffledOpts.forEach(opt => {
                     let btn = document.createElement('button');
@@ -815,8 +790,6 @@
                     btn.onclick = () => checkMcAnswer(opt, qObj.a);
                     area.appendChild(btn);
                 });
-            } else if(qObj.type === 'builder') {
-                renderSentenceBuilder(qObj);
             }
         }
 
@@ -926,7 +899,7 @@
             showNotification("Voortgang wissen", "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?");
             let modalBtn = document.querySelector('.custom-modal .btn');
             modalBtn.onclick = function() {
-                localStorage.removeItem('wordly_ai_v4');
+                localStorage.removeItem('wordly_ai_v5');
                 location.reload();
             };
         }
