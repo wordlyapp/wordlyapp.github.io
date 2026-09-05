@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordly Learn</title>
-    
-    <!-- Google AdSense / Eigendom Verificatie -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6951847135196559" crossorigin="anonymous"></script>
 
     <link rel="icon" type="image/jpeg" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
     <link rel="apple-touch-icon" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
@@ -1092,6 +1089,49 @@
             document.getElementById('profile-modal').classList.add('hidden');
         }
 
+        function backToDashboard() {
+            document.querySelectorAll('#page-lesson, #page-complete, #page-leaderboard, #page-cat-interstitial').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-dashboard').classList.remove('hidden');
+            renderPath();
+        }
+
+        function openLeaderboard() {
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete, #page-cat-interstitial').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-leaderboard').classList.remove('hidden');
+            
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+            let lbContainer = document.getElementById('lb-list-container');
+            lbContainer.innerHTML = "";
+
+            let usersArr = [];
+            for(let u in accounts) {
+                usersArr.push({ name: u, points: accounts[u].data?.points || 0 });
+            }
+            usersArr.sort((a,b) => b.points - a.points);
+
+            if(usersArr.length === 0) {
+                lbContainer.innerHTML = `<div style="font-size:13px; font-weight:700; color:var(--duo-gray-text);">Geen andere gebruikers gevonden.</div>`;
+                return;
+            }
+
+            usersArr.forEach((item, idx) => {
+                let div = document.createElement('div');
+                div.className = `lb-item ${item.name === currentLoggedInUser ? 'user-highlight' : ''}`;
+                div.innerHTML = `<span>#${idx + 1} ${item.name}</span><span>${item.points} XP</span>`;
+                lbContainer.appendChild(div);
+            });
+        }
+
+        function showNotification(title, text) {
+            document.getElementById('notif-title').innerText = title;
+            document.getElementById('notif-text').innerText = text;
+            document.getElementById('custom-notification').classList.remove('hidden');
+        }
+
+        function closeNotification() {
+            document.getElementById('custom-notification').classList.add('hidden');
+        }
+
         const flags = {
             nl: "https://flagcdn.com/w40/nl.png",
             en: "https://flagcdn.com/w40/gb.png",
@@ -1319,9 +1359,9 @@
                 /* Ch 4 */ [["Mijn lieve vader werkt hard op kantoor.", "My sweet father works hard in the office."], ["Liefste moeder kookt de lekkerste maaltijden.", "Dearest mother cooks the most delicious meals."], ["Mijn oudere broer speelt graag buitenspelletjes.", "My older brother likes playing outdoor games."], ["Mijn jongere zus leest een spannend boek.", "My younger sister is reading an exciting book."], ["Zijn trotse zoon heeft een mooie prijs gewonnen.", "His proud son has won a nice prize."], ["Haar lieve dochter gaat naar de middelbare school.", "Her sweet daughter is going to secondary school."], ["Hij is al jarenlang mijn allerbeste vriend.", "He has been my very best friend for years."], ["Die vriendelijke man helpt ons met de tassen.", "That friendly man helps us with the bags."], ["Een sterke vrouw staat midden in het leven.", "A strong woman stands firmly in life."], ["Elk kind verdient een fijne en veilige jeugd.", "Every child deserves a nice and safe childhood."]],
                 /* Ch 5 */ [["Ons nieuwe huis staat in een rustige straat.", "Our new house is in a quiet street."], ["Mijn eigen kamer is netjes opgeruimd.", "My own room is neatly cleaned up."], ["De moderne keuken heeft alle benodigde apparatuur.", "The modern kitchen has all necessary equipment."], ["De badkamer wordt elke zaterdag grondig schoongemaakt.", "The bathroom is thoroughly cleaned every Saturday."], ["Mijn comfortabele bed ligt ontzettend lekker.", "My comfortable bed feels extremely nice."], ["We zitten met het hele gezin aan de eettafel.", "We are sitting at the dining table with the whole family."], ["De houten stoel staat netjes aangeschoven.", "The wooden chair is pushed in neatly."], ["Doe alsjeblieft de voordeur stevig op slot.", "Please lock the front door securely."], ["Kijk door het open raam naar buiten.", "Look outside through the open window."], ["Het dak van ons huis is onlangs vernieuwd.", "The roof of our house was recently renewed."]],
                 /* Ch 6 */ [["Hoe gaat het vandaag met jouw gezondheid?", "How is your health today?"], ["Ik ben ontzettend blij met dit resultaat.", "I am extremely happy with this result."], ["Wat zeg jij eigenlijk tegen die persoon?", "What are you actually saying to that person?"], ["Waar heb jij dit prachtige boek gekocht?", "Where did you buy this beautiful book?"], ["Ik begrijp de moeilijke uitleg van de leraar.", "I understand the difficult explanation of the teacher."], ["Spreek jij vloeiend Engels tijdens vakanties?", "Do you speak English fluently during vacations?"], ["Hoe laat moeten wij morgen aanwezig zijn?", "What time do we have to be present tomorrow?"], ["Ik ben erg moe door al dat harde werken.", "I am very tired from all that hard work."], ["Tot zo, we zien elkaar over tien minuten!", "See you soon, we'll see each other in ten minutes!"], ["Alles is helemaal goed geregeld voor het feest.", "Everything is arranged completely well for the party."]],
-                /* Ch 7 */ [["Waar woon jij ergens in deze grote stad?", "Where do you live somewhere in this big city?"], ["Wat is jouw volledige voor- en achternaam?", "What is your full first and last name?"], ["Ik kom oorspronkelijk uit het mooie Nederland.", "I originally come from the beautiful Netherlands."], ["Heb jij misschien een lieve hond als huisdier?", "Do you happen to have a sweet dog as a pet?"], ["Het weer is vandaag schitterend om buiten te spelen.", "The weather is wonderful today to play outside."], ["Ik hou er enorm van om spannende boeken te lezen.", "I love reading exciting books immensely."], ["Waar bevindt zich de dichtstbijzijnde supermarkt?", "Where is the nearest supermarket located?"], ["Ik heb enorme honger na een lange schooldag.", "I am extremely hungry after a long school day."], ["Dit avontuur is echt heel erg leuk om te doen.", "This adventure is really a lot of fun to do."], ["Mag ik aljeblieft een koud glas water bestellen?", "May I please order a cold glass of water?"]],
+                /* Ch 7 */ [["Waar woon jij ergens in deze grote stad?", "Where do you live somewhere in this big city?"], ["What is jouw volledige voor- en achternaam?", "What is your full first and last name?"], ["Ik kom oorspronkelijk uit het mooie Nederland.", "I originally come from the beautiful Netherlands."], ["Heb jij misschien een lieve hond als huisdier?", "Do you happen to have a sweet dog as a pet?"], ["Het weer is vandaag schitterend om buiten te spelen.", "The weather is wonderful today to play outside."], ["Ik hou er enorm van om spannende boeken te lezen.", "I love reading exciting books immensely."], ["Waar bevindt zich de dichtstbijzijnde supermarkt?", "Where is the nearest supermarket located?"], ["Ik heb enorme honger na een lange schooldag.", "I am extremely hungry after a long school day."], ["Dit avontuur is echt heel erg leuk om te doen.", "This adventure is really a lot of fun to do."], ["Mag ik aljeblieft een koud glas water bestellen?", "May I please order a cold glass of water?"]],
                 /* Ch 8 */ [["Kun jij mij misschien helpen met deze moeilijke taak?", "Can you perhaps help me with this difficult task?"], ["Hoeveel kost dit prachtige schilderij in de winkel?", "How much does this beautiful painting cost in the shop?"], ["Waar is het centrale treinstation gevestigd?", "Where is the central railway station located?"], ["Ik ben op zoek naar een goedkoop hotel.", "I am looking for a cheap hotel."], ["Wanneer vertrekt de volgende bus naar het centrum?", "When does the next bus leave for the center?"], ["Hebben jullie nog een vrije tafel voor twee personen?", "Do you still have a free table for two people?"], ["Ik wil na het eten heel graag afrekenen.", "I would like to check out very much after dinner."], ["Waar kan ik het schone toilet vinden?", "Where can I find the clean restroom?"], ["Is het mogelijk om hier met pin te betalen?", "Is it possible to pay here with card?"], ["Ik wens jou nog een ontzettend fijne dag verder!", "I wish you a very nice day further!"]],
-                /* Ch 9 */ [["Wat wil jij vandaag graag komen drinken?", "What would you like to come drink today?"], ["Ik wil heel graag een verse kop koffie bestellen.", "I would very much like to order a fresh cup of coffee."], ["Dit heerlijke gerecht smaakt echt uitstekend.", "This delicious dish tastes truly excellent."], ["Mag ik aljeblieft de rekening van u ontvangen?", "May I please receive the check from you?"], ["Is dit warme gerecht volledig vegetarisch bereid?", "Is this warm dish prepared completely vegetarian?"], ["Ik heb na de wandeling enorme honger gekregen.", "I have gotten extremely hungry after the walk."], ["Ik w smakelijk eten voor al onze gasten!", "Enjoy your meal for all our guests!"], ["Pas op, want dit bord is nog veel te warm.", "Watch out, because this plate is still much too warm."], ["Ik lust absoluut geen vis in mijn salade.", "I don't like fish in my salad at all."], ["Breng mij alsjeblieft meteen de menukaart.", "Please bring me the menu right away."]],
+                /* Ch 9 */ [["Wat wil jij vandaag graag komen drinken?", "What would you like to come drink today?"], ["Ik wil heel graag een verse kop koffie bestellen.", "I would very much like to order a fresh cup of coffee."], ["Dit heerlijke gerecht smaakt echt uitstekend.", "This delicious dish tastes truly excellent."], ["Mag ik aljeblieft de rekening van u ontvangen?", "May I please receive the check from you?"], ["Is dit warme gerecht volledig vegetarisch bereid?", "Is this warm dish prepared completely vegetarian?"], ["Ik heb na de wandeling enorme honger gekregen.", "I have gotten extremely hungry after the walk."], ["Smakelijk eten voor al onze gasten!", "Enjoy your meal for all our guests!"], ["Pas op, want dit bord is nog veel te warm.", "Watch out, because this plate is still much too warm."], ["Ik lust absoluut geen vis in mijn salade.", "I don't like fish in my salad at all."], ["Breng mij alsjeblieft meteen de menukaart.", "Please bring me the menu right away."]],
                 /* Ch 10 */ [["Ik wil heel graag een treinkaartje naar Amsterdam kopen.", "I would like to buy a train ticket to Amsterdam."], ["Vliegt het vliegtuig morgen precies op tijd naar Londen?", "Does the plane fly to London exactly on time tomorrow?"], ["We hebben een mooi hotel geboekt in het historische centrum.", "We have booked a nice hotel in the historic center."], ["Waar kan ik mijn zware bagage achterlaten?", "Where can I leave my heavy luggage?"], ["Onze vakantie in het verre buitenland was fantastisch.", "Our vacation in the distant abroad was fantastic."], ["Reizen met de moderne trein is comfortabel en snel.", "Traveling by the modern train is comfortable and fast."], ["Vergeet niet om jouw paspoort en tickets mee te nemen.", "Don't forget to take your passport and tickets along."], ["Het verkeer op de snelweg is erg druk vanochtend.", "The traffic on the highway is very busy this morning."], ["Wij gaan volgend jaar lekker naar Spanje op vakantie.", "We are going nicely to Spain for vacation next year."], ["Kun jij mij de juiste weg wijzen naar het vliegveld?", "Can you show me the correct way to the airport?"]],
                 /* Ch 11 */ [["Ik werk elke werkdag van negen tot vijf uur op kantoor.", "I work in the office every workday from nine to five."], ["Mijn collegiale vriend helpt mij altijd met moeilijke projecten.", "My collegial friend always helps me with difficult projects."], ["We hebben morgen een belangrijke vergadering met de directeur.", "We have an important meeting with the director tomorrow."], ["De nieuwe snelle computer werkt veel beter dan de oude.", "The new fast computer works much better than the old one."], ["Ik moet vandaag een lang verslag schrijven voor school.", "I have to write a long report for school today."], ["Kan ik deze belangrijke documenten per e-mail versturen?", "Can I send these important documents by email?"], ["De middagpauze duurt gelukkig een heel halfuur vandaag.", "Fortunately, the lunch break lasts a full half hour today."], ["Hij studeert elke avond hard om zijn examen te halen.", "He studies hard every evening to pass his exam."], ["Onze leraar legt alle moeilijke lessen heel rustig uit.", "Our teacher explains all difficult lessons very calmly."], ["Ik ben ontzettend trots op mijn prestatie van deze week.", "I am extremely proud of my achievement this week."]],
                 /* Ch 12 */ [["In het weekend speel ik graag videospellen met mijn broer.", "On the weekend I like playing video games with my brother."], ["Voetbal is mijn absolute favoriete sport om naar te kijken.", "Football is my absolute favorite sport to watch."], ["We gaan vanavond gezellig samen een spannende film bekijken.", "We are going to watch an exciting movie together cozy tonight."], ["Muziek luisteren helpt mij om na het werk te ontspannen.", "Listening to music helps me to relax after work."], ["Zij leest elke avond een dik en spannend boek in bed.", "She reads a thick and exciting book in bed every evening."], ["Mijn goede vrienden organiseren een groot feest in de tuin.", "My good friends are organizing a big party in the garden."], ["Het schilderen van dit prachtige landschap kost veel tijd.", "Painting this beautiful landscape takes a lot of time."], ["Wij wandelen elke zondag door het groene en stille bos.", "We walk through the green and quiet forest every Sunday."], ["Fotografie is een fantastische en zeer creatieve hobby.", "Photography is a fantastic and very creative hobby."], ["Ik verzamel al jaren oude postzegels uit verschillende landen.", "I have been collecting old stamps from different countries for years."]],
@@ -1331,7 +1371,7 @@
             ],
             "de": [
                 Array(10).fill(["Hallo, wie geht es dir heute?", "Hallo, wie geht es dir heute?"]), Array(10).fill(["Ich möchte gerne einen frischen Apfel essen.", "Ich möchte gerne einen frischen Apfel essen."]), Array(10).fill(["Der schnelle Zug fährt in fünf Minuten ab.", "Der schnelle Zug fährt in fünf Minuten ab."]), Array(10).fill(["Mein lieber Vater arbeitet hart im Büro.", "Mein lieber Vater arbeitet hart im Büro."]), Array(10).fill(["Unser neues Haus liegt in einer ruhigen Straße.", "Unser neues Haus liegt in einer ruhigen Straße."]),
-                Array(10).fill(["Wie geht es dir heute?", "Wie geht es dir heute?"]), Array(10).fill(["Wo wohnst du in dieser großen Stadt?", "Wo wohnst du in dieser großen Stadt?"]), Array(10).fill(["Kannst du mir bitte bei dieser Aufgabe helfen?", "Kannst du mir bitte bei dieser Aufgabe helfen?"]), Array(10).fill ["Was möchtest du heute trinken?", "Was möchtest du heute trinken?"]), Array(10).fill(["Ich möchte gerne eine Fahrkarte kaufen.", "Ich möchte gerne eine Fahrkarte kaufen."]),
+                Array(10).fill(["Wie geht es dir heute?", "Wie geht es dir heute?"]), Array(10).fill(["Wo wohnst du in dieser großen Stadt?", "Wo wohnst du in dieser großen Stadt?"]), Array(10).fill(["Kannst du mir bitte bei dieser Aufgabe helfen?", "Kannst du mir bitte bei dieser Aufgabe helfen?"]), Array(10).fill(["Was möchtest du heute trinken?", "Was möchtest du heute trinken?"]), Array(10).fill(["Ich möchte gerne eine Fahrkarte kaufen.", "Ich möchte gerne eine Fahrkarte kaufen."]),
                 Array(10).fill(["Ich arbeite jeden Tag im Büro.", "Ich arbeite jeden Tag im Büro."]), Array(10).fill(["Am Wochenende spiele ich gerne Fußball.", "Am Wochenende spiele ich gerne Fußball."]), Array(10).fill(["Es war einmal eine kleine Katze im Wald.", "Es war einmal eine kleine Katze im Wald."]), Array(10).fill(["Meine ganze Familie kommt zu Besuch.", "Meine ganze Familie kommt zu Besuch."]), Array(10).fill(["Herzlichen Glückwunsch zum Kursabschluss!", "Herzlichen Glückwunsch zum Kursabschluss!"])
             ],
             "fr": [
@@ -1818,65 +1858,6 @@
         function nextQuestion() {
             currentQIdx++;
             loadQuestion();
-        }
-
-        function backToDashboard() {
-            updateDashboardStats();
-            renderPath();
-            document.querySelectorAll('#page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
-            document.getElementById('page-dashboard').classList.remove('hidden');
-        }
-
-        function openLeaderboard() {
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete').forEach(p => p.classList.add('hidden'));
-            document.getElementById('page-leaderboard').classList.remove('hidden');
-            renderLeaderboardData();
-        }
-
-        function renderLeaderboardData() {
-            let container = document.getElementById('lb-list-container');
-            container.innerHTML = "";
-
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            let usersList = [];
-
-            for (let username in accounts) {
-                let pnts = accounts[username].data.points || 0;
-                usersList.push({ name: username, xp: pnts });
-            }
-
-            if (!usersList.some(u => u.name === currentLoggedInUser)) {
-                usersList.push({ name: currentLoggedInUser || "You", xp: appData.points });
-            }
-
-            usersList.sort((a, b) => b.xp - a.xp);
-
-            usersList.forEach((user, index) => {
-                let item = document.createElement('div');
-                let isMe = user.name === currentLoggedInUser;
-                item.className = `lb-item ${isMe ? 'user-highlight' : ''}`;
-                
-                let medal = index === 0 ? "🥇" : (index === 1 ? "🥈" : (index === 2 ? "🥉" : `#${index + 1}`));
-                
-                item.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-weight: 900; width: 24px; text-align: center;">${medal}</span>
-                        <span>${user.name} ${isMe ? "(Jij)" : ""}</span>
-                    </div>
-                    <span style="color: var(--duo-green);">${user.xp} XP</span>
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        function showNotification(title, text) {
-            document.getElementById('notif-title').innerText = title;
-            document.getElementById('notif-text').innerText = text;
-            document.getElementById('custom-notification').classList.remove('hidden');
-        }
-
-        function closeNotification() {
-            document.getElementById('custom-notification').classList.add('hidden');
         }
     </script>
 </body>
