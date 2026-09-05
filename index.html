@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,7 +45,7 @@
             overflow: hidden;
         }
 
-        /* --- LANDING PAGE STYLING --- */
+        /* --- LANDING PAGE STYLING (SCROLLBAAR & VOL) --- */
         #landing-page {
             position: fixed;
             top: 0;
@@ -55,49 +55,39 @@
             background: #ffffff;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
             z-index: 3000;
-            padding: 20px;
+            overflow-y: auto;
         }
 
-        .landing-top-bar {
-            position: absolute;
-            top: 20px;
-            right: 30px;
+        .landing-header-bar {
+            width: 100%;
             display: flex;
-            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--border);
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
-        .landing-top-bar button {
-            padding: 8px 18px;
-            font-weight: 900;
-            font-size: 13px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: var(--transition);
+        .landing-content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
         }
-
-        .btn-signin-top {
-            background: transparent;
-            color: var(--duo-green);
-            border: 2px solid var(--duo-green);
-        }
-        .btn-signin-top:hover { background: var(--duo-light-green); }
-
-        .btn-signup-top {
-            background: var(--duo-green);
-            color: white;
-            border: none;
-            border-bottom: 3px solid var(--duo-green-shadow);
-        }
-        .btn-signup-top:hover { filter: brightness(1.05); }
 
         .landing-hero {
             text-align: center;
-            max-width: 480px;
+            max-width: 600px;
             animation: fadeIn 0.4s ease-out;
+            margin-bottom: 50px;
         }
 
         .landing-logo {
@@ -111,17 +101,61 @@
         }
 
         .landing-hero h1 {
-            font-size: 34px;
+            font-size: 38px;
             font-weight: 900;
             color: var(--duo-dark);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .landing-hero p {
             color: var(--duo-gray-text);
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 700;
             margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .landing-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Sectie met redenen waarom mijne de beste is (Volle landingspagina) */
+        .landing-features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .feature-box {
+            background: #fafafa;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            text-align: left;
+            transition: var(--transition);
+        }
+        .feature-box:hover {
+            border-color: var(--duo-green);
+            background: var(--duo-light-green);
+        }
+        .feature-box h3 {
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            color: var(--duo-dark);
+        }
+        .feature-box p {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--duo-gray-text);
+            line-height: 1.4;
         }
 
         .auth-card {
@@ -131,9 +165,10 @@
             border: 2px solid var(--border);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
             width: 100%;
-            max-width: 380px;
+            max-width: 400px;
             text-align: center;
             animation: fadeIn 0.3s ease-out;
+            margin: 20px auto;
         }
 
         .auth-card h2 {
@@ -152,10 +187,14 @@
             font-family: 'Nunito', sans-serif;
             font-weight: 700;
             font-size: 14px;
+            box-sizing: border-box;
             background: #fdfdfd;
         }
 
-        .auth-card input:focus { border-color: var(--accent-blue); outline: none; }
+        .auth-card input:focus {
+            border-color: var(--accent-blue);
+            outline: none;
+        }
 
         .auth-card button.main-auth-btn {
             width: 100%;
@@ -185,7 +224,11 @@
         }
         .auth-card button.secondary-btn:hover { background: #eee; }
 
-        .auth-message { margin-top: 10px; font-size: 13px; font-weight: 800; }
+        .auth-message {
+            margin-top: 10px;
+            font-size: 13px;
+            font-weight: 800;
+        }
         .success-text { color: var(--duo-green); }
         .error-text { color: #ea2b2b; }
         /* --- EINDE LANDING PAGE STYLING --- */
@@ -299,7 +342,10 @@
             font-size: 12px;
         }
 
-        .top-stats-bar { display: flex; gap: 8px; }
+        .top-stats-bar {
+            display: flex;
+            gap: 8px;
+        }
 
         .stat-pill {
             background: #f7f7f7;
@@ -395,7 +441,11 @@
             color: var(--duo-green);
         }
 
-        .chapter-tab.locked-tab { opacity: 0.5; cursor: not-allowed; background: #f0f0f0; }
+        .chapter-tab.locked-tab {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f0f0f0;
+        }
 
         .duo-path {
             display: flex;
@@ -437,6 +487,7 @@
         }
 
         .duo-node span.node-label { font-size: 8px; opacity: 0.9; text-transform: uppercase; margin-top: 1px; }
+
         .duo-node:hover:not(.locked) { transform: scale(1.06); filter: brightness(1.05); }
         .duo-node:active:not(.locked) { transform: translateY(3px); border-bottom-width: 2px; box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
 
@@ -448,7 +499,10 @@
             box-shadow: none;
         }
 
-        .duo-node.exam-node { background: #ff9600; border-bottom: 5px solid #cc7700; }
+        .duo-node.exam-node {
+            background: #ff9600;
+            border-bottom: 5px solid #cc7700;
+        }
 
         .card {
             background: var(--card-bg);
@@ -561,7 +615,7 @@
 
         .hidden { display: none !important; }
 
-        /* --- ZWARTE KAT MASCOT ANIMATIE STYLING (1x per les) --- */
+        /* --- ZWARTE KAT MASCOT ANIMATIE STYLING --- */
         .mascot-container {
             display: flex;
             align-items: center;
@@ -591,12 +645,23 @@
             100% { transform: translateY(-5px) rotate(5deg); }
         }
 
-        .mascot-speech { font-size: 13px; font-weight: 800; line-height: 1.4; }
+        .mascot-speech {
+            font-size: 13px;
+            font-weight: 800;
+            line-height: 1.4;
+        }
 
         /* --- LEADERBOARD STYLING --- */
-        .leaderboard-container { width: 100%; animation: fadeIn 0.3s ease-out; }
+        .leaderboard-container {
+            width: 100%;
+            animation: fadeIn 0.3s ease-out;
+        }
 
-        .lb-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+        .lb-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
 
         .lb-tab {
             flex: 1;
@@ -610,9 +675,17 @@
             text-align: center;
             color: var(--duo-gray-text);
         }
-        .lb-tab.active { background: var(--duo-light-green); border-color: var(--duo-green); color: var(--duo-green); }
+        .lb-tab.active {
+            background: var(--duo-light-green);
+            border-color: var(--duo-green);
+            color: var(--duo-green);
+        }
 
-        .lb-list { display: flex; flex-direction: column; gap: 8px; }
+        .lb-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
         .lb-item {
             display: flex;
@@ -620,12 +693,21 @@
             align-items: center;
             background: #fdfdfd;
             border: 2px solid var(--border);
-            padding: 12px 16px;
+            padding: 10px 14px;
             border-radius: var(--radius-sm);
             font-weight: 800;
-            font-size: 14px;
+            font-size: 13px;
         }
-        .lb-item.user-highlight { background: var(--duo-light-green); border-color: var(--duo-green); box-shadow: 0 4px 12px rgba(88,204,2,0.15); }
+
+        .lb-item.user-highlight {
+            background: var(--duo-light-green);
+            border-color: var(--duo-green);
+        }
+
+        .lb-rank {
+            width: 24px;
+            color: var(--duo-gray-text);
+        }
 
         .custom-modal {
             background: white;
@@ -633,7 +715,7 @@
             border-radius: var(--radius-md);
             border: 2px solid var(--border);
             width: 100%;
-            max-width: 340px;
+            max-width: 360px;
             text-align: center;
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
@@ -641,55 +723,141 @@
         .custom-modal p { color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px; }
         
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px);
-            display: flex; justify-content: center; align-items: center; z-index: 2000;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
         }
     </style>
 </head>
 <body>
 
-    <!-- LANDING PAGE & AUTHENTICATIE SCHERM -->
+    <!-- LANDING PAGE & AUTHENTICATIE SCHERM (VOL EN SCROLLBAAR, ENGELS) -->
     <div id="landing-page">
-        <div class="landing-top-bar">
-            <button class="btn-signin-top" onclick="showLoginBox()">Sign In</button>
-            <button class="btn-signup-top" onclick="showRegisterBox()">Sign Up</button>
-        </div>
-
-        <div id="landing-hero-box" class="landing-hero">
-            <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="landing-logo">
-            <h1>Wordly Learn</h1>
-            <p>De leukste en slimste manier om gratis talen te leren op elk apparaat.</p>
-            <div style="display: flex; gap: 12px; justify-content: center;">
-                <button class="btn" style="max-width: 200px;" onclick="showRegisterBox()">Start Direct</button>
+        <header class="landing-header-bar">
+            <div class="logo-area">
+                <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="logo-img"> Wordly Learn
             </div>
-        </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="showLoginBox()">Log in</button>
+            </div>
+        </header>
 
-        <div id="login-box" class="auth-card hidden">
-            <h2>Sign In (Inloggen)</h2>
-            <input type="text" id="login-user" placeholder="Gebruikersnaam">
-            <input type="password" id="login-pass" placeholder="Wachtwoord">
-            <button class="main-auth-btn" onclick="handleLogin()">Inloggen</button>
-            <button class="main-auth-btn secondary-btn" onclick="showLandingHero()">Terug</button>
-            <div id="login-msg" class="auth-message"></div>
-        </div>
+        <div class="landing-content-wrapper">
+            <!-- Hero Box -->
+            <div id="landing-hero-box" class="landing-hero">
+                <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="landing-logo">
+                <h1>The smartest and most fun way to learn languages for free.</h1>
+                <p>Master vocabulary easily on any device with bite-sized lessons, interactive paths, and fun achievements designed to keep you motivated every single day.</p>
+                <div class="landing-buttons">
+                    <button class="btn" onclick="showRegisterBox()">Get Started</button>
+                    <button class="btn secondary-btn" onclick="showLoginBox()" style="color:var(--duo-dark);">I already have an account</button>
+                </div>
+            </div>
 
-        <div id="register-box" class="auth-card hidden">
-            <h2>Sign Up (Registreren)</h2>
-            <input type="text" id="reg-user" placeholder="Kies een gebruikersnaam">
-            <input type="password" id="reg-pass" placeholder="Kies een wachtwoord">
-            <button class="main-auth-btn" onclick="handleRegister()">Account Aanmaken</button>
-            <button class="main-auth-btn secondary-btn" onclick="showLandingHero()">Terug</button>
-            <div id="reg-msg" class="auth-message"></div>
+            <!-- Login Card -->
+            <div id="login-box" class="auth-card hidden">
+                <h2>Welcome Back</h2>
+                <input type="text" id="login-user" placeholder="Username">
+                <input type="password" id="login-pass" placeholder="Password">
+                <button class="main-auth-btn" onclick="handleLogin()">Log In</button>
+                <button class="main-auth-btn secondary-btn" onclick="showLandingHero()">Back</button>
+                <div id="login-msg" class="auth-message"></div>
+            </div>
+
+            <!-- Register Card -->
+            <div id="register-box" class="auth-card hidden">
+                <h2>Create Your Account</h2>
+                <input type="text" id="reg-user" placeholder="Choose a username">
+                <input type="password" id="reg-pass" placeholder="Choose a password">
+                <button class="main-auth-btn" onclick="handleRegister()">Register</button>
+                <button class="main-auth-btn secondary-btn" onclick="showLandingHero()">Back</button>
+                <div id="reg-msg" class="auth-message"></div>
+            </div>
+
+            <!-- Extra volle content met redenen waarom het de beste is (om te kunnen scrollen) -->
+            <div class="landing-features-section" id="landing-features-container">
+                <div class="feature-box">
+                    <h3>🚀 100% Free & Accessible</h3>
+                    <p>Learn anytime, anywhere on your phone, tablet, or desktop without any hidden fees or subscriptions.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>🎮 Gamified Learning Path</h3>
+                    <p>Earn XP, maintain daily streaks, climb the competitive weekly leaderboards, and unlock exciting new chapters.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>🐈‍⬛ Interactive Mascot Support</h3>
+                    <p>Our friendly black cat mascot will guide you through tricky questions and cheer you on every step of the way.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>🌍 Multiple Languages</h3>
+                    <p>Switch seamlessly between Dutch, English, German, French, and Spanish with our custom language setup prompts.</p>
+                </div>
+            </div>
         </div>
     </div>
     <!-- EINDE LANDING PAGE -->
 
+    <!-- TAAL-KEUZE PROMPT MODAL (Gedupliceerd van rechtsboven, verschijnt direct na inloggen) -->
+    <div id="lang-prompt-modal" class="modal-overlay hidden">
+        <div class="custom-modal" style="max-width: 400px;">
+            <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--duo-green); margin-bottom: 12px; object-fit: cover;">
+            <h3>Choose your language</h3>
+            <p>Select your base language and the language you want to learn right now:</p>
+            
+            <div style="background: #f7f7f7; padding: 15px; border-radius: var(--radius-sm); border: 2px solid var(--border); display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; align-items: center;">
+                
+                <!-- Gedupliceerde Taalkeuzer Controls -->
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                    <span id="prompt-label-from" style="font-weight: 800; font-size: 13px;">From:</span>
+                    <div class="custom-dropdown-container">
+                        <button class="lang-dropdown-btn" onclick="toggleMenu('prompt-from-menu')">
+                            <img id="prompt-from-flag" class="flag-icon" src="" alt="">
+                            <span id="prompt-from-label">Nederlands</span> ▾
+                        </button>
+                        <div id="prompt-from-menu" class="lang-menu-content">
+                            <div class="lang-option" onclick="selectPromptLanguage('from', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png"> Nederlands</div>
+                            <div class="lang-option" onclick="selectPromptLanguage('from', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png"> Engels</div>
+                            <div class="lang-option" onclick="selectPromptLanguage('from', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png"> Duits</div>
+                            <div class="lang-option" onclick="selectPromptLanguage('from', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png"> Frans</div>
+                            <div class="lang-option" onclick="selectPromptLanguage('from', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png"> Spaans</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                    <span id="prompt-label-to" style="font-weight: 800; font-size: 13px;">To:</span>
+                    <div class="custom-dropdown-container">
+                        <button class="lang-dropdown-btn" onclick="toggleMenu('prompt-to-menu')">
+                            <img id="prompt-to-flag" class="flag-icon" src="" alt="">
+                            <span id="prompt-to-label">Engels</span> ▾
+                        </button>
+                        <div id="prompt-to-menu" class="lang-menu-content">
+                            <div class="lang-option" onclick="selectPromptLanguage('to', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png"> Nederlands</div>
+                            <div class="lang-option" onclick="selectPromptLanguage('to', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png"> Engels</div>
+                            <div class="lang-option" onclick="selectPromptLanguage('to', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png"> Duits</div>
+                            <div class="lang-option" onclick="selectPromptLanguage('to', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png"> Frans</div>
+                            <div class="lang-option" onclick="selectPromptLanguage('to', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png"> Spaans</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="btn" onclick="confirmLangPromptAndStart()">Start Learning</button>
+        </div>
+    </div>
+
+    <!-- Algemene Meldingen Modal -->
     <div id="custom-notification" class="modal-overlay hidden">
         <div class="custom-modal">
-            <h3 id="notif-title">Melding</h3>
-            <p id="notif-text">Tekst...</p>
-            <button class="btn" id="notif-ok-btn" onclick="closeNotification()">Begrepen</button>
+            <h3 id="notif-title">Notice</h3>
+            <p id="notif-text">Text...</p>
+            <button class="btn" id="notif-ok-btn" onclick="closeNotification()">Got it</button>
         </div>
     </div>
 
@@ -699,33 +867,33 @@
         </div>
         <div class="nav-controls">
             <div class="lang-switcher-wrapper">
-                <span id="label-from-text">Van:</span>
+                <span id="label-from-text">From:</span>
                 <div class="custom-dropdown-container">
                     <button class="lang-dropdown-btn" onclick="toggleMenu('from-menu')">
                         <img id="from-flag" class="flag-icon" src="" alt="">
                         <span id="from-label">Nederlands</span> ▾
                     </button>
                     <div id="from-menu" class="lang-menu-content">
-                        <div class="lang-option" onclick="selectLanguage('from', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png" alt=""> Nederlands</div>
-                        <div class="lang-option" onclick="selectLanguage('from', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png" alt=""> Engels</div>
-                        <div class="lang-option" onclick="selectLanguage('from', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png" alt=""> Duits</div>
-                        <div class="lang-option" onclick="selectLanguage('from', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png" alt=""> Frans</div>
-                        <div class="lang-option" onclick="selectLanguage('from', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png" alt=""> Spaans</div>
+                        <div class="lang-option" onclick="selectLanguage('from', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png"> Nederlands</div>
+                        <div class="lang-option" onclick="selectLanguage('from', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png"> Engels</div>
+                        <div class="lang-option" onclick="selectLanguage('from', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png"> Duits</div>
+                        <div class="lang-option" onclick="selectLanguage('from', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png"> Frans</div>
+                        <div class="lang-option" onclick="selectLanguage('from', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png"> Spaans</div>
                     </div>
                 </div>
 
-                <span style="margin-left: 4px;" id="label-to-text">Naar:</span>
+                <span style="margin-left: 4px;" id="label-to-text">To:</span>
                 <div class="custom-dropdown-container">
                     <button class="lang-dropdown-btn" onclick="toggleMenu('to-menu')">
                         <img id="to-flag" class="flag-icon" src="" alt="">
                         <span id="to-label">Engels</span> ▾
                     </button>
                     <div id="to-menu" class="lang-menu-content">
-                        <div class="lang-option" onclick="selectLanguage('to', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png" alt=""> Nederlands</div>
-                        <div class="lang-option" onclick="selectLanguage('to', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png" alt=""> Engels</div>
-                        <div class="lang-option" onclick="selectLanguage('to', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png" alt=""> Duits</div>
-                        <div class="lang-option" onclick="selectLanguage('to', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png" alt=""> Frans</div>
-                        <div class="lang-option" onclick="selectLanguage('to', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png" alt=""> Spaans</div>
+                        <div class="lang-option" onclick="selectLanguage('to', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png"> Nederlands</div>
+                        <div class="lang-option" onclick="selectLanguage('to', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png"> Engels</div>
+                        <div class="lang-option" onclick="selectLanguage('to', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png"> Duits</div>
+                        <div class="lang-option" onclick="selectLanguage('to', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png"> Frans</div>
+                        <div class="lang-option" onclick="selectLanguage('to', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png"> Spaans</div>
                     </div>
                 </div>
             </div>
@@ -734,7 +902,7 @@
                 <div class="stat-pill">🔥 <span id="streak-display">1</span></div>
                 <div class="stat-pill" onclick="openLeaderboard()">🏆 <span id="points-display">0</span> XP</div>
             </div>
-            <button class="action-btn logout-btn" id="logout-btn-text" onclick="logoutUser()">Uitloggen</button>
+            <button class="action-btn logout-btn" id="logout-btn-text" onclick="logoutUser()">Log out</button>
             <button class="action-btn" id="reset-btn-text" onclick="resetProgressPrompt()">Reset</button>
         </div>
     </header>
@@ -744,11 +912,12 @@
             <!-- Dashboard / Pad Scherm -->
             <div id="page-dashboard" style="width: 100%;">
                 <div class="chapter-header">
-                    <h2 id="chapter-title-display">Hoofdstuk 1: Basis & Introductie</h2>
-                    <p id="chapter-desc-display">Leer fundamentele woorden en simpele zinnen.</p>
+                    <h2 id="chapter-title-display">Chapter 1: Basics & Introduction</h2>
+                    <p id="chapter-desc-display">Learn fundamental words and simple greetings.</p>
                 </div>
 
                 <div class="chapter-tabs" id="chapter-tabs-container"></div>
+
                 <div class="duo-path" id="path-container"></div>
             </div>
 
@@ -760,37 +929,37 @@
                 </div>
 
                 <div class="lesson-top-bar">
-                    <button class="back-btn" id="stop-btn-text" onclick="backToDashboard()">✕ Stoppen</button>
+                    <button class="back-btn" id="stop-btn-text" onclick="backToDashboard()">✕ Stop</button>
                     <div class="progress-bar-container">
                         <div id="lesson-progress-bar" class="progress-bar-fill"></div>
                     </div>
-                    <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text); font-size: 12px;">1/10</span>
+                    <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text); font-size: 12px;">1/5</span>
                 </div>
-                <h3 id="question-prompt" class="question-title">Vertaal dit</h3>
+                <h3 id="question-prompt" class="question-title">Translate this</h3>
                 
                 <div id="answers-area"></div>
                 
-                <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Doorgaan</button>
+                <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Continue</button>
             </div>
 
             <!-- Les Voltooid Scherm -->
             <div id="page-complete" class="card page-section hidden" style="text-align: center;">
-                <h2 id="complete-title-text" style="font-size: 22px; font-weight: 900; color: var(--duo-green); margin-bottom: 8px;">Les Voltooid! 🎉</h2>
-                <p id="complete-text" style="color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px;">Geweldig gepresteerd!</p>
-                <button class="btn" id="complete-continue-btn" onclick="backToDashboard()">Doorgaan</button>
+                <h2 id="complete-title-text" style="font-size: 22px; font-weight: 900; color: var(--duo-green); margin-bottom: 8px;">Lesson Completed! 🎉</h2>
+                <p id="complete-text" style="color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px;">Great job!</p>
+                <button class="btn" id="complete-continue-btn" onclick="backToDashboard()">Continue</button>
             </div>
 
             <!-- Leaderboard Scherm -->
             <div id="page-leaderboard" class="card page-section hidden">
                 <div class="lesson-top-bar" style="margin-bottom: 12px;">
-                    <button class="back-btn" onclick="backToDashboard()">← <span id="lb-back-text">Terug</span></button>
+                    <button class="back-btn" onclick="backToDashboard()">← <span id="lb-back-text">Back</span></button>
                     <h3 id="lb-main-title" style="font-size: 16px; font-weight: 900;">Leaderboard</h3>
                     <div></div>
                 </div>
                 <div class="leaderboard-container">
                     <div class="lb-tabs">
-                        <div id="lb-tab-weekly" class="lb-tab active" onclick="switchLeaderboard('weekly')"></div>
-                        <div id="lb-tab-alltime" class="lb-tab" onclick="switchLeaderboard('alltime')"></div>
+                        <div id="lb-tab-weekly" class="lb-tab active" onclick="switchLeaderboard('weekly')">Weekly</div>
+                        <div id="lb-tab-alltime" class="lb-tab" onclick="switchLeaderboard('alltime')">All-Time</div>
                     </div>
                     <div id="lb-list-container" class="lb-list"></div>
                 </div>
@@ -800,17 +969,20 @@
     </main>
 
     <script>
+        // --- AUTHENTICATIE & ACCOUNT LOGICA ---
         let currentLoggedInUser = localStorage.getItem('wordly_logged_in') || null;
 
         function showLoginBox() {
             document.getElementById('landing-hero-box').classList.add('hidden');
             document.getElementById('register-box').classList.add('hidden');
+            document.getElementById('landing-features-container').classList.add('hidden');
             document.getElementById('login-box').classList.remove('hidden');
         }
 
         function showRegisterBox() {
             document.getElementById('landing-hero-box').classList.add('hidden');
             document.getElementById('login-box').classList.add('hidden');
+            document.getElementById('landing-features-container').classList.add('hidden');
             document.getElementById('register-box').classList.remove('hidden');
         }
 
@@ -818,6 +990,7 @@
             document.getElementById('login-box').classList.add('hidden');
             document.getElementById('register-box').classList.add('hidden');
             document.getElementById('landing-hero-box').classList.remove('hidden');
+            document.getElementById('landing-features-container').classList.remove('hidden');
         }
 
         function handleRegister() {
@@ -827,25 +1000,32 @@
 
             if (!user || !pass) {
                 msg.className = "auth-message error-text";
-                msg.innerText = "Vul alle velden in!";
+                msg.innerText = "Please fill in all fields!";
                 return;
             }
 
             let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
             if (accounts[user]) {
                 msg.className = "auth-message error-text";
-                msg.innerText = "Deze gebruikersnaam bestaat al!";
+                msg.innerText = "This username already exists!";
                 return;
             }
 
             accounts[user] = {
                 password: pass,
-                data: { points: 0, streak: 1, fromLang: "nl", toLang: "en", activeChapter: 0, languageProgress: {} }
+                data: {
+                    points: 0,
+                    streak: 1,
+                    fromLang: "nl",
+                    toLang: "en",
+                    activeChapter: 0,
+                    languageProgress: {}
+                }
             };
 
             localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
             msg.className = "auth-message success-text";
-            msg.innerText = "Account aangemaakt! Je kunt nu inloggen.";
+            msg.innerText = "Account created! You can now log in.";
 
             setTimeout(() => {
                 showLoginBox();
@@ -859,20 +1039,24 @@
             let user = document.getElementById('login-user').value.trim();
             let pass = document.getElementById('login-pass').value.trim();
             let msg = document.getElementById('login-msg');
+
             let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
 
             if (!accounts[user] || accounts[user].password !== pass) {
                 msg.className = "auth-message error-text";
-                msg.innerText = "Onjuiste gebruikersnaam of wachtwoord!";
+                msg.innerText = "Incorrect username or password!";
                 return;
             }
 
             currentLoggedInUser = user;
             localStorage.setItem('wordly_logged_in', user);
+
             document.getElementById('login-user').value = "";
             document.getElementById('login-pass').value = "";
             msg.innerText = "";
-            initializeAppForUser();
+
+            // Toon de taalkeuze prompt direct na inloggen
+            showLangPromptModal();
         }
 
         function logoutUser() {
@@ -880,6 +1064,7 @@
             currentLoggedInUser = null;
             location.reload();
         }
+        // --- EINDE AUTH LOGICA ---
 
         const flags = {
             nl: "https://flagcdn.com/w40/nl.png",
@@ -889,8 +1074,64 @@
             es: "https://flagcdn.com/w40/es.png"
         };
 
-        const langNames = { nl: "Nederlands", en: "Engels", de: "Duits", fr: "Frans", es: "Spaans" };
+        const langNames = {
+            nl: "Nederlands",
+            en: "Engels",
+            de: "Duits",
+            fr: "Frans",
+            es: "Spaans"
+        };
 
+        // Tijdelijke selectie in de prompt modal
+        let promptTempFrom = "nl";
+        let promptTempTo = "en";
+
+        function showLangPromptModal() {
+            document.getElementById('landing-page').classList.add('hidden');
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+            if(accounts[currentLoggedInUser] && accounts[currentLoggedInUser].data) {
+                promptTempFrom = accounts[currentLoggedInUser].data.fromLang || "nl";
+                promptTempTo = accounts[currentLoggedInUser].data.toLang || "en";
+            }
+            updatePromptModalUI();
+            document.getElementById('lang-prompt-modal').classList.remove('hidden');
+        }
+
+        function updatePromptModalUI() {
+            document.getElementById('prompt-from-flag').src = flags[promptTempFrom] || flags.nl;
+            document.getElementById('prompt-from-label').innerText = langNames[promptTempFrom];
+            document.getElementById('prompt-to-flag').src = flags[promptTempTo] || flags.en;
+            document.getElementById('prompt-to-label').innerText = langNames[promptTempTo];
+        }
+
+        function selectPromptLanguage(type, code, name) {
+            if (type === 'from') {
+                if (code === promptTempTo) {
+                    showNotification("Attention", "Source and target languages cannot be the same!");
+                    return;
+                }
+                promptTempFrom = code;
+            } else {
+                if (code === promptTempFrom) {
+                    showNotification("Attention", "Source and target languages cannot be the same!");
+                    return;
+                }
+                promptTempTo = code;
+            }
+            updatePromptModalUI();
+            document.querySelectorAll('.lang-menu-content').forEach(m => m.classList.remove('show'));
+        }
+
+        function confirmLangPromptAndStart() {
+            appData.fromLang = promptTempFrom;
+            appData.toLang = promptTempTo;
+            appData.activeChapter = 0;
+            saveData();
+            document.getElementById('lang-prompt-modal').classList.add('hidden');
+            initializeAppForUser();
+        }
+
+        // UI vertalingen
         const uiTranslations = {
             nl: {
                 labelFrom: "Van:", labelTo: "Naar:", reset: "Reset", stop: "✕ Stoppen", logout: "Uitloggen",
@@ -903,7 +1144,13 @@
                 nodeLockTitle: "Vergrendeld", nodeLockText: "Voltooi eerst de vorige les in dit hoofdstuk!",
                 resetTitle: "Voortgang wissen", resetText: "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?",
                 lbTitle: "Leaderboard", lbWeekly: "Wekelijks", lbAllTime: "All-Time", lbBack: "Terug",
-                catQuoteText: "Miauwerd! De zwarte kat is er om je aan te moedigen!"
+                catQuotes: [
+                    "Miauwerd! Jij gaat als een speer!",
+                    "Purrr... Wat een fantastisch antwoord!",
+                    "Een echte kampioen geeft nooit op!",
+                    "Hou vol! Je doet het geweldig!",
+                    "Mijn zwarte klauwen zeggen: dit is correct!"
+                ]
             },
             en: {
                 labelFrom: "From:", labelTo: "To:", reset: "Reset", stop: "✕ Stop", logout: "Log out",
@@ -916,7 +1163,13 @@
                 nodeLockTitle: "Locked", nodeLockText: "Complete the previous lesson in this chapter first!",
                 resetTitle: "Clear Progress", resetText: "Are you sure you want to reset all saved lessons and XP?",
                 lbTitle: "Leaderboard", lbWeekly: "Weekly", lbAllTime: "All-Time", lbBack: "Back",
-                catQuoteText: "Meow! The black cat is cheering for you!"
+                catQuotes: [
+                    "Meow! You're on fire!",
+                    "Purrr... What a fantastic answer!",
+                    "A true champion never gives up!",
+                    "Keep going! You're doing great!",
+                    "My black claws say: spot on!"
+                ]
             },
             de: {
                 labelFrom: "Von:", labelTo: "Nach:", reset: "Zurücksetzen", stop: "✕ Stopp", logout: "Abmelden",
@@ -927,9 +1180,15 @@
                 sameLangText: "Quell- und Zielsprache dürfen nicht identisch sein!",
                 lockTitle: "Kapitel gesperrt", lockText: "Du musst erst alle Lektionen des vorherigen Kapitels abschließen!",
                 nodeLockTitle: "Gesperrt", nodeLockText: "Schließe zuerst die vorherige Lektion ab!",
-                resetTitle: "Fortschritt zurücksetzen", resetText: "Möchtest du wirklich alle gespeicherten Lektionen zurücksetzen?",
+                resetTitle: "Fortschritt zurücksetzen", resetText: "Möchtest du wirklich alle gespeicherten Lektionen und XP zurücksetzen?",
                 lbTitle: "Bestenliste", lbWeekly: "Wöchentlich", lbAllTime: "All-Time", lbBack: "Zurück",
-                catQuoteText: "Miau! Die schwarze Katze feuert dich an!"
+                catQuotes: [
+                    "Miau! Du bist spitze!",
+                    "Purrr... Was für eine tolle Antwort!",
+                    "Ein wahrer Champion gibt nie auf!",
+                    "Weiter so! Du machst das großartig!",
+                    "Meine schwarzen Pfoten sagen: richtig!"
+                ]
             },
             fr: {
                 labelFrom: "De:", labelTo: "Vers:", reset: "Réinitialiser", stop: "✕ Quitter", logout: "Déconnexion",
@@ -938,11 +1197,17 @@
                 correctMsg: "Superbe ! C'est correct.", wrongMsg: "Dommage ! La bonne réponse était :",
                 notifTitle: "Avis", notifOk: "Compris", sameLangTitle: "Attention",
                 sameLangText: "La langue source et la langue cible ne peuvent pas être identiques !",
-                lockTitle: "Chapitre verrouillé", lockText: "Vous devez d'abord terminer toutes les leçons !",
-                nodeLockTitle: "Verrouillé", nodeLockText: "Terminez d'abord la leçon précédente !",
-                resetTitle: "Effacer la progression", resetText: "Êtes-vous sûr de vouloir réinitialiser ?",
+                lockTitle: "Chapitre verrouillé", lockText: "Vous devez d'abord terminer toutes les leçons du chapitre précédent !",
+                nodeLockTitle: "Verrouillé", nodeLockText: "Terminez d'abord la leçon précédente de ce chapitre !",
+                resetTitle: "Effacer la progression", resetText: "Êtes-vous sûr de vouloir réinitialiser toute votre progression ?",
                 lbTitle: "Classement", lbWeekly: "Hebdomadaire", lbAllTime: "All-Time", lbBack: "Retour",
-                catQuoteText: "Miaou ! Le chat noir t'encourage !"
+                catQuotes: [
+                    "Miaou ! Tu gères un max !",
+                    "Purrr... Quelle excellente réponse !",
+                    "Un vrai champion n'abandonne jamais !",
+                    "Continue comme ça !",
+                    "Mes pattes noires approuvent !"
+                ]
             },
             es: {
                 labelFrom: "De:", labelTo: "A:", reset: "Reiniciar", stop: "✕ Salir", logout: "Cerrar sesión",
@@ -951,11 +1216,17 @@
                 correctMsg: "¡Genial! Es correcto.", wrongMsg: "¡Qué pena! La respuesta correcta era:",
                 notifTitle: "Aviso", notifOk: "Entendido", sameLangTitle: "Atención",
                 sameLangText: "¡El idioma de origen y destino no pueden ser el mismo!",
-                lockTitle: "Capítulo bloqueado", lockText: "¡Debes completar el capítulo anterior primero!",
-                nodeLockTitle: "Bloqueado", nodeLockText: "¡Completa la lección anterior primero!",
-                resetTitle: "Borrar progreso", resetText: "¿Estás seguro de que quieres restablecer tu progreso?",
+                lockTitle: "Capítulo bloqueado", lockText: "¡Debes completar todas lecciones del capítulo anterior primero!",
+                nodeLockTitle: "Bloqueado", nodeLockText: "¡Completa primero la lección anterior de este capítulo!",
+                resetTitle: "Borrar progreso", resetText: "¿Estás seguro de que quieres restablecer todo tu progreso?",
                 lbTitle: "Clasificación", lbWeekly: "Semanal", lbAllTime: "All-Time", lbBack: "Volver",
-                catQuoteText: "¡Miau! ¡El gato negro te apoya!"
+                catQuotes: [
+                    "¡Miau! ¡Lo estás bordando!",
+                    "Purrr... ¡Qué respuesta tan brillante!",
+                    "¡Un verdadero campeón nunca se rinde!",
+                    "¡Sigue así, vas genial!",
+                    "¡Mis garras negras dicen que vas perfecto!"
+                ]
             }
         };
 
@@ -963,16 +1234,16 @@
             nl: ["Hoofdstuk 1: Basis & Introductie", "Hoofdstuk 2: Eten & Drinken", "Hoofdstuk 3: Reizen & Vervoer", "Hoofdstuk 4: Familie & Mensen", "Hoofdstuk 5: Huis & Omgeving", "Hoofdstuk 6: Kleuren & Cijfers", "Hoofdstuk 7: Dieren in de Natuur", "Hoofdstuk 8: Hobby's & Sport", "Hoofdstuk 9: School & Werk", "Hoofdstuk 10: Tijd & Weer"],
             en: ["Chapter 1: Basics & Introduction", "Chapter 2: Food & Drinks", "Chapter 3: Travel & Transport", "Chapter 4: Family & People", "Chapter 5: House & Environment", "Chapter 6: Colors & Numbers", "Chapter 7: Animals in Nature", "Chapter 8: Hobbies & Sport", "Chapter 9: School & Work", "Chapter 10: Time & Weather"],
             de: ["Kapitel 1: Grundlagen & Einführung", "Kapitel 2: Essen & Trinken", "Kapitel 3: Reisen & Transport", "Kapitel 4: Familie & Personen", "Kapitel 5: Haus & Umgebung", "Kapitel 6: Farben & Zahlen", "Kapitel 7: Tiere in der Natur", "Kapitel 8: Hobbys & Sport", "Kapitel 9: Schule & Arbeit", "Kapitel 10: Zeit & Wetter"],
-            fr: ["Chapitre 1 : Bases & Introduction", "Chapitre 2 : Manger & Boire", "Chapitre 3 : Voyage & Transport", "Chapitre 4 : Famille & Personnes", "Chapitre 5 : Maison & Environnement", "Chapitre 6 : Couleurs & Nombres", "Chapitre 7 : Animaux", "Chapitre 8 : Loisirs & Sport", "Chapitre 9 : École & Travail", "Chapitre 10 : Temps & Météo"],
-            es: ["Capítulo 1: Básicos", "Capítulo 2: Comida", "Capítulo 3: Viajes", "Capítulo 4: Familia", "Capítulo 5: Casa", "Capítulo 6: Colores", "Capítulo 7: Animales", "Capítulo 8: Deportes", "Capítulo 9: Escuela", "Capítulo 10: Tiempo"]
+            fr: ["Chapitre 1 : Bases & Introduction", "Chapitre 2 : Manger & Boire", "Chapitre 3 : Voyage & Transport", "Chapitre 4 : Famille & Personnes", "Chapitre 5 : Maison & Environnement", "Chapitre 6 : Couleurs & Nombres", "Chapitre 7 : Animaux dans la nature", "Chapitre 8 : Loisirs & Sport", "Chapitre 9 : École & Travail", "Chapitre 10 : Temps & Météo"],
+            es: ["Capítulo 1: Básicos e Introducción", "Capítulo 2: Comida y Bebida", "Capítulo 3: Viajes y Transporte", "Capítulo 4: Familia y Personas", "Capítulo 5: Casa y Entorno", "Capítulo 6: Colores y Números", "Capítulo 7: Animales en la Naturaleza", "Capítulo 8: Aficiones y Deporte", "Capítulo 9: Escuela y Trabajo", "Capítulo 10: Tiempo y Clima"]
         };
 
         const chapterDescriptionsMulti = {
-            nl: ["Leer fundamentele woorden en simpele groetingen.", "Alles over lekker eten, drinken en boodschappen doen.", "Vervoermiddelen, stations en reizen naar het buiteland.", "Familieleden, vrienden en relaties beschrijven.", "Kamers, meubels en je eigen woning.", "De mooiste kleuren en getallen tellen.", "Dieren in het wild en huisdieren.", "Sporten, games spelen en ontspanning.", "Nuttige woorden voor op school en tijdens je werk.", "Het weer vandaag en besef van tijd."],
+            nl: ["Leer fundamentele woorden en simpele begroetingen.", "Alles over lekker eten, drinken en boodschappen doen.", "Vervoermiddelen, stations en reizen naar het buiteland.", "Familieleden, vrienden en relaties beschrijven.", "Kamers, meubels en je eigen woning.", "De mooiste kleuren en getallen tellen.", "Dieren in het wild en huisdieren.", "Sporten, games spelen en ontspanning.", "Nuttige woorden voor op school en tijdens je werk.", "Het weer vandaag en besef van tijd."],
             en: ["Learn fundamental words and simple greetings.", "All about great food, drinks, and grocery shopping.", "Means of transport, stations, and traveling abroad.", "Describe family members, friends, and relationships.", "Rooms, furniture, and your own home.", "The most beautiful colors and counting numbers.", "Wild animals and pets.", "Sports, playing games, and relaxation.", "Useful words for school and during your work.", "The weather today and awareness of time."],
             de: ["Lerne grundlegende Wörter und einfache Begrüßungen.", "Alles über gutes Essen, Trinken und Einkaufen.", "Verkehrsmittel, Bahnhöfe und Auslandsreisen.", "Familienmitglieder, Freunde und Beziehungen beschreiben.", "Zimmer, Möbel und dein eigenes Zuhause.", "Die schönsten Farben und Zahlen zählen.", "Tiere in freier Wildbahn und Haustiere.", "Sport, Spiele spielen und Entspannung.", "Nützliche Wörter für Schule und Arbeit.", "Das Wetter heute und Zeitgefühl."],
-            fr: ["Apprenez des mots fondamentaux et des salutations simples.", "Tout sur la nourriture, les boissons et les courses.", "Moyens de transport, gares et voyages à l'étranger.", "Décrire les membres de la famille.", "Pièces et meubles.", "Couleurs et nombres.", "Animaux sauvages.", "Sports et détente.", "Mots utiles pour l'école.", "La météo."],
-            es: ["Aprende palabras fundamentales.", "Comida y bebida.", "Viajes.", "Familia.", "Casa.", "Colores.", "Animales.", "Deportes.", "Escuela.", "Tiempo."]
+            fr: ["Apprenez des mots fondamentaux et des salutations simples.", "Tout sur la nourriture, les boissons et les courses.", "Moyens de transport, gares et voyages à l'étranger.", "Décrire les membres de la famille, les amis et les relations.", "Pièces, meubles et votre propre maison.", "Les plus belles couleurs et compter les nombres.", "Animaux sauvages et animaux de compagnie.", "Sports, jeux et détente.", "Mots utiles pour l'école et le travail.", "La météo d'aujourd'hui et la notion du temps."],
+            es: ["Aprende palabras fundamentales y saludos sencillos.", "Todo sobre buena comida, bebida y compras.", "Medios de transporte, estaciones y viajes al extranjero.", "Describe a miembros de la familia, amigos y relaciones.", "Habitaciones, muebles y tu propio hogar.", "Los colores más bonitos y contar números.", "Animales salvajes y mascotas.", "Deportes, videojuegos y relajación.", "Palabras útiles para la escuela y el trabajo.", "El tiempo hoy y la conciencia del tiempo."]
         };
 
         const masterDatabase = {
@@ -990,25 +1261,35 @@
             ],
             "de": [
                 [["Hallo", "Hallo"], ["Goedemorgen", "Guten Morgen"], ["Goedemiddag", "Guten Tag"], ["Goedenavond", "Guten Abend"], ["Welterusten", "Gute Nacht"], ["Dank je wel", "Danke"], ["Tot ziens", "Tschüss"], ["Alsjeblieft", "Bitte"], ["Ja", "Ja"], ["Nee", "Nein"]],
-                Array(10).fill(["Appel", "Apfel"]), Array(10).fill(["Trein", "Zug"]), Array(10).fill(["Vader", "Vater"]),
-                Array(10).fill(["Huis", "Haus"]), Array(10).fill(["Rood", "Rot"]), Array(10).fill(["Hond", "Hund"]),
-                Array(10).fill(["Spel", "Spiel"]), Array(10).fill(["School", "Schule"]), Array(10).fill(["Tijd", "Zeit"])
+                [["Appel", "Apfel"], ["Banaan", "Banane"], ["Water", "Wasser"], ["Brood", "Brot"], ["Melk", "Milch"], ["Kaas", "Käse"], ["Koffie", "Kaffee"], ["Thee", "Tee"], ["Vlees", "Fleisch"], ["Vis", "Fisch"]],
+                Array(10).fill(["Trein", "Zug"]), Array(10).fill(["Vader", "Vater"]), Array(10).fill(["Huis", "Haus"]),
+                Array(10).fill(["Rood", "Rot"]), Array(10).fill(["Hond", "Hund"]), Array(10).fill(["Spel", "Spiel"]),
+                Array(10).fill(["School", "Schule"]), Array(10).fill(["Tijd", "Zeit"])
             ],
             "fr": [
                 [["Hallo", "Bonjour"], ["Goedemorgen", "Bonjour"], ["Goedemiddag", "Bon après-midi"], ["Goedenavond", "Bonsoir"], ["Welterusten", "Bonne nuit"], ["Dank je wel", "Merci"], ["Tot ziens", "Au revoir"], ["Alsjeblieft", "S'il vous plaît"], ["Ja", "Oui"], ["Nee", "Non"]],
-                Array(10).fill(["Appel", "Pomme"]), Array(10).fill(["Trein", "Train"]), Array(10).fill(["Vader", "Père"]),
-                Array(10).fill(["Huis", "Maison"]), Array(10).fill(["Rood", "Rouge"]), Array(10).fill(["Hond", "Chien"]),
-                Array(10).fill(["Spel", "Jeu"]), Array(10).fill(["School", "École"]), Array(10).fill(["Tijd", "Temps"])
+                [["Appel", "Pomme"], ["Banaan", "Banane"], ["Water", "Eau"], ["Brood", "Pain"], ["Melk", "Lait"], ["Kaas", "Fromage"], ["Koffie", "Café"], ["Thee", "Thé"], ["Vlees", "Viande"], ["Vis", "Poisson"]],
+                Array(10).fill(["Trein", "Train"]), Array(10).fill(["Vader", "Père"]), Array(10).fill(["Huis", "Maison"]),
+                Array(10).fill(["Rood", "Rouge"]), Array(10).fill(["Hond", "Chien"]), Array(10).fill(["Spel", "Jeu"]),
+                Array(10).fill(["School", "École"]), Array(10).fill(["Tijd", "Temps"])
             ],
             "es": [
                 [["Hallo", "Hola"], ["Goedemorgen", "Buenos días"], ["Goedemiddag", "Buenas tardes"], ["Goedenavond", "Buenas noches"], ["Welterusten", "Buenas noches"], ["Dank je wel", "Gracias"], ["Tot ziens", "Adiós"], ["Alsjeblieft", "Por favor"], ["Ja", "Sí"], ["Nee", "No"]],
-                Array(10).fill(["Appel", "Manzana"]), Array(10).fill(["Trein", "Tren"]), Array(10).fill(["Vader", "Padre"]),
-                Array(10).fill(["Huis", "Casa"]), Array(10).fill(["Rood", "Rojo"]), Array(10).fill(["Hond", "Perro"]),
-                Array(10).fill(["Spel", "Juego"]), Array(10).fill(["School", "Escuela"]), Array(10).fill(["Tijd", "Tiempo"])
+                [["Appel", "Manzana"], ["Banaan", "Plátano"], ["Water", "Agua"], ["Brood", "Pan"], ["Melk", "Leche"], ["Kaas", "Queso"], ["Koffie", "Café"], ["Thee", "Té"], ["Vlees", "Carne"], ["Vis", "Pescado"]],
+                Array(10).fill(["Trein", "Tren"]), Array(10).fill(["Vader", "Padre"]), Array(10).fill(["Casa", "Casa"]),
+                Array(10).fill(["Rood", "Rojo"]), Array(10).fill(["Hond", "Perro"]), Array(10).fill(["Spel", "Juego"]),
+                Array(10).fill(["School", "Escuela"]), Array(10).fill(["Tijd", "Tiempo"])
             ]
         };
 
-        let appData = { points: 0, streak: 1, fromLang: "nl", toLang: "en", activeChapter: 0, languageProgress: {} };
+        let appData = {
+            points: 0,
+            streak: 1,
+            fromLang: "nl",
+            toLang: "en",
+            activeChapter: 0,
+            languageProgress: {}
+        };
 
         function saveData() {
             if (!currentLoggedInUser) return;
@@ -1040,6 +1321,7 @@
 
         function initializeAppForUser() {
             document.getElementById('landing-page').classList.add('hidden');
+            document.getElementById('lang-prompt-modal').classList.add('hidden');
             updateUIStrings();
             renderChapterTabs();
             updateDashboardStats();
@@ -1055,10 +1337,16 @@
 
         function selectLanguage(type, code, name) {
             if (type === 'from') {
-                if (code === appData.toLang) { showNotification(t("sameLangTitle"), t("sameLangText")); return; }
+                if (code === appData.toLang) {
+                    showNotification(t("sameLangTitle"), t("sameLangText"));
+                    return;
+                }
                 appData.fromLang = code;
             } else {
-                if (code === appData.fromLang) { showNotification(t("sameLangTitle"), t("sameLangText")); return; }
+                if (code === appData.fromLang) {
+                    showNotification(t("sameLangTitle"), t("sameLangText"));
+                    return;
+                }
                 appData.toLang = code;
             }
 
@@ -1073,7 +1361,9 @@
 
         function t(key) {
             let lang = appData.fromLang;
-            if (uiTranslations[lang] && uiTranslations[lang][key]) return uiTranslations[lang][key];
+            if (uiTranslations[lang] && uiTranslations[lang][key]) {
+                return uiTranslations[lang][key];
+            }
             return uiTranslations["nl"][key];
         }
 
@@ -1111,11 +1401,15 @@
             document.getElementById('chapter-desc-display').innerText = descs[appData.activeChapter];
         }
 
-        function getActivePairKey() { return `${appData.fromLang}-${appData.toLang}`; }
+        function getActivePairKey() {
+            return `${appData.fromLang}-${appData.toLang}`;
+        }
 
         function getCurrentLangCompletedMap() {
             let pairKey = getActivePairKey();
-            if(!appData.languageProgress[pairKey]) appData.languageProgress[pairKey] = {};
+            if(!appData.languageProgress[pairKey]) {
+                appData.languageProgress[pairKey] = {};
+            }
             return appData.languageProgress[pairKey];
         }
 
@@ -1135,8 +1429,12 @@
                 let tab = document.createElement('button');
                 tab.className = `chapter-tab ${appData.activeChapter === i ? 'active' : ''} ${!unlocked ? 'locked-tab' : ''}`;
                 tab.innerText = `H${i+1}`;
+                
                 tab.onclick = () => {
-                    if(!unlocked) { showNotification(t("lockTitle"), t("lockText")); return; }
+                    if(!unlocked) {
+                        showNotification(t("lockTitle"), t("lockText"));
+                        return;
+                    }
                     appData.activeChapter = i;
                     saveData();
                     updateDashboardStats();
@@ -1177,7 +1475,9 @@
                 if(isUnlocked) {
                     node.onclick = () => startLesson(i, isExam);
                 } else {
-                    node.onclick = () => { showNotification(t("nodeLockTitle"), t("nodeLockText")); };
+                    node.onclick = () => {
+                        showNotification(t("nodeLockTitle"), t("nodeLockText"));
+                    };
                 }
 
                 row.appendChild(node);
@@ -1198,57 +1498,89 @@
                     let allOpts = (masterDatabase[to][chapterIdx] || masterDatabase[to][0]).map(i => i[1]);
                     return [termA, termB, allOpts];
                 });
+            } else if (to === "nl" && masterDatabase[from]) {
+                let pairs = masterDatabase[from][chapterIdx] || masterDatabase[from][0];
+                return pairs.map(item => {
+                    let termA = item[1];
+                    let termB = item[0];
+                    let allOpts = (masterDatabase[from][chapterIdx] || masterDatabase[from][0]).map(i => i[0]);
+                    return [termA, termB, allOpts];
+                });
             } else {
                 let fromPairs = masterDatabase[from] ? (masterDatabase[from][chapterIdx] || masterDatabase[from][0]) : [];
-                return fromPairs.map(item => [item[0], item[1], fromPairs.map(i => i[1])]);
+                let toPairs = masterDatabase[to] ? (masterDatabase[to][chapterIdx] || masterDatabase[to][0]) : [];
+
+                let combined = [];
+                for (let i = 0; i < Math.min(fromPairs.length, toPairs.length); i++) {
+                    let wordInNL = fromPairs[i][0];
+                    let wordFrom = fromPairs[i][1];
+                    let match = toPairs.find(p => p[0].toLowerCase() === wordInNL.toLowerCase());
+                    let wordTo = match ? match[1] : fromPairs[i][1];
+                    let allToOpts = toPairs.map(p => p[1]);
+                    combined.push([wordFrom, wordTo, allToOpts]);
+                }
+                if (combined.length === 0) {
+                    return [["Hello", "Bonjour", ["Bonjour", "Salut", "Adieu", "Merci"]]];
+                }
+                return combined;
             }
         }
 
-        let activeQuestions = [], currentQIdx = 0, activeLessonIdx = 0, isCurrentExam = false, catTriggeredThisLesson = false;
+        let activeQuestions = [], currentQIdx = 0, activeLessonIdx = 0, isCurrentExam = false;
 
         function startLesson(lessonIdx, isExam) {
             activeLessonIdx = lessonIdx;
             isCurrentExam = isExam;
-            catTriggeredThisLesson = false; 
             let fullWordList = getChapterWordList();
             activeQuestions = [];
 
-            let count = isExam ? 10 : 10;
-            for(let q = 0; q < count; q++) {
-                let item = fullWordList[q % fullWordList.length];
-                activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+            if(isExam) {
+                let shuffledPool = [...fullWordList].sort(() => 0.5 - Math.random());
+                let count = Math.min(10, shuffledPool.length);
+                for(let q = 0; q < count; q++) {
+                    let item = shuffledPool[q];
+                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+                }
+            } else {
+                let chunkSize = 4;
+                let startIndex = (lessonIdx * chunkSize) % fullWordList.length;
+                for(let q = 0; q < 5; q++) {
+                    let item = fullWordList[(startIndex + q) % fullWordList.length];
+                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+                }
             }
 
             currentQIdx = 0;
             document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-lesson').classList.remove('hidden');
+            
+            triggerCatMascot();
             loadQuestion();
         }
 
-        function triggerCatMascotOnce() {
-            if (catTriggeredThisLesson) return;
-            catTriggeredThisLesson = true;
-            
+        function triggerCatMascot() {
             let catBox = document.getElementById('cat-mascot-box');
-            let quote = uiTranslations[appData.fromLang]?.catQuoteText || uiTranslations["nl"].catQuoteText;
-            document.getElementById('cat-speech-text').innerText = quote;
+            let quotes = uiTranslations[appData.fromLang]?.catQuotes || uiTranslations["nl"].catQuotes;
+            let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            
+            document.getElementById('cat-speech-text').innerText = randomQuote;
             catBox.classList.remove('hidden');
             
-            setTimeout(() => { catBox.classList.add('hidden'); }, 4000);
+            setTimeout(() => {
+                catBox.classList.add('hidden');
+            }, 4500);
         }
 
         function loadQuestion() {
-            if (currentQIdx === 6) {
-                showQuestionSevenFeedbackCheck();
-                return;
-            }
-
             if(currentQIdx >= activeQuestions.length) {
-                appData.points += isCurrentExam ? 50 : 25;
+                appData.points += isCurrentExam ? 50 : 20;
+                
                 let langProgress = getCurrentLangCompletedMap();
                 let key = `ch${appData.activeChapter}`;
                 if(!langProgress[key]) langProgress[key] = [];
-                if(!langProgress[key].includes(activeLessonIdx)) langProgress[key].push(activeLessonIdx);
+                if(!langProgress[key].includes(activeLessonIdx)) {
+                    langProgress[key].push(activeLessonIdx);
+                }
                 saveData();
                 updateDashboardStats();
 
@@ -1257,8 +1589,8 @@
                 return;
             }
 
-            if (currentQIdx === 2) {
-                triggerCatMascotOnce();
+            if (currentQIdx > 0 && currentQIdx % 2 === 0) {
+                triggerCatMascot();
             }
 
             let qObj = activeQuestions[currentQIdx];
@@ -1266,7 +1598,9 @@
             document.getElementById('lesson-progress-bar').style.width = `${progressPercent}%`;
             document.getElementById('lesson-progress-text').innerText = `${currentQIdx + 1}/${activeQuestions.length}`;
             
-            document.getElementById('question-prompt').innerText = `${t("lessonPrompt")} "${qObj.q}"`;
+            document.getElementById('question-prompt').innerText = isCurrentExam 
+                ? `${t("examPrompt")} "${qObj.q}"` 
+                : `${t("lessonPrompt")} "${qObj.q}"`;
 
             let area = document.getElementById('answers-area');
             area.innerHTML = "";
@@ -1283,23 +1617,6 @@
                 btn.onclick = () => checkMcAnswer(opt, qObj.a);
                 area.appendChild(btn);
             });
-        }
-
-        function showQuestionSevenFeedbackCheck() {
-            let area = document.getElementById('answers-area');
-            document.getElementById('question-prompt').innerText = "Vraag 7 van 10: Hoe vind je dat het tot nu toe gaat?";
-            area.innerHTML = `
-                <button class="btn option-btn" onclick="handleQ7Response('Ik doe het heel goed! 🔥')">Ik doe het heel goed! 🔥</button>
-                <button class="btn option-btn" onclick="handleQ7Response('Het gaat wel redelijk 🤔')">Het gaat wel redelijk 🤔</button>
-                <button class="btn option-btn" onclick="handleQ7Response('Het is best lastig 😅')">Het is best lastig 😅</button>
-            `;
-            document.getElementById('next-btn').classList.add('hidden');
-        }
-
-        function handleQ7Response(responseType) {
-            let area = document.getElementById('answers-area');
-            area.innerHTML = `<div class="feedback-box-correct">Bedankt voor je feedback ("${responseType}"). Oké, dan gaan we weer verder met de vragen!</div>`;
-            document.getElementById('next-btn').classList.remove('hidden');
         }
 
         function checkMcAnswer(given, correct) {
@@ -1326,74 +1643,53 @@
             document.getElementById('page-dashboard').classList.remove('hidden');
         }
 
+        let currentLbType = 'weekly';
+
         function openLeaderboard() {
             document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-leaderboard').classList.remove('hidden');
-            renderLeaderboardData('weekly');
+            renderLeaderboardData(currentLbType);
         }
 
         function switchLeaderboard(type) {
+            currentLbType = type;
             document.getElementById('lb-tab-weekly').className = `lb-tab ${type === 'weekly' ? 'active' : ''}`;
             document.getElementById('lb-tab-alltime').className = `lb-tab ${type === 'alltime' ? 'active' : ''}`;
             renderLeaderboardData(type);
         }
 
-        // --- HIER IS HET LEADERBOARD VOLLEDIG GEFIXEERD EN VERBETERD ---
         function renderLeaderboardData(type) {
             let container = document.getElementById('lb-list-container');
             container.innerHTML = "";
-            
+
             let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
             let usersList = [];
 
-            // 1. Zorg ervoor dat de huidige actieve data direct up-to-date ingesloten wordt
-            if (currentLoggedInUser && accounts[currentLoggedInUser]) {
-                accounts[currentLoggedInUser].data = appData;
-            }
-
-            // 2. Loop door alle geregistreerde accounts heen
             for (let username in accounts) {
-                let userPoints = accounts[username].data ? (accounts[username].data.points || 0) : 0;
-                let finalXp = type === 'weekly' ? Math.floor(userPoints * 0.4) : userPoints;
-                usersList.push({ name: username, xp: finalXp });
+                let pnts = accounts[username].data.points || 0;
+                let weeklyPnts = type === 'weekly' ? Math.floor(pnts * 0.4) : pnts;
+                usersList.push({ name: username, xp: weeklyPnts });
             }
 
-            // 3. Als je om wat voor reden dan ook niet in de accounts staat, voeg jezelf toe als fallback
-            if (currentLoggedInUser && !usersList.some(u => u.name === currentLoggedInUser)) {
-                usersList.push({ name: currentLoggedInUser, xp: type === 'weekly' ? Math.floor(appData.points * 0.4) : appData.points });
+            if (!usersList.some(u => u.name === currentLoggedInUser)) {
+                usersList.push({ name: currentLoggedInUser || "You", xp: appData.points });
             }
 
-            // 4. Voeg optionele AI-spelers toe zodat de lijst altijd leuk gevuld is als je de enige echte gebruiker bent
-            let dummyPlayers = [
-                { name: "Sophie_NL", xp: type === 'weekly' ? 140 : 380 },
-                { name: "DaanDuolingo", xp: type === 'weekly' ? 95 : 290 },
-                { name: "Emma_Learns", xp: type === 'weekly' ? 60 : 150 }
-            ];
-
-            // Voeg dummies alleen toe als ze nog niet bestaan in de echte lijst
-            dummyPlayers.forEach(dummy => {
-                if (!usersList.some(u => u.name.toLowerCase() === dummy.name.toLowerCase())) {
-                    usersList.push(dummy);
-                }
-            });
-
-            // 5. Sorteer op basis van de meeste XP (hoogste eerst)
             usersList.sort((a, b) => b.xp - a.xp);
 
-            // 6. Bouw de HTML elementen op voor de weergave
             usersList.forEach((user, index) => {
                 let item = document.createElement('div');
-                let isMe = (user.name === currentLoggedInUser);
+                let isMe = user.name === currentLoggedInUser;
                 item.className = `lb-item ${isMe ? 'user-highlight' : ''}`;
                 
-                let rankDisplay = index === 0 ? "🥇" : (index === 1 ? "🥈" : (index === 2 ? "🥉" : `#${index + 1}`));
+                let medal = index === 0 ? "🥇" : (index === 1 ? "🥈" : (index === 2 ? "🥉" : `#${index + 1}`));
                 
                 item.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="font-weight: 900; width: 28px; text-align: center; font-size: 16px;">${rankDisplay}</span>
-                        <span style="color: var(--duo-dark);">${user.name} ${isMe ? "<strong>(Jij)</strong>" : ""}</span>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-weight: 900; width: 24px; text-align: center;">${medal}</span>
+                        <span>${user.name} ${isMe ? "(You)" : ""}</span>
                     </div>
-                    <span style="color: var(--duo-green); font-weight: 900;">${user.xp} XP</span>
+                    <span style="color: var(--duo-green);">${user.xp} XP</span>
                 `;
                 container.appendChild(item);
             });
@@ -1421,4 +1717,3 @@
     </script>
 </body>
 </html>
-```[cite: 3]
