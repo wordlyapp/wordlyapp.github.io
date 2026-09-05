@@ -920,7 +920,8 @@
     <script>
         // --- AUTH0 & ACCOUNT LOGICA ---
         let auth0Client = null;
-        let currentLoggedInUser = localStorage.getItem('wordly_logged_in') || null;
+        let currentLoggedInUser = null;
+        let currentAuth0User = null;
 
         async function initAuth0() {
             try {
@@ -941,13 +942,9 @@
                 const isAuthenticated = await auth0Client.isAuthenticated();
                 if (isAuthenticated) {
                     const user = await auth0Client.getUser();
-                    currentLoggedInUser = user.email || user.name || "user@auth0";
-                    localStorage.setItem('wordly_logged_in', currentLoggedInUser);
-                    
-                    setupUserData(currentLoggedInUser);
-                    initializeAppForUser();
-                } else if (currentLoggedInUser) {
-                    setupUserData(currentLoggedInUser);
+                    currentAuth0User = user;
+                    currentLoggedInUser = user.email || user.name || user.sub || "user@auth0";
+                    setupUserData(user);
                     initializeAppForUser();
                 }
             } catch (err) {
@@ -965,8 +962,8 @@
         }
 
         async function logoutUser() {
-            localStorage.removeItem('wordly_logged_in');
             currentLoggedInUser = null;
+            currentAuth0User = null;
             if (auth0Client) {
                 auth0Client.logout({
                     logoutParams: {
@@ -978,21 +975,21 @@
             }
         }
 
-        function setupUserData(userEmail) {
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if (!accounts[userEmail]) {
-                accounts[userEmail] = {
-                    data: {
-                        points: 0,
-                        streak: 1,
-                        fromLang: "nl",
-                        toLang: "en",
-                        activeChapter: 0,
-                        languageProgress: {},
-                        mistakes: []
-                    }
-                };
-                localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
+        function setupUserData(user) {
+            // Auth0 is the source of truth for the account identity.
+            // No account is created or stored in localStorage.
+            appData = {
+                points: 0,
+                streak: 1,
+                fromLang: "nl",
+                toLang: "en",
+                activeChapter: 0,
+                languageProgress: {},
+                mistakes: []
+            };
+
+            if (user && user.name) {
+                currentLoggedInUser = user.email || user.name || user.sub;
             }
         }
 
@@ -1029,11 +1026,8 @@
 
         function showLangPromptModal() {
             document.getElementById('landing-page').classList.add('hidden');
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if(accounts[currentLoggedInUser] && accounts[currentLoggedInUser].data) {
-                promptTempFrom = accounts[currentLoggedInUser].data.fromLang || "nl";
-                promptTempTo = accounts[currentLoggedInUser].data.toLang || "en";
-            }
+            promptTempFrom = appData.fromLang || "nl";
+            promptTempTo = appData.toLang || "en";
             updatePromptModalUI();
             document.getElementById('lang-prompt-modal').classList.remove('hidden');
         }
@@ -1310,11 +1304,8 @@
 
         function saveData() {
             if (!currentLoggedInUser) return;
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if (accounts[currentLoggedInUser]) {
-                accounts[currentLoggedInUser].data = appData;
-                localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
-            }
+            // Progress is kept in memory in this standalone HTML file.
+            // For cross-device progress, connect this function to your backend/database.
         }
 
         window.onload = function() {
@@ -1331,11 +1322,7 @@
             document.getElementById('landing-page').classList.add('hidden');
             document.getElementById('lang-prompt-modal').classList.add('hidden');
             
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if (accounts[currentLoggedInUser] && accounts[currentLoggedInUser].data) {
-                appData = accounts[currentLoggedInUser].data;
-                if(!appData.mistakes) appData.mistakes = [];
-            }
+            if (!appData.mistakes) appData.mistakes = [];
 
             updateUIStrings();
             renderChapterTabs();
@@ -1794,19 +1781,11 @@
             let container = document.getElementById('lb-list-container');
             container.innerHTML = "";
 
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            let usersList = [];
-
-            for (let username in accounts) {
-                let pnts = accounts[username].data.points || 0;
-                usersList.push({ name: username, xp: pnts });
-            }
-
-            if (!usersList.some(u => u.name === currentLoggedInUser)) {
-                usersList.push({ name: currentLoggedInUser || "You", xp: appData.points });
-            }
-
-            usersList.sort((a, b) => b.xp - a.xp);
+            // This page no longer reads a local account list.
+            // A global leaderboard requires a backend/database endpoint.
+            let usersList = [
+                { name: currentLoggedInUser || "You", xp: appData.points }
+            ];
 
             usersList.forEach((user, index) => {
                 let item = document.createElement('div');
