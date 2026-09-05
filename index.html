@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordly Learn</title>
     
-    <!-- Favicon (Browser tab en app icon) -->
     <link rel="icon" type="image/jpeg" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
     <link rel="apple-touch-icon" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
 
@@ -43,51 +42,99 @@
             overflow: hidden;
         }
 
-        /* --- STYLING VOOR LANDING / LOGIN PAGINA --- */
+        /* --- LANDING PAGE STYLING --- */
         #landing-page {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #f4f4f9;
+            background: #ffffff;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 3000;
+            padding: 20px;
+        }
+
+        .landing-hero {
+            text-align: center;
+            max-width: 450px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .landing-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--duo-green);
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(88, 204, 2, 0.2);
+        }
+
+        .landing-hero h1 {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--duo-dark);
+            margin-bottom: 10px;
+        }
+
+        .landing-hero p {
+            color: var(--duo-gray-text);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .landing-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
         }
 
         .auth-card {
             background: white;
             padding: 25px;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-lg);
             border: 2px solid var(--border);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            width: 320px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 380px;
             text-align: center;
+            animation: fadeIn 0.3s ease-out;
         }
 
         .auth-card h2 {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 900;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             color: var(--duo-dark);
         }
 
         .auth-card input {
             width: 100%;
-            padding: 10px;
+            padding: 12px 14px;
             margin: 8px 0;
             border: 2px solid var(--border);
             border-radius: var(--radius-sm);
             font-family: 'Nunito', sans-serif;
             font-weight: 700;
+            font-size: 14px;
             box-sizing: border-box;
+            background: #fdfdfd;
         }
 
-        .auth-card button {
+        .auth-card input:focus {
+            border-color: var(--accent-blue);
+            outline: none;
+        }
+
+        .auth-card button.main-auth-btn {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: var(--duo-green);
             color: white;
             border: none;
@@ -95,13 +142,23 @@
             border-radius: var(--radius-sm);
             cursor: pointer;
             font-weight: 900;
+            font-size: 14px;
             text-transform: uppercase;
-            margin-top: 10px;
+            margin-top: 14px;
             transition: var(--transition);
         }
 
-        .auth-card button:hover { filter: brightness(1.05); }
-        .auth-card button:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .auth-card button.main-auth-btn:hover { filter: brightness(1.05); }
+        .auth-card button.main-auth-btn:active { transform: translateY(2px); border-bottom-width: 2px; }
+
+        .auth-card button.secondary-btn {
+            background: #f7f7f7;
+            color: var(--duo-gray-text);
+            border: 2px solid var(--border);
+            border-bottom: 3px solid var(--border);
+            margin-top: 8px;
+        }
+        .auth-card button.secondary-btn:hover { background: #eee; }
 
         .auth-message {
             margin-top: 10px;
@@ -110,21 +167,7 @@
         }
         .success-text { color: var(--duo-green); }
         .error-text { color: #ea2b2b; }
-
-        .auth-switch {
-            margin-top: 15px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--duo-gray-text);
-        }
-
-        .auth-switch a {
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-weight: 800;
-        }
-        .auth-switch a:hover { text-decoration: underline; }
-        /* --- EINDE LANDING / LOGIN STYLING --- */
+        /* --- EINDE LANDING PAGE STYLING --- */
 
         header.top-nav {
             width: 100%;
@@ -205,9 +248,7 @@
             overflow: hidden;
         }
 
-        .lang-menu-content.show {
-            display: block;
-        }
+        .lang-menu-content.show { display: block; }
 
         .lang-option {
             padding: 8px 12px;
@@ -255,7 +296,7 @@
             color: #4b4b4b;
         }
 
-        .reset-btn {
+        .action-btn {
             background: #fee2e2;
             color: #dc2626;
             border: 2px solid #fecaca;
@@ -266,7 +307,14 @@
             cursor: pointer;
             transition: var(--transition);
         }
-        .reset-btn:hover { background: #fecaca; }
+        .action-btn:hover { background: #fecaca; }
+
+        .logout-btn {
+            background: #e0f2fe;
+            color: #0284c7;
+            border: 2px solid #bae6fd;
+        }
+        .logout-btn:hover { background: #bae6fd; }
 
         main.workspace {
             flex: 1;
@@ -528,33 +576,40 @@
 </head>
 <body>
 
-    <!-- LANDING / REGISTRATIE & LOGIN PAGINA -->
+    <!-- LANDING PAGE & AUTHENTICATIE SCHERM -->
     <div id="landing-page">
-        <!-- Registratieformulier (Standaard zichtbaar bij start) -->
-        <div id="register-box" class="auth-card">
-            <h2 id="reg-title">Registreren</h2>
-            <input type="text" id="reg-user" placeholder="Gebruikersnaam">
-            <input type="password" id="reg-pass" placeholder="Wachtwoord">
-            <button onclick="handleRegister()">Registreer</button>
-            <div id="reg-msg" class="auth-message"></div>
-            <div class="auth-switch">
-                Al een account? <a href="#" onclick="switchToLogin(event)">Log hier in</a>
+        <!-- Start / Welkom Scherm -->
+        <div id="landing-hero-box" class="landing-hero">
+            <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="landing-logo">
+            <h1>Wordly Learn</h1>
+            <p>De leukste manier om gratis talen te leren op elk apparaat.</p>
+            <div class="landing-buttons">
+                <button class="btn" onclick="showLoginBox()">Inloggen</button>
+                <button class="btn secondary-btn" onclick="showRegisterBox()" style="color:var(--duo-dark);">Account Aanmaken</button>
             </div>
         </div>
 
-        <!-- Inlogformulier (Eerst verborgen) -->
+        <!-- Inlog Formulier -->
         <div id="login-box" class="auth-card hidden">
-            <h2 id="login-title">Inloggen</h2>
+            <h2>Welkom terug</h2>
             <input type="text" id="login-user" placeholder="Gebruikersnaam">
             <input type="password" id="login-pass" placeholder="Wachtwoord">
-            <button onclick="handleLogin()">Login</button>
+            <button class="main-auth-btn" onclick="handleLogin()">Inloggen</button>
+            <button class="main-auth-btn secondary-btn" onclick="showLandingHero()">Terug</button>
             <div id="login-msg" class="auth-message"></div>
-            <div class="auth-switch">
-                Nog geen account? <a href="#" onclick="switchToRegister(event)">Registreer hier</a>
-            </div>
+        </div>
+
+        <!-- Registratie Formulier -->
+        <div id="register-box" class="auth-card hidden">
+            <h2>Account Aanmaken</h2>
+            <input type="text" id="reg-user" placeholder="Kies een gebruikersnaam">
+            <input type="password" id="reg-pass" placeholder="Kies een wachtwoord">
+            <button class="main-auth-btn" onclick="handleRegister()">Registreren</button>
+            <button class="main-auth-btn secondary-btn" onclick="showLandingHero()">Terug</button>
+            <div id="reg-msg" class="auth-message"></div>
         </div>
     </div>
-    <!-- EINDE LANDING PAGINA -->
+    <!-- EINDE LANDING PAGE -->
 
     <div id="custom-notification" class="modal-overlay hidden">
         <div class="custom-modal">
@@ -605,7 +660,8 @@
                 <div class="stat-pill">🔥 <span id="streak-display">1</span></div>
                 <div class="stat-pill">⚡ <span id="points-display">0</span> XP</div>
             </div>
-            <button class="reset-btn" id="reset-btn-text" onclick="resetProgressPrompt()">Reset</button>
+            <button class="action-btn logout-btn" id="logout-btn-text" onclick="logoutUser()">Uitloggen</button>
+            <button class="action-btn" id="reset-btn-text" onclick="resetProgressPrompt()">Reset</button>
         </div>
     </header>
 
@@ -647,14 +703,31 @@
     </main>
 
     <script>
-        // --- AUTHENTICATIE LOGICA ---
-        let registeredUser = "";
-        let registeredPass = "";
+        // --- AUTHENTICATIE & ACCOUNT LOGICA ---
+        let currentLoggedInUser = localStorage.getItem('wordly_logged_in') || null;
+
+        function showLoginBox() {
+            document.getElementById('landing-hero-box').classList.add('hidden');
+            document.getElementById('register-box').classList.add('hidden');
+            document.getElementById('login-box').classList.remove('hidden');
+        }
+
+        function showRegisterBox() {
+            document.getElementById('landing-hero-box').classList.add('hidden');
+            document.getElementById('login-box').classList.add('hidden');
+            document.getElementById('register-box').classList.remove('hidden');
+        }
+
+        function showLandingHero() {
+            document.getElementById('login-box').classList.add('hidden');
+            document.getElementById('register-box').classList.add('hidden');
+            document.getElementById('landing-hero-box').classList.remove('hidden');
+        }
 
         function handleRegister() {
-            const user = document.getElementById('reg-user').value.trim();
-            const pass = document.getElementById('reg-pass').value.trim();
-            const msg = document.getElementById('reg-msg');
+            let user = document.getElementById('reg-user').value.trim();
+            let pass = document.getElementById('reg-pass').value.trim();
+            let msg = document.getElementById('reg-msg');
 
             if (!user || !pass) {
                 msg.className = "auth-message error-text";
@@ -662,50 +735,67 @@
                 return;
             }
 
-            registeredUser = user;
-            registeredPass = pass;
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+            if (accounts[user]) {
+                msg.className = "auth-message error-text";
+                msg.innerText = "Deze gebruikersnaam bestaat al!";
+                return;
+            }
 
+            // Maak account aan met standaard lege voortgang
+            accounts[user] = {
+                password: pass,
+                data: {
+                    points: 0,
+                    streak: 1,
+                    fromLang: "nl",
+                    toLang: "en",
+                    activeChapter: 0,
+                    languageProgress: {}
+                }
+            };
+
+            localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
             msg.className = "auth-message success-text";
-            msg.innerText = "Successfully registered!";
+            msg.innerText = "Account aangemaakt! Je kunt nu inloggen.";
 
-            // Na korte vertraging automatisch naar het inlogscherm sturen
             setTimeout(() => {
-                msg.innerText = "";
+                showLoginBox();
                 document.getElementById('reg-user').value = "";
                 document.getElementById('reg-pass').value = "";
-                document.getElementById('register-box').classList.add('hidden');
-                document.getElementById('login-box').classList.remove('hidden');
+                msg.innerText = "";
             }, 1200);
         }
 
         function handleLogin() {
-            const user = document.getElementById('login-user').value.trim();
-            const pass = document.getElementById('login-pass').value.trim();
-            const msg = document.getElementById('login-msg');
+            let user = document.getElementById('login-user').value.trim();
+            let pass = document.getElementById('login-pass').value.trim();
+            let msg = document.getElementById('login-msg');
 
-            if (user === registeredUser && pass === registeredPass) {
-                msg.innerText = "";
-                document.getElementById('login-user').value = "";
-                document.getElementById('login-pass').value = "";
-                
-                // Verberg de gehele landing page en toon de echte website
-                document.getElementById('landing-page').classList.add('hidden');
-            } else {
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+
+            if (!accounts[user] || accounts[user].password !== pass) {
                 msg.className = "auth-message error-text";
                 msg.innerText = "Onjuiste gebruikersnaam of wachtwoord!";
+                return;
             }
+
+            // Sla op wie er is ingelogd zodat het onthouden wordt tot uitloggen
+            currentLoggedInUser = user;
+            localStorage.setItem('wordly_logged_in', user);
+
+            document.getElementById('login-user').value = "";
+            document.getElementById('login-pass').value = "";
+            msg.innerText = "";
+
+            // Verberg landing page en laad de app
+            initializeAppForUser();
         }
 
-        function switchToLogin(e) {
-            e.preventDefault();
-            document.getElementById('register-box').classList.add('hidden');
-            document.getElementById('login-box').classList.remove('hidden');
-        }
-
-        function switchToRegister(e) {
-            e.preventDefault();
-            document.getElementById('login-box').classList.add('hidden');
-            document.getElementById('register-box').classList.remove('hidden');
+        function logoutUser() {
+            localStorage.removeItem('wordly_logged_in');
+            currentLoggedInUser = null;
+            location.reload(); // Herlaad om de landing page weer te tonen
         }
         // --- EINDE AUTH LOGICA ---
 
@@ -727,265 +817,77 @@
 
         const uiTranslations = {
             nl: {
-                labelFrom: "Van:",
-                labelTo: "Naar:",
-                reset: "Reset",
-                stop: "✕ Stoppen",
-                examLabel: "Toets",
-                lessonLabel: "Les",
-                examPrompt: "[EINDTOETS] Vertaal:",
-                lessonPrompt: "Vertaal / Beantwoord:",
-                completeTitle: "Les Voltooid! 🎉",
-                completeSub: "Geweldig gepresteerd!",
-                continueBtn: "Doorgaan",
-                correctMsg: "Geweldig! Dat is correct.",
-                wrongMsg: "Helaas! Het juiste antwoord was:",
-                notifTitle: "Melding",
-                notifOk: "Begrepen",
-                sameLangTitle: "Let op",
+                labelFrom: "Van:", labelTo: "Naar:", reset: "Reset", stop: "✕ Stoppen", logout: "Uitloggen",
+                examLabel: "Toets", lessonLabel: "Les", examPrompt: "[EINDTOETS] Vertaal:", lessonPrompt: "Vertaal / Beantwoord:",
+                completeTitle: "Les Voltooid! 🎉", completeSub: "Geweldig gepresteerd!", continueBtn: "Doorgaan",
+                correctMsg: "Geweldig! Dat is correct.", wrongMsg: "Helaas! Het juiste antwoord was:",
+                notifTitle: "Melding", notifOk: "Begrepen", sameLangTitle: "Let op",
                 sameLangText: "De brontaal en doeltaal mogen niet hetzelfde zijn!",
-                lockTitle: "Hoofdstuk Vergrendeld",
-                lockText: "Je moet eerst alle lessen van het vorige hoofdstuk volledig afronden om dit hoofdstuk te ontgrendelen!",
-                nodeLockTitle: "Vergrendeld",
-                nodeLockText: "Voltooi eerst de vorige les in dit hoofdstuk!",
-                resetTitle: "Voortgang wissen",
-                resetText: "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?"
+                lockTitle: "Hoofdstuk Vergrendeld", lockText: "Je moet eerst alle lessen van het vorige hoofdstuk afronden!",
+                nodeLockTitle: "Vergrendeld", nodeLockText: "Voltooi eerst de vorige les in dit hoofdstuk!",
+                resetTitle: "Voortgang wissen", resetText: "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?"
             },
             en: {
-                labelFrom: "From:",
-                labelTo: "To:",
-                reset: "Reset",
-                stop: "✕ Stop",
-                examLabel: "Exam",
-                lessonLabel: "Lesson",
-                examPrompt: "[FINAL EXAM] Translate:",
-                lessonPrompt: "Translate / Answer:",
-                completeTitle: "Lesson Completed! 🎉",
-                completeSub: "Great job!",
-                continueBtn: "Continue",
-                correctMsg: "Awesome! That's correct.",
-                wrongMsg: "Too bad! The correct answer was:",
-                notifTitle: "Notice",
-                notifOk: "Got it",
-                sameLangTitle: "Attention",
+                labelFrom: "From:", labelTo: "To:", reset: "Reset", stop: "✕ Stop", logout: "Log out",
+                examLabel: "Exam", lessonLabel: "Lesson", examPrompt: "[FINAL EXAM] Translate:", lessonPrompt: "Translate / Answer:",
+                completeTitle: "Lesson Completed! 🎉", completeSub: "Great job!", continueBtn: "Continue",
+                correctMsg: "Awesome! That's correct.", wrongMsg: "Too bad! The correct answer was:",
+                notifTitle: "Notice", notifOk: "Got it", sameLangTitle: "Attention",
                 sameLangText: "Source and target languages cannot be the same!",
-                lockTitle: "Chapter Locked",
-                lockText: "You must complete all lessons of the previous chapter first to unlock this one!",
-                nodeLockTitle: "Locked",
-                nodeLockText: "Complete the previous lesson in this chapter first!",
-                resetTitle: "Clear Progress",
-                resetText: "Are you sure you want to reset all saved lessons and XP?"
+                lockTitle: "Chapter Locked", lockText: "You must complete all lessons of the previous chapter first!",
+                nodeLockTitle: "Locked", nodeLockText: "Complete the previous lesson in this chapter first!",
+                resetTitle: "Clear Progress", resetText: "Are you sure you want to reset all saved lessons and XP?"
             },
             de: {
-                labelFrom: "Von:",
-                labelTo: "Nach:",
-                reset: "Zurücksetzen",
-                stop: "✕ Stopp",
-                examLabel: "Test",
-                lessonLabel: "Lektion",
-                examPrompt: "[ABSCHLUSSTEST] Übersetze:",
-                lessonPrompt: "Übersetze / Beantworte:",
-                completeTitle: "Lektion beendet! 🎉",
-                completeSub: "Großartige Leistung!",
-                continueBtn: "Weiter",
-                correctMsg: "Super! Das ist richtig.",
-                wrongMsg: "Schade! Die richtige Antwort war:",
-                notifTitle: "Hinweis",
-                notifOk: "Verstanden",
-                sameLangTitle: "Achtung",
+                labelFrom: "Von:", labelTo: "Nach:", reset: "Zurücksetzen", stop: "✕ Stopp", logout: "Abmelden",
+                examLabel: "Test", lessonLabel: "Lektion", examPrompt: "[ABSCHLUSSTEST] Übersetze:", lessonPrompt: "Übersetze / Beantworte:",
+                completeTitle: "Lektion beendet! 🎉", completeSub: "Großartige Leistung!", continueBtn: "Weiter",
+                correctMsg: "Super! Das ist richtig.", wrongMsg: "Schade! Die richtige Antwort war:",
+                notifTitle: "Hinweis", notifOk: "Verstanden", sameLangTitle: "Achtung",
                 sameLangText: "Quell- und Zielsprache dürfen nicht identisch sein!",
-                lockTitle: "Kapitel gesperrt",
-                lockText: "Du musst erst alle Lektionen des vorherigen Kapitels abschließen!",
-                nodeLockTitle: "Gesperrt",
-                nodeLockText: "Schließe zuerst die vorherige Lektion ab!",
-                resetTitle: "Fortschritt zurücksetzen",
-                resetText: "Möchtest du wirklich alle gespeicherten Lektionen und XP zurücksetzen?"
+                lockTitle: "Kapitel gesperrt", lockText: "Du musst erst alle Lektionen des vorherigen Kapitels abschließen!",
+                nodeLockTitle: "Gesperrt", nodeLockText: "Schließe zuerst die vorherige Lektion ab!",
+                resetTitle: "Fortschritt zurücksetzen", resetText: "Möchtest du wirklich alle gespeicherten Lektionen und XP zurücksetzen?"
             },
             fr: {
-                labelFrom: "De:",
-                labelTo: "Vers:",
-                reset: "Réinitialiser",
-                stop: "✕ Quitter",
-                examLabel: "Examen",
-                lessonLabel: "Leçon",
-                examPrompt: "[EXAMEN FINAL] Traduisez:",
-                lessonPrompt: "Traduisez / Répondez:",
-                completeTitle: "Leçon terminée ! 🎉",
-                completeSub: "Excellent travail !",
-                continueBtn: "Continuer",
-                correctMsg: "Superbe ! C'est correct.",
-                wrongMsg: "Dommage ! La bonne réponse était :",
-                notifTitle: "Avis",
-                notifOk: "Compris",
-                sameLangTitle: "Attention",
+                labelFrom: "De:", labelTo: "Vers:", reset: "Réinitialiser", stop: "✕ Quitter", logout: "Déconnexion",
+                examLabel: "Examen", lessonLabel: "Leçon", examPrompt: "[EXAMEN FINAL] Traduisez:", lessonPrompt: "Traduisez / Répondez:",
+                completeTitle: "Leçon terminée ! 🎉", completeSub: "Excellent travail !", continueBtn: "Continuer",
+                correctMsg: "Superbe ! C'est correct.", wrongMsg: "Dommage ! La bonne réponse était :",
+                notifTitle: "Avis", notifOk: "Compris", sameLangTitle: "Attention",
                 sameLangText: "La langue source et la langue cible ne peuvent pas être identiques !",
-                lockTitle: "Chapitre verrouillé",
-                lockText: "Vous devez d'abord terminer toutes les leçons du chapitre précédent !",
-                nodeLockTitle: "Verrouillé",
-                nodeLockText: "Terminez d'abord la leçon précédente de ce chapitre !",
-                resetTitle: "Effacer la progression",
-                resetText: "Êtes-vous sûr de vouloir réinitialiser toute votre progression ?"
+                lockTitle: "Chapitre verrouillé", lockText: "Vous devez d'abord terminer toutes les leçons du chapitre précédent !",
+                nodeLockTitle: "Verrouillé", nodeLockText: "Terminez d'abord la leçon précédente de ce chapitre !",
+                resetTitle: "Effacer la progression", resetText: "Êtes-vous sûr de vouloir réinitialiser toute votre progression ?"
             },
             es: {
-                labelFrom: "De:",
-                labelTo: "A:",
-                reset: "Reiniciar",
-                stop: "✕ Salir",
-                examLabel: "Examen",
-                lessonLabel: "Lección",
-                examPrompt: "[EXAMEN FINAL] Traduce:",
-                lessonPrompt: "Traduce / Responde:",
-                completeTitle: "¡Lección completada! 🎉",
-                completeSub: "¡Buen trabajo!",
-                continueBtn: "Continuar",
-                correctMsg: "¡Genial! Es correcto.",
-                wrongMsg: "¡Qué pena! La respuesta correcta era:",
-                notifTitle: "Aviso",
-                notifOk: "Entendido",
-                sameLangTitle: "Atención",
+                labelFrom: "De:", labelTo: "A:", reset: "Reiniciar", stop: "✕ Salir", logout: "Cerrar sesión",
+                examLabel: "Examen", lessonLabel: "Lección", examPrompt: "[EXAMEN FINAL] Traduce:", lessonPrompt: "Traduce / Responde:",
+                completeTitle: "¡Lección completada! 🎉", completeSub: "¡Buen trabajo!", continueBtn: "Continuar",
+                correctMsg: "¡Genial! Es correcto.", wrongMsg: "¡Qué pena! La respuesta correcta era:",
+                notifTitle: "Aviso", notifOk: "Entendido", sameLangTitle: "Atención",
                 sameLangText: "¡El idioma de origen y destino no pueden ser el mismo!",
-                lockTitle: "Capítulo bloqueado",
-                lockText: "¡Debes completar todas las lecciones del capítulo anterior primero!",
-                nodeLockTitle: "Bloqueado",
-                nodeLockText: "¡Completa primero la lección anterior de este capítulo!",
-                resetTitle: "Borrar progreso",
-                resetText: "¿Estás seguro de que quieres restablecer todo tu progreso?"
+                lockTitle: "Capítulo bloqueado", lockText: "¡Debes completar todas las lecciones del capítulo anterior primero!",
+                nodeLockTitle: "Bloqueado", nodeLockText: "¡Completa primero la lección anterior de este capítulo!",
+                resetTitle: "Borrar progreso", resetText: "¿Estás seguro de que quieres restablecer todo tu progreso?"
             }
         };
 
         const chapterNamesMulti = {
-            nl: [
-                "Hoofdstuk 1: Basis & Introductie",
-                "Hoofdstuk 2: Eten & Drinken",
-                "Hoofdstuk 3: Reizen & Vervoer",
-                "Hoofdstuk 4: Familie & Mensen",
-                "Hoofdstuk 5: Huis & Omgeving",
-                "Hoofdstuk 6: Kleuren & Cijfers",
-                "Hoofdstuk 7: Dieren in de Natuur",
-                "Hoofdstuk 8: Hobby's & Sport",
-                "Hoofdstuk 9: School & Werk",
-                "Hoofdstuk 10: Tijd & Weer"
-            ],
-            en: [
-                "Chapter 1: Basics & Introduction",
-                "Chapter 2: Food & Drinks",
-                "Chapter 3: Travel & Transport",
-                "Chapter 4: Family & People",
-                "Chapter 5: House & Environment",
-                "Chapter 6: Colors & Numbers",
-                "Chapter 7: Animals in Nature",
-                "Chapter 8: Hobbies & Sport",
-                "Chapter 9: School & Work",
-                "Chapter 10: Time & Weather"
-            ],
-            de: [
-                "Kapitel 1: Grundlagen & Einführung",
-                "Kapitel 2: Essen & Trinken",
-                "Kapitel 3: Reisen & Transport",
-                "Kapitel 4: Familie & Personen",
-                "Kapitel 5: Haus & Umgebung",
-                "Kapitel 6: Farben & Zahlen",
-                "Kapitel 7: Tiere in der Natur",
-                "Kapitel 8: Hobbys & Sport",
-                "Kapitel 9: Schule & Arbeit",
-                "Kapitel 10: Zeit & Wetter"
-            ],
-            fr: [
-                "Chapitre 1 : Bases & Introduction",
-                "Chapitre 2 : Manger & Boire",
-                "Chapitre 3 : Voyage & Transport",
-                "Chapitre 4 : Famille & Personnes",
-                "Chapitre 5 : Maison & Environnement",
-                "Chapitre 6 : Couleurs & Nombres",
-                "Chapitre 7 : Animaux dans la nature",
-                "Chapitre 8 : Loisirs & Sport",
-                "Chapitre 9 : École & Travail",
-                "Chapitre 10 : Temps & Météo"
-            ],
-            es: [
-                "Capítulo 1: Básicos e Introducción",
-                "Capítulo 2: Comida y Bebida",
-                "Capítulo 3: Viajes y Transporte",
-                "Capítulo 4: Familia y Personas",
-                "Capítulo 5: Casa y Entorno",
-                "Capítulo 6: Colores y Números",
-                "Capítulo 7: Animales en la Naturaleza",
-                "Capítulo 8: Aficiones y Deporte",
-                "Capítulo 9: Escuela y Trabajo",
-                "Capítulo 10: Tiempo y Clima"
-            ]
+            nl: ["Hoofdstuk 1: Basis & Introductie", "Hoofdstuk 2: Eten & Drinken", "Hoofdstuk 3: Reizen & Vervoer", "Hoofdstuk 4: Familie & Mensen", "Hoofdstuk 5: Huis & Omgeving", "Hoofdstuk 6: Kleuren & Cijfers", "Hoofdstuk 7: Dieren in de Natuur", "Hoofdstuk 8: Hobby's & Sport", "Hoofdstuk 9: School & Werk", "Hoofdstuk 10: Tijd & Weer"],
+            en: ["Chapter 1: Basics & Introduction", "Chapter 2: Food & Drinks", "Chapter 3: Travel & Transport", "Chapter 4: Family & People", "Chapter 5: House & Environment", "Chapter 6: Colors & Numbers", "Chapter 7: Animals in Nature", "Chapter 8: Hobbies & Sport", "Chapter 9: School & Work", "Chapter 10: Time & Weather"],
+            de: ["Kapitel 1: Grundlagen & Einführung", "Kapitel 2: Essen & Trinken", "Kapitel 3: Reisen & Transport", "Kapitel 4: Familie & Personen", "Kapitel 5: Haus & Umgebung", "Kapitel 6: Farben & Zahlen", "Kapitel 7: Tiere in der Natur", "Kapitel 8: Hobbys & Sport", "Kapitel 9: Schule & Arbeit", "Kapitel 10: Zeit & Wetter"],
+            fr: ["Chapitre 1 : Bases & Introduction", "Chapitre 2 : Manger & Boire", "Chapitre 3 : Voyage & Transport", "Chapitre 4 : Famille & Personnes", "Chapitre 5 : Maison & Environnement", "Chapitre 6 : Couleurs & Nombres", "Chapitre 7 : Animaux dans la nature", "Chapitre 8 : Loisirs & Sport", "Chapitre 9 : École & Travail", "Chapitre 10 : Temps & Météo"],
+            es: ["Capítulo 1: Básicos e Introducción", "Capítulo 2: Comida y Bebida", "Capítulo 3: Viajes y Transporte", "Capítulo 4: Familia y Personas", "Capítulo 5: Casa y Entorno", "Capítulo 6: Colores y Números", "Capítulo 7: Animales en la Naturaleza", "Capítulo 8: Aficiones y Deporte", "Capítulo 9: Escuela y Trabajo", "Capítulo 10: Tiempo y Clima"]
         };
 
         const chapterDescriptionsMulti = {
-            nl: [
-                "Leer fundamentele woorden en simpele begroetingen.",
-                "Alles over lekker eten, drinken en boodschappen doen.",
-                "Vervoermiddelen, stations en reizen naar het buiteland.",
-                "Familieleden, vrienden en relaties beschrijven.",
-                "Kamers, meubels en je eigen woning.",
-                "De mooiste kleuren en getallen tellen.",
-                "Dieren in het wild en huisdieren.",
-                "Sporten, games spelen en ontspanning.",
-                "Nuttige woorden voor op school en tijdens je werk.",
-                "Het weer vandaag en besef van tijd."
-            ],
-            en: [
-                "Learn fundamental words and simple greetings.",
-                "All about great food, drinks, and grocery shopping.",
-                "Means of transport, stations, and traveling abroad.",
-                "Describe family members, friends, and relationships.",
-                "Rooms, furniture, and your own home.",
-                "The most beautiful colors and counting numbers.",
-                "Wild animals and pets.",
-                "Sports, playing games, and relaxation.",
-                "Useful words for school and during your work.",
-                "The weather today and awareness of time."
-            ],
-            de: [
-                "Lerne grundlegende Wörter und einfache Begrüßungen.",
-                "Alles über gutes Essen, Trinken und Einkaufen.",
-                "Verkehrsmittel, Bahnhöfe und Auslandsreisen.",
-                "Familienmitglieder, Freunde und Beziehungen beschreiben.",
-                "Zimmer, Möbel und dein eigenes Zuhause.",
-                "Die schönsten Farben und Zahlen zählen.",
-                "Tiere in freier Wildbahn und Haustiere.",
-                "Sport, Spiele spielen und Entspannung.",
-                "Nützliche Wörter für Schule und Arbeit.",
-                "Das Wetter heute und Zeitgefühl."
-            ],
-            fr: [
-                "Apprenez des mots fondamentaux et des salutations simples.",
-                "Tout sur la nourriture, les boissons et les courses.",
-                "Moyens de transport, gares et voyages à l'étranger.",
-                "Décrire les membres de la famille, les amis et les relations.",
-                "Pièces, meubles et votre propre maison.",
-                "Les plus belles couleurs et compter les nombres.",
-                "Animaux sauvages et animaux de compagnie.",
-                "Sports, jeux et détente.",
-                "Mots utiles pour l'école et le travail.",
-                "La météo d'aujourd'hui et la notion du temps."
-            ],
-            es: [
-                "Aprende palabras fundamentales y saludos sencillos.",
-                "Todo sobre buena comida, bebida y compras.",
-                "Medios de transporte, estaciones y viajes al extranjero.",
-                "Describe a miembros de la familia, amigos y relaciones.",
-                "Habitaciones, muebles y tu propio hogar.",
-                "Los colores más bonitos y contar números.",
-                "Animales salvajes y mascotas.",
-                "Deportes, videojuegos y relajación.",
-                "Palabras útiles para la escuela y el trabajo.",
-                "El tiempo hoy y la conciencia del tiempo."
-            ]
+            nl: ["Leer fundamentele woorden en simpele begroetingen.", "Alles over lekker eten, drinken en boodschappen doen.", "Vervoermiddelen, stations en reizen naar het buiteland.", "Familieleden, vrienden en relaties beschrijven.", "Kamers, meubels en je eigen woning.", "De mooiste kleuren en getallen tellen.", "Dieren in het wild en huisdieren.", "Sporten, games spelen en ontspanning.", "Nuttige woorden voor op school en tijdens je werk.", "Het weer vandaag en besef van tijd."],
+            en: ["Learn fundamental words and simple greetings.", "All about great food, drinks, and grocery shopping.", "Means of transport, stations, and traveling abroad.", "Describe family members, friends, and relationships.", "Rooms, furniture, and your own home.", "The most beautiful colors and counting numbers.", "Wild animals and pets.", "Sports, playing games, and relaxation.", "Useful words for school and during your work.", "The weather today and awareness of time."],
+            de: ["Lerne grundlegende Wörter und einfache Begrüßungen.", "Alles über gutes Essen, Trinken und Einkaufen.", "Verkehrsmittel, Bahnhöfe und Auslandsreisen.", "Familienmitglieder, Freunde und Beziehungen beschreiben.", "Zimmer, Möbel und dein eigenes Zuhause.", "Die schönsten Farben und Zahlen zählen.", "Tiere in freier Wildbahn und Haustiere.", "Sport, Spiele spielen und Entspannung.", "Nützliche Wörter für Schule und Arbeit.", "Das Wetter heute und Zeitgefühl."],
+            fr: ["Apprenez des mots fondamentaux et des salutations simples.", "Tout sur la nourriture, les boissons et les courses.", "Moyens de transport, gares et voyages à l'étranger.", "Décrire les membres de la famille, les amis et les relations.", "Pièces, meubles et votre propre maison.", "Les plus belles couleurs et compter les nombres.", "Animaux sauvages et animaux de compagnie.", "Sports, jeux et détente.", "Mots utiles pour l'école et le travail.", "La météo d'aujourd'hui et la notion du temps."],
+            es: ["Aprende palabras fundamentales y saludos sencillos.", "Todo sobre buena comida, bebida y compras.", "Medios de transporte, estaciones y viajes al extranjero.", "Describe a miembros de la familia, amigos y relaciones.", "Habitaciones, muebles y tu propio hogar.", "Los colores más bonitos y contar números.", "Animales salvajes y mascotas.", "Deportes, videojuegos y relajación.", "Palabras útiles para la escuela y el trabajo.", "El tiempo hoy y la conciencia del tiempo."]
         };
-
-        function t(key) {
-            let lang = appData.fromLang;
-            if (uiTranslations[lang] && uiTranslations[lang][key]) {
-                return uiTranslations[lang][key];
-            }
-            return uiTranslations["nl"][key];
-        }
 
         const masterDatabase = {
             "en": [
@@ -1003,42 +905,27 @@
             "de": [
                 [["Hallo", "Hallo"], ["Goedemorgen", "Guten Morgen"], ["Goedemiddag", "Guten Tag"], ["Goedenavond", "Guten Abend"], ["Welterusten", "Gute Nacht"], ["Dank je wel", "Danke"], ["Tot ziens", "Tschüss"], ["Alsjeblieft", "Bitte"], ["Ja", "Ja"], ["Nee", "Nein"]],
                 [["Appel", "Apfel"], ["Banaan", "Banane"], ["Water", "Wasser"], ["Brood", "Brot"], ["Melk", "Milch"], ["Kaas", "Käse"], ["Koffie", "Kaffee"], ["Thee", "Tee"], ["Vlees", "Fleisch"], ["Vis", "Fisch"]],
-                Array(10).fill(["Trein", "Zug"]),
-                Array(10).fill(["Vader", "Vater"]),
-                Array(10).fill(["Huis", "Haus"]),
-                Array(10).fill(["Rood", "Rot"]),
-                Array(10).fill(["Hond", "Hund"]),
-                Array(10).fill(["Spel", "Spiel"]),
-                Array(10).fill(["School", "Schule"]),
-                Array(10).fill(["Tijd", "Zeit"])
+                Array(10).fill(["Trein", "Zug"]), Array(10).fill(["Vader", "Vater"]), Array(10).fill(["Huis", "Haus"]),
+                Array(10).fill(["Rood", "Rot"]), Array(10).fill(["Hond", "Hund"]), Array(10).fill(["Spel", "Spiel"]),
+                Array(10).fill(["School", "Schule"]), Array(10).fill(["Tijd", "Zeit"])
             ],
             "fr": [
                 [["Hallo", "Bonjour"], ["Goedemorgen", "Bonjour"], ["Goedemiddag", "Bon après-midi"], ["Goedenavond", "Bonsoir"], ["Welterusten", "Bonne nuit"], ["Dank je wel", "Merci"], ["Tot ziens", "Au revoir"], ["Alsjeblieft", "S'il vous plaît"], ["Ja", "Oui"], ["Nee", "Non"]],
                 [["Appel", "Pomme"], ["Banaan", "Banane"], ["Water", "Eau"], ["Brood", "Pain"], ["Melk", "Lait"], ["Kaas", "Fromage"], ["Koffie", "Café"], ["Thee", "Thé"], ["Vlees", "Viande"], ["Vis", "Poisson"]],
-                Array(10).fill(["Trein", "Train"]),
-                Array(10).fill(["Vader", "Père"]),
-                Array(10).fill(["Huis", "Maison"]),
-                Array(10).fill(["Rood", "Rouge"]),
-                Array(10).fill(["Hond", "Chien"]),
-                Array(10).fill(["Spel", "Jeu"]),
-                Array(10).fill(["School", "École"]),
-                Array(10).fill(["Tijd", "Temps"])
+                Array(10).fill(["Trein", "Train"]), Array(10).fill(["Vader", "Père"]), Array(10).fill(["Huis", "Maison"]),
+                Array(10).fill(["Rood", "Rouge"]), Array(10).fill(["Hond", "Chien"]), Array(10).fill(["Spel", "Jeu"]),
+                Array(10).fill(["School", "École"]), Array(10).fill(["Tijd", "Temps"])
             ],
             "es": [
                 [["Hallo", "Hola"], ["Goedemorgen", "Buenos días"], ["Goedemiddag", "Buenas tardes"], ["Goedenavond", "Buenas noches"], ["Welterusten", "Buenas noches"], ["Dank je wel", "Gracias"], ["Tot ziens", "Adiós"], ["Alsjeblieft", "Por favor"], ["Ja", "Sí"], ["Nee", "No"]],
                 [["Appel", "Manzana"], ["Banaan", "Plátano"], ["Water", "Agua"], ["Brood", "Pan"], ["Melk", "Leche"], ["Kaas", "Queso"], ["Koffie", "Café"], ["Thee", "Té"], ["Vlees", "Carne"], ["Vis", "Pescado"]],
-                Array(10).fill(["Trein", "Tren"]),
-                Array(10).fill(["Vader", "Padre"]),
-                Array(10).fill(["Casa", "Casa"]),
-                Array(10).fill(["Rood", "Rojo"]),
-                Array(10).fill(["Hond", "Perro"]),
-                Array(10).fill(["Spel", "Juego"]),
-                Array(10).fill(["School", "Escuela"]),
-                Array(10).fill(["Tijd", "Tiempo"])
+                Array(10).fill(["Trein", "Tren"]), Array(10).fill(["Vader", "Padre"]), Array(10).fill(["Casa", "Casa"]),
+                Array(10).fill(["Rood", "Rojo"]), Array(10).fill(["Hond", "Perro"]), Array(10).fill(["Spel", "Juego"]),
+                Array(10).fill(["School", "Escuela"]), Array(10).fill(["Tijd", "Tiempo"])
             ]
         };
 
-        let appData = JSON.parse(localStorage.getItem('wordly_learn_v9')) || {
+        let appData = {
             points: 0,
             streak: 1,
             fromLang: "nl",
@@ -1048,14 +935,26 @@
         };
 
         function saveData() {
-            localStorage.setItem('wordly_learn_v9', JSON.stringify(appData));
+            if (!currentLoggedInUser) return;
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+            if (accounts[currentLoggedInUser]) {
+                accounts[currentLoggedInUser].data = appData;
+                localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
+            }
         }
 
         window.onload = function() {
-            updateUIStrings();
-            renderChapterTabs();
-            updateDashboardStats();
-            renderPath();
+            // Controleer of er al iemand is ingelogd op dit apparaat
+            if (currentLoggedInUser) {
+                let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+                if (accounts[currentLoggedInUser]) {
+                    appData = accounts[currentLoggedInUser].data;
+                    initializeAppForUser();
+                } else {
+                    currentLoggedInUser = null;
+                    localStorage.removeItem('wordly_logged_in');
+                }
+            }
 
             window.onclick = function(event) {
                 if (!event.target.closest('.custom-dropdown-container')) {
@@ -1063,6 +962,15 @@
                 }
             };
         };
+
+        function initializeAppForUser() {
+            // Verberg de gehele landing page overlay
+            document.getElementById('landing-page').classList.add('hidden');
+            updateUIStrings();
+            renderChapterTabs();
+            updateDashboardStats();
+            renderPath();
+        }
 
         function toggleMenu(menuId) {
             document.querySelectorAll('.lang-menu-content').forEach(m => {
@@ -1095,6 +1003,14 @@
             document.querySelectorAll('.lang-menu-content').forEach(m => m.classList.remove('show'));
         }
 
+        function t(key) {
+            let lang = appData.fromLang;
+            if (uiTranslations[lang] && uiTranslations[lang][key]) {
+                return uiTranslations[lang][key];
+            }
+            return uiTranslations["nl"][key];
+        }
+
         function updateUIStrings() {
             document.getElementById('from-flag').src = flags[appData.fromLang] || flags.nl;
             document.getElementById('from-label').innerText = langNames[appData.fromLang];
@@ -1105,6 +1021,7 @@
             document.getElementById('label-to-text').innerText = t("labelTo");
             document.getElementById('reset-btn-text').innerText = t("reset");
             document.getElementById('stop-btn-text').innerText = t("stop");
+            document.getElementById('logout-btn-text').innerText = t("logout");
             document.getElementById('notif-ok-btn').innerText = t("notifOk");
             document.getElementById('complete-continue-btn').innerText = t("continueBtn");
             document.getElementById('complete-title-text').innerText = t("completeTitle");
@@ -1350,7 +1267,8 @@
             showNotification(t("resetTitle"), t("resetText"));
             let modalBtn = document.querySelector('.custom-modal .btn');
             modalBtn.onclick = function() {
-                localStorage.removeItem('wordly_learn_v9');
+                appData = { points: 0, streak: 1, fromLang: "nl", toLang: "en", activeChapter: 0, languageProgress: {} };
+                saveData();
                 location.reload();
             };
         }
