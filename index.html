@@ -45,7 +45,7 @@
             overflow: hidden;
         }
 
-        /* --- LANDING PAGE STYLING (SCROLLBAAR & VOL) --- */
+        /* --- LANDING PAGE STYLING --- */
         #landing-page {
             position: fixed;
             top: 0;
@@ -124,7 +124,6 @@
             margin: 0 auto;
         }
 
-        /* Sectie met redenen waarom mijne de beste is (Volle landingspagina) */
         .landing-features-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -231,7 +230,6 @@
         }
         .success-text { color: var(--duo-green); }
         .error-text { color: #ea2b2b; }
-        /* --- EINDE LANDING PAGE STYLING --- */
 
         header.top-nav {
             width: 100%;
@@ -382,6 +380,13 @@
         }
         .logout-btn:hover { background: #bae6fd; }
 
+        .profile-btn {
+            background: #fef08a;
+            color: #854d0e;
+            border: 2px solid #fde047;
+        }
+        .profile-btn:hover { background: #fde047; }
+
         main.workspace {
             flex: 1;
             width: 100%;
@@ -504,6 +509,11 @@
             border-bottom: 5px solid #cc7700;
         }
 
+        .duo-node.review-node {
+            background: #8b5cf6;
+            border-bottom: 5px solid #6d28d9;
+        }
+
         .card {
             background: var(--card-bg);
             border: 2px solid var(--border);
@@ -615,40 +625,25 @@
 
         .hidden { display: none !important; }
 
-        /* --- ZWARTE KAT MASCOT ANIMATIE STYLING --- */
-        .mascot-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        /* --- ZWARTE KAT MASCOT TUSSENSCHERM --- */
+        .cat-interstitial-card {
             background: #1e1e1e;
             color: #ffffff;
-            padding: 12px 16px;
+            padding: 30px;
             border-radius: var(--radius-md);
-            margin-bottom: 16px;
-            border-bottom: 4px solid #000;
-            animation: bounceIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+            border-bottom: 6px solid #000;
         }
-
-        @keyframes bounceIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .black-cat-avatar {
-            font-size: 32px;
-            animation: catBounce 1s infinite alternate ease-in-out;
+        .cat-avatar-large {
+            font-size: 64px;
+            margin-bottom: 15px;
             display: inline-block;
+            animation: catBounce 1s infinite alternate ease-in-out;
         }
-
         @keyframes catBounce {
             0% { transform: translateY(0) rotate(-5deg); }
-            100% { transform: translateY(-5px) rotate(5deg); }
-        }
-
-        .mascot-speech {
-            font-size: 13px;
-            font-weight: 800;
-            line-height: 1.4;
+            100% { transform: translateY(-8px) rotate(5deg); }
         }
 
         /* --- LEADERBOARD STYLING --- */
@@ -657,34 +652,11 @@
             animation: fadeIn 0.3s ease-out;
         }
 
-        .lb-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .lb-tab {
-            flex: 1;
-            padding: 8px;
-            background: #f7f7f7;
-            border: 2px solid var(--border);
-            border-radius: var(--radius-sm);
-            font-weight: 900;
-            font-size: 12px;
-            cursor: pointer;
-            text-align: center;
-            color: var(--duo-gray-text);
-        }
-        .lb-tab.active {
-            background: var(--duo-light-green);
-            border-color: var(--duo-green);
-            color: var(--duo-green);
-        }
-
         .lb-list {
             display: flex;
             flex-direction: column;
             gap: 8px;
+            margin-top: 10px;
         }
 
         .lb-item {
@@ -702,11 +674,6 @@
         .lb-item.user-highlight {
             background: var(--duo-light-green);
             border-color: var(--duo-green);
-        }
-
-        .lb-rank {
-            width: 24px;
-            color: var(--duo-gray-text);
         }
 
         .custom-modal {
@@ -736,7 +703,7 @@
 </head>
 <body>
 
-    <!-- LANDING PAGE & AUTHENTICATIE SCHERM (VOL EN SCROLLBAAR, ENGELS) -->
+    <!-- LANDING PAGE & AUTHENTICATIE SCHERM -->
     <div id="landing-page">
         <header class="landing-header-bar">
             <div class="logo-area">
@@ -748,7 +715,6 @@
         </header>
 
         <div class="landing-content-wrapper">
-            <!-- Hero Box -->
             <div id="landing-hero-box" class="landing-hero">
                 <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="landing-logo">
                 <h1>The smartest and most fun way to learn languages for free.</h1>
@@ -759,7 +725,6 @@
                 </div>
             </div>
 
-            <!-- Login Card -->
             <div id="login-box" class="auth-card hidden">
                 <h2>Welcome Back</h2>
                 <input type="text" id="login-user" placeholder="Username">
@@ -769,7 +734,6 @@
                 <div id="login-msg" class="auth-message"></div>
             </div>
 
-            <!-- Register Card -->
             <div id="register-box" class="auth-card hidden">
                 <h2>Create Your Account</h2>
                 <input type="text" id="reg-user" placeholder="Choose a username">
@@ -779,7 +743,6 @@
                 <div id="reg-msg" class="auth-message"></div>
             </div>
 
-            <!-- Extra volle content met redenen waarom het de beste is (om te kunnen scrollen) -->
             <div class="landing-features-section" id="landing-features-container">
                 <div class="feature-box">
                     <h3>🚀 100% Free & Accessible</h3>
@@ -787,22 +750,21 @@
                 </div>
                 <div class="feature-box">
                     <h3>🎮 Gamified Learning Path</h3>
-                    <p>Earn XP, maintain daily streaks, climb the competitive weekly leaderboards, and unlock exciting new chapters.</p>
+                    <p>Earn XP, maintain daily streaks, climb the competitive leaderboards, and unlock exciting new chapters.</p>
                 </div>
                 <div class="feature-box">
-                    <h3>🐈‍⬛ Interactive Mascot Support</h3>
-                    <p>Our friendly black cat mascot will guide you through tricky questions and cheer you on every step of the way.</p>
+                    <h3>🐈‍⬛ Smart Mascot Guidance</h3>
+                    <p>Our friendly black cat mascot reviews your progress between lessons without interrupting your active questions.</p>
                 </div>
                 <div class="feature-box">
-                    <h3>🌍 Multiple Languages</h3>
-                    <p>Switch seamlessly between Dutch, English, German, French, and Spanish with our custom language setup prompts.</p>
+                    <h3>🛠️ Mistakes & Profiles</h3>
+                    <p>Review your mistakes before taking exams and track your personal statistics with dedicated user profiles.</p>
                 </div>
             </div>
         </div>
     </div>
-    <!-- EINDE LANDING PAGE -->
 
-    <!-- TAAL-KEUZE PROMPT MODAL (Gedupliceerd van rechtsboven, verschijnt direct na inloggen) -->
+    <!-- TAAL-KEUZE PROMPT MODAL -->
     <div id="lang-prompt-modal" class="modal-overlay hidden">
         <div class="custom-modal" style="max-width: 400px;">
             <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--duo-green); margin-bottom: 12px; object-fit: cover;">
@@ -810,8 +772,6 @@
             <p>Select your base language and the language you want to learn right now:</p>
             
             <div style="background: #f7f7f7; padding: 15px; border-radius: var(--radius-sm); border: 2px solid var(--border); display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; align-items: center;">
-                
-                <!-- Gedupliceerde Taalkeuzer Controls -->
                 <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
                     <span id="prompt-label-from" style="font-weight: 800; font-size: 13px;">From:</span>
                     <div class="custom-dropdown-container">
@@ -845,10 +805,23 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
             <button class="btn" onclick="confirmLangPromptAndStart()">Start Learning</button>
+        </div>
+    </div>
+
+    <!-- PROFIEL MODAL -->
+    <div id="profile-modal" class="modal-overlay hidden">
+        <div class="custom-modal">
+            <h3 id="profile-username-title">Gebruikersprofiel</h3>
+            <p id="profile-details-text">Statistieken en voortgang</p>
+            <div style="background: #f7f7f7; padding: 12px; border-radius: var(--radius-sm); border: 2px solid var(--border); margin-bottom: 15px; text-align: left; font-size: 13px; font-weight: 800;">
+                <div>👤 Gebruiker: <span id="prof-user" style="color: var(--duo-green);"></span></div>
+                <div>🔥 Streak: <span id="prof-streak"></span> dagen</div>
+                <div>🏆 Totale XP: <span id="prof-xp"></span></div>
+                <div>📚 Actief Hoofdstuk: <span id="prof-chapter"></span></div>
+            </div>
+            <button class="btn" onclick="closeProfileModal()">Sluiten</button>
         </div>
     </div>
 
@@ -902,6 +875,7 @@
                 <div class="stat-pill">🔥 <span id="streak-display">1</span></div>
                 <div class="stat-pill" onclick="openLeaderboard()">🏆 <span id="points-display">0</span> XP</div>
             </div>
+            <button class="action-btn profile-btn" onclick="openProfileModal()">Profiel</button>
             <button class="action-btn logout-btn" id="logout-btn-text" onclick="logoutUser()">Log out</button>
             <button class="action-btn" id="reset-btn-text" onclick="resetProgressPrompt()">Reset</button>
         </div>
@@ -921,13 +895,8 @@
                 <div class="duo-path" id="path-container"></div>
             </div>
 
-            <!-- Les Scherm met Zwarte Kat Mascot -->
+            <!-- Les Scherm -->
             <div id="page-lesson" class="card page-section hidden">
-                <div id="cat-mascot-box" class="mascot-container hidden">
-                    <div class="black-cat-avatar">🐈‍⬛</div>
-                    <div id="cat-speech-text" class="mascot-speech"></div>
-                </div>
-
                 <div class="lesson-top-bar">
                     <button class="back-btn" id="stop-btn-text" onclick="backToDashboard()">✕ Stop</button>
                     <div class="progress-bar-container">
@@ -942,6 +911,16 @@
                 <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Continue</button>
             </div>
 
+            <!-- Zwarte Kat Tussenscherm (Geen pop-up tijdens vragen) -->
+            <div id="page-cat-interstitial" class="card page-section hidden" style="text-align: center;">
+                <div class="cat-interstitial-card">
+                    <div class="cat-avatar-large">🐈‍⬛</div>
+                    <h3 style="font-size: 20px; font-weight: 900; margin-bottom: 10px;">Zwarte Kat Coördinatie</h3>
+                    <p id="cat-interstitial-text" style="font-size: 14px; font-weight: 800; margin-bottom: 20px; line-height: 1.5;"></p>
+                    <button class="btn" onclick="resumeAfterCat()">Verder gaan</button>
+                </div>
+            </div>
+
             <!-- Les Voltooid Scherm -->
             <div id="page-complete" class="card page-section hidden" style="text-align: center;">
                 <h2 id="complete-title-text" style="font-size: 22px; font-weight: 900; color: var(--duo-green); margin-bottom: 8px;">Lesson Completed! 🎉</h2>
@@ -949,7 +928,7 @@
                 <button class="btn" id="complete-continue-btn" onclick="backToDashboard()">Continue</button>
             </div>
 
-            <!-- Leaderboard Scherm -->
+            <!-- Leaderboard Scherm (Echte personen, geen wekelijks/NPCs) -->
             <div id="page-leaderboard" class="card page-section hidden">
                 <div class="lesson-top-bar" style="margin-bottom: 12px;">
                     <button class="back-btn" onclick="backToDashboard()">← <span id="lb-back-text">Back</span></button>
@@ -957,10 +936,7 @@
                     <div></div>
                 </div>
                 <div class="leaderboard-container">
-                    <div class="lb-tabs">
-                        <div id="lb-tab-weekly" class="lb-tab active" onclick="switchLeaderboard('weekly')">Weekly</div>
-                        <div id="lb-tab-alltime" class="lb-tab" onclick="switchLeaderboard('alltime')">All-Time</div>
-                    </div>
+                    <p style="font-size: 12px; font-weight: 700; color: var(--duo-gray-text); margin-bottom: 10px;">Ranglijst van echte gebruikers:</p>
                     <div id="lb-list-container" class="lb-list"></div>
                 </div>
             </div>
@@ -1019,7 +995,8 @@
                     fromLang: "nl",
                     toLang: "en",
                     activeChapter: 0,
-                    languageProgress: {}
+                    languageProgress: {},
+                    mistakes: []
                 }
             };
 
@@ -1055,7 +1032,6 @@
             document.getElementById('login-pass').value = "";
             msg.innerText = "";
 
-            // Toon de taalkeuze prompt direct na inloggen
             showLangPromptModal();
         }
 
@@ -1064,7 +1040,19 @@
             currentLoggedInUser = null;
             location.reload();
         }
-        // --- EINDE AUTH LOGICA ---
+
+        // --- PROFIEL MODAL FUNCTIES ---
+        function openProfileModal() {
+            document.getElementById('prof-user').innerText = currentLoggedInUser || "Onbekend";
+            document.getElementById('prof-streak').innerText = appData.streak;
+            document.getElementById('prof-xp').innerText = appData.points;
+            document.getElementById('prof-chapter').innerText = appData.activeChapter + 1;
+            document.getElementById('profile-modal').classList.remove('hidden');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profile-modal').classList.add('hidden');
+        }
 
         const flags = {
             nl: "https://flagcdn.com/w40/nl.png",
@@ -1082,7 +1070,6 @@
             es: "Spaans"
         };
 
-        // Tijdelijke selectie in de prompt modal
         let promptTempFrom = "nl";
         let promptTempTo = "en";
 
@@ -1126,16 +1113,17 @@
             appData.fromLang = promptTempFrom;
             appData.toLang = promptTempTo;
             appData.activeChapter = 0;
+            if(!appData.mistakes) appData.mistakes = [];
             saveData();
             document.getElementById('lang-prompt-modal').classList.add('hidden');
             initializeAppForUser();
         }
 
-        // UI vertalingen
         const uiTranslations = {
             nl: {
                 labelFrom: "Van:", labelTo: "Naar:", reset: "Reset", stop: "✕ Stoppen", logout: "Uitloggen",
-                examLabel: "Toets", lessonLabel: "Les", examPrompt: "[EINDTOETS] Vertaal:", lessonPrompt: "Vertaal / Beantwoord:",
+                examLabel: "Toets", lessonLabel: "Les", reviewLabel: "Fouten",
+                examPrompt: "[EINDTOETS] Vertaal:", lessonPrompt: "Vertaal / Beantwoord:", reviewPrompt: "[FOUTEN VERBETEREN] Vertaal:",
                 completeTitle: "Les Voltooid! 🎉", completeSub: "Geweldig gepresteerd!", continueBtn: "Doorgaan",
                 correctMsg: "Geweldig! Dat is correct.", wrongMsg: "Helaas! Het juiste antwoord was:",
                 notifTitle: "Melding", notifOk: "Begrepen", sameLangTitle: "Let op",
@@ -1143,18 +1131,19 @@
                 lockTitle: "Hoofdstuk Vergrendeld", lockText: "Je moet eerst alle lessen van het vorige hoofdstuk afronden!",
                 nodeLockTitle: "Vergrendeld", nodeLockText: "Voltooi eerst de vorige les in dit hoofdstuk!",
                 resetTitle: "Voortgang wissen", resetText: "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?",
-                lbTitle: "Leaderboard", lbWeekly: "Wekelijks", lbAllTime: "All-Time", lbBack: "Terug",
+                lbTitle: "Leaderboard", lbBack: "Terug",
                 catQuotes: [
-                    "Miauwerd! Jij gaat als een speer!",
-                    "Purrr... Wat een fantastisch antwoord!",
-                    "Een echte kampioen geeft nooit op!",
-                    "Hou vol! Je doet het geweldig!",
-                    "Mijn zwarte klauwen zeggen: dit is correct!"
+                    "Miauwerd! Jij gaat als een speer door deze les heen!",
+                    "Purrr... Wat een fantastisch antwoord zeg!",
+                    "Een echte kampioen geeft nooit op, ga zo door!",
+                    "Hou vol! Je doet het geweldig in deze sessie!",
+                    "Mijn zwarte klauwen zeggen: je bent goed bezig!"
                 ]
             },
             en: {
                 labelFrom: "From:", labelTo: "To:", reset: "Reset", stop: "✕ Stop", logout: "Log out",
-                examLabel: "Exam", lessonLabel: "Lesson", examPrompt: "[FINAL EXAM] Translate:", lessonPrompt: "Translate / Answer:",
+                examLabel: "Exam", lessonLabel: "Lesson", reviewLabel: "Mistakes",
+                examPrompt: "[FINAL EXAM] Translate:", lessonPrompt: "Translate / Answer:", reviewPrompt: "[MISTAKES REVIEW] Translate:",
                 completeTitle: "Lesson Completed! 🎉", completeSub: "Great job!", continueBtn: "Continue",
                 correctMsg: "Awesome! That's correct.", wrongMsg: "Too bad! The correct answer was:",
                 notifTitle: "Notice", notifOk: "Got it", sameLangTitle: "Attention",
@@ -1162,9 +1151,9 @@
                 lockTitle: "Chapter Locked", lockText: "You must complete all lessons of the previous chapter first!",
                 nodeLockTitle: "Locked", nodeLockText: "Complete the previous lesson in this chapter first!",
                 resetTitle: "Clear Progress", resetText: "Are you sure you want to reset all saved lessons and XP?",
-                lbTitle: "Leaderboard", lbWeekly: "Weekly", lbAllTime: "All-Time", lbBack: "Back",
+                lbTitle: "Leaderboard", lbBack: "Back",
                 catQuotes: [
-                    "Meow! You're on fire!",
+                    "Meow! You're on fire today!",
                     "Purrr... What a fantastic answer!",
                     "A true champion never gives up!",
                     "Keep going! You're doing great!",
@@ -1173,7 +1162,8 @@
             },
             de: {
                 labelFrom: "Von:", labelTo: "Nach:", reset: "Zurücksetzen", stop: "✕ Stopp", logout: "Abmelden",
-                examLabel: "Test", lessonLabel: "Lektion", examPrompt: "[ABSCHLUSSTEST] Übersetze:", lessonPrompt: "Übersetze / Beantworte:",
+                examLabel: "Test", lessonLabel: "Lektion", reviewLabel: "Fehler",
+                examPrompt: "[ABSCHLUSSTEST] Übersetze:", lessonPrompt: "Übersetze / Beantworte:", reviewPrompt: "[FEHLER VERBESSERN] Übersetze:",
                 completeTitle: "Lektion beendet! 🎉", completeSub: "Großartige Leistung!", continueBtn: "Weiter",
                 correctMsg: "Super! Das ist richtig.", wrongMsg: "Schade! Die richtige Antwort war:",
                 notifTitle: "Hinweis", notifOk: "Verstanden", sameLangTitle: "Achtung",
@@ -1181,7 +1171,7 @@
                 lockTitle: "Kapitel gesperrt", lockText: "Du musst erst alle Lektionen des vorherigen Kapitels abschließen!",
                 nodeLockTitle: "Gesperrt", nodeLockText: "Schließe zuerst die vorherige Lektion ab!",
                 resetTitle: "Fortschritt zurücksetzen", resetText: "Möchtest du wirklich alle gespeicherten Lektionen und XP zurücksetzen?",
-                lbTitle: "Bestenliste", lbWeekly: "Wöchentlich", lbAllTime: "All-Time", lbBack: "Zurück",
+                lbTitle: "Bestenliste", lbBack: "Zurück",
                 catQuotes: [
                     "Miau! Du bist spitze!",
                     "Purrr... Was für eine tolle Antwort!",
@@ -1192,7 +1182,8 @@
             },
             fr: {
                 labelFrom: "De:", labelTo: "Vers:", reset: "Réinitialiser", stop: "✕ Quitter", logout: "Déconnexion",
-                examLabel: "Examen", lessonLabel: "Leçon", examPrompt: "[EXAMEN FINAL] Traduisez:", lessonPrompt: "Traduisez / Répondez:",
+                examLabel: "Examen", lessonLabel: "Leçon", reviewLabel: "Erreurs",
+                examPrompt: "[EXAMEN FINAL] Traduisez:", lessonPrompt: "Traduisez / Répondez:", reviewPrompt: "[CORRECTION DES ERREURS] Traduisez:",
                 completeTitle: "Leçon terminée ! 🎉", completeSub: "Excellent travail !", continueBtn: "Continuer",
                 correctMsg: "Superbe ! C'est correct.", wrongMsg: "Dommage ! La bonne réponse était :",
                 notifTitle: "Avis", notifOk: "Compris", sameLangTitle: "Attention",
@@ -1200,7 +1191,7 @@
                 lockTitle: "Chapitre verrouillé", lockText: "Vous devez d'abord terminer toutes les leçons du chapitre précédent !",
                 nodeLockTitle: "Verrouillé", nodeLockText: "Terminez d'abord la leçon précédente de ce chapitre !",
                 resetTitle: "Effacer la progression", resetText: "Êtes-vous sûr de vouloir réinitialiser toute votre progression ?",
-                lbTitle: "Classement", lbWeekly: "Hebdomadaire", lbAllTime: "All-Time", lbBack: "Retour",
+                lbTitle: "Classement", lbBack: "Retour",
                 catQuotes: [
                     "Miaou ! Tu gères un max !",
                     "Purrr... Quelle excellente réponse !",
@@ -1211,7 +1202,8 @@
             },
             es: {
                 labelFrom: "De:", labelTo: "A:", reset: "Reiniciar", stop: "✕ Salir", logout: "Cerrar sesión",
-                examLabel: "Examen", lessonLabel: "Lección", examPrompt: "[EXAMEN FINAL] Traduce:", lessonPrompt: "Traduce / Responde:",
+                examLabel: "Examen", lessonLabel: "Lección", reviewLabel: "Errores",
+                examPrompt: "[EXAMEN FINAL] Traduce:", lessonPrompt: "Traduce / Responde:", reviewPrompt: "[REVISIÓN DE ERRORES] Traduce:",
                 completeTitle: "¡Lección completada! 🎉", completeSub: "¡Buen trabajo!", continueBtn: "Continuar",
                 correctMsg: "¡Genial! Es correcto.", wrongMsg: "¡Qué pena! La respuesta correcta era:",
                 notifTitle: "Aviso", notifOk: "Entendido", sameLangTitle: "Atención",
@@ -1219,7 +1211,7 @@
                 lockTitle: "Capítulo bloqueado", lockText: "¡Debes completar todas lecciones del capítulo anterior primero!",
                 nodeLockTitle: "Bloqueado", nodeLockText: "¡Completa primero la lección anterior de este capítulo!",
                 resetTitle: "Borrar progreso", resetText: "¿Estás seguro de que quieres restablecer todo tu progreso?",
-                lbTitle: "Clasificación", lbWeekly: "Semanal", lbAllTime: "All-Time", lbBack: "Volver",
+                lbTitle: "Clasificación", lbBack: "Volver",
                 catQuotes: [
                     "¡Miau! ¡Lo estás bordando!",
                     "Purrr... ¡Qué respuesta tan brillante!",
@@ -1288,7 +1280,8 @@
             fromLang: "nl",
             toLang: "en",
             activeChapter: 0,
-            languageProgress: {}
+            languageProgress: {},
+            mistakes: []
         };
 
         function saveData() {
@@ -1305,6 +1298,7 @@
                 let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
                 if (accounts[currentLoggedInUser]) {
                     appData = accounts[currentLoggedInUser].data;
+                    if(!appData.mistakes) appData.mistakes = [];
                     initializeAppForUser();
                 } else {
                     currentLoggedInUser = null;
@@ -1384,8 +1378,6 @@
             document.getElementById('complete-text').innerText = t("completeSub");
 
             document.getElementById('lb-main-title').innerText = t("lbTitle");
-            document.getElementById('lb-tab-weekly').innerText = t("lbWeekly");
-            document.getElementById('lb-tab-alltime').innerText = t("lbAllTime");
             document.getElementById('lb-back-text').innerText = t("lbBack");
         }
 
@@ -1449,7 +1441,7 @@
             let container = document.getElementById('path-container');
             container.innerHTML = "";
             
-            let totalNodes = 6;
+            let totalNodes = 6; // 0 tot 3 normale lessen, 4 is Fouten verbeteren, 5 is Eindtoets
             let langProgress = getCurrentLangCompletedMap();
             let currentKey = `ch${appData.activeChapter}`;
             let langCompleted = langProgress[currentKey] || [];
@@ -1461,19 +1453,25 @@
                 let isDone = langCompleted.includes(i);
                 let isUnlocked = i === 0 || langCompleted.includes(i - 1);
                 let isExam = (i === totalNodes - 1);
+                let isReview = (i === totalNodes - 2);
 
                 let node = document.createElement('button');
-                node.className = `duo-node ${isExam ? 'exam-node' : ''} ${isDone ? 'done' : (!isUnlocked ? 'locked' : 'current')}`;
-                if(isDone) node.style.background = isExam ? "#ff9600" : "var(--duo-green)";
+                node.className = `duo-node ${isExam ? 'exam-node' : (isReview ? 'review-node' : '')} ${isDone ? 'done' : (!isUnlocked ? 'locked' : 'current')}`;
                 
                 if(isExam) {
                     node.innerHTML = `🏆<span class="node-label">${t("examLabel")}</span>`;
+                } else if(isReview) {
+                    node.innerHTML = `🔧<span class="node-label">${t("reviewLabel")}</span>`;
                 } else {
                     node.innerHTML = `${i + 1}<span class="node-label">${t("lessonLabel")}</span>`;
                 }
                 
                 if(isUnlocked) {
-                    node.onclick = () => startLesson(i, isExam);
+                    if(isReview) {
+                        node.onclick = () => startReviewLesson(i);
+                    } else {
+                        node.onclick = () => startLesson(i, isExam);
+                    }
                 } else {
                     node.onclick = () => {
                         showNotification(t("nodeLockTitle"), t("nodeLockText"));
@@ -1526,11 +1524,12 @@
             }
         }
 
-        let activeQuestions = [], currentQIdx = 0, activeLessonIdx = 0, isCurrentExam = false;
+        let activeQuestions = [], currentQIdx = 0, activeLessonIdx = 0, isCurrentExam = false, isCurrentReview = false;
 
         function startLesson(lessonIdx, isExam) {
             activeLessonIdx = lessonIdx;
             isCurrentExam = isExam;
+            isCurrentReview = false;
             let fullWordList = getChapterWordList();
             activeQuestions = [];
 
@@ -1551,29 +1550,58 @@
             }
 
             currentQIdx = 0;
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-lesson').classList.remove('hidden');
             
-            triggerCatMascot();
             loadQuestion();
         }
 
-        function triggerCatMascot() {
-            let catBox = document.getElementById('cat-mascot-box');
+        function startReviewLesson(lessonIdx) {
+            activeLessonIdx = lessonIdx;
+            isCurrentExam = false;
+            isCurrentReview = true;
+            activeQuestions = [];
+
+            let mistakesList = appData.mistakes || [];
+            let fullWordList = getChapterWordList();
+
+            if(mistakesList.length > 0) {
+                mistakesList.forEach(m => {
+                    let item = fullWordList.find(w => w[0] === m.q) || fullWordList[0];
+                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+                });
+            } else {
+                // Als er geen fouten zijn, pak wat standaardwoorden om te oefenen
+                for(let q = 0; q < 4; q++) {
+                    let item = fullWordList[q % fullWordList.length];
+                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+                }
+            }
+
+            currentQIdx = 0;
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-lesson').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function triggerCatInterstitial() {
             let quotes = uiTranslations[appData.fromLang]?.catQuotes || uiTranslations["nl"].catQuotes;
             let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
             
-            document.getElementById('cat-speech-text').innerText = randomQuote;
-            catBox.classList.remove('hidden');
-            
-            setTimeout(() => {
-                catBox.classList.add('hidden');
-            }, 4500);
+            document.getElementById('cat-interstitial-text').innerText = randomQuote;
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-cat-interstitial').classList.remove('hidden');
+        }
+
+        function resumeAfterCat() {
+            document.getElementById('page-cat-interstitial').classList.add('hidden');
+            document.getElementById('page-lesson').classList.remove('hidden');
+            proceedNextQuestion();
         }
 
         function loadQuestion() {
             if(currentQIdx >= activeQuestions.length) {
-                appData.points += isCurrentExam ? 50 : 20;
+                appData.points += isCurrentExam ? 50 : (isCurrentReview ? 30 : 20);
                 
                 let langProgress = getCurrentLangCompletedMap();
                 let key = `ch${appData.activeChapter}`;
@@ -1584,13 +1612,9 @@
                 saveData();
                 updateDashboardStats();
 
-                document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+                document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
                 document.getElementById('page-complete').classList.remove('hidden');
                 return;
-            }
-
-            if (currentQIdx > 0 && currentQIdx % 2 === 0) {
-                triggerCatMascot();
             }
 
             let qObj = activeQuestions[currentQIdx];
@@ -1598,9 +1622,11 @@
             document.getElementById('lesson-progress-bar').style.width = `${progressPercent}%`;
             document.getElementById('lesson-progress-text').innerText = `${currentQIdx + 1}/${activeQuestions.length}`;
             
-            document.getElementById('question-prompt').innerText = isCurrentExam 
-                ? `${t("examPrompt")} "${qObj.q}"` 
-                : `${t("lessonPrompt")} "${qObj.q}"`;
+            let promptText = t("lessonPrompt");
+            if(isCurrentExam) promptText = t("examPrompt");
+            if(isCurrentReview) promptText = t("reviewPrompt");
+
+            document.getElementById('question-prompt').innerText = `${promptText} "${qObj.q}"`;
 
             let area = document.getElementById('answers-area');
             area.innerHTML = "";
@@ -1614,51 +1640,59 @@
                 let btn = document.createElement('button');
                 btn.className = "btn option-btn";
                 btn.innerText = opt;
-                btn.onclick = () => checkMcAnswer(opt, qObj.a);
+                btn.onclick = () => checkMcAnswer(opt, qObj.a, qObj.q);
                 area.appendChild(btn);
             });
         }
 
-        function checkMcAnswer(given, correct) {
+        function checkMcAnswer(given, correct, questionText) {
             let area = document.getElementById('answers-area');
             area.querySelectorAll('button').forEach(b => b.disabled = true);
 
             if(given.toLowerCase() === correct.toLowerCase()) {
                 area.innerHTML += `<div class="feedback-box-correct">${t("correctMsg")}</div>`;
+                // Verwijder uit foutenlijst als hij nu goed is beantwoord
+                appData.mistakes = (appData.mistakes || []).filter(m => m.q !== questionText);
             } else {
                 area.innerHTML += `<div class="feedback-box-wrong">${t("wrongMsg")} <strong>${correct}</strong></div>`;
+                // Voeg toe aan foutenlijst als hij fout is
+                if(!appData.mistakes) appData.mistakes = [];
+                if(!appData.mistakes.some(m => m.q === questionText)) {
+                    appData.mistakes.push({ q: questionText, a: correct });
+                }
             }
+            saveData();
             document.getElementById('next-btn').classList.remove('hidden');
         }
 
         function nextQuestion() {
             currentQIdx++;
+            // Slimme zwarte kat verschijnt op een rustig moment tussen opdrachten door (bijv. bij vraag 2 of 4)
+            if (currentQIdx > 0 && currentQIdx % 2 === 0 && currentQIdx < activeQuestions.length) {
+                triggerCatInterstitial();
+            } else {
+                proceedNextQuestion();
+            }
+        }
+
+        function proceedNextQuestion() {
             loadQuestion();
         }
 
         function backToDashboard() {
             updateDashboardStats();
             renderPath();
-            document.querySelectorAll('#page-lesson, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-dashboard').classList.remove('hidden');
         }
 
-        let currentLbType = 'weekly';
-
         function openLeaderboard() {
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-leaderboard').classList.remove('hidden');
-            renderLeaderboardData(currentLbType);
+            renderLeaderboardData();
         }
 
-        function switchLeaderboard(type) {
-            currentLbType = type;
-            document.getElementById('lb-tab-weekly').className = `lb-tab ${type === 'weekly' ? 'active' : ''}`;
-            document.getElementById('lb-tab-alltime').className = `lb-tab ${type === 'alltime' ? 'active' : ''}`;
-            renderLeaderboardData(type);
-        }
-
-        function renderLeaderboardData(type) {
+        function renderLeaderboardData() {
             let container = document.getElementById('lb-list-container');
             container.innerHTML = "";
 
@@ -1667,8 +1701,7 @@
 
             for (let username in accounts) {
                 let pnts = accounts[username].data.points || 0;
-                let weeklyPnts = type === 'weekly' ? Math.floor(pnts * 0.4) : pnts;
-                usersList.push({ name: username, xp: weeklyPnts });
+                usersList.push({ name: username, xp: pnts });
             }
 
             if (!usersList.some(u => u.name === currentLoggedInUser)) {
@@ -1687,7 +1720,7 @@
                 item.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <span style="font-weight: 900; width: 24px; text-align: center;">${medal}</span>
-                        <span>${user.name} ${isMe ? "(You)" : ""}</span>
+                        <span>${user.name} ${isMe ? "(Jij)" : ""}</span>
                     </div>
                     <span style="color: var(--duo-green);">${user.xp} XP</span>
                 `;
@@ -1699,7 +1732,7 @@
             showNotification(t("resetTitle"), t("resetText"));
             let modalBtn = document.querySelector('.custom-modal .btn');
             modalBtn.onclick = function() {
-                appData = { points: 0, streak: 1, fromLang: "nl", toLang: "en", activeChapter: 0, languageProgress: {} };
+                appData = { points: 0, streak: 1, fromLang: "nl", toLang: "en", activeChapter: 0, languageProgress: {}, mistakes: [] };
                 saveData();
                 location.reload();
             };
