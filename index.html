@@ -20,9 +20,9 @@
             --border: #e5e5e5;
             --accent-blue: #1cb0f6;
             --accent-blue-shadow: #1899d6;
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --radius-sm: 12px;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
             --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -43,72 +43,72 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 28px;
+            padding: 10px 24px;
             border-bottom: 2px solid var(--border);
             background: white;
             z-index: 100;
         }
 
         .logo-area {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 900;
             color: var(--duo-green);
             letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .nav-controls {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .lang-switcher {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             background: #f7f7f7;
             border: 2px solid var(--border);
-            padding: 6px 10px;
+            padding: 4px 8px;
             border-radius: var(--radius-sm);
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .lang-switcher select {
             background: transparent;
             border: none;
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--duo-dark);
             outline: none;
             cursor: pointer;
         }
 
         .flag-icon {
-            width: 22px;
-            height: 16px;
-            border-radius: 3px;
+            width: 20px;
+            height: 14px;
+            border-radius: 2px;
             object-fit: cover;
             box-shadow: 0 1px 2px rgba(0,0,0,0.15);
         }
 
         .top-stats-bar {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .stat-pill {
             background: #f7f7f7;
             border: 2px solid var(--border);
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 13px;
+            gap: 4px;
+            font-size: 12px;
             font-weight: 800;
             color: #4b4b4b;
         }
@@ -117,10 +117,10 @@
             background: #fee2e2;
             color: #dc2626;
             border: 2px solid #fecaca;
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: var(--radius-sm);
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             transition: var(--transition);
         }
@@ -133,13 +133,13 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 30px 16px;
+            padding: 20px 16px;
             background: #ffffff;
         }
 
         .content-container {
             width: 100%;
-            max-width: 650px;
+            max-width: 600px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -148,15 +148,15 @@
         .chapter-header {
             width: 100%;
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
-        .chapter-header h2 { font-size: 24px; font-weight: 900; color: #3c3c3c; margin-bottom: 4px; }
-        .chapter-header p { color: var(--duo-gray-text); font-size: 14px; font-weight: 700; }
+        .chapter-header h2 { font-size: 20px; font-weight: 900; color: #3c3c3c; margin-bottom: 2px; }
+        .chapter-header p { color: var(--duo-gray-text); font-size: 13px; font-weight: 700; }
 
         .chapter-tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 28px;
+            gap: 6px;
+            margin-bottom: 20px;
             width: 100%;
             overflow-x: auto;
             padding-bottom: 4px;
@@ -164,13 +164,13 @@
 
         .chapter-tab {
             flex: 1;
-            padding: 10px 14px;
+            padding: 8px 10px;
             background: #f7f7f7;
             border: 2px solid var(--border);
-            border-bottom: 4px solid var(--border);
+            border-bottom: 3px solid var(--border);
             border-radius: var(--radius-sm);
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--duo-gray-text);
             cursor: pointer;
             text-align: center;
@@ -195,33 +195,33 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 24px;
+            gap: 16px;
             width: 100%;
-            padding: 10px 0 40px 0;
+            padding: 5px 0 30px 0;
         }
 
         .path-row {
             display: flex;
             justify-content: center;
             width: 100%;
-            gap: 70px;
+            gap: 60px;
         }
 
-        .path-row.offset-1 { transform: translateX(-40px); }
-        .path-row.offset-2 { transform: translateX(40px); }
+        .path-row.offset-1 { transform: translateX(-30px); }
+        .path-row.offset-2 { transform: translateX(30px); }
 
         .duo-node {
-            width: 76px;
-            height: 76px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             background: var(--duo-green);
             border: none;
-            border-bottom: 6px solid var(--duo-green-shadow);
+            border-bottom: 5px solid var(--duo-green-shadow);
             color: white;
             font-weight: 900;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
-            box-shadow: 0 8px 0 rgba(0,0,0,0.08);
+            box-shadow: 0 6px 0 rgba(0,0,0,0.08);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -230,14 +230,14 @@
             position: relative;
         }
 
-        .duo-node span.node-label { font-size: 9px; opacity: 0.9; text-transform: uppercase; margin-top: 2px; }
+        .duo-node span.node-label { font-size: 8px; opacity: 0.9; text-transform: uppercase; margin-top: 1px; }
 
-        .duo-node:hover:not(.locked) { transform: scale(1.08); filter: brightness(1.05); }
-        .duo-node:active:not(.locked) { transform: translateY(4px); border-bottom-width: 2px; box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
+        .duo-node:hover:not(.locked) { transform: scale(1.06); filter: brightness(1.05); }
+        .duo-node:active:not(.locked) { transform: translateY(3px); border-bottom-width: 2px; box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
 
         .duo-node.locked {
             background: #e5e5e5;
-            border-bottom: 6px solid #d1d1d1;
+            border-bottom: 5px solid #d1d1d1;
             color: #afafaf;
             cursor: not-allowed;
             box-shadow: none;
@@ -249,22 +249,24 @@
 
         @keyframes pulseNode {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(88, 204, 2, 0.5); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 14px rgba(88, 204, 2, 0); }
+            70% { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(88, 204, 2, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(88, 204, 2, 0); }
         }
 
         .card {
             background: var(--card-bg);
             border: 2px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 28px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
             width: 100%;
-            animation: fadeIn 0.3s ease-out;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            animation: fadeIn 0.25s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -272,17 +274,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 14px;
         }
 
         .back-btn {
             background: #f7f7f7;
             border: 2px solid var(--border);
-            border-bottom: 4px solid var(--border);
+            border-bottom: 3px solid var(--border);
             color: var(--duo-gray-text);
-            padding: 6px 14px;
+            padding: 4px 10px;
             border-radius: var(--radius-sm);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
             cursor: pointer;
             transition: var(--transition);
@@ -291,10 +293,10 @@
 
         .progress-bar-container {
             flex: 1;
-            height: 14px;
+            height: 10px;
             background: #e5e5e5;
-            border-radius: 10px;
-            margin: 0 20px;
+            border-radius: 8px;
+            margin: 0 16px;
             overflow: hidden;
         }
 
@@ -303,50 +305,50 @@
             background: var(--duo-green);
             width: 0%;
             transition: width 0.3s ease;
-            border-radius: 10px;
+            border-radius: 8px;
         }
 
         .question-title {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 900;
-            margin-bottom: 20px;
+            margin-bottom: 14px;
             color: #3c3c3c;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .btn {
             background-color: var(--duo-green);
             color: white;
             border: none;
-            border-bottom: 5px solid var(--duo-green-shadow);
-            padding: 14px 20px;
-            font-size: 15px;
+            border-bottom: 4px solid var(--duo-green-shadow);
+            padding: 10px 16px;
+            font-size: 13px;
             font-weight: 900;
             border-radius: var(--radius-sm);
             cursor: pointer;
             width: 100%;
-            margin-top: 16px;
+            margin-top: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             transition: var(--transition);
-            box-shadow: 0 4px 12px rgba(88, 204, 2, 0.3);
+            box-shadow: 0 3px 10px rgba(88, 204, 2, 0.25);
         }
 
         .btn:hover { filter: brightness(1.05); }
-        .btn:active { transform: translateY(3px); border-bottom-width: 2px; box-shadow: none; }
+        .btn:active { transform: translateY(2px); border-bottom-width: 2px; box-shadow: none; }
 
         .option-btn {
             background: white;
             color: var(--duo-dark);
             border: 2px solid var(--border);
-            border-bottom: 4px solid var(--border);
-            margin: 10px 0;
+            border-bottom: 3px solid var(--border);
+            margin: 6px 0;
             text-align: left;
             box-shadow: none;
             text-transform: none;
             font-weight: 800;
-            font-size: 15px;
-            padding: 14px 18px;
+            font-size: 13px;
+            padding: 10px 14px;
             border-radius: var(--radius-sm);
         }
         .option-btn:hover { background: #f7f7f7; border-color: #cfcfcf; }
@@ -354,50 +356,50 @@
         .word-bank {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin: 14px 0;
-            padding: 16px;
+            gap: 8px;
+            margin: 10px 0;
+            padding: 12px;
             background: #f7f7f7;
             border: 2px dashed var(--border);
             border-radius: var(--radius-sm);
-            min-height: 70px;
+            min-height: 55px;
             align-content: flex-start;
         }
 
         .word-bubble {
             background: white;
             border: 2px solid var(--border);
-            border-bottom: 4px solid var(--border);
-            padding: 10px 14px;
-            border-radius: 10px;
+            border-bottom: 3px solid var(--border);
+            padding: 6px 10px;
+            border-radius: 8px;
             font-weight: 800;
-            font-size: 14px;
+            font-size: 12px;
             cursor: pointer;
             transition: var(--transition);
             user-select: none;
         }
         .word-bubble:hover { background: #f0f0f0; border-color: #ccc; }
-        .word-bubble:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .word-bubble:active { transform: translateY(2px); border-bottom-width: 1px; }
 
         .target-slot {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin: 10px 0;
-            padding: 16px;
+            gap: 8px;
+            margin: 8px 0;
+            padding: 12px;
             background: #ffffff;
             border: 2px solid var(--border);
             border-radius: var(--radius-sm);
-            min-height: 70px;
+            min-height: 55px;
             align-content: center;
         }
 
         .feedback-box-correct {
-            color: #278500; font-weight: 900; font-size: 15px; margin: 12px 0; padding: 14px;
+            color: #278500; font-weight: 900; font-size: 13px; margin: 10px 0; padding: 10px;
             background: var(--duo-light-green); border-radius: var(--radius-sm); border: 2px solid #b8f270;
         }
         .feedback-box-wrong {
-            color: #ea2b2b; font-weight: 900; font-size: 15px; margin: 12px 0; padding: 14px;
+            color: #ea2b2b; font-weight: 900; font-size: 13px; margin: 10px 0; padding: 10px;
             background: #ffdfe0; border-radius: var(--radius-sm); border: 2px solid #ffb1b3;
         }
 
@@ -416,16 +418,16 @@
 
         .custom-modal {
             background: white;
-            padding: 28px;
-            border-radius: var(--radius-lg);
+            padding: 24px;
+            border-radius: var(--radius-md);
             border: 2px solid var(--border);
             width: 100%;
-            max-width: 380px;
+            max-width: 340px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
-        .custom-modal h3 { font-size: 20px; font-weight: 900; margin-bottom: 8px; color: #3c3c3c; }
-        .custom-modal p { color: var(--duo-gray-text); font-size: 14px; font-weight: 700; margin-bottom: 24px; }
+        .custom-modal h3 { font-size: 18px; font-weight: 900; margin-bottom: 6px; color: #3c3c3c; }
+        .custom-modal p { color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -451,6 +453,8 @@
                     <option value="en">Engels</option>
                     <option value="ru">Russisch</option>
                     <option value="es">Spaans</option>
+                    <option value="de">Duits</option>
+                    <option value="fr">Frans</option>
                 </select>
                 <span>Naar:</span>
                 <img id="to-flag" class="flag-icon" src="" alt="">
@@ -491,7 +495,7 @@
                     <div class="progress-bar-container">
                         <div id="lesson-progress-bar" class="progress-bar-fill"></div>
                     </div>
-                    <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text); font-size: 13px;">1/8</span>
+                    <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text); font-size: 12px;">1/8</span>
                 </div>
                 <h3 id="question-prompt" class="question-title">Vertaal dit</h3>
                 
@@ -501,8 +505,8 @@
             </div>
 
             <div id="page-complete" class="card page-section hidden" style="text-align: center;">
-                <h2 style="font-size: 26px; font-weight: 900; color: var(--duo-green); margin-bottom: 10px;">Les Voltooid! 🎉</h2>
-                <p id="complete-text" style="color: var(--duo-gray-text); font-size: 15px; font-weight: 700; margin-bottom: 24px;">Geweldig gepresteerd!</p>
+                <h2 style="font-size: 22px; font-weight: 900; color: var(--duo-green); margin-bottom: 8px;">Les Voltooid! 🎉</h2>
+                <p id="complete-text" style="color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px;">Geweldig gepresteerd!</p>
                 <button class="btn" onclick="backToDashboard()">Doorgaan</button>
             </div>
 
@@ -519,57 +523,162 @@
             fr: "https://flagcdn.com/w40/fr.png"
         };
 
-        const globalMultilingualDatabase = {
-            "nl-en": [
-                [ { q: "Hallo", a: "Hello", opts: ["Hello", "Goodbye", "Please", "Thanks"] }, { q: "Goedemorgen", a: "Good morning", opts: ["Good night", "Good morning", "Hello", "See you"] }, { q: "Dank je wel", a: "Thank you", opts: ["Please", "Thank you", "Sorry", "Yes"] }, { q: "Tot ziens", a: "Goodbye", opts: ["Hello", "Good morning", "Goodbye", "Welcome"] }, { q: "Ik ben blij", a: "I am happy", type: "builder", words: ["I", "am", "happy"] } ],
-                [ { q: "Appel", a: "Apple", opts: ["Banana", "Apple", "Water", "Bread"] }, { q: "Water", a: "Water", opts: ["Milk", "Water", "Juice", "Wine"] }, { q: "Brood", a: "Bread", opts: ["Cheese", "Bread", "Butter", "Meat"] }, { q: "Ik drink water", a: "I drink water", type: "builder", words: ["I", "drink", "water"] } ],
-                [ { q: "Trein", a: "Train", opts: ["Bus", "Train", "Car", "Plane"] }, { q: "Station", a: "Station", opts: ["Airport", "Station", "Hotel", "Street"] }, { q: "Waar is de trein?", a: "Where is the train?", type: "builder", words: ["Where", "is", "the", "train"] } ],
-                [ { q: "Moeder", a: "Mother", opts: ["Father", "Mother", "Sister", "Brother"] }, { q: "Vader", a: "Father", opts: ["Father", "Son", "Daughter", "Friend"] }, { q: "Dit is mijn familie", a: "This is my family", type: "builder", words: ["This", "is", "my", "family"] } ],
-                [ { q: "Huis", a: "House", opts: ["Car", "House", "School", "Park"] }, { q: "Kamer", a: "Room", opts: ["Door", "Room", "Window", "Wall"] }, { q: "Mijn huis is groot", a: "My house is big", type: "builder", words: ["My", "house", "is", "big"] } ],
-                [ { q: "Rood", a: "Red", opts: ["Blue", "Red", "Green", "Yellow"] }, { q: "Groen", a: "Green", opts: ["Green", "Black", "White", "Red"] }, { q: "Twee rode appels", a: "Two red apples", type: "builder", words: ["Two", "red", "apples"] } ],
-                [ { q: "Hond", a: "Dog", opts: ["Cat", "Dog", "Bird", "Fish"] }, { q: "Kat", a: "Cat", opts: ["Dog", "Cat", "Horse", "Cow"] }, { q: "De hond blaft", a: "The dog barks", type: "builder", words: ["The", "dog", "barks"] } ],
-                [ { q: "Voetbal", a: "Football", opts: ["Tennis", "Football", "Swimming", "Running"] }, { q: "Ik speel spelletjes", a: "I play games", type: "builder", words: ["I", "play", "games"] } ],
-                [ { q: "School", a: "School", opts: ["Office", "School", "Library", "Shop"] }, { q: "Boek", a: "Book", opts: ["Pen", "Book", "Paper", "Desk"] }, { q: "Ik leer Engels", a: "I learn English", type: "builder", words: ["I", "learn", "English"] } ],
-                [ { q: "Vandaag", a: "Today", opts: ["Tomorrow", "Yesterday", "Today", "Now"] }, { q: "Het is warm", a: "It is warm today", type: "builder", words: ["It", "is", "warm", "today"] } ]
-            ],
-            "ru-en": [
-                [ { q: "Привет", a: "Hello", opts: ["Hello", "Goodbye", "Please", "Thanks"] }, { q: "Доброе утро", a: "Good morning", opts: ["Good night", "Good morning", "Hello", "See you"] }, { q: "Спасибо", a: "Thank you", opts: ["Please", "Thank you", "Sorry", "Yes"] }, { q: "Я счастлив", a: "I am happy", type: "builder", words: ["I", "am", "happy"] } ],
-                [ { q: "Яблоко", a: "Apple", opts: ["Banana", "Apple", "Water", "Bread"] }, { q: "Вода", a: "Water", opts: ["Milk", "Water", "Juice", "Wine"] }, { q: "Я пью воду", a: "I drink water", type: "builder", words: ["I", "drink", "water"] } ],
-                [ { q: "Поезд", a: "Train", opts: ["Bus", "Train", "Car", "Plane"] }, { q: "Станция", a: "Station", opts: ["Airport", "Station", "Hotel", "Street"] }, { q: "Где поезд?", a: "Where is the train?", type: "builder", words: ["Where", "is", "the", "train"] } ],
-                [ { q: "Мать", a: "Mother", opts: ["Father", "Mother", "Sister", "Brother"] }, { q: "Отец", a: "Father", opts: ["Father", "Son", "Daughter", "Friend"] } ],
-                [ { q: "Дом", a: "House", opts: ["Car", "House", "School", "Park"] }, { q: "Комната", a: "Room", opts: ["Door", "Room", "Window", "Wall"] } ],
-                [ { q: "Красный", a: "Red", opts: ["Blue", "Red", "Green", "Yellow"] }, { q: "Зеленый", a: "Green", opts: ["Green", "Black", "White", "Red"] } ],
-                [ { q: "Собака", a: "Dog", opts: ["Cat", "Dog", "Bird", "Fish"] }, { q: "Кошка", a: "Cat", opts: ["Dog", "Cat", "Horse", "Cow"] } ],
-                [ { q: "Футбол", a: "Football", opts: ["Tennis", "Football", "Swimming", "Running"] } ],
-                [ { q: "Школа", a: "School", opts: ["Office", "School", "Library", "Shop"] }, { q: "Книга", a: "Book", opts: ["Pen", "Book", "Paper", "Desk"] } ],
-                [ { q: "Сегодня", a: "Today", opts: ["Tomorrow", "Yesterday", "Today", "Now"] } ]
-            ],
-            "en-ru": [
-                [ { q: "Hello", a: "Привет", opts: ["Привет", "Пока", "Спасибо", "Да"] }, { q: "Good morning", a: "Доброе утро", opts: ["Доброе утро", "Спокойной ночи", "Привет", "Пока"] }, { q: "Thank you", a: "Спасибо", opts: ["Пожалуйста", "Спасибо", "Извините", "Да"] } ],
-                [ { q: "Apple", a: "Яблоко", opts: ["Банан", "Яблоко", "Вода", "Хлеб"] }, { q: "Water", a: "Вода", opts: ["Молоко", "Вода", "Сок", "Вино"] } ],
-                [ { q: "Train", a: "Поезд", opts: ["Автобус", "Поезд", "Машина", "Самолет"] } ],
-                [ { q: "Mother", a: "Мать", opts: ["Отец", "Мать", "Сестра", "Брат"] } ],
-                [ { q: "House", a: "Дом", opts: ["Машина", "Дом", "Школа", "Парк"] } ],
-                [ { q: "Red", a: "Красный", opts: ["Синий", "Красный", "Зеленый", "Желтый"] } ],
-                [ { q: "Dog", a: "Собака", opts: ["Кошка", "Собака", "Птица", "Рыба"] } ],
-                [ { q: "Football", a: "Футбол", opts: ["Теннис", "Футбол", "Плавание", "Бег"] } ],
-                [ { q: "School", a: "Школа", opts: ["Офис", "Школа", "Библиотека", "Магазин"] } ],
-                [ { q: "Today", a: "Сегодня", opts: ["Завтра", "Вчера", "Сегодня", "Сейчас"] } ]
-            ],
-            "en-es": [
-                [ { q: "Hello", a: "Hola", opts: ["Hola", "Adiós", "Por favor", "Gracias"] }, { q: "Good morning", a: "Buenos días", opts: ["Buenas noches", "Buenos días", "Hola", "Adiós"] }, { q: "Thank you", a: "Gracias", opts: ["Por favor", "Gracias", "Lo siento", "Sí"] } ],
-                [ { q: "Apple", a: "Manzana", opts: ["Plátano", "Manzana", "Agua", "Pan"] }, { q: "Water", a: "Agua", opts: ["Leche", "Agua", "Jugo", "Vino"] } ],
-                [ { q: "Train", a: "Tren", opts: ["Autobús", "Tren", "Coche", "Avión"] } ],
-                [ { q: "Mother", a: "Madre", opts: ["Padre", "Madre", "Hermana", "Hermano"] } ],
-                [ { q: "House", a: "Casa", opts: ["Coche", "Casa", "Escuela", "Parque"] } ],
-                [ { q: "Red", a: "Rojo", opts: ["Azul", "Rojo", "Verde", "Amarillo"] } ],
-                [ { q: "Dog", a: "Perro", opts: ["Gato", "Perro", "Pájaro", "Pez"] } ],
-                [ { q: "Football", a: "Fútbol", opts: ["Tenis", "Fútbol", "Natación", "Correr"] } ],
-                [ { q: "School", a: "Escuela", opts: ["Oficina", "Escuela", "Biblioteca", "Tienda"] } ],
-                [ { q: "Today", a: "Hoy", opts: ["Mañana", "Ayer", "Hoy", "Ahora"] } ]
-            ]
-        };
+        const masterDictionary = {
+    "nl": {
+        "en": [
+            // ==========================================
+            // SECTIE 1: LOSSE WOORDEN & BASISBEGRIPPEN
+            // ==========================================
+            ["Hallo", "Hello", ["Hello", "Goodbye", "Please", "Thanks"]],
+            ["Hoi", "Hi", ["Hi", "Bye", "Please", "Thanks"]],
+            ["Goedemorgen", "Good morning", ["Good night", "Good morning", "Hello", "See you"]],
+            ["Goedemiddag", "Good afternoon", ["Good morning", "Good afternoon", "Good night", "Hello"]],
+            ["Goedenavond", "Good evening", ["Good morning", "Good afternoon", "Good evening", "Goodbye"]],
+            ["Welterusten", "Good night", ["Good morning", "Good night", "Hello", "Goodbye"]],
+            ["Dank je wel", "Thank you", ["Please", "Thank you", "Sorry", "Yes"]],
+            ["Hartelijk dank", "Many thanks", ["No thanks", "Many thanks", "Please", "Sorry"]],
+            ["Tot ziens", "Goodbye", ["Hello", "Good morning", "Goodbye", "Welcome"]],
+            ["Tot morgen", "See you tomorrow", ["See you later", "See you tomorrow", "Goodbye", "Good night"]],
+            ["Alsjeblieft", "Please", ["Please", "Thanks", "Sorry", "No"]],
+            ["Alstublieft", "Here you are", ["Here you are", "Thank you", "Please", "Excuse me"]],
+            ["Ja", "Yes", ["No", "Yes", "Maybe", "Please"]],
+            ["Nee", "No", ["Yes", "No", "Maybe", "Thanks"]],
+            ["Misschien", "Maybe", ["Yes", "No", "Maybe", "Always"]],
+            ["Sorry", "Sorry", ["Thank you", "Sorry", "Please", "Hello"]],
+            ["Pardon", "Excuse me", ["Sorry", "Excuse me", "Please", "Thanks"]],
+            ["Geen probleem", "No problem", ["No problem", "Yes please", "Thank you", "Goodbye"]],
+            ["Natuurlijk", "Of course", ["Of course", "Never", "No", "Maybe"]],
+            ["Welkom", "Welcome", ["Welcome", "Goodbye", "Hello", "Thanks"]],
 
+            // ETEN & DRINKEN (WOORDEN)
+            ["Appel", "Apple", ["Banana", "Apple", "Water", "Bread"]],
+            ["Banaan", "Banana", ["Apple", "Banana", "Orange", "Grape"]],
+            ["Sinaasappel", "Orange", ["Apple", "Lemon", "Orange", "Peach"]],
+            ["Druif", "Grape", ["Grape", "Melon", "Pear", "Plum"]],
+            ["Aardbei", "Strawberry", ["Strawberry", "Blueberry", "Apple", "Banana"]],
+            ["Water", "Water", ["Milk", "Water", "Juice", "Wine"]],
+            ["Brood", "Bread", ["Cheese", "Bread", "Butter", "Meat"]],
+            ["Melk", "Milk", ["Water", "Milk", "Tea", "Coffee"]],
+            ["Kaas", "Cheese", ["Cheese", "Butter", "Meat", "Fish"]],
+            ["Koffie", "Coffee", ["Tea", "Coffee", "Water", "Juice"]],
+            ["Thee", "Tea", ["Coffee", "Tea", "Milk", "Soda"]],
+            ["Vlees", "Meat", ["Fish", "Meat", "Chicken", "Vegetable"]],
+            ["Vis", "Fish", ["Meat", "Fish", "Egg", "Rice"]],
+            ["Rijst", "Rice", ["Potato", "Rice", "Pasta", "Bread"]],
+            ["Kip", "Chicken", ["Beef", "Chicken", "Fish", "Pork"]],
+            ["Ei", "Egg", ["Cheese", "Egg", "Milk", "Bread"]],
+            ["Suiker", "Sugar", ["Salt", "Sugar", "Water", "Milk"]],
+            ["Zout", "Salt", ["Sugar", "Salt", "Pepper", "Oil"]],
+            ["Boter", "Butter", ["Cheese", "Butter", "Milk", "Bread"]],
+            ["Soep", "Soup", ["Soup", "Salad", "Meat", "Rice"]],
+
+            // VERVOER & LOCATIES (WOORDEN)
+            ["Trein", "Train", ["Bus", "Train", "Car", "Plane"]],
+            ["Station", "Station", ["Airport", "Station", "Hotel", "Street"]],
+            ["Bus", "Bus", ["Train", "Bus", "Taxi", "Bike"]],
+            ["Auto", "Car", ["Car", "Bike", "Plane", "Train"]],
+            ["Vliegtuig", "Plane", ["Ship", "Plane", "Train", "Bus"]],
+            ["Fiets", "Bike", ["Car", "Bike", "Bus", "Train"]],
+            ["Hotel", "Hotel", ["Station", "Hotel", "House", "Hospital"]],
+            ["Luchthaven", "Airport", ["Station", "Airport", "Port", "Street"]],
+            ["Kaartje", "Ticket", ["Money", "Ticket", "Passport", "Map"]],
+            ["Geld", "Money", ["Ticket", "Money", "Card", "Key"]],
+            ["Huis", "House", ["Hotel", "House", "School", "Store"]],
+            ["School", "School", ["House", "School", "Hospital", "Park"]],
+            ["Winkel", "Store", ["Market", "Store", "House", "Bank"]],
+            ["Boek", "Book", ["Pen", "Book", "Paper", "Desk"]],
+            ["Hond", "Dog", ["Cat", "Dog", "Bird", "Fish"]],
+            ["Kat", "Cat", ["Dog", "Cat", "Mouse", "Rabbit"]],
+
+            // ==========================================
+            // SECTIE 2: VOLLEDIGE GRAMMATICALE ZINNEN
+            // ==========================================
+            ["Goedemorgen, heb je lekker geslapen vannacht?", "Good morning, did you sleep well last night?", ["Yes, I slept very well.", "No, I am still tired.", "Good morning to you too.", "Not really."]],
+            ["Het is vandaag echt prachtig weer om naar buiten te gaan.", "The weather is truly wonderful today to go outside.", ["Yes, the sun is shining.", "It is raining outside.", "It is a bit cold.", "Let's go for a walk."]],
+            ["Wat zijn jouw plannen voor het komende weekend?", "What are your plans for the upcoming weekend?", ["I am going to stay home.", "I am visiting friends.", "I have no plans yet.", "Working all weekend."]],
+            ["Ik moet vandaag heel erg hard studeren voor een belangrijke toets.", "I have to study very hard today for an important test.", ["Good luck with your test!", "What subject is it?", "Take a short break.", "You can do it!"]],
+            ["Pardon, kunt u mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", "Excuse me, could you tell me how to get to the nearest train station?", ["Go straight ahead and turn left.", "It is about five minutes walking.", "You need to take the bus.", "Follow this street."]],
+            ["De vlucht van Amsterdam naar Londen heeft helaas een flinke vertraging.", "Unfortunately, the flight from Amsterdam to London has a significant delay.", ["How long is the delay?", "Can I change my ticket?", "Where can I wait?", "That is very annoying."]],
+            ["Hoeveel kost een enkeltje met de metro naar het stadscentrum?", "How much does a one-way ticket by subway to the city center cost?", ["It costs five euros.", "Children travel for free.", "You can pay with a card.", "The ticket machine is over there."]],
+            ["Zullen we vanavond gezellig ergens een hapje gaan eten?", "Shall we go out to grab a bite to eat somewhere tonight?", ["That sounds like a great idea!", "Where do you want to go?", "I prefer to cook at home.", "What time shall we meet?"]],
+            ["Ik heb een allergie voor noten, dus ik moet goed opletten.", "I have a nut allergy, so I have to be very careful.", ["I will inform the chef.", "Are you allergic to anything else?", "There are no nuts in this dish.", "Better safe than sorry."]],
+            ["Kan ik alstublieft de menukaart en een glas ijsthee krijgen?", "Could I please have the menu and a glass of iced tea?", ["Here is the menu, right away.", "What kind of tea would you prefer?", "I will be back to take your order.", "Coming up!"]],
+            ["Help me alstublieft, ik ben mijn portemonnee met al mijn pasjes verloren!", "Please help me, I have lost my wallet with all my cards!", ["Where did you lose it?", "You need to block your cards immediately.", "Let's go to the police station.", "Did you check your jacket?"]],
+            ["Waar is hier in de buurt de dichtstbijzijnde apotheek?", "Where is the nearest pharmacy around here?", ["It is around the corner.", "Turn right at the traffic lights.", "It is closed on Sundays.", "Can I help you find something specific?"]],
+            ["Hoe laat vertrekt de volgende trein naar Amsterdam?", "What time does the next train to Amsterdam leave?", ["The train is delayed.", "Where is the station?", "I am taking the bus.", "Is this a car?"]],
+            ["Ik woon in een mooi huis in het stadscentrum.", "I live in a nice house in the city center.", ["The hotel is full.", "This is my house.", "Where is the school?", "Let's visit the store."]],
+            ["Kun jij mij alsjeblieft even helpen hiermee?", "Could you please help me with this?", ["Can you help me?", "Where is the train station?", "How much does this cost?", "What time is it?"]],
+            ["Ik begrijp er helemaal niets van.", "I do not understand anything about it.", ["I understand completely.", "I do not understand.", "I know the answer.", "Yes, please help."]],
+            ["Hoeveel kost dit prachtige product?", "How much does this beautiful product cost?", ["How much does this cost?", "Where is this located?", "What is this item?", "Is this free of charge?"]],
+            ["Waar kan ik het dichtstbijzijnde toilet vinden?", "Where can I find the nearest restroom?", ["Where is the bathroom?", "Where is the train station?", "Where is the hotel?", "Where am I right now?"]],
+            ["Ik heb trek in een lekkere appel.", "I am craving a delicious apple.", ["I want a banana.", "I would like an apple.", "I need some water.", "I prefer bread."]],
+            ["Kan ik een glas koud water krijgen?", "Can I get a glass of cold water?", ["I would like milk.", "Water please.", "Do you have juice?", "Wine or water?"]]
+        ],
+        "ru": [
+            ["Hallo", "Привет", ["Привет", "Пока", "Спасибо", "Да"]],
+            ["Goedemorgen", "Доброе утро", ["Доброе утро", "Спокойной ночи", "Привет", "Пока"]],
+            ["Appel", "Яблоко", ["Банан", "Яблоко", "Вода", "Хлеб"]],
+            ["Water", "Вода", ["Молоко", "Вода", "Сок", "Вино"]],
+            ["Trein", "Поезд", ["Автобус", "Поезд", "Машина", "Самолет"]],
+            ["Goedemorgen, heb je lekker geslapen vannacht?", "Доброе утро, ты хорошо спал прошлой ночью?", ["Да, спал отлично", "Нет, я устал", "Доброе утро", "Нормально"]],
+            ["Pardon, kunt u mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", "Извините, вы не подскажете, как добраться до ближайшего вокзала?", ["Идите прямо", "Это в пяти минутах ходьбы", "Нужно сесть на автобус", "Следуйте за мной"]]
+        ],
+        "es": [
+            ["Hallo", "Hola", ["Hola", "Adiós", "Por favor", "Gracias"]],
+            ["Goedemorgen", "Buenos días", ["Buenas noches", "Buenos días", "Hola", "Adiós"]],
+            ["Appel", "Manzana", ["Plátano", "Manzana", "Agua", "Pan"]],
+            ["Water", "Agua", ["Leche", "Agua", "Jugo", "Vino"]],
+            ["Trein", "Tren", ["Autobús", "Tren", "Coche", "Avión"]],
+            ["Goedemorgen, heb je lekker geslapen vannacht?", "Buenos días, ¿dormiste bien anoche?", ["Sí, dormí muy bien", "No, estoy cansado", "Buenos días", "Más o menos"]],
+            ["Pardon, kunt u mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", "Disculpe, ¿podría decirme cómo llegar a la estación de tren más cercana?", ["Siga todo recto", "Está a cinco minutos andando", "Tiene que coger el autobús", "Gire a la izquierda"]]
+        ],
+        "de": [
+            ["Hallo", "Hallo", ["Hallo", "Tschüss", "Bitte", "Danke"]],
+            ["Goedemorgen", "Guten Morgen", ["Gute Nacht", "Guten Morgen", "Hallo", "Tschüss"]],
+            ["Appel", "Apfel", ["Banane", "Apfel", "Wasser", "Brot"]],
+            ["Water", "Wasser", ["Milch", "Wasser", "Saft", "Wein"]],
+            ["Trein", "Zug", ["Bus", "Zug", "Auto", "Flugzeug"]],
+            ["Goedemorgen, heb je lekker geslapen vannacht?", "Guten Morgen, hast du letzte Nacht gut geschlafen?", ["Ja, ich habe sehr gut geschlafen", "Nein, ich bin müde", "Guten Morgen", "Es geht so"]],
+            ["Pardon, kunt u mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", "Entschuldigung, können Sie mir sagen, wie ich zum nächsten Bahnhof komme?", ["Gehen Sie geradeaus", "Es ist fünf Minuten zu Fuß", "Sie müssen den Bus nehmen", "Biegen Sie links ab"]]
+        ],
+        "fr": [
+            ["Hallo", "Bonjour", ["Bonjour", "Au revoir", "S'il vous plaît", "Merci"]],
+            ["Goedemorgen", "Bonjour", ["Bonne nuit", "Bonjour", "Salut", "Au revoir"]],
+            ["Appel", "Pomme", ["Banane", "Pomme", "Eau", "Pain"]],
+            ["Water", "Eau", ["Lait", "Eau", "Jus", "Vin"]],
+            ["Trein", "Train", ["Bus", "Train", "Voiture", "Avion"]],
+            ["Goedemorgen, heb je lekker geslapen vannacht?", "Bonjour, est-ce que tu as bien dormi cette nuit?", ["Oui, j'ai très bien dormi", "Non, je suis fatigué", "Bonjour", "Ça va"]],
+            ["Pardon, kunt u mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", "Pardon, pourriez-vous me dire comment aller à la gare la plus proche?", ["Allez tout droit", "C'est à cinq minutes à pied", "Vous devez prendre le bus", "Tournez à gauche"]]
+        ]
+    },
+    "en": {
+        "nl": [
+            ["Hello", "Hallo", ["Hallo", "Doei", "Alsjeblieft", "Dank je"]],
+            ["Hi", "Hoi", ["Hoi", "Doei", "Alsjeblieft", "Dank je"]],
+            ["Good morning", "Goedemorgen", ["Goedenavond", "Goedemorgen", "Hallo", "Tot ziens"]],
+            ["Good afternoon", "Goedemiddag", ["Goedemorgen", "Goedemiddag", "Goedenavond", "Hallo"]],
+            ["Good evening", "Goedenavond", ["Goedemorgen", "Goedemiddag", "Goedenavond", "Tot ziens"]],
+            ["Good night", "Welterusten", ["Goedemorgen", "Welterusten", "Hallo", "Doei"]],
+            ["Thank you", "Dank je wel", ["Alsjeblieft", "Dank je wel", "Sorry", "Ja"]],
+            ["Goodbye", "Tot ziens", ["Hallo", "Goedemorgen", "Tot ziens", "Welkom"]],
+            ["Please", "Alsjeblieft", ["Alsjeblieft", "Dank je", "Sorry", "Nee"]],
+            ["Yes", "Ja", ["Nee", "Ja", "Misschien", "Alsjeblieft"]],
+            ["No", "Nee", ["Ja", "Nee", "Misschien", "Dank je"]],
+            ["Maybe", "Misschien", ["Ja", "Nee", "Misschien", "Altijd"]],
+            ["Sorry", "Sorry", ["Dank je", "Sorry", "Alsjeblieft", "Hallo"]],
+            ["Apple", "Appel", ["Banaan", "Appel", "Water", "Brood"]],
+            ["Banana", "Banaan", ["Appel", "Banaan", "Sinaasappel", "Druif"]],
+            ["Water", "Water", ["Melk", "Water", "Sap", "Wijn"]],
+            ["Bread", "Brood", ["Kaas", "Brood", "Boter", "Vlees"]],
+            ["Milk", "Melk", ["Water", "Melk", "Thee", "Koffie"]],
+            ["Cheese", "Kaas", ["Kaas", "Boter", "Vlees", "Vis"]],
+            ["Coffee", "Koffie", ["Thee", "Koffie", "Water", "Sap"]],
+            ["Good morning, did you sleep well last night?", "Goedemorgen, heb je lekker geslapen vannacht?", ["Ja, ik heb heel goed geslapen.", "Nee, ik ben nog moe.", "Goedemorgen jij ook.", "Niet echt."]],
+            ["Excuse me, could you tell me how to get to the nearest train station?", "Pardon, kun je mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", ["Ga rechtdoor en sla linksaf.", "Het is ongeveer vijf minuten lopen.", "Je moet de bus nemen.", "Volg deze straat."]],
+            ["Shall we go out to grab a bite to eat somewhere tonight?", "Zullen we vanavond gezellig ergens een hapje gaan eten?", ["Dat klinkt als een goed idee!", "Waar wil je naartoe?", "Ik kook liever thuis.", "Hoe laat spreken we af?"]]
+        ]
+    }
+};
         const chapterNames = [
             "Hoofdstuk 1: Basis & Introductie",
             "Hoofdstuk 2: Eten & Drinken",
@@ -586,7 +695,7 @@
         const chapterDescriptions = [
             "Leer fundamentele woorden en simpele begroetingen.",
             "Alles over lekker eten, drinken en boodschappen doen.",
-            "Vervoermiddelen, stations en reizen naar het buitendland.",
+            "Vervoermiddelen, stations en reizen naar het buitenland.",
             "Familieleden, vrienden en relaties beschrijven.",
             "Kamers, meubels en je eigen woning.",
             "De mooiste kleuren en getallen tellen.",
@@ -596,7 +705,7 @@
             "Het weer vandaag en besef van tijd."
         ];
 
-        let appData = JSON.parse(localStorage.getItem('wordly_ai_v5')) || {
+        let appData = JSON.parse(localStorage.getItem('wordly_ai_v6')) || {
             points: 0,
             streak: 1,
             fromLang: "nl",
@@ -606,7 +715,7 @@
         };
 
         function saveData() {
-            localStorage.setItem('wordly_ai_v5', JSON.stringify(appData));
+            localStorage.setItem('wordly_ai_v6', JSON.stringify(appData));
         }
 
         window.onload = function() {
@@ -628,7 +737,7 @@
             let newTo = document.getElementById('to-lang-select').value;
             
             if(newFrom === newTo) {
-                showNotification("Let op", "De brontaal en doelaang mogen niet hetzelfde zijn!");
+                showNotification("Let op", "De brontaal en doeltaal mogen niet hetzelfde zijn!");
                 document.getElementById('from-lang-select').value = appData.fromLang;
                 document.getElementById('to-lang-select').value = appData.toLang;
                 return;
@@ -636,7 +745,7 @@
 
             appData.fromLang = newFrom;
             appData.toLang = newTo;
-            appData.activeChapter = 0; // Terug naar hoofdstuk 1 bij taalwissel
+            appData.activeChapter = 0;
             updateFlags();
             saveData();
             renderChapterTabs();
@@ -655,13 +764,11 @@
             return `${appData.fromLang}-${appData.toLang}`;
         }
 
-        // Bepaalt of een hoofdstuk ontgrendeld is (Hoofdstuk N is pas open als Hoofdstuk N-1 volledig is afgerond)
         function isChapterUnlocked(chapterIndex) {
             if(chapterIndex === 0) return true;
             let pairKey = getActivePairKey();
             let prevChapterKey = `${pairKey}_ch${chapterIndex - 1}`;
             let completedLessons = appData.completed[prevChapterKey] || [];
-            // Stel dat elk hoofdstuk 6 lessen heeft
             return completedLessons.length >= 6;
         }
 
@@ -689,13 +796,27 @@
         }
 
         function getActiveQuestionsList() {
-            let pairKey = getActivePairKey();
-            let chapters = globalMultilingualDatabase[pairKey];
-            if(!chapters) {
-                // Slimme generieke fallback als exacte taalcombinatie ontbreekt in database
-                chapters = globalMultilingualDatabase["nl-en"];
+            let from = appData.fromLang;
+            let to = appData.toLang;
+            if(masterDictionary[from] && masterDictionary[from][to]) {
+                let rawList = masterDictionary[from][to];
+                // Genereer dynamisch voldoende vragen per hoofdstuk op basis van de woordenboeklijst
+                let chapterList = [];
+                let startIndex = (appData.activeChapter * 3) % rawList.length;
+                for(let i = 0; i < 5; i++) {
+                    let item = rawList[(startIndex + i) % rawList.length];
+                    chapterList.push({ q: item[0], a: item[1], opts: item[2] });
+                }
+                return chapterList;
             }
-            return chapters[appData.activeChapter] || chapters[0];
+            // Fallback als een combinatie niet direct bestaat
+            return [
+                { q: "Word", a: "Woord", opts: ["Woord", "Zin", "Taal", "Boek"] },
+                { q: "Learn", a: "Leren", opts: ["Leren", "Schrijven", "Lezen", "Horen"] },
+                { q: "Language", a: "Taal", opts: ["Taal", "Land", "Huis", "Stad"] },
+                { q: "Friend", a: "Vriend", opts: ["Vriend", "Vijand", "Broer", "Vader"] },
+                { q: "Good", a: "Goed", opts: ["Goed", "Slecht", "Mooi", "Groot"] }
+            ];
         }
 
         function renderPath() {
@@ -703,7 +824,6 @@
             let container = document.getElementById('path-container');
             container.innerHTML = "";
             
-            let questionsPool = getActiveQuestionsList();
             let totalLessonsInChapter = 6;
             let pairKey = getActivePairKey();
             let currentKey = `${pairKey}_ch${appData.activeChapter}`;
@@ -722,7 +842,7 @@
                 node.innerHTML = `${i + 1}<span class="node-label">Les</span>`;
                 
                 if(isUnlocked) {
-                    node.onclick = () => startLesson(i, questionsPool);
+                    node.onclick = () => startLesson(i);
                 } else {
                     node.onclick = () => {
                         showNotification("Les Vergrendeld", "Voltooi eerst de vorige les in dit hoofdstuk!");
@@ -736,8 +856,9 @@
 
         let activeQuestions = [], currentQIdx = 0, activeLessonIdx = 0, currentLessonErrors = 0;
 
-        function startLesson(lessonIdx, pool) {
+        function startLesson(lessonIdx) {
             activeLessonIdx = lessonIdx;
+            let pool = getActiveQuestionsList();
             activeQuestions = [];
             for(let q = 0; q < 5; q++) {
                 let base = pool[(lessonIdx + q) % pool.length];
@@ -779,95 +900,14 @@
             area.innerHTML = "";
             document.getElementById('next-btn').classList.add('hidden');
 
-            if(qObj.type === 'builder') {
-                renderSentenceBuilder(qObj);
-            } else {
-                let shuffledOpts = [...qObj.opts].sort(() => 0.5 - Math.random());
-                shuffledOpts.forEach(opt => {
-                    let btn = document.createElement('button');
-                    btn.className = "btn option-btn";
-                    btn.innerText = opt;
-                    btn.onclick = () => checkMcAnswer(opt, qObj.a);
-                    area.appendChild(btn);
-                });
-            }
-        }
-
-        function renderSentenceBuilder(qObj) {
-            let area = document.getElementById('answers-area');
-            let selectedWords = [];
-            let shuffledWords = [...qObj.words].sort(() => 0.5 - Math.random());
-
-            area.innerHTML = `
-                <div style="font-size:13px; color:var(--duo-gray-text); margin-bottom:6px; font-weight:800;">Jouw zin:</div>
-                <div id="target-slot" class="target-slot"></div>
-                <div style="font-size:13px; color:var(--duo-gray-text); margin-bottom:6px; margin-top:14px; font-weight:800;">Beschikbare woorden:</div>
-                <div id="word-bank" class="word-bank"></div>
-                <div id="builder-feedback"></div>
-            `;
-
-            let slotDiv = document.getElementById('target-slot');
-            let bankDiv = document.getElementById('word-bank');
-
-            function updateUI() {
-                slotDiv.innerHTML = "";
-                bankDiv.innerHTML = "";
-
-                if(selectedWords.length === 0) {
-                    slotDiv.innerHTML = `<span style="color:#b8b8b8; font-size:13px; font-weight:700;">Klik op de woorden hieronder...</span>`;
-                }
-
-                selectedWords.forEach((item, idx) => {
-                    let bubble = document.createElement('div');
-                    bubble.className = "word-bubble";
-                    bubble.style.borderColor = "var(--accent-blue)";
-                    bubble.style.background = "#ddf4ff";
-                    bubble.style.color = "#0484c7";
-                    bubble.innerText = item.word;
-                    bubble.onclick = () => {
-                        selectedWords.splice(idx, 1);
-                        updateUI();
-                    };
-                    slotDiv.appendChild(bubble);
-                });
-
-                shuffledWords.forEach((w, idx) => {
-                    let usedCount = selectedWords.filter(s => s.originalIdx === idx).length;
-                    if(usedCount === 0) {
-                        let bubble = document.createElement('div');
-                        bubble.className = "word-bubble";
-                        bubble.innerText = w;
-                        bubble.onclick = () => {
-                            selectedWords.push({ word: w, originalIdx: idx });
-                            updateUI();
-                        };
-                        bankDiv.appendChild(bubble);
-                    }
-                });
-            }
-
-            updateUI();
-
-            let checkBtn = document.createElement('button');
-            checkBtn.className = "btn";
-            checkBtn.innerText = "Controleer";
-            checkBtn.style.marginTop = "16px";
-            checkBtn.onclick = () => {
-                let userSentence = selectedWords.map(s => s.word).join(" ");
-                let correctSentence = qObj.words.join(" ");
-
-                if(userSentence.toLowerCase() === correctSentence.toLowerCase()) {
-                    document.getElementById('builder-feedback').innerHTML = `<div class="feedback-box-correct">Helemaal juist! Uitstekend werk.</div>`;
-                    checkBtn.classList.add('hidden');
-                    document.getElementById('next-btn').classList.remove('hidden');
-                } else {
-                    currentLessonErrors++;
-                    document.getElementById('builder-feedback').innerHTML = `<div class="feedback-box-wrong">Niet helemaal. Juiste zin: <strong>${correctSentence}</strong></div>`;
-                    checkBtn.classList.add('hidden');
-                    document.getElementById('next-btn').classList.remove('hidden');
-                }
-            };
-            area.appendChild(checkBtn);
+            let shuffledOpts = [...qObj.opts].sort(() => 0.5 - Math.random());
+            shuffledOpts.forEach(opt => {
+                let btn = document.createElement('button');
+                btn.className = "btn option-btn";
+                btn.innerText = opt;
+                btn.onclick = () => checkMcAnswer(opt, qObj.a);
+                area.appendChild(btn);
+            });
         }
 
         function checkMcAnswer(given, correct) {
@@ -899,7 +939,7 @@
             showNotification("Voortgang wissen", "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?");
             let modalBtn = document.querySelector('.custom-modal .btn');
             modalBtn.onclick = function() {
-                localStorage.removeItem('wordly_ai_v5');
+                localStorage.removeItem('wordly_ai_v6');
                 location.reload();
             };
         }
