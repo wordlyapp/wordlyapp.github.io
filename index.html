@@ -42,192 +42,6 @@
             overflow: hidden;
         }
 
-        /* --- LANDING PAGE STYLING --- */
-        #landing-page {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            z-index: 3000;
-            overflow-y: auto;
-        }
-
-        .landing-header-bar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px;
-            border-bottom: 2px solid var(--border);
-            background: white;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .landing-content-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .landing-hero {
-            text-align: center;
-            max-width: 600px;
-            animation: fadeIn 0.4s ease-out;
-            margin-bottom: 50px;
-        }
-
-        .landing-logo {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--duo-green);
-            margin-bottom: 20px;
-            box-shadow: 0 8px 20px rgba(88, 204, 2, 0.2);
-        }
-
-        .landing-hero h1 {
-            font-size: 38px;
-            font-weight: 900;
-            color: var(--duo-dark);
-            margin-bottom: 12px;
-        }
-
-        .landing-hero p {
-            color: var(--duo-gray-text);
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
-
-        .landing-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .landing-features-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-            width: 100%;
-            margin-bottom: 50px;
-        }
-
-        .feature-box {
-            background: #fafafa;
-            border: 2px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            text-align: left;
-            transition: var(--transition);
-        }
-        .feature-box:hover {
-            border-color: var(--duo-green);
-            background: var(--duo-light-green);
-        }
-        .feature-box h3 {
-            font-size: 18px;
-            font-weight: 900;
-            margin-bottom: 8px;
-            color: var(--duo-dark);
-        }
-        .feature-box p {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--duo-gray-text);
-            line-height: 1.4;
-        }
-
-        .auth-card {
-            background: white;
-            padding: 30px;
-            border-radius: var(--radius-lg);
-            border: 2px solid var(--border);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            animation: fadeIn 0.3s ease-out;
-            margin: 20px auto;
-        }
-
-        .auth-card h2 {
-            font-size: 24px;
-            font-weight: 900;
-            margin-bottom: 18px;
-            color: var(--duo-dark);
-        }
-
-        .auth-card input {
-            width: 100%;
-            padding: 12px 14px;
-            margin: 8px 0;
-            border: 2px solid var(--border);
-            border-radius: var(--radius-sm);
-            font-family: 'Nunito', sans-serif;
-            font-weight: 700;
-            font-size: 14px;
-            box-sizing: border-box;
-            background: #fdfdfd;
-        }
-
-        .auth-card input:focus {
-            border-color: var(--accent-blue);
-            outline: none;
-        }
-
-        .auth-card button.main-auth-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--duo-green);
-            color: white;
-            border: none;
-            border-bottom: 4px solid var(--duo-green-shadow);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-weight: 900;
-            font-size: 14px;
-            text-transform: uppercase;
-            margin-top: 14px;
-            transition: var(--transition);
-        }
-
-        .auth-card button.main-auth-btn:hover { filter: brightness(1.05); }
-        .auth-card button.main-auth-btn:active { transform: translateY(2px); border-bottom-width: 2px; }
-
-        .auth-card button.secondary-btn {
-            background: #f7f7f7;
-            color: var(--duo-gray-text);
-            border: 2px solid var(--border);
-            border-bottom: 3px solid var(--border);
-            margin-top: 8px;
-        }
-        .auth-card button.secondary-btn:hover { background: #eee; }
-
-        .auth-message {
-            margin-top: 10px;
-            font-size: 13px;
-            font-weight: 800;
-        }
-        .success-text { color: var(--duo-green); }
-        .error-text { color: #ea2b2b; }
-
         header.top-nav {
             width: 100%;
             display: flex;
@@ -358,9 +172,9 @@
         .stat-pill:hover { background: #eee; }
 
         .action-btn {
-            background: #fee2e2;
-            color: #dc2626;
-            border: 2px solid #fecaca;
+            background: #fef08a;
+            color: #854d0e;
+            border: 2px solid #fde047;
             padding: 4px 10px;
             border-radius: var(--radius-sm);
             font-weight: 800;
@@ -368,21 +182,7 @@
             cursor: pointer;
             transition: var(--transition);
         }
-        .action-btn:hover { background: #fecaca; }
-
-        .logout-btn {
-            background: #e0f2fe;
-            color: #0284c7;
-            border: 2px solid #bae6fd;
-        }
-        .logout-btn:hover { background: #bae6fd; }
-
-        .profile-btn {
-            background: #fef08a;
-            color: #854d0e;
-            border: 2px solid #fde047;
-        }
-        .profile-btn:hover { background: #fde047; }
+        .action-btn:hover { background: #fde047; }
 
         main.workspace {
             flex: 1;
@@ -611,18 +411,8 @@
         }
         .option-btn:hover { background: #f7f7f7; border-color: #cfcfcf; }
 
-        .feedback-box-correct {
-            color: #278500; font-weight: 900; font-size: 13px; margin: 10px 0; padding: 10px;
-            background: var(--duo-light-green); border-radius: var(--radius-sm); border: 2px solid #b8f270;
-        }
-        .feedback-box-wrong {
-            color: #ea2b2b; font-weight: 900; font-size: 13px; margin: 10px 0; padding: 10px;
-            background: #ffdfe0; border-radius: var(--radius-sm); border: 2px solid #ffb1b3;
-        }
-
         .hidden { display: none !important; }
 
-        /* --- ZIN OPBOUWEN STYLING --- */
         .antwoord-zone {
             min-height: 60px;
             border: 2px dashed var(--border);
@@ -661,7 +451,6 @@
         }
         button.woord-btn:hover { filter: brightness(1.05); }
 
-        /* --- ZWARTE KAT MASCOT TUSSENSCHERM --- */
         .cat-interstitial-card {
             background: #1e1e1e;
             color: #ffffff;
@@ -680,36 +469,6 @@
         @keyframes catBounce {
             0% { transform: translateY(0) rotate(-5deg); }
             100% { transform: translateY(-8px) rotate(5deg); }
-        }
-
-        /* --- LEADERBOARD STYLING --- */
-        .leaderboard-container {
-            width: 100%;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .lb-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .lb-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #fdfdfd;
-            border: 2px solid var(--border);
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            font-weight: 800;
-            font-size: 13px;
-        }
-
-        .lb-item.user-highlight {
-            background: var(--duo-light-green);
-            border-color: var(--duo-green);
         }
 
         .custom-modal {
@@ -739,120 +498,12 @@
 </head>
 <body>
 
-    <!-- LANDING PAGE & AUTHENTICATIE SCHERM -->
-    <div id="landing-page">
-        <header class="landing-header-bar">
-            <div class="logo-area">
-                <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="logo-img"> Wordly Learn
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="showLoginBox()">Log in</button>
-            </div>
-        </header>
-
-        <div class="landing-content-wrapper">
-            <div id="landing-hero-box" class="landing-hero">
-                <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="landing-logo">
-                <h1>The smartest and most fun way to learn languages for free.</h1>
-                <p>Master vocabulary easily on any device with bite-sized lessons, interactive paths, and fun achievements designed to keep you motivated every single day.</p>
-                <div class="landing-buttons">
-                    <button class="btn" onclick="showRegisterBox()">Get Started</button>
-                    <button class="btn secondary-btn" onclick="showLoginBox()" style="color:var(--duo-dark);">I already have an account</button>
-                </div>
-            </div>
-
-            <div id="login-box" class="auth-card hidden">
-                <h2>Welcome Back</h2>
-                <input type="text" id="login-user" placeholder="Username">
-                <input type="password" id="login-pass" placeholder="Password">
-                <button class="main-auth-btn" onclick="handleLogin()">Log In</button>
-                <button class="main-auth-btn secondary-btn" onclick="showLandingHero()">Back</button>
-                <div id="login-msg" class="auth-message"></div>
-            </div>
-
-            <div id="register-box" class="auth-card hidden">
-                <h2>Create Your Account</h2>
-                <input type="text" id="reg-user" placeholder="Choose a username">
-                <input type="password" id="reg-pass" placeholder="Choose a password">
-                <button class="main-auth-btn" onclick="handleRegister()">Register</button>
-                <button class="main-auth-btn secondary-btn" onclick="showLandingHero()">Back</button>
-                <div id="reg-msg" class="auth-message"></div>
-            </div>
-
-            <div class="landing-features-section" id="landing-features-container">
-                <div class="feature-box">
-                    <h3>🚀 100% Free & Accessible</h3>
-                    <p>Learn anytime, anywhere on your phone, tablet, or desktop without any hidden fees or subscriptions.</p>
-                </div>
-                <div class="feature-box">
-                    <h3>🎮 Gamified Learning Path</h3>
-                    <p>Earn XP, maintain daily streaks, climb the competitive leaderboards, and unlock exciting new chapters.</p>
-                </div>
-                <div class="feature-box">
-                    <h3>🐈‍⬛ Smart Mascot Guidance</h3>
-                    <p>Our friendly black cat mascot reviews your progress between lessons with fun remarks!</p>
-                </div>
-                <div class="feature-box">
-                    <h3>🛠️ Mistakes & Profiles</h3>
-                    <p>Review your mistakes before taking exams and track your personal statistics with dedicated user profiles.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TAAL-KEUZE PROMPT MODAL -->
-    <div id="lang-prompt-modal" class="modal-overlay hidden">
-        <div class="custom-modal" style="max-width: 400px;">
-            <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--duo-green); margin-bottom: 12px; object-fit: cover;">
-            <h3>Choose your language</h3>
-            <p>Select your base language and the language you want to learn right now:</p>
-            
-            <div style="background: #f7f7f7; padding: 15px; border-radius: var(--radius-sm); border: 2px solid var(--border); display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; align-items: center;">
-                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                    <span id="prompt-label-from" style="font-weight: 800; font-size: 13px;">From:</span>
-                    <div class="custom-dropdown-container">
-                        <button class="lang-dropdown-btn" onclick="toggleMenu('prompt-from-menu')">
-                            <img id="prompt-from-flag" class="flag-icon" src="" alt="">
-                            <span id="prompt-from-label">Nederlands</span> ▾
-                        </button>
-                        <div id="prompt-from-menu" class="lang-menu-content">
-                            <div class="lang-option" onclick="selectPromptLanguage('from', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png"> Nederlands</div>
-                            <div class="lang-option" onclick="selectPromptLanguage('from', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png"> Engels</div>
-                            <div class="lang-option" onclick="selectPromptLanguage('from', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png"> Duits</div>
-                            <div class="lang-option" onclick="selectPromptLanguage('from', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png"> Frans</div>
-                            <div class="lang-option" onclick="selectPromptLanguage('from', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png"> Spaans</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                    <span id="prompt-label-to" style="font-weight: 800; font-size: 13px;">To:</span>
-                    <div class="custom-dropdown-container">
-                        <button class="lang-dropdown-btn" onclick="toggleMenu('prompt-to-menu')">
-                            <img id="prompt-to-flag" class="flag-icon" src="" alt="">
-                            <span id="prompt-to-label">Engels</span> ▾
-                        </button>
-                        <div id="prompt-to-menu" class="lang-menu-content">
-                            <div class="lang-option" onclick="selectPromptLanguage('to', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png"> Nederlands</div>
-                            <div class="lang-option" onclick="selectPromptLanguage('to', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png"> Engels</div>
-                            <div class="lang-option" onclick="selectPromptLanguage('to', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png"> Duits</div>
-                            <div class="lang-option" onclick="selectPromptLanguage('to', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png"> Frans</div>
-                            <div class="lang-option" onclick="selectPromptLanguage('to', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png"> Spaans</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="btn" onclick="confirmLangPromptAndStart()">Start Learning</button>
-        </div>
-    </div>
-
     <!-- PROFIEL MODAL -->
     <div id="profile-modal" class="modal-overlay hidden">
         <div class="custom-modal">
-            <h3 id="profile-username-title">Gebruikersprofiel</h3>
-            <p id="profile-details-text">Statistieken en voortgang</p>
+            <h3>Gebruikersprofiel</h3>
+            <p>Statistieken en voortgang</p>
             <div style="background: #f7f7f7; padding: 12px; border-radius: var(--radius-sm); border: 2px solid var(--border); margin-bottom: 15px; text-align: left; font-size: 13px; font-weight: 800;">
-                <div>👤 Gebruiker: <span id="prof-user" style="color: var(--duo-green);"></span></div>
                 <div>🔥 Streak: <span id="prof-streak"></span> dagen</div>
                 <div>🏆 Totale XP: <span id="prof-xp"></span></div>
                 <div>📚 Actief Hoofdstuk: <span id="prof-chapter"></span></div>
@@ -909,10 +560,9 @@
 
             <div class="top-stats-bar">
                 <div class="stat-pill">🔥 <span id="streak-display">1</span></div>
-                <div class="stat-pill" onclick="openLeaderboard()">🏆 <span id="points-display">0</span> XP</div>
+                <div class="stat-pill">🏆 <span id="points-display">0</span> XP</div>
             </div>
-            <button class="action-btn profile-btn" onclick="openProfileModal()">Profiel</button>
-            <button class="action-btn logout-btn" id="logout-btn-text" onclick="logoutUser()">Log out</button>
+            <button class="action-btn" onclick="openProfileModal()">Profiel</button>
         </div>
     </header>
 
@@ -962,176 +612,10 @@
                 <p id="complete-text" style="color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px;">Great job!</p>
                 <button class="btn" id="complete-continue-btn" onclick="backToDashboard()">Continue</button>
             </div>
-
-            <!-- Leaderboard Scherm -->
-            <div id="page-leaderboard" class="card page-section hidden">
-                <div class="lesson-top-bar" style="margin-bottom: 12px;">
-                    <button class="back-btn" onclick="backToDashboard()">← <span id="lb-back-text">Back</span></button>
-                    <h3 id="lb-main-title" style="font-size: 16px; font-weight: 900;">Leaderboard</h3>
-                    <div></div>
-                </div>
-                <div class="leaderboard-container">
-                    <p style="font-size: 12px; font-weight: 700; color: var(--duo-gray-text); margin-bottom: 10px;">Ranglijst van echte gebruikers:</p>
-                    <div id="lb-list-container" class="lb-list"></div>
-                </div>
-            </div>
-
         </div>
     </main>
 
     <script>
-        // --- AUTHENTICATIE & ACCOUNT LOGICA ---
-        let currentLoggedInUser = localStorage.getItem('wordly_logged_in') || null;
-
-        function showLoginBox() {
-            document.getElementById('landing-hero-box').classList.add('hidden');
-            document.getElementById('register-box').classList.add('hidden');
-            document.getElementById('landing-features-container').classList.add('hidden');
-            document.getElementById('login-box').classList.remove('hidden');
-        }
-
-        function showRegisterBox() {
-            document.getElementById('landing-hero-box').classList.add('hidden');
-            document.getElementById('login-box').classList.add('hidden');
-            document.getElementById('landing-features-container').classList.add('hidden');
-            document.getElementById('register-box').classList.remove('hidden');
-        }
-
-        function showLandingHero() {
-            document.getElementById('login-box').classList.add('hidden');
-            document.getElementById('register-box').classList.add('hidden');
-            document.getElementById('landing-hero-box').classList.remove('hidden');
-            document.getElementById('landing-features-container').classList.remove('hidden');
-        }
-
-        function handleRegister() {
-            let user = document.getElementById('reg-user').value.trim();
-            let pass = document.getElementById('reg-pass').value.trim();
-            let msg = document.getElementById('reg-msg');
-
-            if (!user || !pass) {
-                msg.className = "auth-message error-text";
-                msg.innerText = "Please fill in all fields!";
-                return;
-            }
-
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if (accounts[user]) {
-                msg.className = "auth-message error-text";
-                msg.innerText = "This username already exists!";
-                return;
-            }
-
-            accounts[user] = {
-                password: pass,
-                data: {
-                    points: 0,
-                    streak: 1,
-                    fromLang: "nl",
-                    toLang: "en",
-                    activeChapter: 0,
-                    languageProgress: {},
-                    mistakes: []
-                }
-            };
-
-            localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
-            msg.className = "auth-message success-text";
-            msg.innerText = "Account created! You can now log in.";
-
-            setTimeout(() => {
-                showLoginBox();
-                document.getElementById('reg-user').value = "";
-                document.getElementById('reg-pass').value = "";
-                msg.innerText = "";
-            }, 1200);
-        }
-
-        function handleLogin() {
-            let user = document.getElementById('login-user').value.trim();
-            let pass = document.getElementById('login-pass').value.trim();
-            let msg = document.getElementById('login-msg');
-
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-
-            if (!accounts[user] || accounts[user].password !== pass) {
-                msg.className = "auth-message error-text";
-                msg.innerText = "Incorrect username or password!";
-                return;
-            }
-
-            currentLoggedInUser = user;
-            localStorage.setItem('wordly_logged_in', user);
-
-            document.getElementById('login-user').value = "";
-            document.getElementById('login-pass').value = "";
-            msg.innerText = "";
-
-            showLangPromptModal();
-        }
-
-        function logoutUser() {
-            localStorage.removeItem('wordly_logged_in');
-            currentLoggedInUser = null;
-            location.reload();
-        }
-
-        // --- PROFIEL MODAL FUNCTIES ---
-        function openProfileModal() {
-            document.getElementById('prof-user').innerText = currentLoggedInUser || "Onbekend";
-            document.getElementById('prof-streak').innerText = appData.streak;
-            document.getElementById('prof-xp').innerText = appData.points;
-            document.getElementById('prof-chapter').innerText = appData.activeChapter + 1;
-            document.getElementById('profile-modal').classList.remove('hidden');
-        }
-
-        function closeProfileModal() {
-            document.getElementById('profile-modal').classList.add('hidden');
-        }
-
-        function backToDashboard() {
-            document.querySelectorAll('#page-lesson, #page-complete, #page-leaderboard, #page-cat-interstitial').forEach(p => p.classList.add('hidden'));
-            document.getElementById('page-dashboard').classList.remove('hidden');
-            renderPath();
-        }
-
-        function openLeaderboard() {
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete, #page-cat-interstitial').forEach(p => p.classList.add('hidden'));
-            document.getElementById('page-leaderboard').classList.remove('hidden');
-            
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            let lbContainer = document.getElementById('lb-list-container');
-            lbContainer.innerHTML = "";
-
-            let usersArr = [];
-            for(let u in accounts) {
-                usersArr.push({ name: u, points: accounts[u].data?.points || 0 });
-            }
-            usersArr.sort((a,b) => b.points - a.points);
-
-            if(usersArr.length === 0) {
-                lbContainer.innerHTML = `<div style="font-size:13px; font-weight:700; color:var(--duo-gray-text);">Geen andere gebruikers gevonden.</div>`;
-                return;
-            }
-
-            usersArr.forEach((item, idx) => {
-                let div = document.createElement('div');
-                div.className = `lb-item ${item.name === currentLoggedInUser ? 'user-highlight' : ''}`;
-                div.innerHTML = `<span>#${idx + 1} ${item.name}</span><span>${item.points} XP</span>`;
-                lbContainer.appendChild(div);
-            });
-        }
-
-        function showNotification(title, text) {
-            document.getElementById('notif-title').innerText = title;
-            document.getElementById('notif-text').innerText = text;
-            document.getElementById('custom-notification').classList.remove('hidden');
-        }
-
-        function closeNotification() {
-            document.getElementById('custom-notification').classList.add('hidden');
-        }
-
         const flags = {
             nl: "https://flagcdn.com/w40/nl.png",
             en: "https://flagcdn.com/w40/gb.png",
@@ -1148,58 +632,9 @@
             es: "Spaans"
         };
 
-        let promptTempFrom = "nl";
-        let promptTempTo = "en";
-
-        function showLangPromptModal() {
-            document.getElementById('landing-page').classList.add('hidden');
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if(accounts[currentLoggedInUser] && accounts[currentLoggedInUser].data) {
-                promptTempFrom = accounts[currentLoggedInUser].data.fromLang || "nl";
-                promptTempTo = accounts[currentLoggedInUser].data.toLang || "en";
-            }
-            updatePromptModalUI();
-            document.getElementById('lang-prompt-modal').classList.remove('hidden');
-        }
-
-        function updatePromptModalUI() {
-            document.getElementById('prompt-from-flag').src = flags[promptTempFrom] || flags.nl;
-            document.getElementById('prompt-from-label').innerText = langNames[promptTempFrom];
-            document.getElementById('prompt-to-flag').src = flags[promptTempTo] || flags.en;
-            document.getElementById('prompt-to-label').innerText = langNames[promptTempTo];
-        }
-
-        function selectPromptLanguage(type, code, name) {
-            if (type === 'from') {
-                if (code === promptTempTo) {
-                    showNotification("Attention", "Source and target languages cannot be the same!");
-                    return;
-                }
-                promptTempFrom = code;
-            } else {
-                if (code === promptTempFrom) {
-                    showNotification("Attention", "Source and target languages cannot be the same!");
-                    return;
-                }
-                promptTempTo = code;
-            }
-            updatePromptModalUI();
-            document.querySelectorAll('.lang-menu-content').forEach(m => m.classList.remove('show'));
-        }
-
-        function confirmLangPromptAndStart() {
-            appData.fromLang = promptTempFrom;
-            appData.toLang = promptTempTo;
-            appData.activeChapter = 0;
-            if(!appData.mistakes) appData.mistakes = [];
-            saveData();
-            document.getElementById('lang-prompt-modal').classList.add('hidden');
-            initializeAppForUser();
-        }
-
         const uiTranslations = {
             nl: {
-                labelFrom: "Van:", labelTo: "Naar:", stop: "✕ Stoppen", logout: "Uitloggen",
+                labelFrom: "Van:", labelTo: "Naar:", stop: "✕ Stoppen",
                 examLabel: "Toets", lessonLabel: "Les", reviewLabel: "Fouten",
                 examPrompt: "[EINDTOETS] Vertaal:", lessonPrompt: "Vertaal / Beantwoord:", reviewPrompt: "[FOUTEN VERBETEREN] Vertaal:",
                 completeTitle: "Les Voltooid! 🎉", completeSub: "Geweldig gepresteerd!", continueBtn: "Doorgaan",
@@ -1208,7 +643,6 @@
                 sameLangText: "De brontaal en doeltaal mogen niet hetzelfde zijn!",
                 lockTitle: "Hoofdstuk Vergrendeld", lockText: "Je moet eerst alle lessen van het vorige hoofdstuk afronden!",
                 nodeLockTitle: "Vergrendeld", nodeLockText: "Voltooi eerst de vorige les in dit hoofdstuk!",
-                lbTitle: "Leaderboard", lbBack: "Terug",
                 catQuotes: [
                     "Miauwerd! Jij hebt deze les geweldig afgerond!",
                     "Purrr... Wat een fantastische prestatie zeg!",
@@ -1218,7 +652,7 @@
                 ]
             },
             en: {
-                labelFrom: "From:", labelTo: "To:", stop: "✕ Stop", logout: "Log out",
+                labelFrom: "From:", labelTo: "To:", stop: "✕ Stop",
                 examLabel: "Exam", lessonLabel: "Lesson", reviewLabel: "Mistakes",
                 examPrompt: "[FINAL EXAM] Translate:", lessonPrompt: "Translate / Answer:", reviewPrompt: "[MISTAKES REVIEW] Translate:",
                 completeTitle: "Lesson Completed! 🎉", completeSub: "Great job!", continueBtn: "Continue",
@@ -1227,7 +661,6 @@
                 sameLangText: "Source and target languages cannot be the same!",
                 lockTitle: "Chapter Locked", lockText: "You must complete all lessons of the previous chapter first!",
                 nodeLockTitle: "Locked", nodeLockText: "Complete the previous lesson in this chapter first!",
-                lbTitle: "Leaderboard", lbBack: "Back",
                 catQuotes: [
                     "Meow! You successfully finished this lesson!",
                     "Purrr... What a fantastic achievement!",
@@ -1237,7 +670,7 @@
                 ]
             },
             de: {
-                labelFrom: "Von:", labelTo: "Nach:", stop: "✕ Stopp", logout: "Abmelden",
+                labelFrom: "Von:", labelTo: "Nach:", stop: "✕ Stopp",
                 examLabel: "Test", lessonLabel: "Lektion", reviewLabel: "Fehler",
                 examPrompt: "[ABSCHLUSSTEST] Übersetze:", lessonPrompt: "Übersetze / Beantworte:", reviewPrompt: "[FEHLER VERBESSERN] Übersetze:",
                 completeTitle: "Lektion beendet! 🎉", completeSub: "Großartige Leistung!", continueBtn: "Weiter",
@@ -1246,7 +679,6 @@
                 sameLangText: "Quell- und Zielsprache dürfen nicht identisch sein!",
                 lockTitle: "Kapitel gesperrt", lockText: "Du musst erst alle Lektionen des vorherigen Kapitels abschließen!",
                 nodeLockTitle: "Gesperrt", nodeLockText: "Schließe zuerst die vorherige Lektion ab!",
-                lbTitle: "Bestenliste", lbBack: "Zurück",
                 catQuotes: [
                     "Miau! Lektion erfolgreich abgeschlossen!",
                     "Purrr... Was für eine tolle Leistung!",
@@ -1256,7 +688,7 @@
                 ]
             },
             fr: {
-                labelFrom: "De:", labelTo: "Vers:", stop: "✕ Quitter", logout: "Déconnexion",
+                labelFrom: "De:", labelTo: "Vers:", stop: "✕ Quitter",
                 examLabel: "Examen", lessonLabel: "Leçon", reviewLabel: "Erreurs",
                 examPrompt: "[EXAMEN FINAL] Traduisez:", lessonPrompt: "Traduisez / Répondez:", reviewPrompt: "[CORRECTION DES ERREURS] Traduisez:",
                 completeTitle: "Leçon terminée ! 🎉", completeSub: "Excellent travail !", continueBtn: "Continuer",
@@ -1265,7 +697,6 @@
                 sameLangText: "La langue source et la langue cible ne peuvent pas être identiques !",
                 lockTitle: "Chapitre verrouillé", lockText: "Vous devez d'abord terminer toutes les leçons du chapitre précédent !",
                 nodeLockTitle: "Verrouillé", nodeLockText: "Terminez d'abord la leçon précédente de ce chapitre !",
-                lbTitle: "Classement", lbBack: "Retour",
                 catQuotes: [
                     "Miaou ! Leçon brillamment terminée !",
                     "Purrr... Quelle excellente réussite !",
@@ -1275,7 +706,7 @@
                 ]
             },
             es: {
-                labelFrom: "De:", labelTo: "A:", stop: "✕ Salir", logout: "Cerrar sesión",
+                labelFrom: "De:", labelTo: "A:", stop: "✕ Salir",
                 examLabel: "Examen", lessonLabel: "Lección", reviewLabel: "Errores",
                 examPrompt: "[EXAMEN FINAL] Traduce:", lessonPrompt: "Traduce / Responde:", reviewPrompt: "[REVISIÓN DE ERRORES] Traduce:",
                 completeTitle: "¡Lección completada! 🎉", completeSub: "¡Buen trabajo!", continueBtn: "Continuar",
@@ -1284,7 +715,6 @@
                 sameLangText: "¡El idioma de origen y destino no pueden ser el mismo!",
                 lockTitle: "Capítulo bloqueado", lockText: "¡Debes completar todas lecciones del capítulo anterior primero!",
                 nodeLockTitle: "Bloqueado", nodeLockText: "¡Completa primero la lección anterior de este capítulo!",
-                lbTitle: "Clasificación", lbBack: "Volver",
                 catQuotes: [
                     "¡Miau! ¡Lección superada con éxito!",
                     "Purrr... ¡Qué gran logro!",
@@ -1360,7 +790,7 @@
                 /* Ch 5 */ [["Ons nieuwe huis staat in een rustige straat.", "Our new house is in a quiet street."], ["Mijn eigen kamer is netjes opgeruimd.", "My own room is neatly cleaned up."], ["De moderne keuken heeft alle benodigde apparatuur.", "The modern kitchen has all necessary equipment."], ["De badkamer wordt elke zaterdag grondig schoongemaakt.", "The bathroom is thoroughly cleaned every Saturday."], ["Mijn comfortabele bed ligt ontzettend lekker.", "My comfortable bed feels extremely nice."], ["We zitten met het hele gezin aan de eettafel.", "We are sitting at the dining table with the whole family."], ["De houten stoel staat netjes aangeschoven.", "The wooden chair is pushed in neatly."], ["Doe alsjeblieft de voordeur stevig op slot.", "Please lock the front door securely."], ["Kijk door het open raam naar buiten.", "Look outside through the open window."], ["Het dak van ons huis is onlangs vernieuwd.", "The roof of our house was recently renewed."]],
                 /* Ch 6 */ [["Hoe gaat het vandaag met jouw gezondheid?", "How is your health today?"], ["Ik ben ontzettend blij met dit resultaat.", "I am extremely happy with this result."], ["Wat zeg jij eigenlijk tegen die persoon?", "What are you actually saying to that person?"], ["Waar heb jij dit prachtige boek gekocht?", "Where did you buy this beautiful book?"], ["Ik begrijp de moeilijke uitleg van de leraar.", "I understand the difficult explanation of the teacher."], ["Spreek jij vloeiend Engels tijdens vakanties?", "Do you speak English fluently during vacations?"], ["Hoe laat moeten wij morgen aanwezig zijn?", "What time do we have to be present tomorrow?"], ["Ik ben erg moe door al dat harde werken.", "I am very tired from all that hard work."], ["Tot zo, we zien elkaar over tien minuten!", "See you soon, we'll see each other in ten minutes!"], ["Alles is helemaal goed geregeld voor het feest.", "Everything is arranged completely well for the party."]],
                 /* Ch 7 */ [["Waar woon jij ergens in deze grote stad?", "Where do you live somewhere in this big city?"], ["What is jouw volledige voor- en achternaam?", "What is your full first and last name?"], ["Ik kom oorspronkelijk uit het mooie Nederland.", "I originally come from the beautiful Netherlands."], ["Heb jij misschien een lieve hond als huisdier?", "Do you happen to have a sweet dog as a pet?"], ["Het weer is vandaag schitterend om buiten te spelen.", "The weather is wonderful today to play outside."], ["Ik hou er enorm van om spannende boeken te lezen.", "I love reading exciting books immensely."], ["Waar bevindt zich de dichtstbijzijnde supermarkt?", "Where is the nearest supermarket located?"], ["Ik heb enorme honger na een lange schooldag.", "I am extremely hungry after a long school day."], ["Dit avontuur is echt heel erg leuk om te doen.", "This adventure is really a lot of fun to do."], ["Mag ik aljeblieft een koud glas water bestellen?", "May I please order a cold glass of water?"]],
-                /* Ch 8 */ [["Kun jij mij misschien helpen met deze moeilijke taak?", "Can you perhaps help me with this difficult task?"], ["Hoeveel kost dit prachtige schilderij in de winkel?", "How much does this beautiful painting cost in the shop?"], ["Waar is het centrale treinstation gevestigd?", "Where is the central railway station located?"], ["Ik ben op zoek naar een goedkoop hotel.", "I am looking for a cheap hotel."], ["Wanneer vertrekt de volgende bus naar het centrum?", "When does the next bus leave for the center?"], ["Hebben jullie nog een vrije tafel voor twee personen?", "Do you still have a free table for two people?"], ["Ik wil na het eten heel graag afrekenen.", "I would like to check out very much after dinner."], ["Waar kan ik het schone toilet vinden?", "Where can I find the clean restroom?"], ["Is het mogelijk om hier met pin te betalen?", "Is it possible to pay here with card?"], ["I wens jou nog een ontzettend fijne dag verder!", "I wish you a very nice day further!"]],
+                /* Ch 8 */ [["Kun jij mij misschien helpen met deze moeilijke taak?", "Can you perhaps help me with this difficult task?"], ["Hoeveel kost dit prachtige schilderij in de winkel?", "How much does this beautiful painting cost in the shop?"], ["Waar is het centrale treinstation gevestigd?", "Where is the central railway station located?"], ["Ik ben op zoek naar een goedkoop hotel.", "I am looking for a cheap hotel."], ["Wanneer vertrekt de volgende bus naar het centrum?", "When does the next bus leave for the center?"], ["Hebben jullie nog een vrije tafel voor twee personen?", "Do you still have a free table for two people?"], ["Ik wil na het eten heel graag afrekenen.", "I would like to check out very much after dinner."], ["Waar kan ik het schone toilet vinden?", "Where can I find the clean restroom?"], ["Is het mogelijk om hier met pin te betalen?", "Is it possible to pay here with card?"], ["Ik wens jou nog een ontzettend fijne dag verder!", "I wish you a very nice day further!"]],
                 /* Ch 9 */ [["Wat wil jij vandaag graag komen drinken?", "What would you like to come drink today?"], ["Ik wil heel graag een verse kop koffie bestellen.", "I would very much like to order a fresh cup of coffee."], ["Dit heerlijke gerecht smaakt echt uitstekend.", "This delicious dish tastes truly excellent."], ["Mag ik aljeblieft de rekening van u ontvangen?", "May I please receive the check from you?"], ["Is dit warme gerecht volledig vegetarisch bereid?", "Is this warm dish prepared completely vegetarian?"], ["Ik heb na de wandeling enorme honger gekregen.", "I have gotten extremely hungry after the walk."], ["Smakelijk eten voor al onze gasten!", "Enjoy your meal for all our guests!"], ["Pas op, want dit bord is nog veel te warm.", "Watch out, because this plate is still much too warm."], ["Ik lust absoluut geen vis in mijn salade.", "I don't like fish in my salad at all."], ["Breng mij alsjeblieft meteen de menukaart.", "Please bring me the menu right away."]],
                 /* Ch 10 */ [["Ik wil heel graag een treinkaartje naar Amsterdam kopen.", "I would like to buy a train ticket to Amsterdam."], ["Vliegt het vliegtuig morgen precies op tijd naar Londen?", "Does the plane fly to London exactly on time tomorrow?"], ["We hebben een mooi hotel geboekt in het historische centrum.", "We have booked a nice hotel in the historic center."], ["Waar kan ik mijn zware bagage achterlaten?", "Where can I leave my heavy luggage?"], ["Onze vakantie in het verre buitenland was fantastisch.", "Our vacation in the distant abroad was fantastic."], ["Reizen met de moderne trein is comfortabel en snel.", "Traveling by the modern train is comfortable and fast."], ["Vergeet niet om jouw paspoort en tickets mee te nemen.", "Don't forget to take your passport and tickets along."], ["Het verkeer op de snelweg is erg druk vanochtend.", "The traffic on the highway is very busy this morning."], ["Wij gaan volgend jaar lekker naar Spanje op vakantie.", "We are going nicely to Spain for vacation next year."], ["Kun jij mij de juiste weg wijzen naar het vliegveld?", "Can you show me the correct way to the airport?"]],
                 /* Ch 11 */ [["Ik werk elke werkdag van negen tot vijf uur op kantoor.", "I work in the office every workday from nine to five."], ["Mijn collegiale vriend helpt mij altijd met moeilijke projecten.", "My collegial friend always helps me with difficult projects."], ["We hebben morgen een belangrijke vergadering met de directeur.", "We have an important meeting with the director tomorrow."], ["De nieuwe snelle computer werkt veel beter dan de oude.", "The new fast computer works much better than the old one."], ["Ik moet vandaag een lang verslag schrijven voor school.", "I have to write a long report for school today."], ["Kan ik deze belangrijke documenten per e-mail versturen?", "Can I send these important documents by email?"], ["De middagpauze duurt gelukkig een heel halfuur vandaag.", "Fortunately, the lunch break lasts a full half hour today."], ["Hij studeert elke avond hard om zijn examen te halen.", "He studies hard every evening to pass his exam."], ["Onze leraar legt alle moeilijke lessen heel rustig uit.", "Our teacher explains all difficult lessons very calmly."], ["Ik ben ontzettend trots op mijn prestatie van deze week.", "I am extremely proud of my achievement this week."]],
@@ -1381,7 +811,7 @@
             ],
             "es": [
                 Array(10).fill(["Hola, ¿cómo estás hoy?", "Hola, ¿cómo estás hoy?"]), Array(10).fill(["Quisiera comer una manzana fresca.", "Quisiera comer una manzana fresca."]), Array(10).fill(["El tren rápido sale en cinco minutos.", "El tren rápido sale en cinco minutos."]), Array(10).fill(["Mi querido padre trabaja duro en la oficina.", "Mi querido padre trabaja duro en la oficina."]), Array(10).fill(["Nuestra nueva casa está en una calle tranquila.", "Nuestra nueva casa está en una calle tranquila."]),
-                Array(10).fill(["¿Cómo estás hoy?", "¿Cómo estás hoy?"]), Array(10).fill(["¿Dónde vives en esta gran ciudad?", "¿Dónde vives en esta gran ciudad?"]), Array(10).fill(["¿Puedes ayudarme con esta tarea?", "¿Puedes ayudarme con esta tarea?"]), Array(10).fill(["¿Qué quieres beber hoy?", "¿Qué quieres beber hoy?"]), Array(10).fill(["Quiero comprar un billete de train.", "Quiero comprar un billete de tren."]),
+                Array(10).fill(["¿Cómo estás hoy?", "¿Cómo estás hoy?"]), Array(10).fill(["¿Dónde vives en esta gran ciudad?", "¿Dónde vives en esta gran ciudad?"]), Array(10).fill(["¿Puedes ayudarme con esta tarea?", "¿Puedes ayudarme con esta tarea?"]), Array(10).fill(["¿Qué quieres beber hoy?", "¿Qué quieres beber hoy?"]), Array(10).fill(["Quiero comprar un billete de tren.", "Quiero comprar un billete de tren."]),
                 Array(10).fill(["Trabajo en la oficina todos los días.", "Trabajo en la oficina todos los días."]), Array(10).fill(["Me gusta jugar al fútbol los fines de semana.", "Me gusta jugar al fútbol los fines de semana."]), Array(10).fill(["Érase una vez un gato pequeño en el bosque.", "Érase una vez un gato pequeño en el bosque."]), Array(10).fill(["Toda mi familia viene de visita.", "Toda mi familia viene de visita."]), Array(10).fill(["¡Felicitaciones por completar el curso con éxito!", "¡Felicitaciones por completar el curso con éxito!"])
             ]
         };
@@ -1396,27 +826,25 @@
             mistakes: []
         };
 
-        function saveData() {
-            if (!currentLoggedInUser) return;
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if (accounts[currentLoggedInUser]) {
-                accounts[currentLoggedInUser].data = appData;
-                localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
+        function loadData() {
+            const saved = localStorage.getItem('wordly_local_data');
+            if (saved) {
+                try {
+                    appData = JSON.parse(saved);
+                } catch (e) {
+                    console.error("Fout bij laden van local storage data", e);
+                }
             }
         }
 
+        function saveData() {
+            localStorage.setItem('wordly_local_data', JSON.stringify(appData));
+        }
+
         window.onload = function() {
-            if (currentLoggedInUser) {
-                let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-                if (accounts[currentLoggedInUser]) {
-                    appData = accounts[currentLoggedInUser].data;
-                    if(!appData.mistakes) appData.mistakes = [];
-                    initializeAppForUser();
-                } else {
-                    currentLoggedInUser = null;
-                    localStorage.removeItem('wordly_logged_in');
-                }
-            }
+            loadData();
+            if(!appData.mistakes) appData.mistakes = [];
+            initializeAppForUser();
 
             window.onclick = function(event) {
                 if (!event.target.closest('.custom-dropdown-container')) {
@@ -1426,8 +854,6 @@
         };
 
         function initializeAppForUser() {
-            document.getElementById('landing-page').classList.add('hidden');
-            document.getElementById('lang-prompt-modal').classList.add('hidden');
             updateUIStrings();
             renderChapterTabs();
             updateDashboardStats();
@@ -1482,14 +908,10 @@
             document.getElementById('label-from-text').innerText = t("labelFrom");
             document.getElementById('label-to-text').innerText = t("labelTo");
             document.getElementById('stop-btn-text').innerText = t("stop");
-            document.getElementById('logout-btn-text').innerText = t("logout");
             document.getElementById('notif-ok-btn').innerText = t("notifOk");
             document.getElementById('complete-continue-btn').innerText = t("continueBtn");
             document.getElementById('complete-title-text').innerText = t("completeTitle");
             document.getElementById('complete-text').innerText = t("completeSub");
-
-            document.getElementById('lb-main-title').innerText = t("lbTitle");
-            document.getElementById('lb-back-text').innerText = t("lbBack");
         }
 
         function updateDashboardStats() {
@@ -1502,6 +924,33 @@
 
             document.getElementById('chapter-title-display').innerText = titles[appData.activeChapter];
             document.getElementById('chapter-desc-display').innerText = descs[appData.activeChapter];
+        }
+
+        function openProfileModal() {
+            document.getElementById('prof-streak').innerText = appData.streak;
+            document.getElementById('prof-xp').innerText = appData.points;
+            document.getElementById('prof-chapter').innerText = appData.activeChapter + 1;
+            document.getElementById('profile-modal').classList.remove('hidden');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profile-modal').classList.add('hidden');
+        }
+
+        function backToDashboard() {
+            document.querySelectorAll('#page-lesson, #page-complete, #page-cat-interstitial').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-dashboard').classList.remove('hidden');
+            renderPath();
+        }
+
+        function showNotification(title, text) {
+            document.getElementById('notif-title').innerText = title;
+            document.getElementById('notif-text').innerText = text;
+            document.getElementById('custom-notification').classList.remove('hidden');
+        }
+
+        function closeNotification() {
+            document.getElementById('custom-notification').classList.add('hidden');
         }
 
         function getActivePairKey() {
@@ -1599,15 +1048,40 @@
             let to = appData.toLang;
             let chapterIdx = appData.activeChapter;
 
-            let sourceList = masterDatabase[to] || masterDatabase["en"];
-            let pairs = sourceList[chapterIdx] || sourceList[0];
+            if (from === "nl" && masterDatabase[to]) {
+                let pairs = masterDatabase[to][chapterIdx] || masterDatabase[to][0];
+                return pairs.map(item => {
+                    let termA = item[0];
+                    let termB = item[1];
+                    let allOpts = (masterDatabase[to][chapterIdx] || masterDatabase[to][0]).map(i => i[1]);
+                    return [termA, termB, allOpts];
+                });
+            } else if (to === "nl" && masterDatabase[from]) {
+                let pairs = masterDatabase[from][chapterIdx] || masterDatabase[from][0];
+                return pairs.map(item => {
+                    let termA = item[1];
+                    let termB = item[0];
+                    let allOpts = (masterDatabase[from][chapterIdx] || masterDatabase[from][0]).map(i => i[0]);
+                    return [termA, termB, allOpts];
+                });
+            } else {
+                let fromPairs = masterDatabase[from] ? (masterDatabase[from][chapterIdx] || masterDatabase[from][0]) : [];
+                let toPairs = masterDatabase[to] ? (masterDatabase[to][chapterIdx] || masterDatabase[to][0]) : [];
 
-            return pairs.map(item => {
-                let termA = item[0];
-                let termB = item[1];
-                let allOpts = pairs.map(i => i[1]);
-                return [termA, termB, allOpts];
-            });
+                let combined = [];
+                for (let i = 0; i < Math.min(fromPairs.length, toPairs.length); i++) {
+                    let wordInNL = fromPairs[i][0];
+                    let wordFrom = fromPairs[i][1];
+                    let match = toPairs.find(p => p[0].toLowerCase() === wordInNL.toLowerCase());
+                    let wordTo = match ? match[1] : fromPairs[i][1];
+                    let allToOpts = toPairs.map(p => p[1]);
+                    combined.push([wordFrom, wordTo, allToOpts]);
+                }
+                if (combined.length === 0) {
+                    return [["Hello, how are you?", "Bonjour, comment ça va?", ["Bonjour, comment ça va?", "Salut", "Adieu", "Merci"]]];
+                }
+                return combined;
+            }
         }
 
         let activeQuestions = [], currentQIdx = 0, activeLessonIdx = 0, isCurrentExam = false, isCurrentReview = false;
@@ -1642,7 +1116,7 @@
             }
 
             currentQIdx = 0;
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-lesson').classList.remove('hidden');
             
             loadQuestion();
@@ -1674,7 +1148,7 @@
             }
 
             currentQIdx = 0;
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-lesson').classList.remove('hidden');
             loadQuestion();
         }
@@ -1684,7 +1158,7 @@
             let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
             
             document.getElementById('cat-interstitial-text').innerText = randomQuote;
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-cat-interstitial').classList.remove('hidden');
         }
 
@@ -1803,30 +1277,46 @@
                 document.getElementById('next-btn').classList.remove('hidden');
             } else {
                 resultaatDiv.style.color = '#ea2b2b';
-                resultaatDiv.innerText = `Niet helemaal juist. Het moest zijn: "${juisteZin}"`;
-                if(!appData.mistakes) appData.mistakes = [];
+                resultaatDiv.innerText = `Niet helemaal juist. Juiste volgorde: "${juisteZin}"`;
                 if(!appData.mistakes.some(m => m.q === questionText)) {
                     appData.mistakes.push({ q: questionText, a: juisteZin });
+                    saveData();
                 }
-                saveData();
             }
         }
 
-        function checkMcAnswer(given, correct, questionText) {
+        function checkMcAnswer(selected, correct, questionText) {
             let area = document.getElementById('answers-area');
-            area.querySelectorAll('button').forEach(b => b.disabled = true);
+            let buttons = area.getElementsByClassName('option-btn');
+            
+            Array.from(buttons).forEach(btn => {
+                btn.disabled = true;
+                if (btn.innerText === correct) {
+                    btn.style.background = 'var(--duo-light-green)';
+                    btn.style.borderColor = 'var(--duo-green)';
+                    btn.style.color = '#278500';
+                } else if (btn.innerText === selected && selected !== correct) {
+                    btn.style.background = '#ffdfe0';
+                    btn.style.borderColor = '#ffb1b3';
+                    btn.style.color = '#ea2b2b';
+                }
+            });
 
-            if(given.toLowerCase() === correct.toLowerCase()) {
-                area.innerHTML += `<div class="feedback-box-correct">${t("correctMsg")}</div>`;
+            let feedbackDiv = document.createElement('div');
+            if (selected === correct) {
+                feedbackDiv.className = 'feedback-box-correct';
+                feedbackDiv.innerText = t("correctMsg");
                 appData.mistakes = (appData.mistakes || []).filter(m => m.q !== questionText);
+                saveData();
             } else {
-                area.innerHTML += `<div class="feedback-box-wrong">${t("wrongMsg")} <strong>${correct}</strong></div>`;
-                if(!appData.mistakes) appData.mistakes = [];
+                feedbackDiv.className = 'feedback-box-wrong';
+                feedbackDiv.innerText = `${t("wrongMsg")} "${correct}"`;
                 if(!appData.mistakes.some(m => m.q === questionText)) {
                     appData.mistakes.push({ q: questionText, a: correct });
+                    saveData();
                 }
             }
-            saveData();
+            area.appendChild(feedbackDiv);
             document.getElementById('next-btn').classList.remove('hidden');
         }
 
