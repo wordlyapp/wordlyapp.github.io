@@ -65,13 +65,8 @@
             cursor: pointer;
         }
 
-        .cat-mascot.bounce {
-            transform: scale(1.2) rotate(8deg);
-        }
-
-        .cat-mascot.shake {
-            animation: shakeAnim 0.4s ease-in-out;
-        }
+        .cat-mascot.bounce { transform: scale(1.2) rotate(8deg); }
+        .cat-mascot.shake { animation: shakeAnim 0.4s ease-in-out; }
 
         @keyframes shakeAnim {
             0%, 100% { transform: translateX(0); }
@@ -211,16 +206,8 @@
             box-shadow: 0 4px 12px rgba(255, 117, 24, 0.2);
         }
 
-        .btn:hover {
-            filter: brightness(1.05);
-            transform: translateY(-1px);
-        }
-
-        .btn:active {
-            transform: translateY(2px);
-            border-bottom-width: 2px;
-            box-shadow: none;
-        }
+        .btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+        .btn:active { transform: translateY(2px); border-bottom-width: 2px; box-shadow: none; }
 
         .option-btn {
             background: white;
@@ -232,10 +219,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        .option-btn:hover {
-            background: #fff3ed;
-            border-color: var(--primary);
-        }
+        .option-btn:hover { background: #fff3ed; border-color: var(--primary); }
 
         input[type="text"], input[type="password"] {
             width: 100%;
@@ -332,9 +316,7 @@
             transition: all 0.2s;
         }
 
-        .node-btn:hover:not(.locked) {
-            transform: scale(1.12);
-        }
+        .node-btn:hover:not(.locked) { transform: scale(1.12); }
 
         .node-btn.locked {
             background: #cccccc;
@@ -371,10 +353,7 @@
             white-space: nowrap;
         }
 
-        .tab-btn.active {
-            background: #fff3ed;
-            color: var(--primary);
-        }
+        .tab-btn.active { background: #fff3ed; color: var(--primary); }
 
         .shop-grid {
             display: grid;
@@ -430,10 +409,7 @@
             transition: all 0.15s;
         }
 
-        .word-chip:hover {
-            background: #fff3ed;
-            border-color: var(--primary);
-        }
+        .word-chip:hover { background: #fff3ed; border-color: var(--primary); }
     </style>
 </head>
 <body>
@@ -464,10 +440,10 @@
             <h2 id="auth-title">Create Account</h2>
             <p id="auth-desc">Sign up with a private secure account to start learning.</p>
             
-            <label id="lbl-user">Username</label>
+            <label>Username</label>
             <input type="text" id="auth-user" placeholder="Enter username...">
             
-            <label id="lbl-pass">Password</label>
+            <label>Password</label>
             <input type="password" id="auth-pass" placeholder="Enter password...">
 
             <button class="btn" id="auth-btn" onclick="handleAuth()">Create Account</button>
@@ -497,21 +473,18 @@
         <div id="page-onboard-level" class="card page-section hidden">
             <h2>How proficient are you?</h2>
             <p>Select your current level to tailor your lessons.</p>
-            
-            <button class="btn option-btn" onclick="setProficiency('beginner')">Beginner (Little to no experience)</button>
-            <button class="btn option-btn" onclick="setProficiency('intermediate')">Intermediate (Pretty good)</button>
-            <button class="btn option-btn" onclick="setProficiency('advanced')">Advanced (Super good)</button>
+            <button class="btn option-btn" onclick="setProficiency('beginner')">Beginner (Basic words & greetings)</button>
+            <button class="btn option-btn" onclick="setProficiency('intermediate')">Intermediate (Everyday vocabulary)</button>
+            <button class="btn option-btn" onclick="setProficiency('advanced')">Advanced (Complex sentences & grammar)</button>
         </div>
 
         <!-- PAGE: ONBOARDING - GOAL -->
         <div id="page-onboard-goal" class="card page-section hidden">
             <h2>Why do you want to learn?</h2>
             <p>Select your main goal.</p>
-            
             <button class="btn option-btn" onclick="setGoal('Travel')">Travel</button>
             <button class="btn option-btn" onclick="setGoal('School')">School</button>
             <button class="btn option-btn" onclick="setGoal('Fun')">For Fun</button>
-            <button class="btn option-btn" onclick="setGoal('Other')">I do not know</button>
         </div>
 
         <!-- PAGE: DASHBOARD -->
@@ -532,26 +505,24 @@
             <div id="view-tourney" class="hidden">
                 <h2>Tournaments</h2>
                 <p>Compete against bots or real users. Requires at least 125 points to enter!</p>
-                <div id="tourney-content">
-                    <button class="btn" onclick="joinTournament()">Join Tournament (-125 Points entry fee)</button>
-                </div>
+                <button class="btn" onclick="joinTournament()">Join Tournament (-125 Points entry fee)</button>
             </div>
 
             <div id="view-shop" class="hidden">
                 <h2>Point Shop</h2>
-                <p>Spend your hard-earned points on custom themes, profile upgrades, and features.</p>
+                <p>Spend your hard-earned points on custom themes and profile perks.</p>
                 <div class="shop-grid">
                     <div class="shop-item">
                         <div>
                             <strong>Custom Themes</strong>
-                            <p style="font-size: 14px; margin: 8px 0;">Unlock layout customizer for your account profile.</p>
+                            <p style="font-size: 14px; margin: 8px 0;">Unlock layout customizer.</p>
                         </div>
                         <button class="btn" onclick="buyItem('theme', 50)">Buy (50 pts)</button>
                     </div>
                     <div class="shop-item">
                         <div>
                             <strong>Username Change</strong>
-                            <p style="font-size: 14px; margin: 8px 0;">Rename your account display handle anytime.</p>
+                            <p style="font-size: 14px; margin: 8px 0;">Rename your display handle.</p>
                         </div>
                         <button class="btn" onclick="buyItem('rename', 100)">Buy (100 pts)</button>
                     </div>
@@ -566,7 +537,7 @@
                 <select id="settings-level" onchange="updateSettingsLevel()">
                     <option value="beginner">Beginner</option>
                     <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced (Super good)</option>
+                    <option value="advanced">Advanced</option>
                 </select>
 
                 <label style="margin-top: 15px;">Change Username</label>
@@ -600,9 +571,7 @@
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playSound(type) {
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain);
@@ -614,16 +583,14 @@
                 osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15);
                 gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.15);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.15);
             } else {
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(220, audioCtx.currentTime);
                 osc.frequency.linearRampToValueAtTime(140, audioCtx.currentTime + 0.2);
                 gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.2);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.2);
             }
         }
 
@@ -639,101 +606,95 @@
         }, 4000);
 
         const translations = {
-            en: { lessonsCount: "Completed: ", pointsCount: "Points: ", createAccount: "Create Account", login: "Log In", authDesc: "Sign up with a private secure account to start learning.", loginDesc: "Log in to your private account." },
-            nl: { lessonsCount: "Voltooid: ", pointsCount: "Punten: ", createAccount: "Account Aanmaken", login: "Inloggen", authDesc: "Maak een privé beveiligd account aan om te beginnen.", loginDesc: "Log in op je privé account." }
+            en: { lessonsCount: "Completed: ", pointsCount: "Points: ", createAccount: "Create Account", login: "Log In" },
+            nl: { lessonsCount: "Voltooid: ", pointsCount: "Punten: ", createAccount: "Account Aanmaken", login: "Inloggen" }
         };
 
         const masterDatabase = [
-            { type: "word", en: "Dog", nl: "Hond", difficulty: 3 },
-            { type: "word", en: "Cat", nl: "Kat", difficulty: 3 },
-            { type: "word", en: "House", nl: "Huis", difficulty: 3 },
-            { type: "word", en: "Water", nl: "Water", difficulty: 3 },
-            { type: "word", en: "Book", nl: "Boek", difficulty: 4 },
-            { type: "word", en: "Apple", nl: "Appel", difficulty: 4 },
-            { type: "word", en: "Car", nl: "Auto", difficulty: 4 },
-            { type: "word", en: "Tree", nl: "Boom", difficulty: 4 },
-            { type: "word", en: "Milk", nl: "Melk", difficulty: 4 },
-            { type: "word", en: "Bread", nl: "Brood", difficulty: 4 },
-            { type: "word", en: "Sun", nl: "Zon", difficulty: 3 },
-            { type: "word", en: "Moon", nl: "Maan", difficulty: 3 },
-            { type: "word", en: "Star", nl: "Ster", difficulty: 4 },
-            { type: "word", en: "Fish", nl: "Vis", difficulty: 3 },
-            { type: "word", en: "Bird", nl: "Vogel", difficulty: 4 },
-            { type: "word", en: "Door", nl: "Deur", difficulty: 4 },
-            { type: "word", en: "Window", nl: "Raam", difficulty: 5 },
-            { type: "word", en: "Table", nl: "Tafel", difficulty: 4 },
-            { type: "word", en: "Chair", nl: "Stoel", difficulty: 4 },
-            { type: "word", en: "Pen", nl: "Pen", difficulty: 3 },
-            { type: "word", en: "Paper", nl: "Papier", difficulty: 4 },
-            { type: "word", en: "Road", nl: "Weg", difficulty: 3 },
-            { type: "word", en: "City", nl: "Stad", difficulty: 4 },
-            { type: "word", en: "Country", nl: "Land", difficulty: 4 },
-            { type: "word", en: "Friend", nl: "Vriend", difficulty: 4 },
-            { type: "word", en: "Family", nl: "Familie", difficulty: 5 },
-            { type: "word", en: "Time", nl: "Tijd", difficulty: 4 },
-            { type: "word", en: "Day", nl: "Dag", difficulty: 3 },
-            { type: "word", en: "Night", nl: "Nacht", difficulty: 4 },
-            { type: "word", en: "Food", nl: "Eten", difficulty: 3 },
-            { type: "word", en: "Weather", nl: "Weer", difficulty: 5 },
-            { type: "word", en: "Mountain", nl: "Berg", difficulty: 5 },
-            { type: "word", en: "River", nl: "Rivier", difficulty: 5 },
-            { type: "word", en: "Ocean", nl: "Maan", difficulty: 6 },
-            { type: "word", en: "Journey", nl: "Reis", difficulty: 6 },
-            { type: "sentence", en: "The brown dog runs quickly across the green street.", nl: "De bruine hond rent snel over de groene straat.", difficulty: 7 },
-            { type: "sentence", en: "She reads an interesting book in her cozy room.", nl: "Zij leest een interessant boek in haar gezellige kamer.", difficulty: 7 },
-            { type: "sentence", en: "We are traveling to a wonderful city this summer.", nl: "Wij reizen deze zomer naar een prachtige stad.", difficulty: 8 },
-            { type: "sentence", en: "He drinks cold water after playing football outside.", nl: "Hij drinkt koud water nadat hij buiten voetbal speelde.", difficulty: 7 },
-            { type: "sentence", en: "My friendly cat sleeps peacefully on the warm sofa.", nl: "Mijn vriendelijke kat slaapt vredig op de warme bank.", difficulty: 7 },
-            { type: "sentence", en: "They bought fresh apples and warm bread at the market.", nl: "Zij kochten verse appels en warm brood op de markt.", difficulty: 8 },
-            { type: "sentence", en: "A small bird sits on top of the tall wooden fence.", nl: "Een kleine vogel zit boven op de hoge houten schutting.", difficulty: 7 },
-            { type: "sentence", en: "The bright sun warms the earth during bright mornings.", nl: "De heldere zon verwarmt de aarde tijdens heldere ochtenden.", difficulty: 8 },
-            { type: "sentence", en: "Can you please open the heavy wooden door for me?", nl: "Kun je alsjeblieft de zware houten deur voor mij openen?", difficulty: 9 },
-            { type: "sentence", en: "Children play happily together in the school yard.", nl: "Kinderen spelen vrolijk samen op het schoolplein.", difficulty: 7 },
-            { type: "sentence", en: "He drives his fast red car down the long highway.", nl: "Hij rijdt in zijn snelle rode auto over de lange snelweg.", difficulty: 7 },
-            { type: "sentence", en: "The bright star shines brightly in the dark night sky.", nl: "De heldere ster schijnt helder aan de donkere nachthemel.", difficulty: 8 },
-            { type: "sentence", en: "Fresh milk tastes delicious with breakfast every morning.", nl: "Verse melk smaakt elke ochtend heerlijk bij het ontbijt.", difficulty: 7 },
-            { type: "sentence", en: "Clean windows let warm sunlight into the living room.", nl: "Schone ramen laten warm zonlicht de woonkamer binnen.", difficulty: 7 },
-            { type: "sentence", en: "He sits at the large wooden table writing a letter.", nl: "Hij zit aan de grote houten tafel en schrijft een brief.", difficulty: 8 },
-            { type: "sentence", en: "Take a blue pen and write your answers on paper.", nl: "Pak een blauwe pen en schrijf je antwoorden op papier.", difficulty: 7 },
-            { type: "sentence", en: "My close friend has a wonderful family in Amsterdam.", nl: "Mijn beste vriend heeft een prachtige familie in Amsterdam.", difficulty: 7 },
-            { type: "sentence", en: "Time flies fast when you are enjoying yourself completely.", nl: "Tijd vliegt snel als je je volledig aan het vermaken bent.", difficulty: 9 },
-            { type: "sentence", en: "Delicious food makes every social gathering much better.", nl: "Heerlijk eten maakt elke sociale bijeenkomst veel beter.", difficulty: 7 },
-            { type: "sentence", en: "We enjoy peaceful moments during quiet evening hours.", nl: "Wij genieten van vredige momenten tijdens stille avonduren.", difficulty: 8 }
+            // BEGINNER LEVEL (Basic Words & Greetings)
+            { level: "beginner", type: "word", en: "Hello", nl: "Hallo" },
+            { level: "beginner", type: "word", en: "Good morning", nl: "Goedemorgen" },
+            { level: "beginner", type: "word", en: "Thank you", nl: "Dank je wel" },
+            { level: "beginner", type: "word", en: "Yes", nl: "Ja" },
+            { level: "beginner", type: "word", en: "No", nl: "Nee" },
+            { level: "beginner", type: "word", en: "Dog", nl: "Hond" },
+            { level: "beginner", type: "word", en: "Cat", nl: "Kat" },
+            { level: "beginner", type: "word", en: "Water", nl: "Water" },
+            { level: "beginner", type: "word", en: "House", nl: "Huis" },
+            { level: "beginner", type: "word", en: "Book", nl: "Boek" },
+            { level: "beginner", type: "word", en: "Milk", nl: "Melk" },
+            { level: "beginner", type: "word", en: "Bread", nl: "Brood" },
+            { level: "beginner", type: "word", en: "Sun", nl: "Zon" },
+            { level: "beginner", type: "word", en: "Moon", nl: "Maan" },
+            { level: "beginner", type: "word", en: "Fish", nl: "Vis" },
+            { level: "beginner", type: "word", en: "Chair", nl: "Stoel" },
+            { level: "beginner", type: "word", en: "Table", nl: "Tafel" },
+            { level: "beginner", type: "word", en: "Car", nl: "Auto" },
+            { level: "beginner", type: "word", en: "Apple", nl: "Appel" },
+            { level: "beginner", type: "word", en: "Tree", nl: "Boom" },
+
+            // INTERMEDIATE LEVEL (Everyday Vocabulary & Phrases)
+            { level: "intermediate", type: "word", en: "Weather", nl: "Weer" },
+            { level: "intermediate", type: "word", en: "Journey", nl: "Reis" },
+            { level: "intermediate", type: "word", en: "Mountain", nl: "Berg" },
+            { level: "intermediate", type: "word", en: "River", nl: "Rivier" },
+            { level: "intermediate", type: "word", en: "Friend", nl: "Vriend" },
+            { level: "intermediate", type: "word", en: "Family", nl: "Familie" },
+            { level: "intermediate", type: "word", en: "Window", nl: "Raam" },
+            { level: "intermediate", type: "word", en: "City", nl: "Stad" },
+            { level: "intermediate", type: "word", en: "Country", nl: "Land" },
+            { level: "intermediate", type: "word", en: "Breakfast", nl: "Ontbijt" },
+            { level: "intermediate", type: "sentence", en: "I like to read books.", nl: "Ik lees graag boeken." },
+            { level: "intermediate", type: "sentence", en: "Where is the station?", nl: "Waar is het station?" },
+            { level: "intermediate", type: "sentence", en: "The weather is very nice today.", nl: "Het weer is erg mooi vandaag." },
+            { level: "intermediate", type: "sentence", en: "She drinks coffee in the morning.", nl: "Zij drinkt koffie in de ochtend." },
+            { level: "intermediate", type: "sentence", en: "We are walking through the large city.", nl: "Wij wandelen door de grote stad." },
+
+            // ADVANCED LEVEL (Complex Sentences & Grammar)
+            { level: "advanced", type: "sentence", en: "Although it was raining heavily, they decided to take a long walk in the nature reserve.", nl: "Hoewel het hard regende, besloten ze een lange wandeling te maken in het natuurgebied." },
+            { level: "advanced", type: "sentence", en: "Could you please explain how this complicated software application works in detail?", nl: "Kun je alsjeblieft uitleggen hoe deze ingewikkelde softwaretoepassing in detail werkt?" },
+            { level: "advanced", type: "sentence", en: "Successful entrepreneurs constantly adapt to rapidly changing global market conditions.", nl: "Succesvolle ondernemers passen zich voortdurend aan aan snel veranderende wereldwijde marktomstandigheden." },
+            { level: "advanced", type: "sentence", en: "Environmental protection has become one of the most critical challenges of our modern society.", nl: "Milieubescherming is uitgegroeid tot een van de meest kritieke uitdagingen van onze moderne samenleving." },
+            { level: "advanced", type: "sentence", en: "Before making a final decision regarding your career path, you should carefully weigh all potential consequences.", nl: "Voordat je een definitieve beslissing neemt over je carrièrepad, moet je alle mogelijke consequenties zorgvuldig afwegen." },
+            { level: "advanced", type: "sentence", en: "The historical museum downtown exhibits rare artifacts dating back to the medieval period.", nl: "Het historisch museum in het centrum tentoonstelt zeldzame artefacten die terugkeren naar de middeleeuwse periode." },
+            { level: "advanced", type: "sentence", en: "Scientists are conducting advanced experiments to find sustainable sources of renewable energy.", nl: "Wetenschappers voeren geavanceerde experimenten uit om duurzame bronnen van hernieuwbare energie te vinden." },
+            { level: "advanced", type: "sentence", en: "Without proper communication skills, collaborating efficiently on large group projects becomes nearly impossible.", nl: "Zonder goede communicatieve vaardigheden wordt efficiënt samenwerken aan grote groepsprojecten vrijwel onmogelijk." },
+            { level: "advanced", type: "sentence", en: "She successfully managed to balance her demanding university schedule with a part-time job.", nl: "Ze slaagde erin haar veeleisende universitaire rooster te combineren met een bijbaan." },
+            { level: "advanced", type: "sentence", en: "Mastering a foreign language requires daily practice, patience, and a deep understanding of cultural contexts.", nl: "Het beheersen van een vreemde taal vereist dagelijkse oefening, geduld en een diep begrip van culturele contexten." }
         ];
 
         function generateLessons(direction, proficiency) {
-            let pool = masterDatabase;
-            if (proficiency === 'beginner') {
-                pool = masterDatabase.filter(x => x.type === 'word' && x.difficulty <= 4);
-            } else if (proficiency === 'intermediate') {
-                pool = masterDatabase.filter(x => x.difficulty <= 7);
-            } else if (proficiency === 'advanced') {
-                pool = masterDatabase;
-            }
+            let pool = masterDatabase.filter(x => x.level === proficiency);
+            // Fallback if pool is somehow empty
+            if (pool.length === 0) pool = masterDatabase;
 
             const lessons = [];
             let currentQList = [];
             let lessonCounter = 1;
+            const exerciseTypes = ["multiple-choice", "word-builder", "type-answer"];
 
             for (let i = 0; i < pool.length; i++) {
                 let item = pool[i];
                 let isNLtoEN = direction === "nl-en";
                 let promptText = isNLtoEN ? `Translate to English: "${item.nl}"` : `Vertaal naar het Nederlands: "${item.en}"`;
                 let correctAns = isNLtoEN ? item.en : item.nl;
-                let exerciseType = (i % 2 === 0) ? "multiple-choice" : "word-builder";
+                
+                // Cycle through question types for maximum variety
+                let exerciseType = exerciseTypes[i % exerciseTypes.length];
 
                 let options = [];
-                let wrongOpts = pool.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3);
-                options = wrongOpts.map(x => isNLtoEN ? x.en : x.nl);
-                options.push(correctAns);
-                options.sort(() => 0.5 - Math.random());
+                if (exerciseType === 'multiple-choice' || exerciseType === 'word-builder') {
+                    let wrongOpts = masterDatabase.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3);
+                    options = wrongOpts.map(x => isNLtoEN ? x.en : x.nl);
+                    options.push(correctAns);
+                    options.sort(() => 0.5 - Math.random());
+                }
 
                 currentQList.push({
                     type: exerciseType,
                     prompt: promptText,
                     options: options,
-                    correct: correctAns,
-                    difficulty: item.difficulty
+                    correct: correctAns
                 });
 
                 if (currentQList.length >= 4 || i === pool.length - 1) {
@@ -775,10 +736,9 @@
 
         function toggleAuthMode() {
             isLoginMode = !isLoginMode;
-            const t = translations[currentUI];
-            document.getElementById('auth-title').innerText = isLoginMode ? t.login : t.createAccount;
-            document.getElementById('auth-desc').innerText = isLoginMode ? t.loginDesc : t.authDesc;
-            document.getElementById('auth-btn').innerText = isLoginMode ? t.login : t.createAccount;
+            document.getElementById('auth-title').innerText = isLoginMode ? "Log In" : "Create Account";
+            document.getElementById('auth-desc').innerText = isLoginMode ? "Log in to your private account." : "Sign up with a private secure account to start learning.";
+            document.getElementById('auth-btn').innerText = isLoginMode ? "Log In" : "Create Account";
             document.getElementById('auth-switch').innerText = isLoginMode ? "Don't have an account? Create one" : "Already have an account? Log in";
         }
 
@@ -790,35 +750,19 @@
             let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
 
             if (isLoginMode) {
-                if (!accounts[user] || accounts[user].pass !== pass) {
-                    return alert("Invalid username or password.");
-                }
+                if (!accounts[user] || accounts[user].pass !== pass) return alert("Invalid username or password.");
                 currentUser = accounts[user];
                 localStorage.setItem('wordly_current_session', currentUser.user);
                 openDashboard();
             } else {
-                if (accounts[user]) {
-                    return alert("Username already exists.");
-                }
+                if (accounts[user]) return alert("Username already exists.");
                 currentUser = { 
-                    user, 
-                    pass, 
-                    ui: "en", 
-                    direction: "en-nl",
-                    proficiency: "intermediate",
-                    goal: "", 
-                    points: 0,
-                    completedLessons: [],
-                    inventory: [],
-                    uiSet: false,
-                    dirSet: false,
-                    levelSet: false,
-                    goalSet: false
+                    user, pass, ui: "en", direction: "en-nl", proficiency: "intermediate", goal: "", 
+                    points: 0, completedLessons: [], inventory: [] 
                 };
                 accounts[user] = currentUser;
                 localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
                 localStorage.setItem('wordly_current_session', currentUser.user);
-
                 showPage('page-onboard-ui');
             }
         }
@@ -826,28 +770,24 @@
         function saveUILanguage() {
             currentUI = document.getElementById('ui-lang-select').value;
             currentUser.ui = currentUI;
-            currentUser.uiSet = true;
             saveUser();
             showPage('page-onboard-dir');
         }
 
         function setDirection(dir) {
             currentUser.direction = dir;
-            currentUser.dirSet = true;
             saveUser();
             showPage('page-onboard-level');
         }
 
         function setProficiency(level) {
             currentUser.proficiency = level;
-            currentUser.levelSet = true;
             saveUser();
             showPage('page-onboard-goal');
         }
 
         function setGoal(goal) {
             currentUser.goal = goal;
-            currentUser.goalSet = true;
             saveUser();
             openDashboard();
         }
@@ -859,9 +799,8 @@
         }
 
         function updateUIText() {
-            const t = translations[currentUI];
-            document.getElementById('points-display').innerText = t.pointsCount + currentUser.points;
-            document.getElementById('stats-display').innerText = t.lessonsCount + currentUser.completedLessons.length;
+            document.getElementById('points-display').innerText = "Points: " + currentUser.points;
+            document.getElementById('stats-display').innerText = "Completed: " + currentUser.completedLessons.length;
         }
 
         function openDashboard() {
@@ -955,7 +894,7 @@
                     let btn = document.createElement('button');
                     btn.className = "btn option-btn";
                     btn.innerText = option;
-                    btn.onclick = () => checkAnswer(option, q.correct, q.difficulty);
+                    btn.onclick = () => checkAnswer(option, q.correct);
                     area.appendChild(btn);
                 });
             } else if (q.type === 'word-builder') {
@@ -965,20 +904,38 @@
                     let chip = document.createElement('div');
                     chip.className = "word-chip";
                     chip.innerText = option;
-                    chip.onclick = () => checkAnswer(option, q.correct, q.difficulty);
+                    chip.onclick = () => checkAnswer(option, q.correct);
                     grid.appendChild(chip);
                 });
                 area.appendChild(grid);
+            } else if (q.type === 'type-answer') {
+                let input = document.createElement('input');
+                input.type = "text";
+                input.id = "user-typed-answer";
+                input.placeholder = "Type your translation here...";
+                
+                let submitBtn = document.createElement('button');
+                submitBtn.className = "btn";
+                submitBtn.innerText = "Check Answer";
+                submitBtn.onclick = () => {
+                    let val = document.getElementById('user-typed-answer').value.trim();
+                    checkAnswer(val, q.correct);
+                };
+
+                area.appendChild(input);
+                area.appendChild(submitBtn);
             }
         }
 
-        function checkAnswer(given, correct, difficulty) {
+        function checkAnswer(given, correct) {
             const area = document.getElementById('answers-area');
+            // Case-insensitive comparison for typed answers
+            const isCorrect = given.toLowerCase() === correct.toLowerCase();
             
-            if (given === correct) {
+            if (isCorrect) {
                 playSound('correct');
                 triggerMascot('bounce');
-                let pts = Math.min(10, Math.max(3, difficulty));
+                let pts = 10;
                 lessonEarnedPoints += pts;
                 area.innerHTML = `<div class="feedback-correct">Correct! (+${pts} points)</div>`;
             } else {
@@ -1006,34 +963,20 @@
         }
 
         function joinTournament() {
-            if (currentUser.points < 125) {
-                return alert("You need at least 125 points to enter a tournament.");
-            }
+            if (currentUser.points < 125) return alert("You need at least 125 points to enter a tournament.");
             currentUser.points -= 125;
-            
             let tourneyScore = Math.floor(Math.random() * 80) + 20;
             let rank = Math.floor(Math.random() * 5) + 1;
-            let reward = 0;
-            if (rank <= 3) {
-                reward = 95;
-                currentUser.points += 95;
-            } else if (tourneyScore >= 50) {
-                reward = 50;
-                currentUser.points += 50;
-            }
-
+            let reward = rank <= 3 ? 95 : (tourneyScore >= 50 ? 50 : 0);
+            currentUser.points += reward;
             saveUser();
             updateUIText();
-            alert(`Tournament ended!\nYour score: ${tourneyScore}\nRank: #${rank}\nReward earned: ${reward} points!`);
+            alert(`Tournament ended!\nScore: ${tourneyScore}\nRank: #${rank}\nReward: ${reward} points!`);
         }
 
         function buyItem(itemType, cost) {
-            if (currentUser.points < cost) {
-                return alert("Not enough points!");
-            }
-            if (currentUser.inventory.includes(itemType)) {
-                return alert("You already own this item!");
-            }
+            if (currentUser.points < cost) return alert("Not enough points!");
+            if (currentUser.inventory.includes(itemType)) return alert("You already own this item!");
             currentUser.points -= cost;
             currentUser.inventory.push(itemType);
             saveUser();
@@ -1042,15 +985,11 @@
         }
 
         function updateUsername() {
-            if (!currentUser.inventory.includes('rename')) {
-                return alert("You must buy the Username Change perk from the shop first (100 points).");
-            }
+            if (!currentUser.inventory.includes('rename')) return alert("Buy the Username Change perk from the shop first (100 points).");
             const newName = document.getElementById('settings-username').value.trim();
             if (!newName) return alert("Enter a valid username.");
-
             let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
             if (accounts[newName]) return alert("Username already taken.");
-
             delete accounts[currentUser.user];
             currentUser.user = newName;
             accounts[newName] = currentUser;
@@ -1060,7 +999,7 @@
         }
 
         function deleteAccount() {
-            if (!confirm("Are you sure you want to delete your account? This action cannot be undone.")) return;
+            if (!confirm("Are you sure you want to delete your account?")) return;
             let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
             delete accounts[currentUser.user];
             localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
