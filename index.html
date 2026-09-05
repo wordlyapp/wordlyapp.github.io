@@ -258,55 +258,60 @@
             font-size: 15px;
         }
 
-        .lesson-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 16px;
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 24px;
-            padding-right: 8px;
-        }
-
-        .lesson-item {
-            background: #fafafa;
-            border: 2px solid var(--border);
-            padding: 20px;
-            border-radius: 16px;
-            cursor: pointer;
-            font-weight: 700;
+        /* Duolingo-style Path Layout */
+        .path-container {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: flex-start;
-            min-height: 90px;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+
+        .path-row {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            gap: 30px;
+        }
+
+        .path-row.offset-1 { transform: translateX(-40px); }
+        .path-row.offset-2 { transform: translateX(40px); }
+
+        .node-btn {
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            border-bottom: 6px solid var(--primary-hover);
+            color: white;
+            font-weight: 800;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 117, 24, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.2s;
-            box-sizing: border-box;
         }
 
-        .lesson-item:hover:not(.done) {
-            background: #fff3ed;
-            border-color: var(--primary);
-            transform: translateY(-2px);
+        .node-btn:hover:not(.locked) {
+            transform: scale(1.1);
         }
 
-        .lesson-item.done {
-            background: #f0f0f0;
-            border-color: #ddd;
-            color: #888;
+        .node-btn.locked {
+            background: #cccccc;
+            border-bottom: 6px solid #999999;
             cursor: not-allowed;
-            opacity: 0.7;
+            box-shadow: none;
         }
 
-        .lesson-status {
-            font-size: 13px;
-            font-weight: 600;
-            color: #777;
-            margin-top: 10px;
-        }
-
-        .lesson-item.done .lesson-status {
-            color: #2e7d32;
+        .node-btn.done {
+            background: #2e7d32;
+            border-bottom: 6px solid #1b5e20;
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
         }
 
         .nav-tabs {
@@ -414,13 +419,20 @@
             <button class="btn" id="btn-save-ui" onclick="saveUILanguage()">Continue</button>
         </div>
 
+        <div id="screen-direction" class="card hidden">
+            <h2 id="dir-title">Select Course</h2>
+            <p id="dir-desc">Choose which language pair you want to master.</p>
+            <button class="btn option-btn" onclick="setDirection('en-nl')">English - Nederlands</button>
+            <button class="btn option-btn" onclick="setDirection('nl-en')">Nederlands - Engels</button>
+        </div>
+
         <div id="screen-level" class="card hidden">
             <h2 id="level-title">How proficient are you?</h2>
             <p id="level-desc">Select your current level to tailor your lessons.</p>
             
             <button class="btn option-btn" onclick="setProficiency('beginner')">Beginner (Little to no experience)</button>
             <button class="btn option-btn" onclick="setProficiency('intermediate')">Intermediate (Pretty good)</button>
-            <button class="btn option-btn" onclick="setProficiency('advanced')">Advanced (Very good)</button>
+            <button class="btn option-btn" onclick="setProficiency('advanced')">Advanced (Super good)</button>
         </div>
 
         <div id="screen-goal" class="card hidden">
@@ -435,16 +447,16 @@
 
         <div id="screen-dashboard" class="card hidden">
             <div class="nav-tabs">
-                <button class="tab-btn active" id="tab-learn" onclick="switchTab('learn')">Learn</button>
+                <button class="tab-btn active" id="tab-learn" onclick="switchTab('learn')">Learn Path</button>
                 <button class="tab-btn" id="tab-tourney" onclick="switchTab('tourney')">Tournaments</button>
                 <button class="tab-btn" id="tab-shop" onclick="switchTab('shop')">Shop</button>
                 <button class="tab-btn" id="tab-settings" onclick="switchTab('settings')">Settings</button>
             </div>
 
             <div id="view-learn">
-                <h2 id="dash-title">Choose Course</h2>
-                <select id="course-select" onchange="loadLessonsList()"></select>
-                <div class="lesson-grid" id="lessons-list-container"></div>
+                <h2>Learning Path</h2>
+                <p>Complete lessons sequentially down the path!</p>
+                <div class="path-container" id="path-container"></div>
             </div>
 
             <div id="view-tourney" class="hidden">
@@ -557,18 +569,7 @@
                 userLabel: "Username",
                 passLabel: "Password",
                 switchLogin: "Already have an account? Log in",
-                switchCreate: "Don't have an account? Create one",
-                selectUILang: "Select Default Language",
-                selectUIDesc: "Choose the display language for the app.",
-                continueBtn: "Continue",
-                goalTitle: "Why do you want to learn?",
-                goalDesc: "Select your main goal.",
-                chooseCourse: "Choose Course",
-                nextBtn: "Next",
-                checkBtn: "Check",
-                completeTitle: "Great job!",
-                completeDesc: "You successfully completed this lesson and earned points.",
-                backDash: "Back to Lessons"
+                switchCreate: "Don't have an account? Create one"
             },
             nl: {
                 lessonsCount: "Voltooid: ",
@@ -580,18 +581,7 @@
                 userLabel: "Gebruikersnaam",
                 passLabel: "Wachtwoord",
                 switchLogin: "Heb je al een account? Log in",
-                switchCreate: "Geen account? Maak er een aan",
-                selectUILang: "Kies Standaard Taal",
-                selectUIDesc: "Kies de weergavetaal voor de app.",
-                continueBtn: "Doorgaan",
-                goalTitle: "Waarvoor wil je leren?",
-                goalDesc: "Selecteer je hoofddoel.",
-                chooseCourse: "Kies Cursus",
-                nextBtn: "Volgende",
-                checkBtn: "Controleer",
-                completeTitle: "Geweldig gedaan!",
-                completeDesc: "Je hebt deze les succesvol afgerond en punten verdiend.",
-                backDash: "Terug naar Lessen"
+                switchCreate: "Geen account? Maak er een aan"
             }
         };
 
@@ -648,7 +638,7 @@
                 if (currentQList.length >= 3 || i === filtered.length - 1) {
                     lessons.push({
                         id: `lesson_${direction}_${lessonCounter}`,
-                        title: `Lesson ${lessonCounter}`,
+                        title: `${lessonCounter}`,
                         questions: [...currentQList]
                     });
                     currentQList = [];
@@ -661,10 +651,22 @@
         let isLoginMode = false;
         let currentUser = null;
         let currentUI = "en";
-        let currentCourseKey = "en-nl";
         let activeLessonId = null;
         let currentQuestionIndex = 0;
         let lessonEarnedPoints = 0;
+
+        // Auto-login check on page load
+        window.onload = function() {
+            const savedUser = localStorage.getItem('wordly_current_session');
+            if (savedUser) {
+                let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
+                if (accounts[savedUser]) {
+                    currentUser = accounts[savedUser];
+                    currentUI = currentUser.ui || "en";
+                    openDashboard();
+                }
+            }
+        };
 
         function toggleAuthMode() {
             isLoginMode = !isLoginMode;
@@ -687,6 +689,8 @@
                     return alert("Invalid username or password.");
                 }
                 currentUser = accounts[user];
+                localStorage.setItem('wordly_current_session', currentUser.user);
+                openDashboard();
             } else {
                 if (accounts[user]) {
                     return alert("Username already exists.");
@@ -695,28 +699,23 @@
                     user, 
                     pass, 
                     ui: "en", 
+                    direction: "en-nl",
                     proficiency: "intermediate",
                     goal: "", 
                     points: 0,
                     completedLessons: [],
                     inventory: [],
                     uiSet: false,
+                    dirSet: false,
                     levelSet: false,
                     goalSet: false
                 };
                 accounts[user] = currentUser;
                 localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
-            }
+                localStorage.setItem('wordly_current_session', currentUser.user);
 
-            document.getElementById('screen-auth').classList.add('hidden');
-            if (!currentUser.uiSet) {
+                document.getElementById('screen-auth').classList.add('hidden');
                 document.getElementById('screen-lang-ui').classList.remove('hidden');
-            } else if (!currentUser.levelSet) {
-                document.getElementById('screen-level').classList.remove('hidden');
-            } else if (!currentUser.goalSet) {
-                document.getElementById('screen-goal').classList.remove('hidden');
-            } else {
-                openDashboard();
             }
         }
 
@@ -725,9 +724,17 @@
             currentUser.ui = currentUI;
             currentUser.uiSet = true;
             saveUser();
-            updateUIText();
 
             document.getElementById('screen-lang-ui').classList.add('hidden');
+            document.getElementById('screen-direction').classList.remove('hidden');
+        }
+
+        function setDirection(dir) {
+            currentUser.direction = dir;
+            currentUser.dirSet = true;
+            saveUser();
+
+            document.getElementById('screen-direction').classList.add('hidden');
             document.getElementById('screen-level').classList.remove('hidden');
         }
 
@@ -762,14 +769,10 @@
         }
 
         function openDashboard() {
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
             updateUIText();
             document.getElementById('settings-username').value = currentUser.user;
-            const select = document.getElementById('course-select');
-            select.innerHTML = `
-                <option value="en-nl">English - Nederlands</option>
-                <option value="nl-en">Nederlands - Engels</option>
-            `;
-            loadLessonsList();
+            renderPath();
             document.getElementById('screen-dashboard').classList.remove('hidden');
         }
 
@@ -782,26 +785,44 @@
             document.getElementById(`tab-${tab}`).classList.add('active');
         }
 
-        function loadLessonsList() {
-            const courseKey = document.getElementById('course-select').value;
-            currentCourseKey = courseKey;
-            const container = document.getElementById('lessons-list-container');
+        function renderPath() {
+            const container = document.getElementById('path-container');
             container.innerHTML = "";
 
-            const lessons = generateLessons(courseKey, currentUser.proficiency);
-            lessons.forEach((lesson) => {
-                const isDone = currentUser.completedLessons.includes(lesson.id);
-                let div = document.createElement('div');
-                div.className = `lesson-item ${isDone ? 'done' : ''}`;
-                div.innerHTML = `
-                    <span><strong>${lesson.title}</strong></span>
-                    <span class="lesson-status">${isDone ? 'Done' : 'Start ➔'}</span>
-                `;
-                if (!isDone) {
-                    div.onclick = () => startLesson(lesson.id, lessons);
+            const lessons = generateLessons(currentUser.direction || "en-nl", currentUser.proficiency || "intermediate");
+            
+            // Group lessons into Duolingo-style zigzag rows of 3, 2, 3, 2...
+            let rowPattern = [1, 2, 1, 2, 1];
+            let lessonIndex = 0;
+            let patternIdx = 0;
+
+            while (lessonIndex < lessons.length) {
+                let count = rowPattern[patternIdx % rowPattern.length];
+                let rowDiv = document.createElement('div');
+                rowDiv.className = `path-row offset-${patternIdx % 3}`;
+
+                for (let i = 0; i < count && lessonIndex < lessons.length; i++) {
+                    let lesson = lessons[lessonIndex];
+                    let isDone = currentUser.completedLessons.includes(lesson.id);
+                    
+                    // Unlocked if first lesson or previous lesson is completed
+                    let isUnlocked = lessonIndex === 0 || currentUser.completedLessons.includes(lessons[lessonIndex - 1].id);
+
+                    let btn = document.createElement('button');
+                    btn.className = `node-btn ${isDone ? 'done' : (!isUnlocked ? 'locked' : '')}`;
+                    btn.innerText = lesson.title;
+
+                    if (isUnlocked) {
+                        btn.onclick = () => startLesson(lesson.id, lessons);
+                    }
+
+                    rowDiv.appendChild(btn);
+                    lessonIndex++;
                 }
-                container.appendChild(div);
-            });
+
+                container.appendChild(rowDiv);
+                patternIdx++;
+            }
         }
 
         let activeLessonData = [];
@@ -875,7 +896,7 @@
         function backToDashboard() {
             document.getElementById('screen-complete').classList.add('hidden');
             document.getElementById('screen-dashboard').classList.remove('hidden');
-            loadLessonsList();
+            renderPath();
         }
 
         function joinTournament() {
@@ -930,6 +951,7 @@
             currentUser.user = newName;
             accounts[newName] = currentUser;
             localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
+            localStorage.setItem('wordly_current_session', newName);
             alert("Username updated successfully!");
         }
 
@@ -938,11 +960,13 @@
             let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
             delete accounts[currentUser.user];
             localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
+            localStorage.removeItem('wordly_current_session');
             logout();
         }
 
         function logout() {
             currentUser = null;
+            localStorage.removeItem('wordly_current_session');
             document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
             document.getElementById('screen-auth').classList.remove('hidden');
         }
