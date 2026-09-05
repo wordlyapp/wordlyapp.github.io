@@ -8,6 +8,10 @@
     <!-- Google AdSense / Eigendom Verificatie -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6951847135196559" crossorigin="anonymous"></script>
 
+    <!-- Okta Sign-In Widget CSS & JS CDN -->
+    <script src="https://global.oktacdn.com/okta-signin-widget/7.2.1/js/okta-sign-in.min.js"></script>
+    <link href="https://global.oktacdn.com/okta-signin-widget/7.2.1/css/okta-sign-in.min.css" type="text/css" rel="stylesheet"/>
+
     <link rel="icon" type="image/jpeg" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
     <link rel="apple-touch-icon" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
 
@@ -157,79 +161,12 @@
             line-height: 1.4;
         }
 
-        .auth-card {
-            background: white;
-            padding: 30px;
-            border-radius: var(--radius-lg);
-            border: 2px solid var(--border);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        /* Okta Widget Container Wrapper */
+        #okta-login-container {
             width: 100%;
-            max-width: 400px;
-            text-align: center;
-            animation: fadeIn 0.3s ease-out;
+            max-width: 450px;
             margin: 20px auto;
         }
-
-        .auth-card h2 {
-            font-size: 24px;
-            font-weight: 900;
-            margin-bottom: 18px;
-            color: var(--duo-dark);
-        }
-
-        .auth-card input {
-            width: 100%;
-            padding: 12px 14px;
-            margin: 8px 0;
-            border: 2px solid var(--border);
-            border-radius: var(--radius-sm);
-            font-family: 'Nunito', sans-serif;
-            font-weight: 700;
-            font-size: 14px;
-            box-sizing: border-box;
-            background: #fdfdfd;
-        }
-
-        .auth-card input:focus {
-            border-color: var(--accent-blue);
-            outline: none;
-        }
-
-        .auth-card button.main-auth-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--duo-green);
-            color: white;
-            border: none;
-            border-bottom: 4px solid var(--duo-green-shadow);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-weight: 900;
-            font-size: 14px;
-            text-transform: uppercase;
-            margin-top: 14px;
-            transition: var(--transition);
-        }
-
-        .auth-card button.main-auth-btn:hover { filter: brightness(1.05); }
-        .auth-card button.main-auth-btn:active { transform: translateY(2px); border-bottom-width: 2px; }
-
-        .auth-card button.secondary-btn {
-            background: #f7f7f7;
-            color: var(--duo-gray-text);
-            border: 2px solid var(--border);
-            border-bottom: 3px solid var(--border);
-            margin-top: 8px;
-        }
-        .auth-card button.secondary-btn:hover { background: #eee; }
-
-        .auth-message {
-            margin-top: 10px;
-            font-size: 13px;
-            font-weight: 800;
-        }
-        .success-text { color: var(--duo-green); }
-        .error-text { color: #ea2b2b; }
 
         header.top-nav {
             width: 100%;
@@ -742,14 +679,14 @@
 </head>
 <body>
 
-    <!-- LANDING PAGE & AUTHENTICATIE SCHERM -->
+    <!-- LANDING PAGE & OKTA AUTHENTICATIE SCHERM -->
     <div id="landing-page">
         <header class="landing-header-bar">
             <div class="logo-area">
                 <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="logo-img"> Wordly Learn
             </div>
             <div style="display: flex; gap: 10px;">
-                <button class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="showLoginBox()">Log in</button>
+                <button class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="startOktaAuth()">Start Now</button>
             </div>
         </header>
 
@@ -759,28 +696,12 @@
                 <h1>The smartest and most fun way to learn languages for free.</h1>
                 <p>Master vocabulary easily on any device with bite-sized lessons, interactive paths, and fun achievements designed to keep you motivated every single day.</p>
                 <div class="landing-buttons">
-                    <button class="btn" onclick="showRegisterBox()">Get Started</button>
-                    <button class="btn secondary-btn" onclick="showLoginBox()" style="color:var(--duo-dark);">I already have an account</button>
+                    <button class="btn" onclick="startOktaAuth()">Start Now</button>
                 </div>
             </div>
 
-            <div id="login-box" class="auth-card hidden">
-                <h2>Welcome Back</h2>
-                <input type="text" id="login-user" placeholder="Username">
-                <input type="password" id="login-pass" placeholder="Password">
-                <button class="main-auth-btn" onclick="handleLogin()">Log In</button>
-                <button class="main-auth-btn secondary-btn" onclick="showLandingHero()">Back</button>
-                <div id="login-msg" class="auth-message"></div>
-            </div>
-
-            <div id="register-box" class="auth-card hidden">
-                <h2>Create Your Account</h2>
-                <input type="text" id="reg-user" placeholder="Choose a username">
-                <input type="password" id="reg-pass" placeholder="Choose a password">
-                <button class="main-auth-btn" onclick="handleRegister()">Register</button>
-                <button class="main-auth-btn secondary-btn" onclick="showLandingHero()">Back</button>
-                <div id="reg-msg" class="auth-message"></div>
-            </div>
+            <!-- Okta Widget Render Container -->
+            <div id="okta-login-container" class="hidden"></div>
 
             <div class="landing-features-section" id="landing-features-container">
                 <div class="feature-box">
@@ -983,97 +904,63 @@
     </main>
 
     <script>
-        // --- AUTHENTICATIE & ACCOUNT LOGICA ---
+        // --- OKTA & ACCOUNT LOGICA ---
         let currentLoggedInUser = localStorage.getItem('wordly_logged_in') || null;
 
-        function showLoginBox() {
-            document.getElementById('landing-hero-box').classList.add('hidden');
-            document.getElementById('register-box').classList.add('hidden');
-            document.getElementById('landing-features-container').classList.add('hidden');
-            document.getElementById('login-box').classList.remove('hidden');
-        }
-
-        function showRegisterBox() {
-            document.getElementById('landing-hero-box').classList.add('hidden');
-            document.getElementById('login-box').classList.add('hidden');
-            document.getElementById('landing-features-container').classList.add('hidden');
-            document.getElementById('register-box').classList.remove('hidden');
-        }
-
-        function showLandingHero() {
-            document.getElementById('login-box').classList.add('hidden');
-            document.getElementById('register-box').classList.add('hidden');
-            document.getElementById('landing-hero-box').classList.remove('hidden');
-            document.getElementById('landing-features-container').classList.remove('hidden');
-        }
-
-        function handleRegister() {
-            let user = document.getElementById('reg-user').value.trim();
-            let pass = document.getElementById('reg-pass').value.trim();
-            let msg = document.getElementById('reg-msg');
-
-            if (!user || !pass) {
-                msg.className = "auth-message error-text";
-                msg.innerText = "Please fill in all fields!";
-                return;
+        // Initialize Okta Sign-In Widget
+        const oktaSignIn = new OktaSignIn({
+            baseUrl: 'dev-lql5ujqw06xmyjoo.us.auth0.com', // Replace with your Okta domain e.g., https://dev-123456.okta.com
+            clientId: 'Zh28r6Lsy7SNi7cNqXaVXRRYmZyPoYn8',         // Replace with your Okta Client ID
+            redirectUri: window.location.origin,
+            authParams: {
+                pkce: true,
+                defaultScope: ['openid', 'email', 'profile']
             }
+        });
 
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if (accounts[user]) {
-                msg.className = "auth-message error-text";
-                msg.innerText = "This username already exists!";
-                return;
-            }
+        function startOktaAuth() {
+            document.getElementById('landing-hero-box').classList.add('hidden');
+            document.getElementById('landing-features-container').classList.add('hidden');
+            document.getElementById('okta-login-container').classList.remove('hidden');
 
-            accounts[user] = {
-                password: pass,
-                data: {
-                    points: 0,
-                    streak: 1,
-                    fromLang: "nl",
-                    toLang: "en",
-                    activeChapter: 0,
-                    languageProgress: {},
-                    mistakes: []
+            oktaSignIn.renderEl(
+                { el: '#okta-login-container' },
+                function (res) {
+                    if (res.status === 'SUCCESS') {
+                        // Successfully authenticated through Okta
+                        let userEmail = res.session.userLogin || res.claims?.email || "user@okta";
+                        currentLoggedInUser = userEmail;
+                        localStorage.setItem('wordly_logged_in', userEmail);
+
+                        // Initialize user data container if not present
+                        let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+                        if (!accounts[userEmail]) {
+                            accounts[userEmail] = {
+                                data: {
+                                    points: 0,
+                                    streak: 1,
+                                    fromLang: "nl",
+                                    toLang: "en",
+                                    activeChapter: 0,
+                                    languageProgress: {},
+                                    mistakes: []
+                                }
+                            };
+                            localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
+                        }
+
+                        oktaSignIn.remove();
+                        showLangPromptModal();
+                    }
+                },
+                function (err) {
+                    console.error("Okta login error: ", err);
                 }
-            };
-
-            localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
-            msg.className = "auth-message success-text";
-            msg.innerText = "Account created! You can now log in.";
-
-            setTimeout(() => {
-                showLoginBox();
-                document.getElementById('reg-user').value = "";
-                document.getElementById('reg-pass').value = "";
-                msg.innerText = "";
-            }, 1200);
-        }
-
-        function handleLogin() {
-            let user = document.getElementById('login-user').value.trim();
-            let pass = document.getElementById('login-pass').value.trim();
-            let msg = document.getElementById('login-msg');
-
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-
-            if (!accounts[user] || accounts[user].password !== pass) {
-                msg.className = "auth-message error-text";
-                msg.innerText = "Incorrect username or password!";
-                return;
-            }
-
-            currentLoggedInUser = user;
-            localStorage.setItem('wordly_logged_in', user);
-
-            document.getElementById('login-user').value = "";
-            document.getElementById('login-pass').value = "";
-            msg.innerText = "";
-
-            showLangPromptModal();
+            );
         }
 
         function logoutUser() {
+            oktaSignIn.signOut().catch(() => {});
             localStorage.removeItem('wordly_logged_in');
             currentLoggedInUser = null;
             location.reload();
@@ -1319,7 +1206,7 @@
                 /* Ch 4: Woorden */ [["Vader", "Father"], ["Moeder", "Mother"], ["Broer", "Brother"], ["Zus", "Sister"], ["Zoon", "Son"], ["Dochter", "Daughter"], ["Vriend", "Friend"], ["Man", "Man"], ["Vrouw", "Woman"], ["Kind", "Child"]],
                 /* Ch 5: Woorden */ [["Huis", "House"], ["Kamer", "Room"], ["Keuken", "Kitchen"], ["Badkamer", "Bathroom"], ["Bed", "Bed"], ["Tafel", "Table"], ["Stoel", "Chair"], ["Deur", "Door"], ["Raam", "Window"], ["Dak", "Roof"]],
                 /* Ch 6: Korte Zinnen */ [["Hoe gaat het?", "How are you?"], ["Ik ben blij.", "I am happy."], ["Wat zeg je?", "What do you say?"], ["Waar is dit?", "Where is this?"], ["Ik begrijp het.", "I understand."], ["Spreek je Engels?", "Do you speak English?"], ["Hoe laat is het?", "What time is it?"], ["Ik ben moe.", "I am tired."], ["Tot zo!", "See you soon!"], ["Het is goed.", "It is good."]],
-                /* Ch 7: Korte Zinnen */ [["Waar woon je?", "Where do you live?"], ["Wat is je naam?", "What is your name?"], ["Ik kom uit Nederland.", "I am from the Netherlands."], ["Heb je een hond?", "Do you have a dog?"], ["Het weer is mooi.", "The weather is nice."], ["Ik hou van lezen.", "I love reading."], ["Waar is de winkel?", "Where is the shop?"], ["Ik ben hongerig.", "I am hungry."], ["Dit is heel leuk.", "This is very fun."], ["Mag ik een glas water?", "May I have a glass of water?"]],
+                /* Ch 7: Korte Zinnen */ [["Waar woon je?", "Where do you live?"], ["What is je naam?", "What is your name?"], ["Ik kom uit Nederland.", "I am from the Netherlands."], ["Heb je een hond?", "Do you have a dog?"], ["Het weer is mooi.", "The weather is nice."], ["Ik hou van lezen.", "I love reading."], ["Waar is de winkel?", "Where is the shop?"], ["Ik ben hongerig.", "I am hungry."], ["Dit is heel leuk.", "This is very fun."], ["Mag ik een glas water?", "May I have a glass of water?"]],
                 /* Ch 8: Korte Zinnen */ [["Kun je mij helpen?", "Can you help me?"], ["Hoeveel kost dit?", "How much does this cost?"], ["Waar is het station?", "Where is the station?"], ["Ik zoek een hotel.", "I am looking for a hotel."], ["Wanneer vertrekt de bus?", "When does the bus leave?"], ["Heb je een tafel voor twee?", "Do you have a table for two?"], ["Ik wil graag betalen.", "I would like to pay."], ["Waar is het toilet?", "Where is the restroom?"], ["Kan ik met pin betalen?", "Can I pay by card?"], ["Een fijne dag nog!", "Have a nice day!"]],
                 /* Ch 9: Korte Zinnen */ [["Wat wil je drinken?", "What do you want to drink?"], ["Ik wil graag koffie.", "I would like coffee."], ["Het smaakt erg goed.", "It tastes very good."], ["De rekening alstublieft.", "The check please."], ["Is dit gerecht vegetarisch?", "Is this dish vegetarian?"], ["Ik heb honger.", "I am hungry."], ["Smakelijk eten!", "Enjoy your meal!"], ["Dit is te warm.", "This is too hot."], ["Ik lust geen vis.", "I don't like fish."], ["breng me de kaart aub.", "Bring me the menu please."]],
                 /* Ch 10: Lange Zinnen */ [["Ik wil graag een treinkaartje naar Amsterdam kopen.", "I would like to buy a train ticket to Amsterdam."], ["Vliegt het vliegtuig morgen op tijd naar Londen?", "Does the plane fly to London on time tomorrow?"], ["We hebben een mooi hotel geboekt in het centrum.", "We have booked a nice hotel in the city center."], ["Waar kan ik mijn bagage achterlaten op het station?", "Where can I leave my luggage at the station?"], ["De vakantie in het buitenland was fantastisch.", "The vacation abroad was fantastic."], ["Reizen met de trein is comfortabel en snel.", "Traveling by train is comfortable and fast."], ["Vergeet je paspoort en je tickets niet mee te nemen.", "Don't forget to take your passport and tickets."], ["Het verkeer op de snelweg is erg druk vanochtend.", "The traffic on the highway is very busy this morning."], ["Wij gaan volgend jaar naar Spanje op vakantie.", "We are going to Spain for vacation next year."], ["Kun je mij de weg wijzen naar het vliegveld?", "Can you show me the way to the airport?"]],
@@ -1612,14 +1499,12 @@
                     activeQuestions.push({ type: 'mc', q: item[0], a: item[1], opts: item[2] });
                 }
             } else {
-                // 5 normabele meerkeuzevragen
                 let chunkSize = 4;
                 let startIndex = (lessonIdx * chunkSize) % fullWordList.length;
                 for(let q = 0; q < 5; q++) {
                     let item = fullWordList[(startIndex + q) % fullWordList.length];
                     activeQuestions.push({ type: 'mc', q: item[0], a: item[1], opts: item[2] });
                 }
-                // 2 extra bonus vragen aan het einde met zin opbouwen
                 for(let q = 0; q < 2; q++) {
                     let item = fullWordList[(startIndex + 5 + q) % fullWordList.length];
                     let sentence = item[1];
