@@ -728,7 +728,7 @@
                 <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="logo-img"> Wordly Learn
             </div>
             <div style="display: flex; gap: 10px;">
-                <button class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="openAuthModal()">Start Now</button>
+                <button type="button" class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="openAuthModal()">Start Now</button>
             </div>
         </header>
 
@@ -738,7 +738,7 @@
                 <h1>The smartest and most fun way to learn languages for free.</h1>
                 <p>Master vocabulary easily on any device with bite-sized lessons, interactive paths, and fun achievements designed to keep you motivated every single day.</p>
                 <div class="landing-buttons">
-                    <button class="btn" onclick="openAuthModal()">Start Now</button>
+                    <button type="button" class="btn" onclick="openAuthModal()">Start Now</button>
                 </div>
             </div>
 
@@ -985,9 +985,23 @@
             measurementId: "G-GW6CRFE0X1"
         };
 
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        // Firebase wordt veilig geïnitialiseerd. Als Firebase tijdelijk niet laadt,
+        // blijft de Start Now-knop en het loginvenster gewoon werken.
+        let auth = null;
+        let db = null;
+        let firebaseInitError = null;
+
+        try {
+            if (typeof firebase === 'undefined') {
+                throw new Error('Firebase SDK kon niet worden geladen.');
+            }
+            firebase.initializeApp(firebaseConfig);
+            auth = firebase.auth();
+            db = firebase.firestore();
+        } catch (error) {
+            firebaseInitError = error;
+            console.error('Firebase initialisatie mislukt:', error);
+        }
 
         let currentFirebaseUser = null;
         let currentLoggedInUser = null;
@@ -1035,6 +1049,12 @@
         }
 
         async function submitAuth() {
+            if (!auth || !db) {
+                document.getElementById('auth-error').innerText =
+                    'Firebase kan niet worden bereikt. Controleer je internetverbinding en probeer de pagina opnieuw te laden.';
+                return;
+            }
+
             const name = document.getElementById('auth-name').value.trim();
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value;
@@ -1520,7 +1540,24 @@
             }
         }
 
+        // Extra klikbeveiliging: de Start Now-knoppen openen het venster ook
+        // als een browser inline onclick onverwacht blokkeert.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('button[onclick="openAuthModal()"]')
+                .forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        openAuthModal();
+                    });
+                });
+        });
+
         window.onload = function() {
+            if (!auth) {
+                document.getElementById('landing-page').classList.remove('hidden');
+                return;
+            }
+
             auth.onAuthStateChanged(async (user) => {
                 if (user) {
                     try {
