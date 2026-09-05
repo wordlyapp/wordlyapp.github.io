@@ -38,7 +38,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 40px;
+            padding: 12px 30px;
             border-bottom: 2px solid var(--border);
             background: white;
             z-index: 100;
@@ -46,7 +46,7 @@
         }
 
         .logo-area {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             color: var(--duo-green);
             letter-spacing: -0.5px;
@@ -58,16 +58,16 @@
         .nav-controls {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
 
         .lang-select {
-            padding: 8px 14px;
-            border-radius: 12px;
+            padding: 6px 10px;
+            border-radius: 10px;
             border: 2px solid var(--border);
             background: #f8fafc;
             font-weight: 800;
-            font-size: 14px;
+            font-size: 13px;
             outline: none;
             cursor: pointer;
             transition: all 0.2s;
@@ -76,19 +76,19 @@
 
         .top-stats-bar {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             font-weight: 800;
         }
 
         .stat-pill {
             background: #f8fafc;
             border: 2px solid var(--border);
-            padding: 6px 14px;
-            border-radius: 12px;
+            padding: 4px 10px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 13px;
+            font-size: 12px;
             color: #475569;
         }
 
@@ -96,30 +96,30 @@
             background: #fee2e2;
             color: #dc2626;
             border: 2px solid #fecaca;
-            padding: 6px 12px;
-            border-radius: 12px;
+            padding: 4px 10px;
+            border-radius: 10px;
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             transition: all 0.2s;
         }
         .reset-btn:hover { background: #fecaca; }
 
-        /* Hoofdwerkplek over het hele scherm, gecentreerd en scrollbaar */
+        /* Hoofdwerkplek over het hele scherm, gecentreerd en compact */
         main.workspace {
             flex: 1;
             width: 100%;
             overflow-y: auto;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            padding: 40px 20px;
+            align-items: center;
+            padding: 20px 15px;
             background: #f8fafc;
         }
 
         .content-container {
             width: 100%;
-            max-width: 680px;
+            max-width: 600px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -131,9 +131,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 30px;
+            gap: 20px;
             width: 100%;
-            padding: 10px 0 50px 0;
+            padding: 5px 0 30px 0;
             animation: fadeIn 0.4s ease-out;
         }
 
@@ -146,24 +146,24 @@
             display: flex;
             justify-content: center;
             width: 100%;
-            gap: 80px;
+            gap: 60px;
         }
 
-        .path-row.offset-1 { transform: translateX(-50px); }
-        .path-row.offset-2 { transform: translateX(50px); }
+        .path-row.offset-1 { transform: translateX(-40px); }
+        .path-row.offset-2 { transform: translateX(40px); }
 
         .duo-node {
-            width: 82px;
-            height: 82px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             background: var(--duo-green);
             border: none;
-            border-bottom: 6px solid var(--duo-green-shadow);
+            border-bottom: 5px solid var(--duo-green-shadow);
             color: white;
             font-weight: 900;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(88, 204, 2, 0.3);
+            box-shadow: 0 8px 20px rgba(88, 204, 2, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -172,14 +172,14 @@
             position: relative;
         }
 
-        .duo-node span.node-label { font-size: 9px; opacity: 0.85; text-transform: uppercase; margin-top: 2px; }
+        .duo-node span.node-label { font-size: 8px; opacity: 0.85; text-transform: uppercase; margin-top: 1px; }
 
-        .duo-node:hover:not(.locked) { transform: scale(1.12); }
-        .duo-node:active:not(.locked) { transform: translateY(4px); border-bottom-width: 2px; }
+        .duo-node:hover:not(.locked) { transform: scale(1.1); }
+        .duo-node:active:not(.locked) { transform: translateY(3px); border-bottom-width: 2px; }
 
         .duo-node.locked {
             background: #e2e8f0;
-            border-bottom: 6px solid #cbd5e1;
+            border-bottom: 5px solid #cbd5e1;
             color: #94a3b8;
             cursor: not-allowed;
             box-shadow: none;
@@ -191,115 +191,115 @@
 
         @keyframes pulseNode {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(88, 204, 2, 0.4); }
-            70% { transform: scale(1.08); box-shadow: 0 0 0 16px rgba(88, 204, 2, 0); }
+            70% { transform: scale(1.06); box-shadow: 0 0 0 12px rgba(88, 204, 2, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(88, 204, 2, 0); }
         }
 
-        /* Kaarten voor Lessen */
+        /* Compacter gemaakte kaarten voor Lessen */
         .card {
             background: var(--card-bg);
             border: 2px solid var(--border);
-            border-radius: 28px;
-            padding: 36px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+            border-radius: 22px;
+            padding: 24px 28px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.04);
             width: 100%;
             box-sizing: border-box;
-            animation: fadeIn 0.4s ease-out;
-            margin-bottom: 40px;
+            animation: fadeIn 0.3s ease-out;
+            margin-bottom: 20px;
         }
 
-        h2 { font-size: 26px; font-weight: 900; margin-top: 0; color: #1e293b; }
-        p { color: var(--duo-gray-text); font-size: 15px; line-height: 1.6; }
+        h2 { font-size: 22px; font-weight: 900; margin-top: 0; color: #1e293b; }
+        p { color: var(--duo-gray-text); font-size: 14px; line-height: 1.5; }
 
         .btn {
             background-color: var(--duo-green);
             color: white;
             border: none;
-            padding: 15px 22px;
-            font-size: 16px;
+            padding: 12px 18px;
+            font-size: 15px;
             font-weight: 900;
-            border-radius: 16px;
+            border-radius: 14px;
             cursor: pointer;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 14px;
             border-bottom: 4px solid var(--duo-green-shadow);
-            box-shadow: 0 6px 15px rgba(88, 204, 2, 0.3);
+            box-shadow: 0 4px 12px rgba(88, 204, 2, 0.3);
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
-        .btn:active { transform: translateY(3px); border-bottom-width: 1px; box-shadow: none; }
+        .btn:active { transform: translateY(2px); border-bottom-width: 1px; box-shadow: none; }
 
         .option-btn {
             background: white;
             color: var(--duo-dark);
             border: 2px solid var(--border);
-            border-bottom: 4px solid var(--border);
-            margin: 10px 0;
+            border-bottom: 3px solid var(--border);
+            margin: 8px 0;
             text-align: left;
             box-shadow: none;
             text-transform: none;
             font-weight: 800;
-            font-size: 16px;
-            padding: 16px 20px;
-            border-radius: 16px;
+            font-size: 15px;
+            padding: 12px 16px;
+            border-radius: 14px;
         }
-        .option-btn:hover { background: #f8fafc; border-color: var(--duo-green); transform: translateX(4px); }
+        .option-btn:hover { background: #f8fafc; border-color: var(--duo-green); transform: translateX(3px); }
 
-        /* Klikbare woordenschat bubbels (voor zin-bouwen & woord-selectie) */
+        /* Klikbare woordenschat bubbels (compacter) */
         .word-bank {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin: 15px 0;
-            padding: 18px;
+            gap: 8px;
+            margin: 10px 0;
+            padding: 12px;
             background: #f8fafc;
             border: 2px dashed var(--border);
-            border-radius: 18px;
-            min-height: 80px;
+            border-radius: 14px;
+            min-height: 60px;
             align-content: flex-start;
         }
 
         .word-bubble {
             background: white;
             border: 2px solid var(--border);
-            border-bottom: 4px solid var(--border);
-            padding: 10px 16px;
-            border-radius: 12px;
+            border-bottom: 3px solid var(--border);
+            padding: 8px 12px;
+            border-radius: 10px;
             font-weight: 800;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.1s;
             user-select: none;
         }
         .word-bubble:hover { border-color: var(--accent-blue); background: #f0f9ff; }
-        .word-bubble:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .word-bubble:active { transform: translateY(2px); border-bottom-width: 1px; }
 
         .target-slot {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin: 10px 0;
-            padding: 18px;
+            gap: 8px;
+            margin: 8px 0;
+            padding: 12px;
             background: #ffffff;
             border: 2px solid var(--border);
-            border-radius: 18px;
-            min-height: 75px;
+            border-radius: 14px;
+            min-height: 60px;
             align-content: center;
         }
 
         .hidden { display: none !important; }
 
         .feedback-box-correct {
-            color: #166534; font-weight: 800; font-size: 16px; margin: 16px 0; padding: 16px;
-            background: #dcfce7; border-radius: 16px; border: 2px solid #bbf7d0;
+            color: #166534; font-weight: 800; font-size: 14px; margin: 10px 0; padding: 12px;
+            background: #dcfce7; border-radius: 12px; border: 2px solid #bbf7d0;
             animation: fadeIn 0.2s ease-out;
         }
         .feedback-box-wrong {
-            color: #991b1b; font-weight: 800; font-size: 16px; margin: 16px 0; padding: 16px;
-            background: #fee2e2; border-radius: 16px; border: 2px solid #fecaca;
+            color: #991b1b; font-weight: 800; font-size: 14px; margin: 10px 0; padding: 12px;
+            background: #fee2e2; border-radius: 12px; border: 2px solid #fecaca;
             animation: fadeIn 0.2s ease-out;
         }
 
@@ -318,17 +318,17 @@
 
         .custom-modal {
             background: white;
-            padding: 32px;
-            border-radius: 28px;
+            padding: 24px;
+            border-radius: 22px;
             border: 2px solid var(--border);
             width: 100%;
-            max-width: 400px;
+            max-width: 360px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
-        .custom-modal h3 { margin-top: 0; font-size: 22px; font-weight: 900; color: #1e293b; }
-        .custom-modal p { color: var(--duo-gray-text); font-size: 15px; margin: 10px 0 24px 0; }
+        .custom-modal h3 { margin-top: 0; font-size: 20px; font-weight: 900; color: #1e293b; }
+        .custom-modal p { color: var(--duo-gray-text); font-size: 14px; margin: 8px 0 20px 0; }
     </style>
 </head>
 <body>
@@ -343,10 +343,10 @@
     </div>
 
     <!-- VASTE TOP NAVIGATIEBALK -->
-    <header.top-nav>
+    <header class="top-nav">
         <div class="logo-area">🟢 Wordly AI</div>
         <div class="nav-controls">
-            <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 13px; color: #64748b;">
+            <div style="display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 12px; color: #64748b;">
                 <span>Taal:</span>
                 <select id="target-lang-select" class="lang-select" onchange="changeTargetLanguage()">
                     <option value="en">🇬🇧 Engels</option>
@@ -374,26 +374,26 @@
         </div>
     </header>
 
-    <!-- GECENTREERDE WERKSPACE OVER HET HELE SCHERM -->
-    <main.workspace>
+    <!-- GECENTREERDE WERKSPACE -->
+    <main class="workspace">
         <div class="content-container">
 
-            <!-- DASHBOARD / LEERPAD (GECENTREERD) -->
+            <!-- DASHBOARD / LEERPAD -->
             <div id="page-dashboard" style="width: 100%;">
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <h2 style="margin-bottom: 6px;">Jouw Adaptieve Leerpad</h2>
-                    <p style="margin: 0;">Elke 2 foutloze lessen schakelt de AI automatisch hoger naar jouw ware niveau!</p>
+                <div style="text-align: center; margin-bottom: 16px;">
+                    <h2 style="margin-bottom: 4px;">Jouw Adaptieve Leerpad</h2>
+                    <p style="margin: 0; font-size: 13px;">Elke 2 foutloze lessen schakelt de AI automatisch hoger naar jouw ware niveau!</p>
                 </div>
                 <div class="duo-path" id="path-container"></div>
             </div>
 
-            <!-- LESSEN / TEST PAGINA (GECENTREERD) -->
+            <!-- LESSEN / TEST PAGINA -->
             <div id="page-lesson" class="card page-section hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <button class="btn" style="width: auto; padding: 8px 14px; margin:0; background:#f1f5f9; border-bottom-color:#cbd5e1; color:#64748b; box-shadow:none; font-size:13px;" onclick="backToDashboard()">✕ Stoppen</button>
-                    <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text); font-size: 14px;">Vraag 1 van 6</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <button class="btn" style="width: auto; padding: 6px 10px; margin:0; background:#f1f5f9; border-bottom-color:#cbd5e1; color:#64748b; box-shadow:none; font-size:12px;" onclick="backToDashboard()">✕ Stoppen</button>
+                    <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text); font-size: 13px;">Vraag 1 van 6</span>
                 </div>
-                <h3 id="question-prompt" style="font-size: 22px; font-weight: 800; margin-bottom: 20px; color: #1e293b;">Vertaal dit</h3>
+                <h3 id="question-prompt" style="font-size: 18px; font-weight: 800; margin-bottom: 14px; color: #1e293b;">Vertaal dit</h3>
                 
                 <!-- Dynamische invoer plekken -->
                 <div id="answers-area"></div>
@@ -403,7 +403,7 @@
 
             <!-- VOLTOOID SCHERM -->
             <div id="page-complete" class="card page-section hidden" style="text-align: center;">
-                <h2 id="complete-title" style="font-size: 30px; color: var(--duo-green);">Les Voltooid! 🎉</h2>
+                <h2 id="complete-title" style="font-size: 26px; color: var(--duo-green);">Les Voltooid! 🎉</h2>
                 <p id="complete-text">Fenomenaal gedaan!</p>
                 <button class="btn" onclick="backToDashboard()">Doorgaan</button>
             </div>
@@ -690,9 +690,9 @@
             let selectedWords = [];
 
             area.innerHTML = `
-                <div style="font-weight:800; font-size:13px; color:#64748b; margin-bottom:6px;">Jouw zin:</div>
+                <div style="font-weight:800; font-size:12px; color:#64748b; margin-bottom:4px;">Jouw zin:</div>
                 <div id="target-slot" class="target-slot"></div>
-                <div style="font-weight:800; font-size:13px; color:#64748b; margin-bottom:6px; margin-top:14px;">Beschikbare woorden (klik om te plaatsen):</div>
+                <div style="font-weight:800; font-size:12px; color:#64748b; margin-bottom:4px; margin-top:10px;">Beschikbare woorden (klik om te plaatsen):</div>
                 <div id="word-bank" class="word-bank"></div>
                 <div id="builder-feedback"></div>
             `;
@@ -705,7 +705,7 @@
                 bankDiv.innerHTML = "";
 
                 if(selectedWords.length === 0) {
-                    slotDiv.innerHTML = `<span style="color:#94a3b8; font-style:italic; font-size:14px;">Klik hieronder op de woorden...</span>`;
+                    slotDiv.innerHTML = `<span style="color:#94a3b8; font-style:italic; font-size:13px;">Klik hieronder op de woorden...</span>`;
                 }
 
                 selectedWords.forEach((item, idx) => {
@@ -741,7 +741,7 @@
             let checkBtn = document.createElement('button');
             checkBtn.className = "btn";
             checkBtn.innerText = "Controleer Zin";
-            checkBtn.style.marginTop = "16px";
+            checkBtn.style.marginTop = "12px";
             checkBtn.onclick = () => {
                 let userSentence = selectedWords.map(s => s.word).join(" ");
                 let correctSentence = q.correctWords.join(" ");
