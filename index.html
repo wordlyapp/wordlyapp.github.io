@@ -353,47 +353,6 @@
         }
         .option-btn:hover { background: #f7f7f7; border-color: #cfcfcf; }
 
-        .word-bank {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 10px 0;
-            padding: 12px;
-            background: #f7f7f7;
-            border: 2px dashed var(--border);
-            border-radius: var(--radius-sm);
-            min-height: 55px;
-            align-content: flex-start;
-        }
-
-        .word-bubble {
-            background: white;
-            border: 2px solid var(--border);
-            border-bottom: 3px solid var(--border);
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-weight: 800;
-            font-size: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            user-select: none;
-        }
-        .word-bubble:hover { background: #f0f0f0; border-color: #ccc; }
-        .word-bubble:active { transform: translateY(2px); border-bottom-width: 1px; }
-
-        .target-slot {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 8px 0;
-            padding: 12px;
-            background: #ffffff;
-            border: 2px solid var(--border);
-            border-radius: var(--radius-sm);
-            min-height: 55px;
-            align-content: center;
-        }
-
         .feedback-box-correct {
             color: #278500; font-weight: 900; font-size: 13px; margin: 10px 0; padding: 10px;
             background: var(--duo-light-green); border-radius: var(--radius-sm); border: 2px solid #b8f270;
@@ -524,161 +483,238 @@
         };
 
         const masterDictionary = {
-    "nl": {
-        "en": [
-            // ==========================================
-            // SECTIE 1: LOSSE WOORDEN & BASISBEGRIPPEN
-            // ==========================================
-            ["Hallo", "Hello", ["Hello", "Goodbye", "Please", "Thanks"]],
-            ["Hoi", "Hi", ["Hi", "Bye", "Please", "Thanks"]],
-            ["Goedemorgen", "Good morning", ["Good night", "Good morning", "Hello", "See you"]],
-            ["Goedemiddag", "Good afternoon", ["Good morning", "Good afternoon", "Good night", "Hello"]],
-            ["Goedenavond", "Good evening", ["Good morning", "Good afternoon", "Good evening", "Goodbye"]],
-            ["Welterusten", "Good night", ["Good morning", "Good night", "Hello", "Goodbye"]],
-            ["Dank je wel", "Thank you", ["Please", "Thank you", "Sorry", "Yes"]],
-            ["Hartelijk dank", "Many thanks", ["No thanks", "Many thanks", "Please", "Sorry"]],
-            ["Tot ziens", "Goodbye", ["Hello", "Good morning", "Goodbye", "Welcome"]],
-            ["Tot morgen", "See you tomorrow", ["See you later", "See you tomorrow", "Goodbye", "Good night"]],
-            ["Alsjeblieft", "Please", ["Please", "Thanks", "Sorry", "No"]],
-            ["Alstublieft", "Here you are", ["Here you are", "Thank you", "Please", "Excuse me"]],
-            ["Ja", "Yes", ["No", "Yes", "Maybe", "Please"]],
-            ["Nee", "No", ["Yes", "No", "Maybe", "Thanks"]],
-            ["Misschien", "Maybe", ["Yes", "No", "Maybe", "Always"]],
-            ["Sorry", "Sorry", ["Thank you", "Sorry", "Please", "Hello"]],
-            ["Pardon", "Excuse me", ["Sorry", "Excuse me", "Please", "Thanks"]],
-            ["Geen probleem", "No problem", ["No problem", "Yes please", "Thank you", "Goodbye"]],
-            ["Natuurlijk", "Of course", ["Of course", "Never", "No", "Maybe"]],
-            ["Welkom", "Welcome", ["Welcome", "Goodbye", "Hello", "Thanks"]],
+            "nl": {
+                "en": [
+                    ["Hallo", "Hello", ["Hello", "Goodbye", "Please", "Thanks"]],
+                    ["Hoi", "Hi", ["Hi", "Bye", "Please", "Thanks"]],
+                    ["Goedemorgen", "Good morning", ["Good night", "Good morning", "Hello", "See you"]],
+                    ["Goedemiddag", "Good afternoon", ["Good morning", "Good afternoon", "Good night", "Hello"]],
+                    ["Goedenavond", "Good evening", ["Good morning", "Good afternoon", "Good evening", "Goodbye"]],
+                    ["Welterusten", "Good night", ["Good morning", "Good night", "Hello", "Goodbye"]],
+                    ["Dank je wel", "Thank you", ["Please", "Thank you", "Sorry", "Yes"]],
+                    ["Hartelijk dank", "Many thanks", ["No thanks", "Many thanks", "Please", "Sorry"]],
+                    ["Tot ziens", "Goodbye", ["Hello", "Good morning", "Goodbye", "Welcome"]],
+                    ["Tot morgen", "See you tomorrow", ["See you later", "See you tomorrow", "Goodbye", "Good night"]],
+                    ["Alsjeblieft", "Please", ["Please", "Thanks", "Sorry", "No"]],
+                    ["Ja", "Yes", ["No", "Yes", "Maybe", "Please"]],
+                    ["Nee", "No", ["Yes", "No", "Maybe", "Thanks"]],
+                    ["Misschien", "Maybe", ["Yes", "No", "Maybe", "Always"]],
+                    ["Sorry", "Sorry", ["Thank you", "Sorry", "Please", "Hello"]],
+                    ["Hoe gaat het?", "How are you?", ["How are you?", "Who are you?", "What is this?", "Where are you?"]],
+                    ["Goed, dank je", "Good, thank you", ["Bad, thanks", "Good, thank you", "Not bad", "Hello"]],
+                    ["Hoe heet jij?", "What is your name?", ["What is your name?", "Where are you from?", "How old are you?", "What time is it?"]],
+                    ["Ik heet...", "My name is...", ["My name is...", "I live in...", "I like...", "Good morning"]],
+                    ["Waar kom je vandaan?", "Where are you from?", ["Where are you from?", "Where do you live?", "What do you do?", "How are you?"]],
+                    ["Ik kom uit Nederland", "I am from the Netherlands", ["I am from the Netherlands", "I live here", "I speak English", "Good afternoon"]],
+                    ["Spreek je Engels?", "Do you speak English?", ["Do you speak English?", "Do you understand?", "What did you say?", "Can you help me?"]],
+                    ["Ik begrijp het niet", "I do not understand", ["I understand", "I do not understand", "I know", "Yes, please"]],
+                    ["Kun je mij helpen?", "Can you help me?", ["Can you help me?", "Where is the station?", "How much is this?", "What time is it?"]],
+                    ["Hoeveel kost dit?", "How much does this cost?", ["How much does this cost?", "Where is this?", "What is this?", "Is this free?"]],
+                    ["Waar is het toilet?", "Where is the bathroom?", ["Where is the bathroom?", "Where is the station?", "Where is the hotel?", "Where am I?"]],
+                    ["Ik ben hongerig", "I am hungry", ["I am hungry", "I am thirsty", "I am tired", "I am happy"]],
+                    ["Appel", "Apple", ["Banana", "Apple", "Water", "Bread"]],
+                    ["Banaan", "Banana", ["Apple", "Banana", "Orange", "Grape"]],
+                    ["Water", "Water", ["Milk", "Water", "Juice", "Wine"]],
+                    ["Brood", "Bread", ["Cheese", "Bread", "Butter", "Meat"]],
+                    ["Melk", "Milk", ["Water", "Milk", "Tea", "Coffee"]],
+                    ["Kaas", "Cheese", ["Cheese", "Butter", "Meat", "Fish"]],
+                    ["Koffie", "Coffee", ["Tea", "Coffee", "Water", "Juice"]],
+                    ["Thee", "Tea", ["Coffee", "Tea", "Milk", "Soda"]],
+                    ["Vlees", "Meat", ["Fish", "Meat", "Chicken", "Vegetable"]],
+                    ["Vis", "Fish", ["Meat", "Fish", "Egg", "Rice"]],
+                    ["Rijst", "Rice", ["Potato", "Rice", "Pasta", "Bread"]],
+                    ["Kip", "Chicken", ["Beef", "Chicken", "Fish", "Pork"]],
+                    ["Ei", "Egg", ["Cheese", "Egg", "Milk", "Bread"]],
+                    ["Trein", "Train", ["Bus", "Train", "Car", "Plane"]],
+                    ["Station", "Station", ["Airport", "Station", "Hotel", "Street"]],
+                    ["Bus", "Bus", ["Train", "Bus", "Taxi", "Bike"]],
+                    ["Auto", "Car", ["Car", "Bike", "Plane", "Train"]],
+                    ["Vliegtuig", "Plane", ["Ship", "Plane", "Train", "Bus"]],
+                    ["Fiets", "Bike", ["Car", "Bike", "Bus", "Train"]],
+                    ["Hotel", "Hotel", ["Station", "Hotel", "House", "Hospital"]],
+                    ["Luchthaven", "Airport", ["Station", "Airport", "Port", "Street"]],
+                    ["Huis", "House", ["Hotel", "House", "School", "Store"]],
+                    ["School", "School", ["House", "School", "Hospital", "Park"]]
+                ],
+                "ru": [
+                    ["Hallo", "Привет", ["Привет", "Пока", "Спасибо", "Да"]],
+                    ["Goedemorgen", "Доброе утро", ["Доброе утро", "Спокойной ночи", "Привет", "Пока"]],
+                    ["Goedemiddag", "Добрый день", ["Добрый день", "Добрый вечер", "Привет", "Пока"]],
+                    ["Goedenavond", "Добрый вечер", ["Добрый день", "Добрый вечер", "Спокойной ночи", "Пока"]],
+                    ["Welterusten", "Спокойной ночи", ["Доброе утро", "Спокойной ночи", "Привет", "До свидания"]],
+                    ["Dank je wel", "Спасибо", ["Пожалуйста", "Спасибо", "Извините", "Да"]],
+                    ["Tot ziens", "До свидания", ["Привет", "Здравствуйте", "До свидания", "Добро пожаловать"]],
+                    ["Alsjeblieft", "Пожалуйста", ["Пожалуйста", "Спасибо", "Извините", "Нет"]],
+                    ["Ja", "Да", ["Нет", "Да", "Может быть", "Пожалуйста"]],
+                    ["Nee", "Нет", ["Да", "Нет", "Может быть", "Спасибо"]],
+                    ["Misschien", "Может быть", ["Да", "Нет", "Может быть", "Всегда"]],
+                    ["Sorry", "Извините", ["Спасибо", "Извините", "Пожалуйста", "Привет"]],
+                    ["Hoe gaat het?", "Как дела?", ["Как дела?", "Кто ты?", "Что это?", "Где ты?"]],
+                    ["Goed, dank je", "Хорошо, спасибо", ["Плохо, спасибо", "Хорошо, спасибо", "Неплохо", "Привет"]],
+                    ["Hoe heet jij?", "Как тебя зовут?", ["Как тебя зовут?", "Откуда ты?", "Сколько тебе лет?", "Который час?"]],
+                    ["Ik heet...", "Меня зовут...", ["Меня зовут...", "Я живу в...", "Мне нравится...", "Доброе утро"]],
+                    ["Spreek je Engels?", "Ты говоришь по-английски?", ["Ты говоришь по-английски?", "Ты понимаешь?", "Что ты сказал?", "Можешь мне помочь?"]],
+                    ["Ik begrijp het niet", "Я не понимаю", ["Я понимаю", "Я не понимаю", "Я знаю", "Да, пожалуйста"]],
+                    ["Kun je mij helpen?", "Можешь мне помочь?", ["Можешь мне помочь?", "Где станция?", "Сколько это стоит?", "Который час?"]],
+                    ["Appel", "Яблоко", ["Банан", "Яблоко", "Вода", "Хлеб"]],
+                    ["Banaan", "Банан", ["Яблоко", "Банан", "Апельсин", "Виноград"]],
+                    ["Water", "Вода", ["Молоко", "Вода", "Сок", "Вино"]],
+                    ["Brood", "Хлеб", ["Сыр", "Хлеб", "Масло", "Мясо"]],
+                    ["Melk", "Молоко", ["Вода", "Молоко", "Чай", "Кофе"]],
+                    ["Kaas", "Сыр", ["Сыр", "Масло", "Мясо", "Рыба"]],
+                    ["Koffie", "Кофе", ["Чай", "Кофе", "Вода", "Сок"]],
+                    ["Thee", "Чай", ["Кофе", "Чай", "Молоко", "Сода"]],
+                    ["Vlees", "Мясо", ["Рыба", "Мясо", "Курица", "Овощ"]],
+                    ["Vis", "Рыба", ["Мясо", "Рыба", "Яйцо", "Рис"]],
+                    ["Trein", "Поезд", ["Автобус", "Поезд", "Машина", "Самолет"]],
+                    ["Station", "Станция", ["Аэропорт", "Станция", "Отель", "Улица"]],
+                    ["Bus", "Автобус", ["Поезд", "Автобус", "Такси", "Велосипед"]],
+                    ["Auto", "Машина", ["Машина", "Велосипед", "Самолет", "Поезд"]],
+                    ["Vliegtuig", "Самолет", ["Корабль", "Самолет", "Поезд", "Автобус"]],
+                    ["Hotel", "Отель", ["Станция", "Отель", "Дом", "Больница"]],
+                    ["Huis", "Дом", ["Отель", "Дом", "Школа", "Магазин"]]
+                ],
+                "es": [
+                    ["Hallo", "Hola", ["Hola", "Adiós", "Por favor", "Gracias"]],
+                    ["Goedemorgen", "Buenos días", ["Buenas noches", "Buenos días", "Hola", "Adiós"]],
+                    ["Goedemiddag", "Buenas tardes", ["Buenos días", "Buenas tardes", "Buenas noches", "Hola"]],
+                    ["Goedenavond", "Buenas noches", ["Buenos días", "Buenas tardes", "Buenas noches", "Adiós"]],
+                    ["Welterusten", "Buenas noches", ["Buenos días", "Buenas noches", "Hola", "Adiós"]],
+                    ["Dank je wel", "Gracias", ["Por favor", "Gracias", "Lo siento", "Sí"]],
+                    ["Tot ziens", "Adiós", ["Hola", "Buenos días", "Adiós", "Bienvenido"]],
+                    ["Alsjeblieft", "Por favor", ["Por favor", "Gracias", "Lo siento", "No"]],
+                    ["Ja", "Sí", ["No", "Sí", "Tal vez", "Por favor"]],
+                    ["Nee", "No", ["Sí", "No", "Tal vez", "Gracias"]],
+                    ["Misschien", "Tal vez", ["Sí", "No", "Tal vez", "Siempre"]],
+                    ["Sorry", "Lo siento", ["Gracias", "Lo siento", "Por favor", "Hola"]],
+                    ["Hoe gaat het?", "¿Cómo estás?", ["¿Cómo estás?", "¿Quién eres?", "¿Qué es esto?", "¿Dónde estás?"]],
+                    ["Goed, dank je", "Bien, gracias", ["Mal, gracias", "Bien, gracias", "Más o menos", "Hola"]],
+                    ["Hoe heet jij?", "¿Cómo te llamas?", ["¿Cómo te llamas?", "¿De dónde eres?", "¿Cuántos años tienes?", "¿Qué hora es?"]],
+                    ["Ik heet...", "Me llamo...", ["Me llamo...", "Vivo en...", "Me gusta...", "Buenos días"]],
+                    ["Spreek je Engels?", "¿Hablas inglés?", ["¿Hablas inglés?", "¿Entiendes?", "¿Qué dijiste?", "¿Puedes ayudarme?"]],
+                    ["Ik begrijp het niet", "No entiendo", ["Entiendo", "No entiendo", "Lo sé", "Sí, por favor"]],
+                    ["Kun je mij helpen?", "¿Puedes ayudarme?", ["¿Puedes ayudarme?", "¿Dónde está la estación?", "¿Cuánto cuesta esto?", "¿Qué hora es?"]],
+                    ["Appel", "Manzana", ["Plátano", "Manzana", "Agua", "Pan"]],
+                    ["Banaan", "Plátano", ["Manzana", "Plátano", "Naranja", "Uva"]],
+                    ["Water", "Agua", ["Leche", "Agua", "Jugo", "Vino"]],
+                    ["Brood", "Pan", ["Queso", "Pan", "Mantequilla", "Carne"]],
+                    ["Melk", "Leche", ["Agua", "Leche", "Té", "Café"]],
+                    ["Kaas", "Queso", ["Queso", "Mantequilla", "Carne", "Pescado"]],
+                    ["Koffie", "Café", ["Té", "Café", "Agua", "Jugo"]],
+                    ["Thee", "Té", ["Café", "Té", "Leche", "Refresco"]],
+                    ["Vlees", "Carne", ["Pescado", "Carne", "Pollo", "Verdura"]],
+                    ["Vis", "Pescado", ["Carne", "Pescado", "Huevo", "Arroz"]],
+                    ["Trein", "Tren", ["Autobús", "Tren", "Coche", "Avión"]],
+                    ["Station", "Estación", ["Aeropuerto", "Estación", "Hotel", "Calle"]],
+                    ["Bus", "Autobús", ["Tren", "Autobús", "Taxi", "Bicicleta"]],
+                    ["Auto", "Coche", ["Coche", "Bicicleta", "Avión", "Tren"]],
+                    ["Vliegtuig", "Avión", ["Barco", "Avión", "Tren", "Autobús"]],
+                    ["Hotel", "Hotel", ["Estación", "Hotel", "Casa", "Hospital"]],
+                    ["Huis", "Casa", ["Hotel", "Casa", "Escuela", "Tienda"]]
+                ],
+                "de": [
+                    ["Hallo", "Hallo", ["Hallo", "Tschüss", "Bitte", "Danke"]],
+                    ["Goedemorgen", "Guten Morgen", ["Gute Nacht", "Guten Morgen", "Hallo", "Tschüss"]],
+                    ["Goedemiddag", "Guten Tag", ["Guten Morgen", "Guten Tag", "Guten Abend", "Hallo"]],
+                    ["Goedenavond", "Guten Abend", ["Guten Morgen", "Guten Tag", "Guten Abend", "Tschüss"]],
+                    ["Welterusten", "Gute Nacht", ["Guten Morgen", "Gute Nacht", "Hallo", "Tschüss"]],
+                    ["Dank je wel", "Danke", ["Bitte", "Danke", "Entschuldigung", "Ja"]],
+                    ["Tot ziens", "Tschüss", ["Hallo", "Guten Morgen", "Tschüss", "Willkommen"]],
+                    ["Alsjeblieft", "Bitte", ["Bitte", "Danke", "Entschuldigung", "Nein"]],
+                    ["Ja", "Ja", ["Nein", "Ja", "Vielleicht", "Bitte"]],
+                    ["Nee", "Nein", ["Ja", "Nein", "Vielleicht", "Danke"]],
+                    ["Misschien", "Vielleicht", ["Ja", "Nein", "Vielleicht", "Immer"]],
+                    ["Sorry", "Entschuldigung", ["Danke", "Entschuldigung", "Bitte", "Hallo"]],
+                    ["Hoe gaat het?", "Wie geht es dir?", ["Wie geht es dir?", "Wer bist du?", "Was ist das?", "Wo bist du?"]],
+                    ["Goed, dank je", "Gut, danke", ["Schlecht, danke", "Gut, danke", "Nicht schlecht", "Hallo"]],
+                    ["Hoe heet jij?", "Wie heißt du?", ["Wie heißt du?", "Woher kommst du?", "Wie alt bist du?", "Wie spät ist es?"]],
+                    ["Ik heet...", "Ich heiße...", ["Ich heiße...", "Ich wohne in...", "Ich mag...", "Guten Morgen"]],
+                    ["Spreek je Engels?", "Sprichst du Englisch?", ["Sprichst du Englisch?", "Verstehst du?", "Was hast du gesagt?", "Kannst du mir helfen?"]],
+                    ["Ik begrijp het niet", "Ich verstehe nicht", ["Ich verstehe", "Ich verstehe nicht", "Ich weiß", "Ja, bitte"]],
+                    ["Kun je mij helpen?", "Kannst du mir helfen?", ["Kannst du mir helfen?", "Wo ist der Bahnhof?", "Wie viel kostet das?", "Wie spät ist es?"]],
+                    ["Appel", "Apfel", ["Banane", "Apfel", "Wasser", "Brot"]],
+                    ["Banaan", "Banane", ["Apfel", "Banane", "Orange", "Traube"]],
+                    ["Water", "Wasser", ["Milch", "Wasser", "Saft", "Wein"]],
+                    ["Brood", "Brot", ["Käse", "Brot", "Butter", "Fleisch"]],
+                    ["Melk", "Milch", ["Wasser", "Milch", "Tee", "Kaffee"]],
+                    ["Kaas", "Käse", ["Käse", "Butter", "Fleisch", "Fisch"]],
+                    ["Koffie", "Kaffee", ["Tee", "Kaffee", "Wasser", "Saft"]],
+                    ["Thee", "Tee", ["Kaffee", "Tee", "Milch", "Soda"]],
+                    ["Vlees", "Fleisch", ["Fisch", "Fleisch", "Hähnchen", "Gemüse"]],
+                    ["Vis", "Fisch", ["Fleisch", "Fisch", "Ei", "Reis"]],
+                    ["Trein", "Zug", ["Bus", "Zug", "Auto", "Flugzeug"]],
+                    ["Station", "Bahnhof", ["Flughafen", "Bahnhof", "Hotel", "Straße"]],
+                    ["Bus", "Bus", ["Zug", "Bus", "Taxi", "Fahrrad"]],
+                    ["Auto", "Auto", ["Auto", "Fahrrad", "Flugzeug", "Zug"]],
+                    ["Vliegtuig", "Flugzeug", ["Schiff", "Flugzeug", "Zug", "Bus"]],
+                    ["Hotel", "Hotel", ["Bahnhof", "Hotel", "Haus", "Krankenhaus"]],
+                    ["Huis", "Haus", ["Hotel", "Haus", "Schule", "Laden"]]
+                ],
+                "fr": [
+                    ["Hallo", "Bonjour", ["Bonjour", "Au revoir", "S'il vous plaît", "Merci"]],
+                    ["Goedemorgen", "Bonjour", ["Bonne nuit", "Bonjour", "Salut", "Au revoir"]],
+                    ["Goedemiddag", "Bon après-midi", ["Bonjour", "Bon après-midi", "Bonne nuit", "Salut"]],
+                    ["Goedenavond", "Bonsoir", ["Bonjour", "Bon après-midi", "Bonsoir", "Au revoir"]],
+                    ["Welterusten", "Bonne nuit", ["Bonjour", "Bonne nuit", "Salut", "Au revoir"]],
+                    ["Dank je wel", "Merci", ["S'il vous plaît", "Merci", "Pardon", "Oui"]],
+                    ["Tot ziens", "Au revoir", ["Bonjour", "Salut", "Au revoir", "Bienvenue"]],
+                    ["Alsjeblieft", "S'il vous plaît", ["S'il vous plaît", "Merci", "Pardon", "Non"]],
+                    ["Ja", "Oui", ["Non", "Oui", "Peut-être", "S'il vous plaît"]],
+                    ["Nee", "Non", ["Oui", "Non", "Peut-être", "Merci"]],
+                    ["Misschien", "Peut-être", ["Oui", "Non", "Peut-être", "Toujours"]],
+                    ["Sorry", "Pardon", ["Merci", "Pardon", "S'il vous plaît", "Bonjour"]],
+                    ["Hoe gaat het?", "Comment ça va?", ["Comment ça va?", "Qui es-tu?", "Qu'est-ce que c'est?", "Où es-tu?"]],
+                    ["Goed, dank je", "Bien, merci", ["Mal, merci", "Bien, merci", "Pas mal", "Bonjour"]],
+                    ["Hoe heet jij?", "Comment tu t'appelles?", ["Comment tu t'appelles?", "D'où viens-tu?", "Quel âge as-tu?", "Quelle heure est-il?"]],
+                    ["Ik heet...", "Je m'appelle...", ["Je m'appelle...", "J'habite à...", "J'aime...", "Bonjour"]],
+                    ["Spreek je Engels?", "Parles-tu anglais?", ["Parles-tu anglais?", "Comprends-tu?", "Qu'as-tu dit?", "Peux-tu m'aider?"]],
+                    ["Ik begrijp het niet", "Je ne comprends pas", ["Je comprends", "Je ne comprends pas", "Je sais", "Oui, s'il vous plaît"]],
+                    ["Kun je mij helpen?", "Peux-tu m'aider?", ["Peux-tu m'aider?", "Où est la gare?", "Combien ça coûte?", "Quelle heure est-il?"]],
+                    ["Appel", "Pomme", ["Banane", "Pomme", "Eau", "Pain"]],
+                    ["Banaan", "Banane", ["Pomme", "Banane", "Orange", "Raisin"]],
+                    ["Water", "Eau", ["Lait", "Eau", "Jus", "Vin"]],
+                    ["Brood", "Pain", ["Fromage", "Pain", "Beurre", "Viande"]],
+                    ["Melk", "Lait", ["Eau", "Lait", "Thé", "Café"]],
+                    ["Kaas", "Fromage", ["Fromage", "Beurre", "Viande", "Poisson"]],
+                    ["Koffie", "Café", ["Thé", "Café", "Eau", "Jus"]],
+                    ["Thee", "Thé", ["Café", "Thé", "Lait", "Soda"]],
+                    ["Vlees", "Viande", ["Poisson", "Viande", "Poulet", "Légume"]],
+                    ["Vis", "Poisson", ["Viande", "Poisson", "Œuf", "Riz"]],
+                    ["Trein", "Train", ["Bus", "Train", "Voiture", "Avion"]],
+                    ["Station", "Gare", ["Aéroport", "Gare", "Hôtel", "Rue"]],
+                    ["Bus", "Bus", ["Train", "Bus", "Taxi", "Vélo"]],
+                    ["Auto", "Voiture", ["Voiture", "Vélo", "Avion", "Train"]],
+                    ["Vliegtuig", "Avion", ["Bateau", "Avion", "Train", "Bus"]],
+                    ["Hotel", "Hôtel", ["Gare", "Hôtel", "Maison", "Hôpital"]],
+                    ["Huis", "Maison", ["Hôtel", "Maison", "École", "Magasin"]]
+                ]
+            },
+            "en": {
+                "nl": [
+                    ["Hello", "Hallo", ["Hallo", "Doei", "Alsjeblieft", "Dank je"]],
+                    ["Hi", "Hoi", ["Hoi", "Doei", "Alsjeblieft", "Dank je"]],
+                    ["Good morning", "Goedemorgen", ["Goedenavond", "Goedemorgen", "Hallo", "Tot ziens"]],
+                    ["Good afternoon", "Goedemiddag", ["Goedemorgen", "Goedemiddag", "Goedenavond", "Hallo"]],
+                    ["Good evening", "Goedenavond", ["Goedemorgen", "Goedemiddag", "Goedenavond", "Tot ziens"]],
+                    ["Good night", "Welterusten", ["Goedemorgen", "Welterusten", "Hallo", "Doei"]],
+                    ["Thank you", "Dank je wel", ["Alsjeblieft", "Dank je wel", "Sorry", "Ja"]],
+                    ["Goodbye", "Tot ziens", ["Hallo", "Goedemorgen", "Tot ziens", "Welkom"]],
+                    ["Please", "Alsjeblieft", ["Alsjeblieft", "Dank je", "Sorry", "Nee"]],
+                    ["Yes", "Ja", ["Nee", "Ja", "Misschien", "Alsjeblieft"]],
+                    ["No", "Nee", ["Ja", "Nee", "Misschien", "Dank je"]],
+                    ["Maybe", "Misschien", ["Ja", "Nee", "Misschien", "Altijd"]],
+                    ["Sorry", "Sorry", ["Dank je", "Sorry", "Alsjeblieft", "Hallo"]],
+                    ["Apple", "Appel", ["Banaan", "Appel", "Water", "Brood"]],
+                    ["Banana", "Banaan", ["Appel", "Banaan", "Sinaasappel", "Druif"]],
+                    ["Water", "Water", ["Melk", "Water", "Sap", "Wijn"]],
+                    ["Bread", "Brood", ["Kaas", "Brood", "Boter", "Vlees"]],
+                    ["Milk", "Melk", ["Water", "Melk", "Thee", "Koffie"]],
+                    ["Cheese", "Kaas", ["Kaas", "Boter", "Vlees", "Vis"]],
+                    ["Coffee", "Koffie", ["Thee", "Koffie", "Water", "Sap"]]
+                ]
+            }
+        };
 
-            // ETEN & DRINKEN (WOORDEN)
-            ["Appel", "Apple", ["Banana", "Apple", "Water", "Bread"]],
-            ["Banaan", "Banana", ["Apple", "Banana", "Orange", "Grape"]],
-            ["Sinaasappel", "Orange", ["Apple", "Lemon", "Orange", "Peach"]],
-            ["Druif", "Grape", ["Grape", "Melon", "Pear", "Plum"]],
-            ["Aardbei", "Strawberry", ["Strawberry", "Blueberry", "Apple", "Banana"]],
-            ["Water", "Water", ["Milk", "Water", "Juice", "Wine"]],
-            ["Brood", "Bread", ["Cheese", "Bread", "Butter", "Meat"]],
-            ["Melk", "Milk", ["Water", "Milk", "Tea", "Coffee"]],
-            ["Kaas", "Cheese", ["Cheese", "Butter", "Meat", "Fish"]],
-            ["Koffie", "Coffee", ["Tea", "Coffee", "Water", "Juice"]],
-            ["Thee", "Tea", ["Coffee", "Tea", "Milk", "Soda"]],
-            ["Vlees", "Meat", ["Fish", "Meat", "Chicken", "Vegetable"]],
-            ["Vis", "Fish", ["Meat", "Fish", "Egg", "Rice"]],
-            ["Rijst", "Rice", ["Potato", "Rice", "Pasta", "Bread"]],
-            ["Kip", "Chicken", ["Beef", "Chicken", "Fish", "Pork"]],
-            ["Ei", "Egg", ["Cheese", "Egg", "Milk", "Bread"]],
-            ["Suiker", "Sugar", ["Salt", "Sugar", "Water", "Milk"]],
-            ["Zout", "Salt", ["Sugar", "Salt", "Pepper", "Oil"]],
-            ["Boter", "Butter", ["Cheese", "Butter", "Milk", "Bread"]],
-            ["Soep", "Soup", ["Soup", "Salad", "Meat", "Rice"]],
-
-            // VERVOER & LOCATIES (WOORDEN)
-            ["Trein", "Train", ["Bus", "Train", "Car", "Plane"]],
-            ["Station", "Station", ["Airport", "Station", "Hotel", "Street"]],
-            ["Bus", "Bus", ["Train", "Bus", "Taxi", "Bike"]],
-            ["Auto", "Car", ["Car", "Bike", "Plane", "Train"]],
-            ["Vliegtuig", "Plane", ["Ship", "Plane", "Train", "Bus"]],
-            ["Fiets", "Bike", ["Car", "Bike", "Bus", "Train"]],
-            ["Hotel", "Hotel", ["Station", "Hotel", "House", "Hospital"]],
-            ["Luchthaven", "Airport", ["Station", "Airport", "Port", "Street"]],
-            ["Kaartje", "Ticket", ["Money", "Ticket", "Passport", "Map"]],
-            ["Geld", "Money", ["Ticket", "Money", "Card", "Key"]],
-            ["Huis", "House", ["Hotel", "House", "School", "Store"]],
-            ["School", "School", ["House", "School", "Hospital", "Park"]],
-            ["Winkel", "Store", ["Market", "Store", "House", "Bank"]],
-            ["Boek", "Book", ["Pen", "Book", "Paper", "Desk"]],
-            ["Hond", "Dog", ["Cat", "Dog", "Bird", "Fish"]],
-            ["Kat", "Cat", ["Dog", "Cat", "Mouse", "Rabbit"]],
-
-            // ==========================================
-            // SECTIE 2: VOLLEDIGE GRAMMATICALE ZINNEN
-            // ==========================================
-            ["Goedemorgen, heb je lekker geslapen vannacht?", "Good morning, did you sleep well last night?", ["Yes, I slept very well.", "No, I am still tired.", "Good morning to you too.", "Not really."]],
-            ["Het is vandaag echt prachtig weer om naar buiten te gaan.", "The weather is truly wonderful today to go outside.", ["Yes, the sun is shining.", "It is raining outside.", "It is a bit cold.", "Let's go for a walk."]],
-            ["Wat zijn jouw plannen voor het komende weekend?", "What are your plans for the upcoming weekend?", ["I am going to stay home.", "I am visiting friends.", "I have no plans yet.", "Working all weekend."]],
-            ["Ik moet vandaag heel erg hard studeren voor een belangrijke toets.", "I have to study very hard today for an important test.", ["Good luck with your test!", "What subject is it?", "Take a short break.", "You can do it!"]],
-            ["Pardon, kunt u mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", "Excuse me, could you tell me how to get to the nearest train station?", ["Go straight ahead and turn left.", "It is about five minutes walking.", "You need to take the bus.", "Follow this street."]],
-            ["De vlucht van Amsterdam naar Londen heeft helaas een flinke vertraging.", "Unfortunately, the flight from Amsterdam to London has a significant delay.", ["How long is the delay?", "Can I change my ticket?", "Where can I wait?", "That is very annoying."]],
-            ["Hoeveel kost een enkeltje met de metro naar het stadscentrum?", "How much does a one-way ticket by subway to the city center cost?", ["It costs five euros.", "Children travel for free.", "You can pay with a card.", "The ticket machine is over there."]],
-            ["Zullen we vanavond gezellig ergens een hapje gaan eten?", "Shall we go out to grab a bite to eat somewhere tonight?", ["That sounds like a great idea!", "Where do you want to go?", "I prefer to cook at home.", "What time shall we meet?"]],
-            ["Ik heb een allergie voor noten, dus ik moet goed opletten.", "I have a nut allergy, so I have to be very careful.", ["I will inform the chef.", "Are you allergic to anything else?", "There are no nuts in this dish.", "Better safe than sorry."]],
-            ["Kan ik alstublieft de menukaart en een glas ijsthee krijgen?", "Could I please have the menu and a glass of iced tea?", ["Here is the menu, right away.", "What kind of tea would you prefer?", "I will be back to take your order.", "Coming up!"]],
-            ["Help me alstublieft, ik ben mijn portemonnee met al mijn pasjes verloren!", "Please help me, I have lost my wallet with all my cards!", ["Where did you lose it?", "You need to block your cards immediately.", "Let's go to the police station.", "Did you check your jacket?"]],
-            ["Waar is hier in de buurt de dichtstbijzijnde apotheek?", "Where is the nearest pharmacy around here?", ["It is around the corner.", "Turn right at the traffic lights.", "It is closed on Sundays.", "Can I help you find something specific?"]],
-            ["Hoe laat vertrekt de volgende trein naar Amsterdam?", "What time does the next train to Amsterdam leave?", ["The train is delayed.", "Where is the station?", "I am taking the bus.", "Is this a car?"]],
-            ["Ik woon in een mooi huis in het stadscentrum.", "I live in a nice house in the city center.", ["The hotel is full.", "This is my house.", "Where is the school?", "Let's visit the store."]],
-            ["Kun jij mij alsjeblieft even helpen hiermee?", "Could you please help me with this?", ["Can you help me?", "Where is the train station?", "How much does this cost?", "What time is it?"]],
-            ["Ik begrijp er helemaal niets van.", "I do not understand anything about it.", ["I understand completely.", "I do not understand.", "I know the answer.", "Yes, please help."]],
-            ["Hoeveel kost dit prachtige product?", "How much does this beautiful product cost?", ["How much does this cost?", "Where is this located?", "What is this item?", "Is this free of charge?"]],
-            ["Waar kan ik het dichtstbijzijnde toilet vinden?", "Where can I find the nearest restroom?", ["Where is the bathroom?", "Where is the train station?", "Where is the hotel?", "Where am I right now?"]],
-            ["Ik heb trek in een lekkere appel.", "I am craving a delicious apple.", ["I want a banana.", "I would like an apple.", "I need some water.", "I prefer bread."]],
-            ["Kan ik een glas koud water krijgen?", "Can I get a glass of cold water?", ["I would like milk.", "Water please.", "Do you have juice?", "Wine or water?"]]
-        ],
-        "ru": [
-            ["Hallo", "Привет", ["Привет", "Пока", "Спасибо", "Да"]],
-            ["Goedemorgen", "Доброе утро", ["Доброе утро", "Спокойной ночи", "Привет", "Пока"]],
-            ["Appel", "Яблоко", ["Банан", "Яблоко", "Вода", "Хлеб"]],
-            ["Water", "Вода", ["Молоко", "Вода", "Сок", "Вино"]],
-            ["Trein", "Поезд", ["Автобус", "Поезд", "Машина", "Самолет"]],
-            ["Goedemorgen, heb je lekker geslapen vannacht?", "Доброе утро, ты хорошо спал прошлой ночью?", ["Да, спал отлично", "Нет, я устал", "Доброе утро", "Нормально"]],
-            ["Pardon, kunt u mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", "Извините, вы не подскажете, как добраться до ближайшего вокзала?", ["Идите прямо", "Это в пяти минутах ходьбы", "Нужно сесть на автобус", "Следуйте за мной"]]
-        ],
-        "es": [
-            ["Hallo", "Hola", ["Hola", "Adiós", "Por favor", "Gracias"]],
-            ["Goedemorgen", "Buenos días", ["Buenas noches", "Buenos días", "Hola", "Adiós"]],
-            ["Appel", "Manzana", ["Plátano", "Manzana", "Agua", "Pan"]],
-            ["Water", "Agua", ["Leche", "Agua", "Jugo", "Vino"]],
-            ["Trein", "Tren", ["Autobús", "Tren", "Coche", "Avión"]],
-            ["Goedemorgen, heb je lekker geslapen vannacht?", "Buenos días, ¿dormiste bien anoche?", ["Sí, dormí muy bien", "No, estoy cansado", "Buenos días", "Más o menos"]],
-            ["Pardon, kunt u mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", "Disculpe, ¿podría decirme cómo llegar a la estación de tren más cercana?", ["Siga todo recto", "Está a cinco minutos andando", "Tiene que coger el autobús", "Gire a la izquierda"]]
-        ],
-        "de": [
-            ["Hallo", "Hallo", ["Hallo", "Tschüss", "Bitte", "Danke"]],
-            ["Goedemorgen", "Guten Morgen", ["Gute Nacht", "Guten Morgen", "Hallo", "Tschüss"]],
-            ["Appel", "Apfel", ["Banane", "Apfel", "Wasser", "Brot"]],
-            ["Water", "Wasser", ["Milch", "Wasser", "Saft", "Wein"]],
-            ["Trein", "Zug", ["Bus", "Zug", "Auto", "Flugzeug"]],
-            ["Goedemorgen, heb je lekker geslapen vannacht?", "Guten Morgen, hast du letzte Nacht gut geschlafen?", ["Ja, ich habe sehr gut geschlafen", "Nein, ich bin müde", "Guten Morgen", "Es geht so"]],
-            ["Pardon, kunt u mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", "Entschuldigung, können Sie mir sagen, wie ich zum nächsten Bahnhof komme?", ["Gehen Sie geradeaus", "Es ist fünf Minuten zu Fuß", "Sie müssen den Bus nehmen", "Biegen Sie links ab"]]
-        ],
-        "fr": [
-            ["Hallo", "Bonjour", ["Bonjour", "Au revoir", "S'il vous plaît", "Merci"]],
-            ["Goedemorgen", "Bonjour", ["Bonne nuit", "Bonjour", "Salut", "Au revoir"]],
-            ["Appel", "Pomme", ["Banane", "Pomme", "Eau", "Pain"]],
-            ["Water", "Eau", ["Lait", "Eau", "Jus", "Vin"]],
-            ["Trein", "Train", ["Bus", "Train", "Voiture", "Avion"]],
-            ["Goedemorgen, heb je lekker geslapen vannacht?", "Bonjour, est-ce que tu as bien dormi cette nuit?", ["Oui, j'ai très bien dormi", "Non, je suis fatigué", "Bonjour", "Ça va"]],
-            ["Pardon, kunt u mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", "Pardon, pourriez-vous me dire comment aller à la gare la plus proche?", ["Allez tout droit", "C'est à cinq minutes à pied", "Vous devez prendre le bus", "Tournez à gauche"]]
-        ]
-    },
-    "en": {
-        "nl": [
-            ["Hello", "Hallo", ["Hallo", "Doei", "Alsjeblieft", "Dank je"]],
-            ["Hi", "Hoi", ["Hoi", "Doei", "Alsjeblieft", "Dank je"]],
-            ["Good morning", "Goedemorgen", ["Goedenavond", "Goedemorgen", "Hallo", "Tot ziens"]],
-            ["Good afternoon", "Goedemiddag", ["Goedemorgen", "Goedemiddag", "Goedenavond", "Hallo"]],
-            ["Good evening", "Goedenavond", ["Goedemorgen", "Goedemiddag", "Goedenavond", "Tot ziens"]],
-            ["Good night", "Welterusten", ["Goedemorgen", "Welterusten", "Hallo", "Doei"]],
-            ["Thank you", "Dank je wel", ["Alsjeblieft", "Dank je wel", "Sorry", "Ja"]],
-            ["Goodbye", "Tot ziens", ["Hallo", "Goedemorgen", "Tot ziens", "Welkom"]],
-            ["Please", "Alsjeblieft", ["Alsjeblieft", "Dank je", "Sorry", "Nee"]],
-            ["Yes", "Ja", ["Nee", "Ja", "Misschien", "Alsjeblieft"]],
-            ["No", "Nee", ["Ja", "Nee", "Misschien", "Dank je"]],
-            ["Maybe", "Misschien", ["Ja", "Nee", "Misschien", "Altijd"]],
-            ["Sorry", "Sorry", ["Dank je", "Sorry", "Alsjeblieft", "Hallo"]],
-            ["Apple", "Appel", ["Banaan", "Appel", "Water", "Brood"]],
-            ["Banana", "Banaan", ["Appel", "Banaan", "Sinaasappel", "Druif"]],
-            ["Water", "Water", ["Melk", "Water", "Sap", "Wijn"]],
-            ["Bread", "Brood", ["Kaas", "Brood", "Boter", "Vlees"]],
-            ["Milk", "Melk", ["Water", "Melk", "Thee", "Koffie"]],
-            ["Cheese", "Kaas", ["Kaas", "Boter", "Vlees", "Vis"]],
-            ["Coffee", "Koffie", ["Thee", "Koffie", "Water", "Sap"]],
-            ["Good morning, did you sleep well last night?", "Goedemorgen, heb je lekker geslapen vannacht?", ["Ja, ik heb heel goed geslapen.", "Nee, ik ben nog moe.", "Goedemorgen jij ook.", "Niet echt."]],
-            ["Excuse me, could you tell me how to get to the nearest train station?", "Pardon, kun je mij vertellen hoe ik bij het dichtstbijzijnde treinstation kom?", ["Ga rechtdoor en sla linksaf.", "Het is ongeveer vijf minuten lopen.", "Je moet de bus nemen.", "Volg deze straat."]],
-            ["Shall we go out to grab a bite to eat somewhere tonight?", "Zullen we vanavond gezellig ergens een hapje gaan eten?", ["Dat klinkt als een goed idee!", "Waar wil je naartoe?", "Ik kook liever thuis.", "Hoe laat spreken we af?"]]
-        ]
-    }
-};
         const chapterNames = [
             "Hoofdstuk 1: Basis & Introductie",
             "Hoofdstuk 2: Eten & Drinken",
@@ -800,7 +836,6 @@
             let to = appData.toLang;
             if(masterDictionary[from] && masterDictionary[from][to]) {
                 let rawList = masterDictionary[from][to];
-                // Genereer dynamisch voldoende vragen per hoofdstuk op basis van de woordenboeklijst
                 let chapterList = [];
                 let startIndex = (appData.activeChapter * 3) % rawList.length;
                 for(let i = 0; i < 5; i++) {
@@ -809,7 +844,6 @@
                 }
                 return chapterList;
             }
-            // Fallback als een combinatie niet direct bestaat
             return [
                 { q: "Word", a: "Woord", opts: ["Woord", "Zin", "Taal", "Boek"] },
                 { q: "Learn", a: "Leren", opts: ["Leren", "Schrijven", "Lezen", "Horen"] },
