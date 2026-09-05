@@ -65,7 +65,6 @@
             gap: 10px;
         }
 
-        /* Custom Dropdown Styling met Vlaggen */
         .custom-dropdown-container {
             position: relative;
             display: inline-block;
@@ -437,7 +436,7 @@
         <div class="custom-modal">
             <h3 id="notif-title">Melding</h3>
             <p id="notif-text">Tekst...</p>
-            <button class="btn" onclick="closeNotification()" style="margin-top: 0;">Begrepen</button>
+            <button class="btn" id="notif-ok-btn" onclick="closeNotification()">Begrepen</button>
         </div>
     </div>
 
@@ -447,8 +446,7 @@
         </div>
         <div class="nav-controls">
             <div class="lang-switcher-wrapper">
-                <span>Van:</span>
-                <!-- Custom Vlag Dropdown Brontaal -->
+                <span id="label-from-text">Van:</span>
                 <div class="custom-dropdown-container">
                     <button class="lang-dropdown-btn" onclick="toggleMenu('from-menu')">
                         <img id="from-flag" class="flag-icon" src="" alt="">
@@ -463,8 +461,7 @@
                     </div>
                 </div>
 
-                <span style="margin-left: 4px;">Naar:</span>
-                <!-- Custom Vlag Dropdown Doeltaal -->
+                <span style="margin-left: 4px;" id="label-to-text">Naar:</span>
                 <div class="custom-dropdown-container">
                     <button class="lang-dropdown-btn" onclick="toggleMenu('to-menu')">
                         <img id="to-flag" class="flag-icon" src="" alt="">
@@ -484,7 +481,7 @@
                 <div class="stat-pill">🔥 <span id="streak-display">1</span></div>
                 <div class="stat-pill">⚡ <span id="points-display">0</span> XP</div>
             </div>
-            <button class="reset-btn" onclick="resetProgressPrompt()">Reset</button>
+            <button class="reset-btn" id="reset-btn-text" onclick="resetProgressPrompt()">Reset</button>
         </div>
     </header>
 
@@ -503,7 +500,7 @@
 
             <div id="page-lesson" class="card page-section hidden">
                 <div class="lesson-top-bar">
-                    <button class="back-btn" onclick="backToDashboard()">✕ Stoppen</button>
+                    <button class="back-btn" id="stop-btn-text" onclick="backToDashboard()">✕ Stoppen</button>
                     <div class="progress-bar-container">
                         <div id="lesson-progress-bar" class="progress-bar-fill"></div>
                     </div>
@@ -517,9 +514,9 @@
             </div>
 
             <div id="page-complete" class="card page-section hidden" style="text-align: center;">
-                <h2 style="font-size: 22px; font-weight: 900; color: var(--duo-green); margin-bottom: 8px;">Les Voltooid! 🎉</h2>
+                <h2 id="complete-title-text" style="font-size: 22px; font-weight: 900; color: var(--duo-green); margin-bottom: 8px;">Les Voltooid! 🎉</h2>
                 <p id="complete-text" style="color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px;">Geweldig gepresteerd!</p>
-                <button class="btn" onclick="backToDashboard()">Doorgaan</button>
+                <button class="btn" id="complete-continue-btn" onclick="backToDashboard()">Doorgaan</button>
             </div>
 
         </div>
@@ -542,34 +539,158 @@
             es: "Spaans"
         };
 
-        // Complete woordendatabase per doeltaal (gekoppeld aan Nederlands als basiswoordenboek)
+        // UI Vertaaltabellen gebaseerd op de gekozen brontaal (appData.fromLang)
+        const uiTranslations = {
+            nl: {
+                labelFrom: "Van:",
+                labelTo: "Naar:",
+                reset: "Reset",
+                stop: "✕ Stoppen",
+                examLabel: "Toets",
+                lessonLabel: "Les",
+                examPrompt: "[EINDTOETS] Vertaal:",
+                lessonPrompt: "Vertaal / Beantwoord:",
+                completeTitle: "Les Voltooid! 🎉",
+                completeSub: "Geweldig gepresteerd!",
+                continueBtn: "Doorgaan",
+                correctMsg: "Geweldig! Dat is correct.",
+                wrongMsg: "Helaas! Het juiste antwoord was:",
+                notifTitle: "Melding",
+                notifOk: "Begrepen",
+                sameLangTitle: "Let op",
+                sameLangText: "De brontaal en doeltaal mogen niet hetzelfde zijn!",
+                lockTitle: "Hoofdstuk Vergrendeld",
+                lockText: "Je moet eerst alle lessen van het vorige hoofdstuk volledig afronden om dit hoofdstuk te ontgrendelen!",
+                nodeLockTitle: "Vergrendeld",
+                nodeLockText: "Voltooi eerst de vorige les in dit hoofdstuk!",
+                resetTitle: "Voortgang wissen",
+                resetText: "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?"
+            },
+            en: {
+                labelFrom: "From:",
+                labelTo: "To:",
+                reset: "Reset",
+                stop: "✕ Stop",
+                examLabel: "Exam",
+                lessonLabel: "Lesson",
+                examPrompt: "[FINAL EXAM] Translate:",
+                lessonPrompt: "Translate / Answer:",
+                completeTitle: "Lesson Completed! 🎉",
+                completeSub: "Great job!",
+                continueBtn: "Continue",
+                correctMsg: "Awesome! That's correct.",
+                wrongMsg: "Too bad! The correct answer was:",
+                notifTitle: "Notice",
+                notifOk: "Got it",
+                sameLangTitle: "Attention",
+                sameLangText: "Source and target languages cannot be the same!",
+                lockTitle: "Chapter Locked",
+                lockText: "You must complete all lessons of the previous chapter first to unlock this one!",
+                nodeLockTitle: "Locked",
+                nodeLockText: "Complete the previous lesson in this chapter first!",
+                resetTitle: "Clear Progress",
+                resetText: "Are you sure you want to reset all saved lessons and XP?"
+            },
+            de: {
+                labelFrom: "Von:",
+                labelTo: "Nach:",
+                reset: "Zurücksetzen",
+                stop: "✕ Stopp",
+                examLabel: "Test",
+                lessonLabel: "Lektion",
+                examPrompt: "[ABSCHLUSSTEST] Übersetze:",
+                lessonPrompt: "Übersetze / Beantworte:",
+                completeTitle: "Lektion beendet! 🎉",
+                completeSub: "Großartige Leistung!",
+                continueBtn: "Weiter",
+                correctMsg: "Super! Das ist richtig.",
+                wrongMsg: "Schade! Die richtige Antwort war:",
+                notifTitle: "Hinweis",
+                notifOk: "Verstanden",
+                sameLangTitle: "Achtung",
+                sameLangText: "Quell- und Zielsprache dürfen nicht identisch sein!",
+                lockTitle: "Kapitel gesperrt",
+                lockText: "Du musst erst alle Lektionen des vorherigen Kapitels abschließen!",
+                nodeLockTitle: "Gesperrt",
+                nodeLockText: "Schließe zuerst die vorherige Lektion ab!",
+                resetTitle: "Fortschritt zurücksetzen",
+                resetText: "Möchtest du wirklich alle gespeicherten Lektionen und XP zurücksetzen?"
+            },
+            fr: {
+                labelFrom: "De:",
+                labelTo: "Vers:",
+                reset: "Réinitialiser",
+                stop: "✕ Quitter",
+                examLabel: "Examen",
+                lessonLabel: "Leçon",
+                examPrompt: "[EXAMEN FINAL] Traduisez:",
+                lessonPrompt: "Traduisez / Répondez:",
+                completeTitle: "Leçon terminée ! 🎉",
+                completeSub: "Excellent travail !",
+                continueBtn: "Continuer",
+                correctMsg: "Superbe ! C'est correct.",
+                wrongMsg: "Dommage ! La bonne réponse était :",
+                notifTitle: "Avis",
+                notifOk: "Compris",
+                sameLangTitle: "Attention",
+                sameLangText: "La langue source et la langue cible ne peuvent pas être identiques !",
+                lockTitle: "Chapitre verrouillé",
+                lockText: "Vous devez d'abord terminer toutes les leçons du chapitre précédent !",
+                nodeLockTitle: "Verrouillé",
+                nodeLockText: "Terminez d'abord la leçon précédente de ce chapitre !",
+                resetTitle: "Effacer la progression",
+                resetText: "Êtes-vous sûr de vouloir réinitialiser toute votre progression ?"
+            },
+            es: {
+                labelFrom: "De:",
+                labelTo: "A:",
+                reset: "Reiniciar",
+                stop: "✕ Salir",
+                examLabel: "Examen",
+                lessonLabel: "Lección",
+                examPrompt: "[EXAMEN FINAL] Traduce:",
+                lessonPrompt: "Traduce / Responde:",
+                completeTitle: "¡Lección completada! 🎉",
+                completeSub: "¡Buen trabajo!",
+                continueBtn: "Continuar",
+                correctMsg: "¡Genial! Es correcto.",
+                wrongMsg: "¡Qué pena! La respuesta correcta era:",
+                notifTitle: "Aviso",
+                notifOk: "Entendido",
+                sameLangTitle: "Atención",
+                sameLangText: "¡El idioma de origen y destino no pueden ser el mismo!",
+                lockTitle: "Capítulo bloqueado",
+                lockText: "¡Debes completar todas las lecciones del capítulo anterior primero!",
+                nodeLockTitle: "Bloqueado",
+                nodeLockText: "¡Completa primero la lección anterior de este capítulo!",
+                resetTitle: "Borrar progreso",
+                resetText: "¿Estás seguro de que quieres restablecer todo tu progreso?"
+            }
+        };
+
+        function t(key) {
+            let lang = appData.fromLang;
+            if (uiTranslations[lang] && uiTranslations[lang][key]) {
+                return uiTranslations[lang][key];
+            }
+            return uiTranslations["nl"][key]; // Fallback naar Nederlands
+        }
+
         const masterDatabase = {
             "en": [
-                /* Hoofdstuk 1 */
                 [["Hallo", "Hello"], ["Hoi", "Hi"], ["Goedemorgen", "Good morning"], ["Goedemiddag", "Good afternoon"], ["Goedenavond", "Good evening"], ["Welterusten", "Good night"], ["Dank je wel", "Thank you"], ["Hartelijk dank", "Many thanks"], ["Tot ziens", "Goodbye"], ["Tot morgen", "See you tomorrow"]],
-                /* Hoofdstuk 2 */
                 [["Appel", "Apple"], ["Banaan", "Banana"], ["Water", "Water"], ["Brood", "Bread"], ["Melk", "Milk"], ["Kaas", "Cheese"], ["Koffie", "Coffee"], ["Thee", "Tea"], ["Vlees", "Meat"], ["Vis", "Fish"]],
-                /* Hoofdstuk 3 */
                 [["Trein", "Train"], ["Station", "Station"], ["Bus", "Bus"], ["Auto", "Car"], ["Vliegtuig", "Plane"], ["Fiets", "Bike"], ["Hotel", "Hotel"], ["Luchthaven", "Airport"], ["Schip", "Ship"], ["Taxi", "Taxi"]],
-                /* Hoofdstuk 4 */
                 [["Vader", "Father"], ["Moeder", "Mother"], ["Broer", "Brother"], ["Zus", "Sister"], ["Zoon", "Son"], ["Dochter", "Daughter"], ["Vriend", "Friend"], ["Man", "Man"], ["Vrouw", "Woman"], ["Kind", "Child"]],
-                /* Hoofdstuk 5 */
                 [["Huis", "House"], ["Kamer", "Room"], ["Keuken", "Kitchen"], ["Badkamer", "Bathroom"], ["Bed", "Bed"], ["Tafel", "Table"], ["Stoel", "Chair"], ["Deur", "Door"], ["Raam", "Window"], ["Dak", "Roof"]],
-                /* Hoofdstuk 6 */
                 [["Rood", "Red"], ["Blauw", "Blue"], ["Groen", "Green"], ["Geel", "Yellow"], ["Eén", "One"], ["Twee", "Two"], ["Drie", "Three"], ["Vier", "Four"], ["Vijf", "Five"], ["Zes", "Six"]],
-                /* Hoofdstuk 7 */
                 [["Hond", "Dog"], ["Kat", "Cat"], ["Paard", "Horse"], ["Koe", "Cow"], ["Vogel", "Bird"], ["Vis", "Fish"], ["Muis", "Mouse"], ["Konijn", "Rabbit"], ["Leeuw", "Lion"], ["Beer", "Bear"]],
-                /* Hoofdstuk 8 */
                 [["Spel", "Game"], ["Bal", "Ball"], ["Voetbal", "Football"], ["Muziek", "Music"], ["Boek", "Book"], ["Film", "Movie"], ["Sport", "Sport"], ["Dans", "Dance"], ["Race", "Race"], ["Lied", "Song"]],
-                /* Hoofdstuk 9 */
                 [["School", "School"], ["Boek", "Book"], ["Pen", "Pen"], ["Papier", "Paper"], ["Leraar", "Teacher"], ["Student", "Student"], ["Kantoor", "Office"], ["Baas", "Boss"], ["Taal", "Language"], ["Les", "Lesson"]],
-                /* Hoofdstuk 10 */
                 [["Tijd", "Time"], ["Dag", "Day"], ["Nacht", "Night"], ["Zon", "Sun"], ["Regen", "Rain"], ["Wind", "Wind"], ["Sneeuw", "Snow"], ["Jaar", "Year"], ["Uur", "Hour"], ["Maand", "Month"]]
             ],
             "de": [
-                /* Hoofdstuk 1 */
                 [["Hallo", "Hallo"], ["Goedemorgen", "Guten Morgen"], ["Goedemiddag", "Guten Tag"], ["Goedenavond", "Guten Abend"], ["Welterusten", "Gute Nacht"], ["Dank je wel", "Danke"], ["Tot ziens", "Tschüss"], ["Alsjeblieft", "Bitte"], ["Ja", "Ja"], ["Nee", "Nein"]],
-                /* Hoofdstuk 2 */
                 [["Appel", "Apfel"], ["Banaan", "Banane"], ["Water", "Wasser"], ["Brood", "Brot"], ["Melk", "Milch"], ["Kaas", "Käse"], ["Koffie", "Kaffee"], ["Thee", "Tee"], ["Vlees", "Fleisch"], ["Vis", "Fisch"]],
                 Array(10).fill(["Trein", "Zug"]),
                 Array(10).fill(["Vader", "Vater"]),
@@ -581,9 +702,7 @@
                 Array(10).fill(["Tijd", "Zeit"])
             ],
             "fr": [
-                /* Hoofdstuk 1 */
                 [["Hallo", "Bonjour"], ["Goedemorgen", "Bonjour"], ["Goedemiddag", "Bon après-midi"], ["Goedenavond", "Bonsoir"], ["Welterusten", "Bonne nuit"], ["Dank je wel", "Merci"], ["Tot ziens", "Au revoir"], ["Alsjeblieft", "S'il vous plaît"], ["Ja", "Oui"], ["Nee", "Non"]],
-                /* Hoofdstuk 2 */
                 [["Appel", "Pomme"], ["Banaan", "Banane"], ["Water", "Eau"], ["Brood", "Pain"], ["Melk", "Lait"], ["Kaas", "Fromage"], ["Koffie", "Café"], ["Thee", "Thé"], ["Vlees", "Viande"], ["Vis", "Poisson"]],
                 Array(10).fill(["Trein", "Train"]),
                 Array(10).fill(["Vader", "Père"]),
@@ -595,9 +714,7 @@
                 Array(10).fill(["Tijd", "Temps"])
             ],
             "es": [
-                /* Hoofdstuk 1 */
                 [["Hallo", "Hola"], ["Goedemorgen", "Buenos días"], ["Goedemiddag", "Buenas tardes"], ["Goedenavond", "Buenas noches"], ["Welterusten", "Buenas noches"], ["Dank je wel", "Gracias"], ["Tot ziens", "Adiós"], ["Alsjeblieft", "Por favor"], ["Ja", "Sí"], ["Nee", "No"]],
-                /* Hoofdstuk 2 */
                 [["Appel", "Manzana"], ["Banaan", "Plátano"], ["Water", "Agua"], ["Brood", "Pan"], ["Melk", "Leche"], ["Kaas", "Queso"], ["Koffie", "Café"], ["Thee", "Té"], ["Vlees", "Carne"], ["Vis", "Pescado"]],
                 Array(10).fill(["Trein", "Tren"]),
                 Array(10).fill(["Vader", "Padre"]),
@@ -609,49 +726,6 @@
                 Array(10).fill(["Tijd", "Tiempo"])
             ]
         };
-
-        // Universele generator voor elke taalcombinatie (bijv. Engels -> Frans of Duits -> Spaans)
-        function getChapterWordList() {
-            let from = appData.fromLang;
-            let to = appData.toLang;
-
-            let chapterIdx = appData.activeChapter;
-
-            if (from === "nl" && masterDatabase[to]) {
-                let pairs = masterDatabase[to][chapterIdx] || masterDatabase[to][0];
-                return pairs.map(item => {
-                    let termA = item[0]; // Nederlands
-                    let termB = item[1]; // Doeltaal
-                    let allOpts = (masterDatabase[to][chapterIdx] || masterDatabase[to][0]).map(i => i[1]);
-                    return [termA, termB, allOpts];
-                });
-            } else if (to === "nl" && masterDatabase[from]) {
-                let pairs = masterDatabase[from][chapterIdx] || masterDatabase[from][0];
-                return pairs.map(item => {
-                    let termA = item[1]; // Vreemde taal
-                    let termB = item[0]; // Nederlands
-                    let allOpts = (masterDatabase[from][chapterIdx] || masterDatabase[from][0]).map(i => i[0]);
-                    return [termA, termB, allOpts];
-                });
-            } else {
-                let fromPairs = masterDatabase[from] ? (masterDatabase[from][chapterIdx] || masterDatabase[from][0]) : [];
-                let toPairs = masterDatabase[to] ? (masterDatabase[to][chapterIdx] || masterDatabase[to][0]) : [];
-
-                let combined = [];
-                for (let i = 0; i < Math.min(fromPairs.length, toPairs.length); i++) {
-                    let wordInNL = fromPairs[i][0];
-                    let wordFrom = fromPairs[i][1];
-                    let match = toPairs.find(p => p[0].toLowerCase() === wordInNL.toLowerCase());
-                    let wordTo = match ? match[1] : fromPairs[i][1];
-                    let allToOpts = toPairs.map(p => p[1]);
-                    combined.push([wordFrom, wordTo, allToOpts]);
-                }
-                if (combined.length === 0) {
-                    return [["Hello", "Bonjour", ["Bonjour", "Salut", "Adieu", "Merci"]]];
-                }
-                return combined;
-            }
-        }
 
         const chapterNames = [
             "Hoofdstuk 1: Basis & Introductie",
@@ -715,13 +789,13 @@
         function selectLanguage(type, code, name) {
             if (type === 'from') {
                 if (code === appData.toLang) {
-                    showNotification("Let op", "De brontaal en doeltaal mogen niet hetzelfde zijn!");
+                    showNotification(t("sameLangTitle"), t("sameLangText"));
                     return;
                 }
                 appData.fromLang = code;
             } else {
                 if (code === appData.fromLang) {
-                    showNotification("Let op", "De brontaal en doeltaal mogen niet hetzelfde zijn!");
+                    showNotification(t("sameLangTitle"), t("sameLangText"));
                     return;
                 }
                 appData.toLang = code;
@@ -741,6 +815,16 @@
             document.getElementById('from-label').innerText = langNames[appData.fromLang];
             document.getElementById('to-flag').src = flags[appData.toLang] || flags.en;
             document.getElementById('to-label').innerText = langNames[appData.toLang];
+
+            // Vertaal vaste UI elementen naar de gekozen brontaal
+            document.getElementById('label-from-text').innerText = t("labelFrom");
+            document.getElementById('label-to-text').innerText = t("labelTo");
+            document.getElementById('reset-btn-text').innerText = t("reset");
+            document.getElementById('stop-btn-text').innerText = t("stop");
+            document.getElementById('notif-ok-btn').innerText = t("notifOk");
+            document.getElementById('complete-continue-btn').innerText = t("continueBtn");
+            document.getElementById('complete-title-text').innerText = t("completeTitle");
+            document.getElementById('complete-text').innerText = t("completeSub");
         }
 
         function updateDashboardStats() {
@@ -781,7 +865,7 @@
                 
                 tab.onclick = () => {
                     if(!unlocked) {
-                        showNotification("Hoofdstuk Vergrendeld", "Je moet eerst alle lessen van het vorige hoofdstuk volledig afronden om dit hoofdstuk te ontgrendelen!");
+                        showNotification(t("lockTitle"), t("lockText"));
                         return;
                     }
                     appData.activeChapter = i;
@@ -816,21 +900,63 @@
                 if(isDone) node.style.background = isExam ? "#ff9600" : "var(--duo-green)";
                 
                 if(isExam) {
-                    node.innerHTML = `🏆<span class="node-label">Toets</span>`;
+                    node.innerHTML = `🏆<span class="node-label">${t("examLabel")}</span>`;
                 } else {
-                    node.innerHTML = `${i + 1}<span class="node-label">Les</span>`;
+                    node.innerHTML = `${i + 1}<span class="node-label">${t("lessonLabel")}</span>`;
                 }
                 
                 if(isUnlocked) {
                     node.onclick = () => startLesson(i, isExam);
                 } else {
                     node.onclick = () => {
-                        showNotification("Vergrendeld", "Voltooi eerst de vorige les in dit hoofdstuk!");
+                        showNotification(t("nodeLockTitle"), t("nodeLockText"));
                     };
                 }
 
                 row.appendChild(node);
                 container.appendChild(row);
+            }
+        }
+
+        // Woordendatabase generator voor flexibele taalrichtingen
+        function getChapterWordList() {
+            let from = appData.fromLang;
+            let to = appData.toLang;
+            let chapterIdx = appData.activeChapter;
+
+            if (from === "nl" && masterDatabase[to]) {
+                let pairs = masterDatabase[to][chapterIdx] || masterDatabase[to][0];
+                return pairs.map(item => {
+                    let termA = item[0];
+                    let termB = item[1];
+                    let allOpts = (masterDatabase[to][chapterIdx] || masterDatabase[to][0]).map(i => i[1]);
+                    return [termA, termB, allOpts];
+                });
+            } else if (to === "nl" && masterDatabase[from]) {
+                let pairs = masterDatabase[from][chapterIdx] || masterDatabase[from][0];
+                return pairs.map(item => {
+                    let termA = item[1];
+                    let termB = item[0];
+                    let allOpts = (masterDatabase[from][chapterIdx] || masterDatabase[from][0]).map(i => i[0]);
+                    return [termA, termB, allOpts];
+                });
+            } else {
+                let fromPairs = masterDatabase[from] ? (masterDatabase[from][chapterIdx] || masterDatabase[from][0]) : [];
+                let toPairs = masterDatabase[to] ? (masterDatabase[to][chapterIdx] || masterDatabase[to][0]) : [];
+
+                let combined = [];
+                for (let i = 0; i < Math.min(fromPairs.length, toPairs.length); i++) {
+                    let wordInNL = fromPairs[i][0];
+                    let wordFrom = fromPairs[i][1];
+                    let match = toPairs.find(p => p[0].toLowerCase() === wordInNL.toLowerCase());
+                    let wordTo = match ? match[1] : fromPairs[i][1];
+                    let allToOpts = toPairs.map(p => p[1]);
+                    combined.push([wordFrom, wordTo, allToOpts]);
+                }
+                if (combined.length === 0) {
+                    return [["Hello", "Bonjour", ["Bonjour", "Salut", "Adieu", "Merci"]]];
+                }
+                return combined;
             }
         }
 
@@ -879,9 +1005,6 @@
 
                 document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
                 document.getElementById('page-complete').classList.remove('hidden');
-                document.getElementById('complete-text').innerText = isCurrentExam 
-                    ? `Gefeliciteerd! Je hebt de eindtoets van ${chapterNames[appData.activeChapter]} gehaald! 🏆` 
-                    : `Les ${activeLessonIdx + 1} succesvol afgerond!`;
                 return;
             }
 
@@ -889,15 +1012,15 @@
             let progressPercent = (currentQIdx / activeQuestions.length) * 100;
             document.getElementById('lesson-progress-bar').style.width = `${progressPercent}%`;
             document.getElementById('lesson-progress-text').innerText = `${currentQIdx + 1}/${activeQuestions.length}`;
+            
             document.getElementById('question-prompt').innerText = isCurrentExam 
-                ? `[EINDTOETS] Vertaal: "${qObj.q}"` 
-                : `Vertaal / Beantwoord: "${qObj.q}"`;
+                ? `${t("examPrompt")} "${qObj.q}"` 
+                : `${t("lessonPrompt")} "${qObj.q}"`;
 
             let area = document.getElementById('answers-area');
             area.innerHTML = "";
             document.getElementById('next-btn').classList.add('hidden');
 
-            // Zorg dat het juiste antwoord er altijd bij zit en selecteer maximaal 3 foute opties (totaal max 4)
             let otherOpts = qObj.opts.filter(opt => opt.toLowerCase() !== qObj.a.toLowerCase());
             otherOpts.sort(() => 0.5 - Math.random());
             let shuffledOpts = [qObj.a, ...otherOpts.slice(0, 3)].sort(() => 0.5 - Math.random());
@@ -916,9 +1039,9 @@
             area.querySelectorAll('button').forEach(b => b.disabled = true);
 
             if(given.toLowerCase() === correct.toLowerCase()) {
-                area.innerHTML += `<div class="feedback-box-correct">Geweldig! Dat is correct.</div>`;
+                area.innerHTML += `<div class="feedback-box-correct">${t("correctMsg")}</div>`;
             } else {
-                area.innerHTML += `<div class="feedback-box-wrong">Helaas! Het juiste antwoord was: <strong>${correct}</strong></div>`;
+                area.innerHTML += `<div class="feedback-box-wrong">${t("wrongMsg")} <strong>${correct}</strong></div>`;
             }
             document.getElementById('next-btn').classList.remove('hidden');
         }
@@ -936,7 +1059,7 @@
         }
 
         function resetProgressPrompt() {
-            showNotification("Voortgang wissen", "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?");
+            showNotification(t("resetTitle"), t("resetText"));
             let modalBtn = document.querySelector('.custom-modal .btn');
             modalBtn.onclick = function() {
                 localStorage.removeItem('wordly_learn_v9');
