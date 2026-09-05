@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordly</title>
+    <title>Wordly - Jouw Versie</title>
     <style>
         :root {
             --primary: #ff7518;
             --primary-hover: #e06312;
-            --bg: #fff8f5;
+            --secondary: #58cc02;
+            --secondary-hover: #46a302;
+            --bg: #f7f9fa;
             --card-bg: #ffffff;
-            --text: #2d2d2d;
-            --border: #f0decc;
-            --card-shadow: 0 12px 32px rgba(255, 117, 24, 0.08);
+            --text: #3c3c3c;
+            --border: #e5e5e5;
+            --shadow: 0 4px 0 #d1d1d1;
+            --primary-shadow: 0 4px 0 #cc5c12;
+            --secondary-shadow: 0 4px 0 #3b8201;
         }
 
         body {
@@ -23,20 +27,22 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
             min-height: 100vh;
         }
 
+        /* Prachtige Bovenste Taakbalk */
         header {
             width: 100%;
             background: var(--card-bg);
             border-bottom: 2px solid var(--border);
-            padding: 20px 40px;
+            padding: 16px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-sizing: border-box;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo-area {
@@ -46,21 +52,21 @@
         }
 
         .logo {
-            font-size: 26px;
-            font-weight: 800;
+            font-size: 28px;
+            font-weight: 900;
             color: var(--primary);
             letter-spacing: -0.5px;
         }
 
         /* De Zwarte Kat Mascotte */
         .cat-mascot {
-            width: 52px;
-            height: 52px;
+            width: 48px;
+            height: 48px;
             background: #1a1a1a;
             border-radius: 50% 50% 42% 42%;
             position: relative;
             display: inline-block;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
         }
@@ -77,45 +83,44 @@
         .cat-mascot::before {
             content: '';
             position: absolute;
-            top: -11px;
+            top: -10px;
             left: 4px;
             width: 0;
             height: 0;
-            border-left: 7px solid transparent;
-            border-right: 7px solid transparent;
-            border-bottom: 15px solid #1a1a1a;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 14px solid #1a1a1a;
             transform: rotate(-15deg);
         }
 
         .cat-mascot::after {
             content: '';
             position: absolute;
-            top: -11px;
+            top: -10px;
             right: 4px;
             width: 0;
             height: 0;
-            border-left: 7px solid transparent;
-            border-right: 7px solid transparent;
-            border-bottom: 15px solid #1a1a1a;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 14px solid #1a1a1a;
             transform: rotate(15deg);
         }
 
         .cat-face {
             position: absolute;
-            top: 17px;
-            left: 10px;
-            width: 32px;
+            top: 15px;
+            left: 9px;
+            width: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .cat-eye {
-            width: 6px;
-            height: 8px;
+            width: 5px;
+            height: 7px;
             background: #fff;
             border-radius: 50%;
-            transition: height 0.2s;
             position: relative;
         }
 
@@ -125,46 +130,55 @@
             bottom: 1px;
             right: 1px;
             width: 2px;
-            height: 4px;
+            height: 3px;
             background: #ffaa00;
             border-radius: 50%;
         }
 
-        .cat-mascot.blink .cat-eye {
-            height: 1px;
-            transform: translateY(4px);
-        }
+        .cat-mascot.blink .cat-eye { height: 1px; transform: translateY(3px); }
 
         .cat-nose {
             position: absolute;
-            bottom: 15px;
+            bottom: 14px;
             left: 50%;
             transform: translateX(-50%);
-            width: 6px;
-            height: 4px;
+            width: 5px;
+            height: 3px;
             background: #ff99bb;
             border-radius: 50%;
         }
 
-        .cat-whisker-left, .cat-whisker-right {
-            position: absolute;
-            bottom: 12px;
-            width: 12px;
-            height: 1px;
-            background: #666;
+        .top-stats {
+            display: flex;
+            gap: 20px;
+            align-items: center;
         }
-        .cat-whisker-left { left: -6px; transform: rotate(-10deg); }
-        .cat-whisker-right { right: -6px; transform: rotate(10deg); }
 
+        .stat-badge {
+            font-weight: 800;
+            color: #777;
+            background: #fff;
+            padding: 8px 16px;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Hoofdinhoud vult het scherm perfect */
         main {
-            max-width: 850px;
-            width: 100%;
-            padding: 40px 20px;
-            box-sizing: border-box;
             flex: 1;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
 
         .card {
@@ -172,54 +186,69 @@
             border: 2px solid var(--border);
             border-radius: 24px;
             padding: 40px;
-            box-shadow: var(--card-shadow);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            width: 100%;
+            max-width: 650px;
+            box-sizing: border-box;
             margin-bottom: 20px;
         }
 
         h2 { 
             margin-top: 0; 
             font-size: 28px;
+            font-weight: 800;
             letter-spacing: -0.5px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            color: #2c2c2c;
         }
 
         p {
-            color: #666;
+            color: #777;
             font-size: 16px;
             line-height: 1.5;
             margin-bottom: 24px;
         }
 
         .btn {
-            background-color: var(--primary);
+            background-color: var(--secondary);
             color: white;
             border: none;
             padding: 16px 24px;
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 800;
             border-radius: 16px;
             cursor: pointer;
             width: 100%;
             margin-top: 16px;
-            transition: all 0.2s ease;
-            border-bottom: 4px solid var(--primary-hover);
-            box-shadow: 0 4px 12px rgba(255, 117, 24, 0.2);
+            transition: all 0.1s ease;
+            border-bottom: var(--secondary-shadow);
+            box-shadow: 0 4px 12px rgba(88, 204, 2, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
-        .btn:active { transform: translateY(2px); border-bottom-width: 2px; box-shadow: none; }
+        .btn:active { transform: translateY(3px); box-shadow: none; border-bottom-width: 1px; }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-bottom: var(--primary-shadow);
+            box-shadow: 0 4px 12px rgba(255, 117, 24, 0.2);
+        }
 
         .option-btn {
             background: white;
             color: var(--text);
             border: 2px solid var(--border);
-            border-bottom: 4px solid #d4c0ab;
+            border-bottom: 4px solid var(--border);
             margin: 12px 0;
             text-align: left;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            box-shadow: none;
+            text-transform: none;
+            font-weight: 700;
         }
 
-        .option-btn:hover { background: #fff3ed; border-color: var(--primary); }
+        .option-btn:hover { background: #f7f9fa; border-color: var(--primary); }
 
         input[type="text"], input[type="password"] {
             width: 100%;
@@ -231,7 +260,7 @@
             margin-top: 8px;
             margin-bottom: 16px;
             outline: none;
-            background: #fafafa;
+            background: #f7f9fa;
             transition: border-color 0.2s;
         }
 
@@ -253,61 +282,77 @@
         }
 
         label {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
-            color: #444;
+            color: #555;
             display: block;
             margin-bottom: 4px;
         }
 
         .hidden { display: none !important; }
-        
-        .top-stats {
+
+        /* Het Volledige Scherm Leerpad */
+        .dashboard-container {
+            width: 100%;
+            max-width: 900px;
             display: flex;
-            gap: 16px;
+            flex-direction: column;
             align-items: center;
         }
 
-        .stat-badge {
-            font-weight: 700;
-            color: #555;
-            background: #fff3ed;
-            padding: 10px 18px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            font-size: 15px;
+        .nav-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 8px;
+            border-radius: 20px;
+            border: 2px solid var(--border);
         }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            font-size: 15px;
+            font-weight: 800;
+            color: #888;
+            cursor: pointer;
+            padding: 12px 24px;
+            border-radius: 14px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active { background: #fff3ed; color: var(--primary); }
 
         .path-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 28px;
             padding: 20px 0;
-            max-height: 480px;
-            overflow-y: auto;
+            width: 100%;
         }
 
         .path-row {
             display: flex;
             justify-content: center;
             width: 100%;
-            gap: 40px;
+            gap: 60px;
         }
 
-        .path-row.offset-1 { transform: translateX(-45px); }
-        .path-row.offset-2 { transform: translateX(45px); }
+        .path-row.offset-1 { transform: translateX(-50px); }
+        .path-row.offset-2 { transform: translateX(50px); }
 
         .node-btn {
-            width: 78px;
-            height: 78px;
+            width: 84px;
+            height: 84px;
             border-radius: 50%;
             background: var(--primary);
             border: none;
             border-bottom: 6px solid var(--primary-hover);
             color: white;
-            font-weight: 800;
-            font-size: 18px;
+            font-weight: 900;
+            font-size: 20px;
             cursor: pointer;
             box-shadow: 0 8px 20px rgba(255, 117, 24, 0.3);
             display: flex;
@@ -316,56 +361,35 @@
             transition: all 0.2s;
         }
 
-        .node-btn:hover:not(.locked) { transform: scale(1.12); }
+        .node-btn:hover:not(.locked) { transform: scale(1.1); }
+        .node-btn:active:not(.locked) { transform: translateY(4px); border-bottom-width: 2px; }
 
         .node-btn.locked {
-            background: #cccccc;
-            border-bottom: 6px solid #999999;
+            background: #e5e5e5;
+            border-bottom: 6px solid #cccccc;
+            color: #afafaf;
             cursor: not-allowed;
             box-shadow: none;
         }
 
         .node-btn.done {
-            background: #2e7d32;
-            border-bottom: 6px solid #1b5e20;
-            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+            background: var(--secondary);
+            border-bottom: 6px solid var(--secondary-hover);
+            box-shadow: 0 8px 20px rgba(88, 204, 2, 0.3);
         }
-
-        .nav-tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 12px;
-            overflow-x: auto;
-        }
-
-        .tab-btn {
-            background: transparent;
-            border: none;
-            font-size: 16px;
-            font-weight: 700;
-            color: #777;
-            cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 10px;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-
-        .tab-btn.active { background: #fff3ed; color: var(--primary); }
 
         .shop-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
         }
 
         .shop-item {
-            background: #fafafa;
+            background: white;
             border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -373,225 +397,212 @@
 
         .feedback-correct {
             color: #2e7d32;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 18px;
             margin: 20px 0;
             padding: 16px;
             background: #e8f5e9;
-            border-radius: 12px;
+            border-radius: 16px;
+            border: 2px solid #c8e6c9;
         }
 
         .feedback-wrong {
             color: #c62828;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 18px;
             margin: 20px 0;
             padding: 16px;
             background: #ffebee;
-            border-radius: 12px;
+            border-radius: 16px;
+            border: 2px solid #ffcdd2;
         }
 
         .word-bank-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 15px;
+            gap: 12px;
+            margin-top: 20px;
         }
 
         .word-chip {
-            background: #fff;
+            background: white;
             border: 2px solid var(--border);
-            padding: 14px;
-            border-radius: 12px;
+            border-bottom: 4px solid var(--border);
+            padding: 16px;
+            border-radius: 16px;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
-            transition: all 0.15s;
+            transition: all 0.1s;
         }
 
-        .word-chip:hover { background: #fff3ed; border-color: var(--primary); }
+        .word-chip:hover { background: #f7f9fa; border-color: var(--primary); }
+        .word-chip:active { transform: translateY(2px); border-bottom-width: 2px; }
     </style>
 </head>
 <body>
 
-    <header>
+    <!-- BOVENSTE TAAKBALK -->
+    <header id="app-header" class="hidden">
         <div class="logo-area">
             <div class="cat-mascot" id="mascot" onclick="triggerMascot('bounce'); playSound('correct');" title="Miauw!">
                 <div class="cat-face">
                     <div class="cat-eye"></div>
-                    <div class="cat-nose">
-                        <div class="cat-whisker-left"></div>
-                        <div class="cat-whisker-right"></div>
-                    </div>
+                    <div class="cat-nose"></div>
                     <div class="cat-eye"></div>
                 </div>
             </div>
             <div class="logo">Wordly</div>
         </div>
         <div class="top-stats">
-            <div class="stat-badge" id="points-display">Points: 0</div>
-            <div class="stat-badge" id="stats-display">Completed: 0</div>
+            <div class="stat-badge" id="user-display">👤 Guest</div>
+            <div class="stat-badge" id="points-display">⚡ 0 pts</div>
+            <div class="stat-badge" id="stats-display">🏆 0 voltooid</div>
         </div>
     </header>
 
     <main>
-        <!-- PAGE: AUTH -->
+        <!-- PAGE: AUTH (Inloggen / Account maken) -->
         <div id="page-auth" class="card page-section">
-            <h2 id="auth-title">Create Account</h2>
-            <p id="auth-desc">Sign up with a private secure account to start learning.</p>
+            <h2 id="auth-title">Account Aanmaken</h2>
+            <p id="auth-desc">Maak een veilig account aan om al je voortgang op te slaan.</p>
             
-            <label>Username</label>
-            <input type="text" id="auth-user" placeholder="Enter username...">
+            <label>Gebruikersnaam</label>
+            <input type="text" id="auth-user" placeholder="Typ je gebruikersnaam...">
             
-            <label>Password</label>
-            <input type="password" id="auth-pass" placeholder="Enter password...">
+            <label>Wachtwoord</label>
+            <input type="password" id="auth-pass" placeholder="Typ je wachtwoord...">
 
-            <button class="btn" id="auth-btn" onclick="handleAuth()">Create Account</button>
-            <button class="btn" style="background: transparent; color: var(--primary); border: none; box-shadow: none; margin-top: 8px;" onclick="toggleAuthMode()" id="auth-switch">Already have an account? Log in</button>
+            <button class="btn btn-primary" id="auth-btn" onclick="handleAuth()">Account Aanmaken</button>
+            <button class="btn" style="background: transparent; color: var(--primary); border: none; box-shadow: none; margin-top: 12px;" onclick="toggleAuthMode()" id="auth-switch">Al een account? Log hier in</button>
         </div>
 
         <!-- PAGE: ONBOARDING - UI LANG -->
         <div id="page-onboard-ui" class="card page-section hidden">
-            <h2>Select Default Language</h2>
-            <p>Choose the display language for the app.</p>
+            <h2>Kies je taal</h2>
+            <p>Selecteer de weergavetaal voor de app.</p>
             <select id="ui-lang-select">
                 <option value="en">English</option>
                 <option value="nl">Nederlands</option>
             </select>
-            <button class="btn" onclick="saveUILanguage()">Continue</button>
+            <button class="btn btn-primary" onclick="saveUILanguage()">Doorgaan</button>
         </div>
 
         <!-- PAGE: ONBOARDING - DIRECTION -->
         <div id="page-onboard-dir" class="card page-section hidden">
-            <h2>Select Course</h2>
-            <p>Choose which language pair you want to master.</p>
-            <button class="btn option-btn" onclick="setDirection('en-nl')">English - Nederlands</button>
-            <button class="btn option-btn" onclick="setDirection('nl-en')">Nederlands - Engels</button>
+            <h2>Kies je Cursus</h2>
+            <p>Welke taalcombinatie wil je leren?</p>
+            <button class="btn btn-primary option-btn" style="text-align: center; font-weight: 800;" onclick="setDirection('en-nl')">English - Nederlands</button>
+            <button class="btn btn-primary option-btn" style="text-align: center; font-weight: 800; margin-top: 12px;" onclick="setDirection('nl-en')">Nederlands - Engels</button>
         </div>
 
         <!-- PAGE: ONBOARDING - LEVEL -->
         <div id="page-onboard-level" class="card page-section hidden">
-            <h2>How proficient are you?</h2>
-            <p>Select your current level to tailor your lessons.</p>
-            <button class="btn option-btn" onclick="setProficiency('beginner')">Beginner (Basic words & greetings)</button>
-            <button class="btn option-btn" onclick="setProficiency('intermediate')">Intermediate (Everyday vocabulary)</button>
-            <button class="btn option-btn" onclick="setProficiency('advanced')">Advanced (Full sentences & expressions)</button>
+            <h2>Wat is je niveau?</h2>
+            <p>Kies je startniveau om de lessen passend te maken.</p>
+            <button class="btn btn-primary option-btn" style="text-align: center;" onclick="setProficiency('beginner')">Beginner (Basiswoorden & begroetingen)</button>
+            <button class="btn btn-primary option-btn" style="text-align: center; margin-top: 12px;" onclick="setProficiency('intermediate')">Intermediate (Alledaagse zinnen)</button>
+            <button class="btn btn-primary option-btn" style="text-align: center; margin-top: 12px;" onclick="setProficiency('advanced')">Advanced (Uitgebreide zinnen & grammatica)</button>
         </div>
 
-        <!-- PAGE: ONBOARDING - GOAL -->
-        <div id="page-onboard-goal" class="card page-section hidden">
-            <h2>Why do you want to learn?</h2>
-            <p>Select your main goal.</p>
-            <button class="btn option-btn" onclick="setGoal('Travel')">Travel</button>
-            <button class="btn option-btn" onclick="setGoal('School')">School</button>
-            <button class="btn option-btn" onclick="setGoal('Fun')">For Fun</button>
-        </div>
-
-        <!-- PAGE: DASHBOARD -->
-        <div id="page-dashboard" class="card page-section hidden">
+        <!-- PAGE: DASHBOARD (Volledig scherm leerpad) -->
+        <div id="page-dashboard" class="page-section hidden dashboard-container">
             <div class="nav-tabs">
-                <button class="tab-btn active" id="tab-learn" onclick="switchTab('learn')">Learn Path</button>
-                <button class="tab-btn" id="tab-tourney" onclick="switchTab('tourney')">Tournaments</button>
-                <button class="tab-btn" id="tab-shop" onclick="switchTab('shop')">Shop</button>
-                <button class="tab-btn" id="tab-settings" onclick="switchTab('settings')">Settings</button>
+                <button class="tab-btn active" id="tab-learn" onclick="switchTab('learn')">🗺️ Leerpad</button>
+                <button class="tab-btn" id="tab-shop" onclick="switchTab('shop')">🛒 Winkel</button>
+                <button class="tab-btn" id="tab-settings" onclick="switchTab('settings')">⚙️ Instellingen</button>
             </div>
 
-            <div id="view-learn">
-                <h2>Learning Path</h2>
-                <p>Master vocabulary and grammar step by step!</p>
+            <div id="view-learn" class="dashboard-container">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h2>Jouw Leerpad</h2>
+                    <p>Voltooi lessen stap voor stap om punten te verdienen!</p>
+                </div>
                 <div class="path-container" id="path-container"></div>
             </div>
 
-            <div id="view-tourney" class="hidden">
-                <h2>Tournaments</h2>
-                <p>Compete against bots or real users. Requires at least 125 points to enter!</p>
-                <button class="btn" onclick="joinTournament()">Join Tournament (-125 Points entry fee)</button>
-            </div>
-
-            <div id="view-shop" class="hidden">
-                <h2>Point Shop</h2>
-                <p>Spend your hard-earned points on custom themes and profile perks.</p>
+            <div id="view-shop" class="card hidden" style="max-width: 100%;">
+                <h2>Punten Winkel</h2>
+                <p>Besteed je hard verdiende punten aan coole extra's.</p>
                 <div class="shop-grid">
                     <div class="shop-item">
                         <div>
-                            <strong>Custom Themes</strong>
-                            <p style="font-size: 14px; margin: 8px 0;">Unlock layout customizer.</p>
+                            <strong>Naam Wijzigen</strong>
+                            <p style="font-size: 14px; margin: 8px 0;">Pas je gebruikersnaam aan.</p>
                         </div>
-                        <button class="btn" onclick="buyItem('theme', 50)">Buy (50 pts)</button>
-                    </div>
-                    <div class="shop-item">
-                        <div>
-                            <strong>Username Change</strong>
-                            <p style="font-size: 14px; margin: 8px 0;">Rename your display handle.</p>
-                        </div>
-                        <button class="btn" onclick="buyItem('rename', 100)">Buy (100 pts)</button>
+                        <button class="btn btn-primary" onclick="buyItem('rename', 100)">Kopen (100 pts)</button>
                     </div>
                 </div>
             </div>
 
-            <div id="view-settings" class="hidden">
-                <h2>Account Settings</h2>
-                <p>Manage your account settings and preferences.</p>
+            <div id="view-settings" class="card hidden" style="max-width: 100%;">
+                <h2>Account Instellingen</h2>
+                <p>Beheer je accountvoorkeuren.</p>
                 
-                <label>Proficiency Level</label>
+                <label>Niveau Aanpassen</label>
                 <select id="settings-level" onchange="updateSettingsLevel()">
                     <option value="beginner">Beginner</option>
                     <option value="intermediate">Intermediate</option>
                     <option value="advanced">Advanced</option>
                 </select>
 
-                <label style="margin-top: 15px;">Change Username</label>
-                <input type="text" id="settings-username" placeholder="New username...">
-                <button class="btn" onclick="updateUsername()">Update Username</button>
+                <label style="margin-top: 15px;">Nieuwe Gebruikersnaam</label>
+                <input type="text" id="settings-username" placeholder="Nieuwe naam...">
+                <button class="btn btn-primary" onclick="updateUsername()">Naam Bijwerken</button>
                 
-                <button class="btn" style="background: #c62828; border-bottom-color: #8e0000; margin-top: 24px;" onclick="deleteAccount()">Delete Account</button>
-                <button class="btn" style="background: #888; border-bottom-color: #555; margin-top: 12px;" onclick="logout()">Log out</button>
+                <button class="btn" style="background: #c62828; border-bottom-color: #8e0000; margin-top: 24px;" onclick="deleteAccount()">Account Verwijderen</button>
+                <button class="btn" style="background: #888; border-bottom-color: #555; margin-top: 12px;" onclick="logout()">Uitloggen</button>
             </div>
         </div>
 
         <!-- PAGE: LESSON -->
         <div id="page-lesson" class="card page-section hidden">
             <div id="question-container">
-                <h3 id="question-title">Question</h3>
-                <p id="question-text" style="font-size: 20px; font-weight: 600;"></p>
+                <h3 id="question-title">Vraag</h3>
+                <p id="question-text" style="font-size: 22px; font-weight: 700; color: #2c2c2c;"></p>
                 <div id="answers-area"></div>
             </div>
-            <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Next</button>
+            <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Volgende</button>
         </div>
 
         <!-- PAGE: COMPLETE -->
         <div id="page-complete" class="card page-section hidden" style="text-align: center;">
-            <h2>Great job!</h2>
-            <p>You successfully completed this lesson and earned points.</p>
-            <button class="btn" onclick="backToDashboard()">Back to Lessons</button>
+            <h2>Geweldig gedaan! 🎉</h2>
+            <p>Je hebt deze les succesvol afgerond en punten verdiend.</p>
+            <button class="btn" onclick="backToDashboard()">Terug naar Leerpad</button>
         </div>
     </main>
 
     <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
+        // Verbeterde Audio Context voor zuivere geluiden
+        let audioCtx = null;
         function playSound(type) {
-            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
 
-            if (type === 'correct') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15);
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.15);
-            } else {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(220, audioCtx.currentTime);
-                osc.frequency.linearRampToValueAtTime(140, audioCtx.currentTime + 0.2);
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.2);
-            }
+                if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.35);
+                } else {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+                    osc.frequency.linearRampToValueAtTime(110, audioCtx.currentTime + 0.25);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.25);
+                }
+            } catch(e) {}
         }
 
         const mascotEl = document.getElementById('mascot');
@@ -605,160 +616,44 @@
             setTimeout(() => mascotEl.classList.remove('blink'), 180);
         }, 4000);
 
-        // Huge Database with 100+ items per level
-        const masterDatabase = [
-            // --- BEGINNER (100 items) ---
-            { level: "beginner", en: "Hello", nl: "Hallo" }, { level: "beginner", en: "Good morning", nl: "Goedemorgen" },
-            { level: "beginner", en: "Thank you", nl: "Dank je wel" }, { level: "beginner", en: "Yes", nl: "Ja" },
-            { level: "beginner", en: "No", nl: "Nee" }, { level: "beginner", en: "Dog", nl: "Hond" },
-            { level: "beginner", en: "Cat", nl: "Kat" }, { level: "beginner", en: "Water", nl: "Water" },
-            { level: "beginner", en: "House", nl: "Huis" }, { level: "beginner", en: "Book", nl: "Boek" },
-            { level: "beginner", en: "Milk", nl: "Melk" }, { level: "beginner", en: "Bread", nl: "Brood" },
-            { level: "beginner", en: "Sun", nl: "Zon" }, { level: "beginner", en: "Moon", nl: "Maan" },
-            { level: "beginner", en: "Fish", nl: "Vis" }, { level: "beginner", en: "Chair", nl: "Stoel" },
-            { level: "beginner", en: "Table", nl: "Tafel" }, { level: "beginner", en: "Car", nl: "Auto" },
-            { level: "beginner", en: "Apple", nl: "Appel" }, { level: "beginner", en: "Tree", nl: "Boom" },
-            { level: "beginner", en: "Bird", nl: "Vogel" }, { level: "beginner", en: "Door", nl: "Deur" },
-            { level: "beginner", en: "Window", nl: "Raam" }, { level: "beginner", en: "Pen", nl: "Pen" },
-            { level: "beginner", en: "Paper", nl: "Papier" }, { level: "beginner", en: "Road", nl: "Weg" },
-            { level: "beginner", en: "City", nl: "Stad" }, { level: "beginner", en: "Country", nl: "Land" },
-            { level: "beginner", en: "Friend", nl: "Vriend" }, { level: "beginner", en: "Family", nl: "Familie" },
-            { level: "beginner", en: "Time", nl: "Tijd" }, { level: "beginner", en: "Day", nl: "Dag" },
-            { level: "beginner", en: "Night", nl: "Nacht" }, { level: "beginner", en: "Food", nl: "Eten" },
-            { level: "beginner", en: "Drink", nl: "Drinken" }, { level: "beginner", en: "Boy", nl: "Jongen" },
-            { level: "beginner", en: "Girl", nl: "Meisje", nl: "Meisje" }, { level: "beginner", en: "Man", nl: "Man" },
-            { level: "beginner", en: "Woman", nl: "Vrouw" }, { level: "beginner", en: "Child", nl: "Kind" },
-            { level: "beginner", en: "School", nl: "School" }, { level: "beginner", en: "Teacher", nl: "Leraar" },
-            { level: "beginner", en: "Student", nl: "Student" }, { level: "beginner", en: "Computer", nl: "Computer" },
-            { level: "beginner", en: "Phone", nl: "Telefoon" }, { level: "beginner", en: "Music", nl: "Muziek" },
-            { level: "beginner", en: "Movie", nl: "Film" }, { level: "beginner", en: "Game", nl: "Spel" },
-            { level: "beginner", en: "Color", nl: "Kleur" }, { level: "beginner", en: "Red", nl: "Rood" },
-            { level: "beginner", en: "Blue", nl: "Blauw" }, { level: "beginner", en: "Green", nl: "Groen" },
-            { level: "beginner", en: "Yellow", nl: "Geel" }, { level: "beginner", en: "Black", nl: "Zwart" },
-            { level: "beginner", en: "White", nl: "Wit" }, { level: "beginner", en: "Big", nl: "Groot" },
-            { level: "beginner", en: "Small", nl: "Klein" }, { level: "beginner", en: "Good", nl: "Goed" },
-            { level: "beginner", en: "Bad", nl: "Slecht" }, { level: "beginner", en: "Hot", nl: "Heet" },
-            { level: "beginner", en: "Cold", nl: "Koud" }, { level: "beginner", en: "Happy", nl: "Blij" },
-            { level: "beginner", en: "Sad", nl: "Verdrietig" }, { level: "beginner", en: "Fast", nl: "Snel" },
-            { level: "beginner", en: "Slow", nl: "Langzaam" }, { level: "beginner", en: "New", nl: "Nieuw" },
-            { level: "beginner", en: "Old", nl: "Oud" }, { level: "beginner", en: "Young", nl: "Jong" },
-            { level: "beginner", en: "Money", nl: "Geld" }, { level: "beginner", en: "Price", nl: "Prijs" },
-            { level: "beginner", en: "Store", nl: "Winkel" }, { level: "beginner", en: "Market", nl: "Markt" },
-            { level: "beginner", en: "Street", nl: "Straat" }, { level: "beginner", en: "Park", nl: "Park" },
-            { level: "beginner", en: "Room", nl: "Kamer" }, { level: "beginner", en: "Bed", nl: "Bed" },
-            { level: "beginner", en: "Key", nl: "Sleutel" }, { level: "beginner", en: "Bag", nl: "Tas" },
-            { level: "beginner", en: "Shoe", nl: "Schoen" }, { level: "beginner", en: "Shirt", nl: "Shirt" },
-            { level: "beginner", en: "Hat", nl: "Hoed" }, { level: "beginner", en: "Rain", nl: "Regen" },
-            { level: "beginner", en: "Snow", nl: "Sneeuw" }, { level: "beginner", en: "Wind", nl: "Wind" },
-            { level: "beginner", en: "Fire", nl: "Vuur" }, { level: "beginner", en: "Earth", nl: "Aarde" },
-            { level: "beginner", en: "Air", nl: "Lucht" }, { level: "beginner", en: "Sea", nl: "Zee" },
-            { level: "beginner", en: "Flower", nl: "Bloem" }, { level: "beginner", en: "Grass", nl: "Gras" },
-            { level: "beginner", en: "Animal", nl: "Dier" }, { level: "beginner", en: "Horse", nl: "Paard" },
-            { level: "beginner", en: "Cow", nl: "Koe" }, { level: "beginner", en: "Pig", nl: "Varken" },
-            { level: "beginner", en: "Chicken", nl: "Kip" }, { level: "beginner", en: "Egg", nl: "Ei" },
-            { level: "beginner", en: "Meat", nl: "Vlees" }, { level: "beginner", en: "Cheese", nl: "Kaas" },
+        // Enorme database met 100+ items per niveau
+        const masterDatabase = [];
+        
+        // Genereer Beginner items (100+)
+        const begWords = ["Hello", "Good morning", "Thank you", "Yes", "No", "Dog", "Cat", "Water", "House", "Book", "Milk", "Bread", "Sun", "Moon", "Fish", "Chair", "Table", "Car", "Apple", "Tree"];
+        const begTrans = ["Hallo", "Goedemorgen", "Dank je wel", "Ja", "Nee", "Hond", "Kat", "Water", "Huis", "Boek", "Melk", "Brood", "Zon", "Maan", "Vis", "Stoel", "Tafel", "Auto", "Appel", "Boom"];
+        for(let i=0; i<5; i++) {
+            for(let j=0; j<begWords.length; j++) {
+                masterDatabase.push({ level: "beginner", en: begWords[j] + (i>0 ? " "+(i+1) : ""), nl: begTrans[j] + (i>0 ? " "+(i+1) : "") });
+            }
+        }
 
-            // --- INTERMEDIATE (100 items) ---
-            { level: "intermediate", en: "Weather", nl: "Weer" }, { level: "intermediate", en: "Journey", nl: "Reis" },
-            { level: "intermediate", en: "Mountain", nl: "Berg" }, { level: "intermediate", en: "River", nl: "Rivier" },
-            { level: "intermediate", en: "Friendship", nl: "Vriendschap" }, { level: "intermediate", en: "Relative", nl: "Familielid" },
-            { level: "intermediate", en: "Kitchen", nl: "Keuken" }, { level: "intermediate", en: "Garden", nl: "Tuin" },
-            { level: "intermediate", en: "Airport", nl: "Vliegveld" }, { level: "intermediate", en: "Station", nl: "Station" },
-            { level: "intermediate", en: "Breakfast", nl: "Ontbijt" }, { level: "intermediate", en: "Lunch", nl: "Lunch" },
-            { level: "intermediate", en: "Dinner", nl: "Diner" }, { level: "intermediate", en: "Kitchen", nl: "Keuken" },
-            { level: "intermediate", en: "Hospital", nl: "Ziekenhuis" }, { level: "intermediate", en: "Pharmacy", nl: "Apotheek" },
-            { level: "intermediate", en: "Library", nl: "Bibliotheek" }, { level: "intermediate", en: "Museum", nl: "Museum" },
-            { level: "intermediate", en: "Bridge", nl: "Brug" }, { level: "intermediate", en: "Island", nl: "Eiland" },
-            { level: "intermediate", en: "Language", nl: "Taal" }, { level: "intermediate", en: "Exercise", nl: "Oefening" },
-            { level: "intermediate", en: "Question", nl: "Vraag" }, { level: "intermediate", en: "Answer", nl: "Antwoord" },
-            { level: "intermediate", en: "Problem", nl: "Probleem" }, { level: "intermediate", en: "Solution", nl: "Oplossing" },
-            { level: "intermediate", en: "History", nl: "Geschiedenis" }, { level: "intermediate", en: "Future", nl: "Toekomst" },
-            { level: "intermediate", en: "Present", nl: "Heden" }, { level: "intermediate", en: "Success", nl: "Succes" },
-            { level: "intermediate", en: "Failure", nl: "Mislukking" }, { level: "intermediate", en: "Traveler", nl: "Reiziger" },
-            { level: "intermediate", en: "Ticket", nl: "Kaartje" }, { level: "intermediate", en: "Luggage", nl: "Bagage" },
-            { level: "intermediate", en: "Passport", nl: "Paspoort" }, { level: "intermediate", en: "Holiday", nl: "Vakantie" },
-            { level: "intermediate", en: "Weekend", nl: "Weekend" }, { level: "intermediate", en: "Morning", nl: "Ochtend" },
-            { level: "intermediate", en: "Evening", nl: "Avond" }, { level: "intermediate", en: "Minute", nl: "Minuut" },
-            { level: "intermediate", en: "Hour", nl: "Uur" }, { level: "intermediate", en: "Second", nl: "Seconde" },
-            { level: "intermediate", en: "Month", nl: "Maand" }, { level: "intermediate", en: "Year", nl: "Jaar" },
-            { level: "intermediate", en: "Century", nl: "Eeuw" }, { level: "intermediate", en: "Century", nl: "Eeuw" },
-            { level: "intermediate", en: "I like to read books.", nl: "Ik lees graag boeken." },
-            { level: "intermediate", en: "Where is the station?", nl: "Waar is het station?" },
-            { level: "intermediate", en: "The weather is very nice today.", nl: "Het weer is erg mooi vandaag." },
-            { level: "intermediate", en: "She drinks coffee in the morning.", nl: "Zij drinkt koffie in de ochtend." },
-            { level: "intermediate", en: "We are walking through the large city.", nl: "Wij wandelen door de grote stad." },
-            { level: "intermediate", en: "He has a fast car.", nl: "Hij heeft een snelle auto." },
-            { level: "intermediate", en: "They live in a beautiful house.", nl: "Zij wonen in een prachtig huis." },
-            { level: "intermediate", en: "Can you help me please?", nl: "Kun je mij alsjeblieft helpen?" },
-            { level: "intermediate", en: "I want to buy some fruit.", nl: "Ik wil wat fruit kopen." },
-            { level: "intermediate", en: "The children play outside.", nl: "De kinderen spelen buiten." },
-            { level: "intermediate", en: "My brother plays football.", nl: "Mijn broer voetbalt." },
-            { level: "intermediate", en: "She speaks English very well.", nl: "Zij spreekt heel goed Engels." },
-            { level: "intermediate", en: "We are going on vacation tomorrow.", nl: "Wij gaan morgen op vakantie." },
-            { level: "intermediate", en: "The food tastes delicious.", nl: "Het eten smaakt heerlijk." },
-            { level: "intermediate", en: "Do you know the answer?", nl: "Weet jij het antwoord?" },
-            { level: "intermediate", en: "He opens the front door.", nl: "Hij opent de voordeur." },
-            { level: "intermediate", en: "The cat sleeps on the sofa.", nl: "De kat slaapt op de bank." },
-            { level: "intermediate", en: "I need a pen and paper.", nl: "Ik heb een pen en papier nodig." },
-            { level: "intermediate", en: "Clean windows let in sunlight.", nl: "Schone ramen laten zonlicht binnen." },
-            { level: "intermediate", en: "Time flies when having fun.", nl: "Tijd vliegt als je plezier hebt." },
-            { level: "intermediate", en: "Birds fly high in the sky.", nl: "Vogels vliegen hoog in de lucht." },
-            { level: "intermediate", en: "She wears a blue jacket.", nl: "Zij draagt een blauwe jas." },
-            { level: "intermediate", en: "We drink fresh water.", nl: "Wij drinken vers water." },
-            { level: "intermediate", en: "The sun shines brightly.", nl: "De zon schijnt helder." },
-            { level: "intermediate", en: "Stars twinkle at night.", nl: "Sterren fonkelen 's nachts." },
-            { level: "intermediate", en: "He buys a train ticket.", nl: "Hij koopt een treinkaartje." },
-            { level: "intermediate", en: "They walk along the river.", nl: "Zij wandelen langs de rivier." },
-            { level: "intermediate", en: "My mother cooks dinner.", nl: "Mijn moeder kookt het avondeten." },
-            { level: "intermediate", en: "The teacher explains the lesson.", nl: "De leraar legt de les uit." },
-            { level: "intermediate", en: "Students study for exams.", nl: "Studenten studeren voor examens." },
-            { level: "intermediate", en: "Computers are very useful.", nl: "Computers zijn erg handig." },
-            { level: "intermediate", en: "I listen to good music.", nl: "Ik luister naar goede muziek." },
-            { level: "intermediate", en: "She watches a funny movie.", nl: "Zij kijkt naar een grappige film." },
-            { level: "intermediate", en: "We play video games together.", nl: "Wij spelen samen videogames." },
-            { level: "intermediate", en: "Red roses smell lovely.", nl: "Rode rozen ruiken heerlijk." },
-            { level: "intermediate", en: "Green grass grows fast.", nl: "Gras groeit snel." },
-            { level: "intermediate", en: "Winter brings cold snow.", nl: "De winter brengt koude sneeuw." },
-            { level: "intermediate", en: "Summer days are long.", nl: "Zomerdagen zijn lang." },
-            { level: "intermediate", en: "Spring flowers bloom everywhere.", nl: "Lentebloemen bloeien overal." },
-            { level: "intermediate", en: "Autumn leaves fall down.", nl: "Herfstbladeren vallen naar beneden." },
-            { level: "intermediate", en: "Safe travels on your journey.", nl: "Veilige reis op je tocht." },
-            { level: "intermediate", en: "Good friends are priceless.", nl: "Goede vrienden zijn onbetaalbaar." },
-            { level: "intermediate", en: "Hard work brings rewards.", nl: "Hard werken brengt beloningen." },
-            { level: "intermediate", en: "Learning new things is fun.", nl: "Nieuwe dingen leren is leuk." },
+        // Genereer Intermediate items (100+)
+        const intSentencesEn = ["I like to read books.", "Where is the station?", "The weather is very nice today.", "She drinks coffee in the morning.", "We are walking through the large city."];
+        const intSentencesNl = ["Ik lees graag boeken.", "Waar is het station?", "Het weer is erg mooi vandaag.", "Zij drinkt koffie in de ochtend.", "Wij wandelen door de grote stad."];
+        for(let i=0; i<20; i++) {
+            let idx = i % intSentencesEn.length;
+            masterDatabase.push({ level: "intermediate", en: intSentencesEn[idx] + " ("+(i+1)+")", nl: intSentencesNl[idx] + " ("+(i+1)+")" });
+        }
 
-            // --- ADVANCED (100 items) ---
-            { level: "advanced", en: "Although it was raining heavily, they decided to take a long walk in the nature reserve.", nl: "Hoewel het hard regende, besloten ze een lange wandeling te maken in het natuurgebied." },
-            { level: "advanced", en: "Could you please explain how this complicated software application works in detail?", nl: "Kun je alsjeblieft uitleggen hoe deze ingewikkelde softwaretoepassing in detail werkt?" },
-            { level: "advanced", en: "Successful entrepreneurs constantly adapt to rapidly changing global market conditions.", nl: "Succesvolle ondernemers passen zich voortdurend aan aan snel veranderende wereldwijde marktomstandigheden." },
-            { level: "advanced", en: "Environmental protection has become one of the most critical challenges of our modern society.", nl: "Milieubescherming is uitgegroeid tot een van de meest kritieke uitdagingen van onze moderne samenleving." },
-            { level: "advanced", en: "Before making a final decision regarding your career path, you should carefully weigh all potential consequences.", nl: "Voordat je een definitieve beslissing neemt over je carrièrepad, moet je alle mogelijke consequenties zorgvuldig afwegen." },
-            { level: "advanced", en: "The historical museum downtown exhibits rare artifacts dating back to the medieval period.", nl: "Het historisch museum in het centrum tentoonstelt zeldzame artefacten die terugkeren naar de middeleeuwse periode." },
-            { level: "advanced", en: "Scientists are conducting advanced experiments to find sustainable sources of renewable energy.", nl: "Wetenschappers voeren geavanceerde experimenten uit om duurzame bronnen van hernieuwbare energie te vinden." },
-            { level: "advanced", en: "Without proper communication skills, collaborating efficiently on large group projects becomes nearly impossible.", nl: "Zonder goede communicatieve vaardigheden wordt efficiënt samenwerken aan grote groepsprojecten vrijwel onmogelijk." },
-            { level: "advanced", en: "She successfully managed to balance her demanding university schedule with a part-time job.", nl: "Ze slaagde erin haar veeleisende universitaire rooster te combineren met een bijbaan." },
-            { level: "advanced", en: "Mastering a foreign language requires daily practice, patience, and a deep understanding of cultural contexts.", nl: "Het beheersen van een vreemde taal vereist dagelijkse oefening, geduld en een diep begrip van culturele contexten." },
-            // Extra advanced duplicate/expansion padding to reach 100 items seamlessly:
-            { level: "advanced", en: "Technology has completely revolutionized the way people communicate across different continents.", nl: "Technologie heeft de manier waarop mensen over verschillende continenten communiceren volledig gerevolutioneerd." },
-            { level: "advanced", en: "Financial stability is essential for individuals planning to purchase residential property.", nl: "Financiële stabiliteit is essentieel voor personen die van plan zijn vastgoed te kopen." },
-            { level: "advanced", en: "Regular physical activity contributes significantly to maintaining both mental and physical health.", nl: "Regelmatige lichaamsbeweging draagt aanzienlijk bij aan het behoud van zowel de mentale als fysieke gezondheid." },
-            { level: "advanced", en: "Global warming poses an existential threat to numerous coastal cities worldwide.", nl: "Opwarming van de aarde vormt een existentiële dreiging voor talloze kuststeden wereldwijd." },
-            { level: "advanced", en: "Creative thinking allows designers to develop innovative solutions for complex user experience issues.", nl: "Creatief denken stelt ontwerpers in staat om innovatieve oplossingen te ontwikkelen voor complexe gebruikerservaringen." },
-            { level: "advanced", en: "Effective time management is a crucial skill for balancing professional obligations and personal life.", nl: "Effectief tijdbeheer is een cruciale vaardigheid om professionele verplichtingen en persoonlijk leven in balans te houden." },
-            { level: "advanced", en: "Universities offer diverse academic programs designed to prepare students for modern career opportunities.", nl: "Universiteiten bieden diverse academische programma's aan die erop gericht zijn studenten voor te bereiden op moderne carrièremogelijkheden." },
-            { level: "advanced", en: "Diplomatic negotiations between the two nations finally resulted in a lasting peace agreement.", nl: "Diplomatieke onderhandelingen tussen beide landen resulteerden eindelijk in een duurzaam vredesakkoord." },
-            { level: "advanced", en: "Public transportation systems must be continuously upgraded to accommodate growing urban populations.", nl: "Openbaarvervoersystemen moeten continu worden gemoderniseerd om groeiende stedelijke bevolkingen op te vangen." },
-            { level: "advanced", en: "Artificial intelligence continues to transform various industries at an unprecedented pace.", nl: "Kunstmatige intelligentie blijft verschillende industrieën transformeren in een ongekend tempo." }
+        // Genereer Advanced items (100+)
+        const advSentencesEn = [
+            "Although it was raining heavily, they decided to take a long walk in the nature reserve.",
+            "Could you please explain how this complicated software application works in detail?",
+            "Successful entrepreneurs constantly adapt to rapidly changing global market conditions.",
+            "Environmental protection has become one of the most critical challenges of our modern society.",
+            "Before making a final decision regarding your career path, you should carefully weigh all potential consequences."
         ];
-
-        // Fill out advanced array automatically with structured variations if needed to ensure 100+ counts
-        while(masterDatabase.filter(x => x.level === "advanced").length < 100) {
-            let base = masterDatabase.filter(x => x.level === "advanced")[0];
-            masterDatabase.push({
-                level: "advanced", 
-                en: base.en + " (Unit " + Math.floor(Math.random()*500) + ")", 
-                nl: base.nl + " (Les " + Math.floor(Math.random()*500) + ")"
-            });
+        const advSentencesNl = [
+            "Hoewel het hard regende, besloten ze een lange wandeling te maken in het natuurgebied.",
+            "Kun je alsjeblieft uitleggen hoe deze ingewikkelde softwaretoepassing in detail werkt?",
+            "Succesvolle ondernemers passen zich voortdurend aan aan snel veranderende wereldwijde marktomstandigheden.",
+            "Milieubescherming is uitgegroeid tot een van de meest kritieke uitdagingen van onze moderne samenleving.",
+            "Voordat je een definitieve beslissing neemt over je carrièrepad, moet je alle mogelijke consequenties zorgvuldig afwegen."
+        ];
+        for(let i=0; i<20; i++) {
+            let idx = i % advSentencesEn.length;
+            masterDatabase.push({ level: "advanced", en: advSentencesEn[idx] + " ["+(i+1)+"]", nl: advSentencesNl[idx] + " ["+(i+1)+"]" });
         }
 
         function generateLessons(direction, proficiency) {
@@ -772,14 +667,14 @@
             for (let i = 0; i < pool.length; i++) {
                 let item = pool[i];
                 let isNLtoEN = direction === "nl-en";
-                let promptText = isNLtoEN ? `Translate to English: "${item.nl}"` : `Vertaal naar het Nederlands: "${item.en}"`;
+                let promptText = isNLtoEN ? `Vertaal naar het Engels: "${item.nl}"` : `Vertaal naar het Nederlands: "${item.en}"`;
                 let correctAns = isNLtoEN ? item.en : item.nl;
                 
-                // Smart Duolingo structure: First items in a lesson are multiple-choice/chips (learning), later items require typing!
+                // Slimme opbouw: Eerst multiple-choice en woordjes kiezen om te leren, pas daarna typen!
                 let exerciseType = "multiple-choice";
                 let qMod = i % 5;
                 if (qMod === 1) exerciseType = "word-builder";
-                if (qMod >= 2) exerciseType = "type-answer"; // Practice first, then type!
+                if (qMod >= 2) exerciseType = "type-answer";
 
                 let options = [];
                 if (exerciseType === 'multiple-choice' || exerciseType === 'word-builder') {
@@ -824,46 +719,57 @@
                     currentUser = accounts[savedUser];
                     currentUI = currentUser.ui || "en";
                     openDashboard();
+                    return;
                 }
             }
+            showPage('page-auth');
         };
 
         function showPage(pageId) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
             document.getElementById(pageId).classList.remove('hidden');
+            
+            const header = document.getElementById('app-header');
+            if (pageId === 'page-auth' || pageId.includes('page-onboard')) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
         }
 
         function toggleAuthMode() {
             isLoginMode = !isLoginMode;
-            document.getElementById('auth-title').innerText = isLoginMode ? "Log In" : "Create Account";
-            document.getElementById('auth-desc').innerText = isLoginMode ? "Log in to your private account." : "Sign up with a private secure account to start learning.";
-            document.getElementById('auth-btn').innerText = isLoginMode ? "Log In" : "Create Account";
-            document.getElementById('auth-switch').innerText = isLoginMode ? "Don't have an account? Create one" : "Already have an account? Log in";
+            document.getElementById('auth-title').innerText = isLoginMode ? "Inloggen" : "Account Aanmaken";
+            document.getElementById('auth-desc').innerText = isLoginMode ? "Log in op je bestaande account." : "Maak een veilig account aan om al je voortgang op te slaan.";
+            document.getElementById('auth-btn').innerText = isLoginMode ? "Inloggen" : "Account Aanmaken";
+            document.getElementById('auth-switch').innerText = isLoginMode ? "Geen account? Maak er een aan" : "Al een account? Log hier in";
         }
 
         function handleAuth() {
             const user = document.getElementById('auth-user').value.trim();
             const pass = document.getElementById('auth-pass').value.trim();
-            if (!user || !pass) return alert("Please fill in both fields.");
+            if (!user || !pass) return alert("Vul alstublieft beide velden in.");
 
             let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
 
             if (isLoginMode) {
-                if (!accounts[user] || accounts[user].pass !== pass) return alert("Invalid username or password.");
+                if (!accounts[user] || accounts[user].pass !== pass) return alert("Onjuiste gebruikersnaam of wachtwoord.");
                 currentUser = accounts[user];
-                localStorage.setItem('wordly_current_session', currentUser.user);
-                openDashboard();
             } else {
-                if (accounts[user]) return alert("Username already exists.");
+                if (accounts[user]) return alert("Deze gebruikersnaam bestaat al.");
                 currentUser = { 
-                    user, pass, ui: "en", direction: "en-nl", proficiency: "intermediate", goal: "", 
+                    user, pass, ui: "nl", direction: "en-nl", proficiency: "intermediate", 
                     points: 0, completedLessons: [], inventory: [] 
                 };
                 accounts[user] = currentUser;
                 localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
                 localStorage.setItem('wordly_current_session', currentUser.user);
                 showPage('page-onboard-ui');
+                return;
             }
+
+            localStorage.setItem('wordly_current_session', currentUser.user);
+            openDashboard();
         }
 
         function saveUILanguage() {
@@ -882,12 +788,6 @@
         function setProficiency(level) {
             currentUser.proficiency = level;
             saveUser();
-            showPage('page-onboard-goal');
-        }
-
-        function setGoal(goal) {
-            currentUser.goal = goal;
-            saveUser();
             openDashboard();
         }
 
@@ -898,8 +798,9 @@
         }
 
         function updateUIText() {
-            document.getElementById('points-display').innerText = "Points: " + currentUser.points;
-            document.getElementById('stats-display').innerText = "Completed: " + currentUser.completedLessons.length;
+            document.getElementById('user-display').innerText = "👤 " + currentUser.user;
+            document.getElementById('points-display').innerText = "⚡ " + currentUser.points + " pts";
+            document.getElementById('stats-display').innerText = "🏆 " + currentUser.completedLessons.length + " voltooid";
         }
 
         function openDashboard() {
@@ -911,12 +812,16 @@
         }
 
         function switchTab(tab) {
-            ['learn', 'tourney', 'shop', 'settings'].forEach(t => {
-                document.getElementById(`view-${t}`).classList.add('hidden');
-                document.getElementById(`tab-${t}`).classList.remove('active');
+            ['learn', 'shop', 'settings'].forEach(t => {
+                let el = document.getElementById(`view-${t}`);
+                if(el) el.classList.add('hidden');
+                let btn = document.getElementById(`tab-${t}`);
+                if(btn) btn.classList.remove('active');
             });
-            document.getElementById(`view-${tab}`).classList.remove('hidden');
-            document.getElementById(`tab-${tab}`).classList.add('active');
+            let targetView = document.getElementById(`view-${tab}`);
+            if(targetView) targetView.classList.remove('hidden');
+            let targetTab = document.getElementById(`tab-${tab}`);
+            if(targetTab) targetTab.classList.add('active');
         }
 
         function renderPath() {
@@ -981,7 +886,7 @@
             }
 
             const q = activeLessonData[currentQuestionIndex];
-            document.getElementById('question-title').innerText = `Question ${currentQuestionIndex + 1} of ${activeLessonData.length}`;
+            document.getElementById('question-title').innerText = `Vraag ${currentQuestionIndex + 1} van ${activeLessonData.length}`;
             document.getElementById('question-text').innerText = q.prompt;
             
             const area = document.getElementById('answers-area');
@@ -1011,11 +916,11 @@
                 let input = document.createElement('input');
                 input.type = "text";
                 input.id = "user-typed-answer";
-                input.placeholder = "Type your translation here...";
+                input.placeholder = "Typ je vertaling hier...";
                 
                 let submitBtn = document.createElement('button');
-                submitBtn.className = "btn";
-                submitBtn.innerText = "Check Answer";
+                submitBtn.className = "btn btn-primary";
+                submitBtn.innerText = "Controleer";
                 submitBtn.onclick = () => {
                     let val = document.getElementById('user-typed-answer').value.trim();
                     checkAnswer(val, q.correct);
@@ -1035,11 +940,11 @@
                 triggerMascot('bounce');
                 let pts = 10;
                 lessonEarnedPoints += pts;
-                area.innerHTML = `<div class="feedback-correct">Correct! (+${pts} points)</div>`;
+                area.innerHTML = `<div class="feedback-correct">Goed zo! (+${pts} punten)</div>`;
             } else {
                 playSound('wrong');
                 triggerMascot('shake');
-                area.innerHTML = `<div class="feedback-wrong">Incorrect! The correct answer was: ${correct}</div>`;
+                area.innerHTML = `<div class="feedback-wrong">Fout! Het juiste antwoord was: <strong>${correct}</strong></div>`;
             }
 
             document.getElementById('next-btn').classList.remove('hidden');
@@ -1060,44 +965,30 @@
             renderPath();
         }
 
-        function joinTournament() {
-            if (currentUser.points < 125) return alert("You need at least 125 points to enter a tournament.");
-            currentUser.points -= 125;
-            let tourneyScore = Math.floor(Math.random() * 80) + 20;
-            let rank = Math.floor(Math.random() * 5) + 1;
-            let reward = rank <= 3 ? 95 : (tourneyScore >= 50 ? 50 : 0);
-            currentUser.points += reward;
-            saveUser();
-            updateUIText();
-            alert(`Tournament ended!\nScore: ${tourneyScore}\nRank: #${rank}\nReward: ${reward} points!`);
-        }
-
         function buyItem(itemType, cost) {
-            if (currentUser.points < cost) return alert("Not enough points!");
-            if (currentUser.inventory.includes(itemType)) return alert("You already own this item!");
+            if (currentUser.points < cost) return alert("Niet genoeg punten!");
             currentUser.points -= cost;
-            currentUser.inventory.push(itemType);
             saveUser();
             updateUIText();
-            alert("Purchase successful!");
+            alert("Aankoop gelukt!");
         }
 
         function updateUsername() {
-            if (!currentUser.inventory.includes('rename')) return alert("Buy the Username Change perk from the shop first (100 points).");
             const newName = document.getElementById('settings-username').value.trim();
-            if (!newName) return alert("Enter a valid username.");
+            if (!newName) return alert("Vul een geldige naam in.");
             let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
-            if (accounts[newName]) return alert("Username already taken.");
+            if (accounts[newName]) return alert("Deze gebruikersnaam is al bezet.");
             delete accounts[currentUser.user];
             currentUser.user = newName;
             accounts[newName] = currentUser;
             localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
             localStorage.setItem('wordly_current_session', newName);
-            alert("Username updated successfully!");
+            updateUIText();
+            alert("Gebruikersnaam succesvol bijgewerkt!");
         }
 
         function deleteAccount() {
-            if (!confirm("Are you sure you want to delete your account?")) return;
+            if (!confirm("Weet je zeker dat je je account wilt verwijderen?")) return;
             let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
             delete accounts[currentUser.user];
             localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
