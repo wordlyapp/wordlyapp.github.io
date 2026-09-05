@@ -790,8 +790,6 @@
 
             <div id="auth-error" class="auth-error"></div>
             <button id="auth-submit" class="btn" style="width:100%;" onclick="submitAuth()">Sign in</button>
-            <div style="display:flex;align-items:center;gap:10px;margin:12px 0;color:#888;font-size:12px;font-weight:800;"><span style="flex:1;border-top:1px solid #ddd;"></span>OR<span style="flex:1;border-top:1px solid #ddd;"></span></div>
-            <button type="button" class="btn" style="width:100%;background:#fff;color:#333;border:2px solid #ddd;border-bottom:4px solid #ccc;box-shadow:none;text-transform:none;" onclick="signInWithGoogle()">Continue with Google</button>
             <button id="forgot-password-btn" style="width:100%;margin-top:9px;border:0;background:transparent;color:var(--accent-blue);font-family:inherit;font-weight:900;cursor:pointer;" onclick="resetPassword()">Password vergeten?</button>
             <div class="auth-note">Your account and Wordly progress are stored securely online.</div>
         </div>
@@ -1002,7 +1000,6 @@
             firebase.initializeApp(firebaseConfig);
             auth = firebase.auth();
             db = firebase.firestore();
-            window.googleProvider = new firebase.auth.GoogleAuthProvider();
         } catch (error) {
             firebaseInitError = error;
             console.error('Firebase initialisatie mislukt:', error);
@@ -1051,24 +1048,6 @@
                 'auth/network-request-failed': 'Geen internetverbinding. Controleer je verbinding en probeer opnieuw.'
             };
             return map[error.code] || error.message || 'Er ging iets mis. Probeer opnieuw.';
-        }
-
-        async function signInWithGoogle() {
-            if (!auth) return;
-            try {
-                const result = await auth.signInWithPopup(window.googleProvider);
-                currentFirebaseUser = result.user;
-                currentLoggedInUser = result.user.displayName || result.user.email || 'Player';
-                await ensureUserDocument(result.user);
-                await loadDataFromFirebase();
-                closeAuthModal();
-                await initializeAppForUser();
-            } catch (error) {
-                console.error('Google sign-in error:', error);
-                if (error.code !== 'auth/popup-closed-by-user') {
-                    document.getElementById('auth-error').innerText = friendlyAuthError(error);
-                }
-            }
         }
 
         async function submitAuth() {
@@ -1194,10 +1173,18 @@
             };
         }
 
+        function cleanLeaderboardName(name) {
+            let cleaned = String(name ?? '').trim();
+            // Oude bug maakte namen zoals "NaNRik" / "NaNrik".
+            cleaned = cleaned.replace(/^nan\s*/i, '').trim();
+            cleaned = cleaned.replace(/nan/gi, '').trim();
+            return cleaned || 'Player';
+        }
+
         async function updateLeaderboardEntry(xp, name) {
             if (!currentFirebaseUser) return;
             await db.collection('leaderboard').doc(currentFirebaseUser.uid).set({
-                name: name || currentLoggedInUser || 'Player',
+                name: cleanLeaderboardName(name || currentLoggedInUser || 'Player'),
                 xp: Number(xp) || 0,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }, { merge: true });
@@ -1538,7 +1525,7 @@
                     activeChapter: Number(appData.activeChapter) || 0,
                     languageProgress: appData.languageProgress || {},
                     mistakes: appData.mistakes || [],
-                    name: currentFirebaseUser.displayName || currentLoggedInUser || 'Player',
+                    name: cleanLeaderboardName(currentFirebaseUser.displayName || currentLoggedInUser || 'Player'),
                     email: currentFirebaseUser.email || '',
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
@@ -2106,11 +2093,7 @@
                     const item = document.createElement('div');
                     item.className = `lb-item ${isMe ? 'user-highlight' : ''}`;
                     const medal = index === 0 ? '🥇' : (index === 1 ? '🥈' : (index === 2 ? '🥉' : `#${index + 1}`));
-                    let displayName = String(user.name || '').trim();
-                    // Verwijder oude/ongeldige "NaN"-tekst uit leaderboard-namen.
-                    displayName = displayName.replace(/^NaN(?:\s*[-:]?\s*)/i, '').trim();
-                    displayName = displayName.replace(/NaN/gi, '').trim();
-                    if (!displayName || displayName.toLowerCase() === 'nan') displayName = 'Player';
+                    const displayName = cleanLeaderboardName(user.name);
                     const safeName = displayName
                         .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
                         .replaceAll('"', '&quot;').replaceAll("'", '&#039;');
