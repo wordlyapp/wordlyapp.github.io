@@ -331,10 +331,43 @@
 
         .content-container {
             width: 100%;
-            max-width: 600px;
+            max-width: 980px;
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        /* --- SIDE ADS --- */
+        .learning-with-ads {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 160px minmax(0, 600px) 160px;
+            justify-content: center;
+            align-items: start;
+            gap: 30px;
+        }
+
+        .side-ad {
+            width: 160px;
+            min-height: 600px;
+            overflow: hidden;
+            position: sticky;
+            top: 20px;
+        }
+
+        .side-ad iframe {
+            border: 0;
+            display: block;
+        }
+
+        @media (max-width: 1050px) {
+            .learning-with-ads {
+                grid-template-columns: minmax(0, 600px);
+            }
+
+            .side-ad {
+                display: none;
+            }
         }
 
         .chapter-header {
@@ -914,8 +947,24 @@
 
     <main class="workspace">
         <div class="content-container">
-            <!-- Dashboard / Pad Scherm -->
-            <div id="page-dashboard" style="width: 100%;">
+            <div class="learning-with-ads">
+                <!-- Linker advertentie -->
+                <aside class="side-ad" aria-label="Advertentie">
+                    <script>
+                      atOptions = {
+                        'key' : '16e5ccc4d529507e220561d43d0c09ea',
+                        'format' : 'iframe',
+                        'height' : 600,
+                        'width' : 160,
+                        'params' : {}
+                      };
+                    </script>
+                    <script src="https://criminaldissolved.com/16e5ccc4d529507e220561d43d0c09ea/invoke.js"></script>
+                </aside>
+
+                <div style="width: 100%; min-width: 0;">
+                    <!-- Dashboard / Pad Scherm -->
+                    <div id="page-dashboard" style="width: 100%;">
                 <div class="chapter-header">
                     <h2 id="chapter-title-display">Chapter 1: Basics & Introduction</h2>
                     <p id="chapter-desc-display">Learn fundamental words and simple greetings.</p>
@@ -924,10 +973,10 @@
                 <div class="chapter-tabs" id="chapter-tabs-container"></div>
 
                 <div class="duo-path" id="path-container"></div>
-            </div>
+                    </div>
 
-            <!-- Les Scherm -->
-            <div id="page-lesson" class="card page-section hidden">
+                    <!-- Les Scherm -->
+                    <div id="page-lesson" class="card page-section hidden">
                 <div class="lesson-top-bar">
                     <button class="back-btn" id="stop-btn-text" onclick="backToDashboard()">✕ Stop</button>
                     <div class="progress-bar-container">
@@ -970,8 +1019,23 @@
                     <p id="lb-subtitle" style="font-size: 12px; font-weight: 700; color: var(--duo-gray-text); margin-bottom: 10px;">Leaderboard of real users:</p>
                     <div id="lb-list-container" class="lb-list"></div>
                 </div>
-            </div>
+                    </div>
+                </div>
 
+                <!-- Rechter advertentie -->
+                <aside class="side-ad" aria-label="Advertentie">
+                    <script>
+                      atOptions = {
+                        'key' : '16e5ccc4d529507e220561d43d0c09ea',
+                        'format' : 'iframe',
+                        'height' : 600,
+                        'width' : 160,
+                        'params' : {}
+                      };
+                    </script>
+                    <script src="https://criminaldissolved.com/16e5ccc4d529507e220561d43d0c09ea/invoke.js"></script>
+                </aside>
+            </div>
         </div>
     </main>
 
