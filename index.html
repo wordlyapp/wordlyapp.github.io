@@ -1,1214 +1,1369 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#fbfaf6" />
-  <meta name="description" content="Wordly makes language learning feel like a daily win." />
-  <title>Wordly | Learn a little. Speak a lot.</title>
-  <link rel="icon" type="image/jpeg" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" />
-  <link rel="apple-touch-icon" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --ink: #18332d;
-      --muted: #667872;
-      --paper: #fbfaf6;
-      --white: #ffffff;
-      --lime: #b9e769;
-      --lime-deep: #79b52d;
-      --coral: #fa8d73;
-      --sky: #b7e7e2;
-      --line: #d9e4dc;
-      --shadow: 0 22px 60px rgba(24, 51, 45, .12);
-      --radius: 24px;
-      --duo-green: #58cc02;
-      --duo-green-shadow: #3b8201;
-      --duo-light-green: #f4ffd7;
-      --duo-gray-text: #777777;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      background: var(--paper);
-      font-family: 'DM Sans', sans-serif;
-      line-height: 1.5;
-    }
-    button, a { font: inherit; }
-    button { cursor: pointer; }
-    a { color: inherit; text-decoration: none; }
-    .shell { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
-
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 22px 0;
-    }
-    .brand { display: inline-flex; align-items: center; gap: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; }
-    .brand-mark {
-      width: 38px; height: 38px; border-radius: 12px; overflow: hidden;
-      border: 2px solid var(--ink); transform: rotate(-5deg); background: var(--lime);
-    }
-    .brand-mark img { width: 100%; height: 100%; object-fit: cover; }
-    .nav-links { display: flex; align-items: center; gap: 30px; color: var(--muted); font-size: 14px; font-weight: 600; }
-    .nav-links a:hover { color: var(--ink); }
-    .nav-actions { display: flex; align-items: center; gap: 14px; }
-    .text-button { border: 0; background: transparent; color: var(--ink); font-weight: 700; padding: 10px 6px; }
-    .button {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      min-height: 46px; padding: 0 18px; border: 2px solid var(--ink); border-radius: 12px;
-      font-weight: 700; transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
-    }
-    .button:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--ink); }
-    .button-primary { background: var(--lime); }
-    .button-primary:hover { background: #c8f07c; }
-    .button-quiet { background: var(--white); }
-    .button-dark { background: var(--ink); color: white; border-color: var(--ink); }
-    .button-dark:hover { box-shadow: 0 6px 0 var(--lime-deep); }
-
-    .hero { position: relative; display: grid; grid-template-columns: .92fr 1.08fr; gap: 60px; align-items: center; padding: 68px 0 92px; }
-    .hero::before { content: ''; position: absolute; width: 170px; height: 170px; border-radius: 50%; background: var(--sky); opacity: .55; left: -100px; top: 30px; z-index: -1; }
-    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--lime-deep); text-transform: uppercase; letter-spacing: .13em; font-size: 11px; font-weight: 700; margin-bottom: 18px; }
-    .eyebrow::before { content: ''; width: 22px; height: 2px; background: var(--lime-deep); }
-    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -.045em; line-height: 1.02; margin: 0; }
-    h1 { max-width: 570px; font-size: clamp(54px, 7vw, 88px); }
-    h1 em { font-style: normal; color: var(--coral); }
-    .hero-copy { max-width: 490px; margin: 24px 0 30px; color: var(--muted); font-size: 18px; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-    .microcopy { margin-top: 16px; color: var(--muted); font-size: 12px; }
-
-    .preview-wrap { position: relative; }
-    .preview-wrap::after { content: 'a better habit, one word at a time'; position: absolute; right: -18px; bottom: -30px; color: var(--coral); font-family: 'Space Grotesk', sans-serif; font-size: 13px; transform: rotate(-5deg); }
-    .app-preview { position: relative; overflow: hidden; background: var(--white); border: 2px solid var(--ink); border-radius: 28px; box-shadow: 14px 16px 0 var(--lime); padding: 20px; transform: rotate(1.5deg); }
-    .preview-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
-    .preview-logo { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; }
-    .streak { background: #fff0df; color: #cf6b30; border-radius: 99px; padding: 6px 10px; font-size: 12px; font-weight: 700; }
-    .preview-main { padding: 34px 24px 20px; }
-    .progress-label { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; font-weight: 700; }
-    .progress { height: 9px; margin: 9px 0 30px; background: #edf1e9; border-radius: 9px; overflow: hidden; }
-    .progress span { display: block; width: 63%; height: 100%; background: var(--lime-deep); border-radius: inherit; }
-    .question { font-size: 23px; margin-bottom: 18px; }
-    .translation { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
-    .answers { display: grid; gap: 10px; }
-    .answer { display: flex; justify-content: space-between; border: 2px solid var(--line); border-radius: 12px; padding: 13px 15px; color: var(--ink); font-size: 14px; font-weight: 600; }
-    .answer:first-child { background: #f2f9df; border-color: var(--lime-deep); }
-    .answer b { color: var(--lime-deep); }
-    .preview-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 23px; padding: 15px 0 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
-    .mini-button { background: var(--ink); color: white; border: 0; border-radius: 9px; padding: 9px 14px; font-weight: 700; }
-
-    .trust-row { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 22px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 13px; }
-    .language-list { display: flex; gap: 22px; flex-wrap: wrap; color: var(--ink); font-weight: 700; }
-    .language-list span::before { content: '•'; color: var(--coral); margin-right: 7px; }
-
-    section { padding: 110px 0; }
-    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 40px; }
-    h2 { max-width: 570px; font-size: clamp(38px, 5vw, 60px); }
-    .section-heading p { max-width: 310px; color: var(--muted); margin: 0; }
-    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .feature { min-height: 270px; padding: 25px; border: 2px solid var(--ink); border-radius: var(--radius); display: flex; flex-direction: column; justify-content: space-between; }
-    .feature:nth-child(1) { background: var(--lime); }
-    .feature:nth-child(2) { background: var(--sky); }
-    .feature:nth-child(3) { background: #ffe2d5; }
-    .feature-number { font-family: 'Space Grotesk', sans-serif; font-size: 14px; }
-    .feature h3 { font-size: 26px; max-width: 220px; }
-    .feature p { margin: 8px 0 0; color: rgba(24, 51, 45, .72); font-size: 14px; }
-    .split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; }
-    .scribble { position: relative; background: var(--ink); color: white; border-radius: var(--radius); padding: 48px; overflow: hidden; }
-    .scribble::after { content: ''; position: absolute; width: 180px; height: 180px; border: 1px solid rgba(255,255,255,.24); border-radius: 50%; right: -55px; top: -55px; box-shadow: 0 0 0 22px rgba(255,255,255,.06), 0 0 0 44px rgba(255,255,255,.04); }
-    .scribble h2 { color: var(--lime); font-size: 46px; }
-    .scribble p { max-width: 380px; color: #c9d7cd; margin: 22px 0 28px; }
-    .check-list { display: grid; gap: 16px; }
-    .check { display: flex; gap: 14px; align-items: flex-start; }
-    .check-mark { flex: 0 0 28px; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--lime); color: var(--ink); font-weight: 800; }
-    .check strong { display: block; margin-bottom: 3px; }
-    .check span { color: var(--muted); font-size: 14px; }
-    .cta { display: flex; justify-content: space-between; align-items: center; gap: 30px; background: var(--coral); border: 2px solid var(--ink); border-radius: var(--radius); padding: 42px 48px; }
-    .cta h2 { font-size: 42px; max-width: 500px; }
-    footer { padding: 30px 0 42px; display: flex; justify-content: space-between; color: var(--muted); border-top: 1px solid var(--line); font-size: 13px; }
-
-    /* App Workspace & Dashboard Overrides */
-    .app-workspace-container {
-      font-family: 'Nunito', sans-serif;
-      color: var(--duo-dark);
-      background: white;
-      border: 2px solid var(--ink);
-      border-radius: var(--radius);
-      padding: 30px;
-      margin: 40px auto;
-      max-width: 800px;
-      box-shadow: var(--shadow);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordly Learn</title>
     
-    header.app-top-nav {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 16px;
-      border-bottom: 2px solid var(--line);
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+    <!-- Favicon (Browser tab en app icon) -->
+    <link rel="icon" type="image/jpeg" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
+    <link rel="apple-touch-icon" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
 
-    .logo-area {
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--duo-green);
-      letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --duo-green: #58cc02;
+            --duo-green-hover: #46a302;
+            --duo-green-shadow: #3b8201;
+            --duo-light-green: #f4ffd7;
+            --duo-dark: #2b2b2b;
+            --duo-gray-text: #777777;
+            --bg: #ffffff;
+            --card-bg: #ffffff;
+            --border: #e5e5e5;
+            --accent-blue: #1cb0f6;
+            --accent-blue-shadow: #1899d6;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    .logo-img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--duo-green);
-    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .nav-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg);
+            color: var(--duo-dark);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-    .custom-dropdown-container {
-      position: relative;
-      display: inline-block;
-    }
+        /* --- STYLING VOOR LANDING / LOGIN PAGINA --- */
+        #landing-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+        }
 
-    .lang-dropdown-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: #f7f7f7;
-      border: 2px solid var(--line);
-      border-bottom: 3px solid var(--line);
-      padding: 5px 10px;
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 12px;
-      color: var(--duo-dark);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .lang-dropdown-btn:hover { background: #eee; }
+        .auth-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            text-align: center;
+        }
 
-    .flag-icon {
-      width: 20px;
-      height: 14px;
-      border-radius: 2px;
-      object-fit: cover;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-    }
+        .auth-card h2 {
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: var(--duo-dark);
+        }
 
-    .lang-menu-content {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 110%;
-      background-color: white;
-      min-width: 150px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-      border: 2px solid var(--line);
-      border-radius: 10px;
-      z-index: 1000;
-      overflow: hidden;
-    }
+        .auth-card input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            box-sizing: border-box;
+        }
 
-    .lang-menu-content.show { display: block; }
+        .auth-card button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--duo-green);
+            color: white;
+            border: none;
+            border-bottom: 4px solid var(--duo-green-shadow);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
 
-    .lang-option {
-      padding: 8px 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--duo-dark);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .lang-option:hover {
-      background-color: var(--duo-light-green);
-      color: var(--duo-green);
-    }
+        .auth-card button:hover { filter: brightness(1.05); }
+        .auth-card button:active { transform: translateY(2px); border-bottom-width: 2px; }
 
-    .lang-switcher-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: #f7f7f7;
-      border: 2px solid var(--line);
-      padding: 3px 8px;
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 12px;
-    }
+        .auth-message {
+            margin-top: 10px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+        .success-text { color: var(--duo-green); }
+        .error-text { color: #ea2b2b; }
 
-    .top-stats-bar { display: flex; gap: 8px; }
+        .auth-switch {
+            margin-top: 15px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--duo-gray-text);
+        }
 
-    .stat-pill {
-      background: #f7f7f7;
-      border: 2px solid var(--line);
-      padding: 4px 10px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 12px;
-      font-weight: 800;
-      color: #4b4b4b;
-    }
+        .auth-switch a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 800;
+        }
+        .auth-switch a:hover { text-decoration: underline; }
+        /* --- EINDE LANDING / LOGIN STYLING --- */
 
-    .reset-btn {
-      background: #fee2e2;
-      color: #dc2626;
-      border: 2px solid #fecaca;
-      padding: 4px 10px;
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .reset-btn:hover { background: #fecaca; }
+        header.top-nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 24px;
+            border-bottom: 2px solid var(--border);
+            background: white;
+            z-index: 100;
+        }
 
-    .chapter-header {
-      width: 100%;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-    .chapter-header h2 { font-size: 20px; font-weight: 900; color: #3c3c3c; margin-bottom: 2px; }
-    .chapter-header p { color: var(--duo-gray-text); font-size: 13px; font-weight: 700; }
+        .logo-area {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--duo-green);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .chapter-tabs {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 20px;
-      width: 100%;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
+        .logo-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--duo-green);
+        }
 
-    .chapter-tab {
-      flex: 1;
-      padding: 8px 10px;
-      background: #f7f7f7;
-      border: 2px solid var(--line);
-      border-bottom: 3px solid var(--line);
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 12px;
-      color: var(--duo-gray-text);
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .chapter-tab.active {
-      background: var(--duo-light-green);
-      border-color: var(--duo-green);
-      border-bottom-color: var(--duo-green-shadow);
-      color: var(--duo-green);
-    }
+        .custom-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
 
-    .chapter-tab.locked-tab { opacity: 0.5; cursor: not-allowed; background: #f0f0f0; }
+        .lang-dropdown-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f7f7f7;
+            border: 2px solid var(--border);
+            border-bottom: 3px solid var(--border);
+            padding: 5px 10px;
+            border-radius: var(--radius-sm);
+            font-weight: 800;
+            font-size: 12px;
+            color: var(--duo-dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .lang-dropdown-btn:hover { background: #eee; }
 
-    .duo-path {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      width: 100%;
-      padding: 5px 0 20px 0;
-    }
+        .flag-icon {
+            width: 20px;
+            height: 14px;
+            border-radius: 2px;
+            object-fit: cover;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+        }
 
-    .path-row {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      gap: 60px;
-    }
+        .lang-menu-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 110%;
+            background-color: white;
+            min-width: 150px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            z-index: 1000;
+            overflow: hidden;
+        }
 
-    .path-row.offset-1 { transform: translateX(-30px); }
-    .path-row.offset-2 { transform: translateX(30px); }
+        .lang-menu-content.show {
+            display: block;
+        }
 
-    .duo-node {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: var(--duo-green);
-      border: none;
-      border-bottom: 5px solid var(--duo-green-shadow);
-      color: white;
-      font-weight: 900;
-      font-size: 15px;
-      cursor: pointer;
-      box-shadow: 0 6px 0 rgba(0,0,0,0.08);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      position: relative;
-    }
+        .lang-option {
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--duo-dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .lang-option:hover {
+            background-color: var(--duo-light-green);
+            color: var(--duo-green);
+        }
 
-    .duo-node span.node-label { font-size: 8px; opacity: 0.9; text-transform: uppercase; margin-top: 1px; }
-    .duo-node:hover:not(.locked) { transform: scale(1.06); filter: brightness(1.05); }
-    .duo-node:active:not(.locked) { transform: translateY(3px); border-bottom-width: 2px; box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
+        .lang-switcher-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f7f7f7;
+            border: 2px solid var(--border);
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            font-weight: 800;
+            font-size: 12px;
+        }
 
-    .duo-node.locked {
-      background: #e5e5e5;
-      border-bottom: 5px solid #d1d1d1;
-      color: #afafaf;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
+        .top-stats-bar {
+            display: flex;
+            gap: 8px;
+        }
 
-    .duo-node.exam-node {
-      background: #ff9600;
-      border-bottom: 5px solid #cc7700;
-    }
+        .stat-pill {
+            background: #f7f7f7;
+            border: 2px solid var(--border);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 800;
+            color: #4b4b4b;
+        }
 
-    .app-card {
-      background: white;
-      border: 2px solid var(--line);
-      border-radius: 14px;
-      padding: 20px;
-      width: 100%;
-    }
+        .reset-btn {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 2px solid #fecaca;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .reset-btn:hover { background: #fecaca; }
 
-    .lesson-top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-    }
+        main.workspace {
+            flex: 1;
+            width: 100%;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 16px;
+            background: #ffffff;
+        }
 
-    .back-btn {
-      background: #f7f7f7;
-      border: 2px solid var(--line);
-      border-bottom: 3px solid var(--line);
-      color: var(--duo-gray-text);
-      padding: 4px 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-    .back-btn:hover { background: #eee; }
+        .content-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    .progress-bar-container {
-      flex: 1;
-      height: 10px;
-      background: #e5e5e5;
-      border-radius: 8px;
-      margin: 0 16px;
-      overflow: hidden;
-    }
+        .chapter-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .chapter-header h2 { font-size: 20px; font-weight: 900; color: #3c3c3c; margin-bottom: 2px; }
+        .chapter-header p { color: var(--duo-gray-text); font-size: 13px; font-weight: 700; }
 
-    .progress-bar-fill {
-      height: 100%;
-      background: var(--duo-green);
-      width: 0%;
-      transition: width 0.3s ease;
-      border-radius: 8px;
-    }
+        .chapter-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
 
-    .question-title {
-      font-size: 16px;
-      font-weight: 900;
-      margin-bottom: 14px;
-      color: #3c3c3c;
-    }
+        .chapter-tab {
+            flex: 1;
+            padding: 8px 10px;
+            background: #f7f7f7;
+            border: 2px solid var(--border);
+            border-bottom: 3px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-weight: 800;
+            font-size: 12px;
+            color: var(--duo-gray-text);
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
 
-    .app-btn {
-      background-color: var(--duo-green);
-      color: white;
-      border: none;
-      border-bottom: 4px solid var(--duo-green-shadow);
-      padding: 10px 16px;
-      font-size: 13px;
-      font-weight: 900;
-      border-radius: 10px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-    }
-    .app-btn:hover { filter: brightness(1.05); }
+        .chapter-tab.active {
+            background: var(--duo-light-green);
+            border-color: var(--duo-green);
+            border-bottom-color: var(--duo-green-shadow);
+            color: var(--duo-green);
+        }
 
-    .option-btn {
-      background: white;
-      color: var(--duo-dark);
-      border: 2px solid var(--line);
-      border-bottom: 3px solid var(--line);
-      margin: 6px 0;
-      text-align: left;
-      box-shadow: none;
-      text-transform: none;
-      font-weight: 800;
-      font-size: 13px;
-      padding: 10px 14px;
-      border-radius: 10px;
-    }
-    .option-btn:hover { background: #f7f7f7; border-color: #cfcfcf; }
+        .chapter-tab.locked-tab {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f0f0f0;
+        }
 
-    .feedback-box-correct {
-      color: #278500; font-weight: 900; font-size: 13px; margin: 10px 0; padding: 10px;
-      background: var(--duo-light-green); border-radius: 10px; border: 2px solid #b8f270;
-    }
-    .feedback-box-wrong {
-      color: #ea2b2b; font-weight: 900; font-size: 13px; margin: 10px 0; padding: 10px;
-      background: #ffdfe0; border-radius: 10px; border: 2px solid #ffb1b3;
-    }
+        .duo-path {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            padding: 5px 0 30px 0;
+        }
 
-    .hidden { display: none !important; }
+        .path-row {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            gap: 60px;
+        }
 
-    /* Auth Modal Styling */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(24, 51, 45, 0.4); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 2000; }
-    .modal-overlay.active { display: flex; }
-    .modal { background: var(--white); border: 2px solid var(--ink); border-radius: var(--radius); width: min(420px, calc(100% - 32px)); padding: 32px; box-shadow: var(--shadow); position: relative; }
-    .modal h3 { font-size: 24px; margin-bottom: 8px; }
-    .modal p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
-    .form-group input { width: 100%; padding: 12px 14px; border: 2px solid var(--line); border-radius: 12px; font: inherit; outline: none; transition: border-color 0.2s; }
-    .form-group input:focus { border-color: var(--ink); }
-    .modal button.button { width: 100%; margin-top: 10px; }
-    .close-modal { position: absolute; top: 20px; right: 20px; background: transparent; border: 0; font-size: 18px; font-weight: 700; }
+        .path-row.offset-1 { transform: translateX(-30px); }
+        .path-row.offset-2 { transform: translateX(30px); }
 
-    .auth-status { position: fixed; right: 20px; bottom: 20px; z-index: 1500; max-width: 300px; padding: 12px 15px; border: 1px solid var(--line); border-radius: 12px; background: white; box-shadow: var(--shadow); color: var(--muted); font-size: 13px; display: none; }
-    .auth-status.show { display: block; }
+        .duo-node {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--duo-green);
+            border: none;
+            border-bottom: 5px solid var(--duo-green-shadow);
+            color: white;
+            font-weight: 900;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            position: relative;
+        }
 
-    @media (max-width: 820px) {
-      .shell { width: min(100% - 32px, 600px); }
-      .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; gap: 38px; padding: 48px 0 74px; }
-      h1 { font-size: clamp(50px, 15vw, 76px); }
-      .split { display: block; }
-      .split > * + * { margin-top: 38px; }
-      .cta { display: block; padding: 32px 26px; }
-      .cta .button { margin-top: 24px; }
-      footer { gap: 20px; flex-direction: column; }
-    }
-  </style>
+        .duo-node span.node-label { font-size: 8px; opacity: 0.9; text-transform: uppercase; margin-top: 1px; }
+
+        .duo-node:hover:not(.locked) { transform: scale(1.06); filter: brightness(1.05); }
+        .duo-node:active:not(.locked) { transform: translateY(3px); border-bottom-width: 2px; box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
+
+        .duo-node.locked {
+            background: #e5e5e5;
+            border-bottom: 5px solid #d1d1d1;
+            color: #afafaf;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .duo-node.exam-node {
+            background: #ff9600;
+            border-bottom: 5px solid #cc7700;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            width: 100%;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lesson-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .back-btn {
+            background: #f7f7f7;
+            border: 2px solid var(--border);
+            border-bottom: 3px solid var(--border);
+            color: var(--duo-gray-text);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .back-btn:hover { background: #eee; }
+
+        .progress-bar-container {
+            flex: 1;
+            height: 10px;
+            background: #e5e5e5;
+            border-radius: 8px;
+            margin: 0 16px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--duo-green);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 900;
+            margin-bottom: 14px;
+            color: #3c3c3c;
+            line-height: 1.3;
+        }
+
+        .btn {
+            background-color: var(--duo-green);
+            color: white;
+            border: none;
+            border-bottom: 4px solid var(--duo-green-shadow);
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 900;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            transition: var(--transition);
+            box-shadow: 0 3px 10px rgba(88, 204, 2, 0.25);
+        }
+
+        .btn:hover { filter: brightness(1.05); }
+        .btn:active { transform: translateY(2px); border-bottom-width: 2px; box-shadow: none; }
+
+        .option-btn {
+            background: white;
+            color: var(--duo-dark);
+            border: 2px solid var(--border);
+            border-bottom: 3px solid var(--border);
+            margin: 6px 0;
+            text-align: left;
+            box-shadow: none;
+            text-transform: none;
+            font-weight: 800;
+            font-size: 13px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+        }
+        .option-btn:hover { background: #f7f7f7; border-color: #cfcfcf; }
+
+        .feedback-box-correct {
+            color: #278500; font-weight: 900; font-size: 13px; margin: 10px 0; padding: 10px;
+            background: var(--duo-light-green); border-radius: var(--radius-sm); border: 2px solid #b8f270;
+        }
+        .feedback-box-wrong {
+            color: #ea2b2b; font-weight: 900; font-size: 13px; margin: 10px 0; padding: 10px;
+            background: #ffdfe0; border-radius: var(--radius-sm); border: 2px solid #ffb1b3;
+        }
+
+        .hidden { display: none !important; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .custom-modal {
+            background: white;
+            padding: 24px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border);
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .custom-modal h3 { font-size: 18px; font-weight: 900; margin-bottom: 6px; color: #3c3c3c; }
+        .custom-modal p { color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px; }
+    </style>
 </head>
 <body>
-  <header class="shell">
-    <nav aria-label="Main navigation">
-      <a class="brand" href="#top" aria-label="Wordly home">
-        <span class="brand-mark"><img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="" /></span>
-        Wordly
-      </a>
-      <div class="nav-links">
-        <a href="#how-it-works">How it works</a>
-        <a href="#why-wordly">Why Wordly</a>
-        <a href="#app-section">App & Learning</a>
-      </div>
-      <div class="nav-actions" id="nav-actions-container">
-        <button class="text-button" data-login>Log in</button>
-        <button class="button button-primary" data-signup>Start learning <span aria-hidden="true">↗</span></button>
-      </div>
-    </nav>
-  </header>
 
-  <main id="top">
-    <div class="shell">
-      <section class="hero">
-        <div class="hero-copy">
-          <div class="eyebrow">Language learning, made human</div>
-          <h1>Learn a little.<br /><em>Speak a lot.</em></h1>
-          <p class="hero-copy">Wordly turns five quiet minutes into a real conversation. Build vocabulary, keep your streak alive, and find your voice in a new language.</p>
-          <div class="hero-actions">
-            <button class="button button-primary" data-signup>Try Wordly free <span aria-hidden="true">→</span></button>
-            <a class="button button-quiet" href="#how-it-works">See how it works</a>
-          </div>
-          <p class="microcopy">No credit card. Just one good word to start.</p>
-        </div>
-
-        <div class="preview-wrap" aria-label="Preview of a Wordly lesson">
-          <div class="app-preview">
-            <div class="preview-top"><span class="preview-logo">Wordly / daily practice</span><span class="streak" id="preview-streak">🔥 12 day streak</span></div>
-            <div class="preview-main">
-              <div class="progress-label"><span>Chapter 02 · Food &amp; drink</span><span>4 / 6</span></div>
-              <div class="progress"><span></span></div>
-              <h2 class="question">How do you say “water”?</h2>
-              <p class="translation">Choose the best translation.</p>
-              <div class="answers"><div class="answer">Wasser <b>✓</b></div><div class="answer">Apfel</div><div class="answer">Brot</div></div>
-              <div class="preview-bottom"><span id="preview-xp">+20 XP earned</span><button class="mini-button" data-signup>Continue</button></div>
+    <!-- LANDING / REGISTRATIE & LOGIN PAGINA -->
+    <div id="landing-page">
+        <!-- Registratieformulier (Standaard zichtbaar bij start) -->
+        <div id="register-box" class="auth-card">
+            <h2 id="reg-title">Registreren</h2>
+            <input type="text" id="reg-user" placeholder="Gebruikersnaam">
+            <input type="password" id="reg-pass" placeholder="Wachtwoord">
+            <button onclick="handleRegister()">Registreer</button>
+            <div id="reg-msg" class="auth-message"></div>
+            <div class="auth-switch">
+                Al een account? <a href="#" onclick="switchToLogin(event)">Log hier in</a>
             </div>
-          </div>
         </div>
-      </section>
 
-      <div class="trust-row"><span>Start with the languages you already love:</span><div class="language-list"><span>English</span><span>Nederlands</span><span>Deutsch</span><span>Français</span><span>Español</span></div></div>
-
-      <section id="how-it-works">
-        <div class="section-heading"><h2>A small ritual with a big payoff.</h2><p>No endless grammar tables. Just useful words, smart repetition, and the satisfaction of getting it right.</p></div>
-        <div class="feature-grid">
-          <article class="feature"><span class="feature-number">01 / Start small</span><div><h3>Five minutes is enough.</h3><p>Short lessons fit into the gaps in your day, so progress never feels like a chore.</p></div></article>
-          <article class="feature"><span class="feature-number">02 / Stay curious</span><div><h3>Words that meet you where you are.</h3><p>Learn practical vocabulary around food, travel, people, and the things you actually talk about.</p></div></article>
-          <article class="feature"><span class="feature-number">03 / Keep going</span><div><h3>Your streak becomes a story.</h3><p>Gentle momentum, clear progress, and a reason to come back tomorrow.</p></div></article>
-        </div>
-      </section>
-
-      <!-- Interactive App Section -->
-      <section id="app-section">
-        <div class="section-heading"><h2>Interactive Learning Workspace</h2><p>Choose your source/target language, finish the lessons, and pass exams!</p></div>
-        <div class="app-workspace-container">
-          <header class="app-top-nav">
-            <div class="logo-area">
-                <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Wordly Logo" class="logo-img"> Wordly Learn
+        <!-- Inlogformulier (Eerst verborgen) -->
+        <div id="login-box" class="auth-card hidden">
+            <h2 id="login-title">Inloggen</h2>
+            <input type="text" id="login-user" placeholder="Gebruikersnaam">
+            <input type="password" id="login-pass" placeholder="Wachtwoord">
+            <button onclick="handleLogin()">Login</button>
+            <div id="login-msg" class="auth-message"></div>
+            <div class="auth-switch">
+                Nog geen account? <a href="#" onclick="switchToRegister(event)">Registreer hier</a>
             </div>
-            <div class="nav-controls">
-                <div class="lang-switcher-wrapper">
-                    <span id="label-from-text">Van:</span>
-                    <div class="custom-dropdown-container">
-                        <button class="lang-dropdown-btn" onclick="toggleMenu('from-menu')">
-                            <img id="from-flag" class="flag-icon" src="" alt="">
-                            <span id="from-label">Nederlands</span> ▾
-                        </button>
-                        <div id="from-menu" class="lang-menu-content">
-                            <div class="lang-option" onclick="selectLanguage('from', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png" alt=""> Nederlands</div>
-                            <div class="lang-option" onclick="selectLanguage('from', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png" alt=""> Engels</div>
-                            <div class="lang-option" onclick="selectLanguage('from', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png" alt=""> Duits</div>
-                            <div class="lang-option" onclick="selectLanguage('from', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png" alt=""> Frans</div>
-                            <div class="lang-option" onclick="selectLanguage('from', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png" alt=""> Spaans</div>
-                        </div>
-                    </div>
-
-                    <span style="margin-left: 4px;" id="label-to-text">Naar:</span>
-                    <div class="custom-dropdown-container">
-                        <button class="lang-dropdown-btn" onclick="toggleMenu('to-menu')">
-                            <img id="to-flag" class="flag-icon" src="" alt="">
-                            <span id="to-label">Engels</span> ▾
-                        </button>
-                        <div id="to-menu" class="lang-menu-content">
-                            <div class="lang-option" onclick="selectLanguage('to', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png" alt=""> Nederlands</div>
-                            <div class="lang-option" onclick="selectLanguage('to', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png" alt=""> Engels</div>
-                            <div class="lang-option" onclick="selectLanguage('to', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png" alt=""> Duits</div>
-                            <div class="lang-option" onclick="selectLanguage('to', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png" alt=""> Frans</div>
-                            <div class="lang-option" onclick="selectLanguage('to', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png" alt=""> Spaans</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="top-stats-bar">
-                    <div class="stat-pill">🔥 <span id="streak-display">1</span></div>
-                    <div class="stat-pill">⚡ <span id="points-display">0</span> XP</div>
-                </div>
-                <button class="reset-btn" id="reset-btn-text" onclick="resetProgressPrompt()">Reset</button>
-            </div>
-          </header>
-
-          <main class="workspace" style="background: transparent; padding: 0; overflow: visible;">
-            <div class="content-container" style="max-width: 100%;">
-                <div id="page-dashboard" style="width: 100%;">
-                    <div class="chapter-header">
-                        <h2 id="chapter-title-display">Hoofdstuk 1: Basis & Introductie</h2>
-                        <p id="chapter-desc-display">Leer fundamentele woorden en simpele zinnen.</p>
-                    </div>
-                    <div class="chapter-tabs" id="chapter-tabs-container"></div>
-                    <div class="duo-path" id="path-container"></div>
-                </div>
-
-                <div id="page-lesson" class="app-card page-section hidden">
-                    <div class="lesson-top-bar">
-                        <button class="back-btn" id="stop-btn-text" onclick="backToDashboard()">✕ Stoppen</button>
-                        <div class="progress-bar-container">
-                            <div id="lesson-progress-bar" class="progress-bar-fill"></div>
-                        </div>
-                        <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text); font-size: 12px;">1/5</span>
-                    </div>
-                    <h3 id="question-prompt" class="question-title">Vertaal dit</h3>
-                    <div id="answers-area"></div>
-                    <button id="next-btn" class="app-btn hidden" onclick="nextQuestion()">Doorgaan</button>
-                </div>
-
-                <div id="page-complete" class="app-card page-section hidden" style="text-align: center;">
-                    <h2 id="complete-title-text" style="font-size: 22px; font-weight: 900; color: var(--duo-green); margin-bottom: 8px;">Les Voltooid! 🎉</h2>
-                    <p id="complete-text" style="color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px;">Geweldig gepresteerd!</p>
-                    <button class="app-btn" id="complete-continue-btn" onclick="backToDashboard()">Doorgaan</button>
-                </div>
-            </div>
-          </main>
         </div>
-      </section>
-
-      <section id="why-wordly" class="split">
-        <div class="scribble"><div class="eyebrow" style="color: var(--lime);">Designed for real life</div><h2>Less studying.<br />More becoming.</h2><p>Wordly gives you structure without making language feel like homework. Your next phrase is waiting.</p><button class="button button-primary" data-signup>Create my free account <span aria-hidden="true">↗</span></button></div>
-        <div class="check-list">
-          <div class="check"><div class="check-mark">✓</div><div><strong>Progress you can feel</strong><span>Every lesson ends with a clear win, from your first word to your first sentence.</span></div></div>
-          <div class="check"><div class="check-mark">✓</div><div><strong>Practice that remembers</strong><span>Revisit the words that need another moment, without losing the ones you know.</span></div></div>
-          <div class="check"><div class="check-mark">✓</div><div><strong>A pace that belongs to you</strong><span>Pick up where you left off whenever life gives you a pocket of time.</span></div></div>
-        </div>
-      </section>
-
-      <section><div class="cta"><h2>Your next language starts with one word.</h2><button class="button button-dark" data-signup>Start learning for free <span aria-hidden="true">→</span></button></div></section>
     </div>
-  </main>
+    <!-- EINDE LANDING PAGINA -->
 
-  <footer class="shell"><span>© 2026 Wordly Learn</span><span>Made for curious people.</span></footer>
-  <div class="auth-status" role="status" aria-live="polite"></div>
-
-  <!-- Notification / Alert Modal -->
-  <div id="custom-notification" class="modal-overlay hidden">
-      <div class="modal" style="max-width: 340px; text-align: center;">
-          <h3 id="notif-title" style="font-size: 18px;">Melding</h3>
-          <p id="notif-text">Tekst...</p>
-          <button class="app-btn" id="notif-ok-btn" onclick="closeNotification()">Begrepen</button>
-      </div>
-  </div>
-
-  <!-- Auth Modal -->
-  <div class="modal-overlay" id="authModal">
-    <div class="modal">
-      <button class="close-modal" id="closeModal">×</button>
-      <h3 id="modalTitle">Welcome to Wordly</h3>
-      <p id="modalDesc">Enter your details to load your progress.</p>
-      <form id="authForm">
-        <div class="form-group">
-          <label for="usernameInput">Your Name or Email</label>
-          <input type="text" id="usernameInput" placeholder="e.g. Rik" required />
+    <div id="custom-notification" class="modal-overlay hidden">
+        <div class="custom-modal">
+            <h3 id="notif-title">Melding</h3>
+            <p id="notif-text">Tekst...</p>
+            <button class="btn" id="notif-ok-btn" onclick="closeNotification()">Begrepen</button>
         </div>
-        <button type="submit" class="button button-primary" id="modalSubmitBtn">Continue learning ↗</button>
-      </form>
     </div>
-  </div>
 
-  <script>
-    /* --- Landingspagina & Authenticatie Logica --- */
-    const modal = document.getElementById('authModal');
-    const closeModal = document.getElementById('closeModal');
-    const authForm = document.getElementById('authForm');
-    const usernameInput = document.getElementById('usernameInput');
-    const navActions = document.getElementById('nav-actions-container');
-    const statusBox = document.querySelector('.auth-status');
+    <header class="top-nav">
+        <div class="logo-area">
+            <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Wordly Logo" class="logo-img"> Wordly Learn
+        </div>
+        <div class="nav-controls">
+            <div class="lang-switcher-wrapper">
+                <span id="label-from-text">Van:</span>
+                <div class="custom-dropdown-container">
+                    <button class="lang-dropdown-btn" onclick="toggleMenu('from-menu')">
+                        <img id="from-flag" class="flag-icon" src="" alt="">
+                        <span id="from-label">Nederlands</span> ▾
+                    </button>
+                    <div id="from-menu" class="lang-menu-content">
+                        <div class="lang-option" onclick="selectLanguage('from', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png"> Nederlands</div>
+                        <div class="lang-option" onclick="selectLanguage('from', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png"> Engels</div>
+                        <div class="lang-option" onclick="selectLanguage('from', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png"> Duits</div>
+                        <div class="lang-option" onclick="selectLanguage('from', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png"> Frans</div>
+                        <div class="lang-option" onclick="selectLanguage('from', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png"> Spaans</div>
+                    </div>
+                </div>
 
-    const showStatus = (message) => { 
-      statusBox.textContent = message; 
-      statusBox.classList.add('show'); 
-      setTimeout(() => statusBox.classList.remove('show'), 5000); 
-    };
+                <span style="margin-left: 4px;" id="label-to-text">Naar:</span>
+                <div class="custom-dropdown-container">
+                    <button class="lang-dropdown-btn" onclick="toggleMenu('to-menu')">
+                        <img id="to-flag" class="flag-icon" src="" alt="">
+                        <span id="to-label">Engels</span> ▾
+                    </button>
+                    <div id="to-menu" class="lang-menu-content">
+                        <div class="lang-option" onclick="selectLanguage('to', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png"> Nederlands</div>
+                        <div class="lang-option" onclick="selectLanguage('to', 'en', 'Engels')"><img class="flag-icon" src="https://flagcdn.com/w40/gb.png"> Engels</div>
+                        <div class="lang-option" onclick="selectLanguage('to', 'de', 'Duits')"><img class="flag-icon" src="https://flagcdn.com/w40/de.png"> Duits</div>
+                        <div class="lang-option" onclick="selectLanguage('to', 'fr', 'Frans')"><img class="flag-icon" src="https://flagcdn.com/w40/fr.png"> Frans</div>
+                        <div class="lang-option" onclick="selectLanguage('to', 'es', 'Spaans')"><img class="flag-icon" src="https://flagcdn.com/w40/es.png"> Spaans</div>
+                    </div>
+                </div>
+            </div>
 
-    function checkExistingUser() {
-      const savedUser = localStorage.getItem('wordly_user');
-      if (savedUser) {
-        loadUserSession(savedUser);
-      }
-    }
+            <div class="top-stats-bar">
+                <div class="stat-pill">🔥 <span id="streak-display">1</span></div>
+                <div class="stat-pill">⚡ <span id="points-display">0</span> XP</div>
+            </div>
+            <button class="reset-btn" id="reset-btn-text" onclick="resetProgressPrompt()">Reset</button>
+        </div>
+    </header>
 
-    function loadUserSession(username) {
-      let userProgress = JSON.parse(localStorage.getItem('wordly_progress_' + username)) || { streak: 12, xp: 20 };
-      
-      const previewStreak = document.getElementById('preview-streak');
-      if(previewStreak) previewStreak.textContent = `🔥 ${userProgress.streak} day streak`;
-      
-      const previewXp = document.getElementById('preview-xp');
-      if(previewXp) previewXp.textContent = `+${userProgress.xp} XP earned`;
+    <main class="workspace">
+        <div class="content-container">
+            <div id="page-dashboard" style="width: 100%;">
+                <div class="chapter-header">
+                    <h2 id="chapter-title-display">Hoofdstuk 1: Basis & Introductie</h2>
+                    <p id="chapter-desc-display">Leer fundamentele woorden en simpele zinnen.</p>
+                </div>
 
-      navActions.innerHTML = `
-        <span style="font-weight: 700; font-size: 14px; color: var(--ink);">👤 ${username}</span>
-        <button class="button button-quiet" id="logoutBtn" style="min-height: 38px; padding: 0 12px; font-size: 13px;">Log out</button>
-      `;
+                <div class="chapter-tabs" id="chapter-tabs-container"></div>
 
-      document.getElementById('logoutBtn').addEventListener('click', () => {
-        localStorage.removeItem('wordly_user');
-        window.location.reload();
-      });
+                <div class="duo-path" id="path-container"></div>
+            </div>
 
-      showStatus(`Welcome back, ${username}! Your session is active.`);
-    }
+            <div id="page-lesson" class="card page-section hidden">
+                <div class="lesson-top-bar">
+                    <button class="back-btn" id="stop-btn-text" onclick="backToDashboard()">✕ Stoppen</button>
+                    <div class="progress-bar-container">
+                        <div id="lesson-progress-bar" class="progress-bar-fill"></div>
+                    </div>
+                    <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text); font-size: 12px;">1/5</span>
+                </div>
+                <h3 id="question-prompt" class="question-title">Vertaal dit</h3>
+                
+                <div id="answers-area"></div>
+                
+                <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Doorgaan</button>
+            </div>
 
-    function openAuthModal() {
-      modal.classList.add('active');
-      usernameInput.focus();
-    }
+            <div id="page-complete" class="card page-section hidden" style="text-align: center;">
+                <h2 id="complete-title-text" style="font-size: 22px; font-weight: 900; color: var(--duo-green); margin-bottom: 8px;">Les Voltooid! 🎉</h2>
+                <p id="complete-text" style="color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px;">Geweldig gepresteerd!</p>
+                <button class="btn" id="complete-continue-btn" onclick="backToDashboard()">Doorgaan</button>
+            </div>
 
-    document.querySelectorAll('[data-login], [data-signup]').forEach((button) => {
-      button.addEventListener('click', (e) => {
-        e.preventDefault();
-        openAuthModal();
-      });
-    });
+        </div>
+    </main>
 
-    closeModal.addEventListener('click', () => { modal.classList.remove('active'); });
-    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+    <script>
+        // --- AUTHENTICATIE LOGICA ---
+        let registeredUser = "";
+        let registeredPass = "";
 
-    authForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const username = usernameInput.value.trim();
-      if (!username) return;
+        function handleRegister() {
+            const user = document.getElementById('reg-user').value.trim();
+            const pass = document.getElementById('reg-pass').value.trim();
+            const msg = document.getElementById('reg-msg');
 
-      localStorage.setItem('wordly_user', username);
-      if (!localStorage.getItem('wordly_progress_' + username)) {
-        localStorage.setItem('wordly_progress_' + username, JSON.stringify({ streak: 1, xp: 10 }));
-      }
-
-      modal.classList.remove('active');
-      loadUserSession(username);
-    });
-
-
-    /* --- Volledige Leertraject / Workspace Logica --- */
-    const flags = {
-        nl: "https://flagcdn.com/w40/nl.png",
-        en: "https://flagcdn.com/w40/gb.png",
-        de: "https://flagcdn.com/w40/de.png",
-        fr: "https://flagcdn.com/w40/fr.png",
-        es: "https://flagcdn.com/w40/es.png"
-    };
-
-    const langNames = {
-        nl: "Nederlands",
-        en: "Engels",
-        de: "Duits",
-        fr: "Frans",
-        es: "Spaans"
-    };
-
-    const uiTranslations = {
-        nl: {
-            labelFrom: "Van:", labelTo: "Naar:", reset: "Reset", stop: "✕ Stoppen",
-            examLabel: "Toets", lessonLabel: "Les", examPrompt: "[EINDTOETS] Vertaal:",
-            lessonPrompt: "Vertaal / Beantwoord:", completeTitle: "Les Voltooid! 🎉",
-            completeSub: "Geweldig gepresteerd!", continueBtn: "Doorgaan",
-            correctMsg: "Geweldig! Dat is correct.", wrongMsg: "Helaas! Het juiste antwoord was:",
-            notifTitle: "Melding", notifOk: "Begrepen", sameLangTitle: "Let op",
-            sameLangText: "De brontaal en doeltaal mogen niet hetzelfde zijn!",
-            lockTitle: "Hoofdstuk Vergrendeld",
-            lockText: "Je moet eerst alle lessen van het vorige hoofdstuk volledig afronden om dit hoofdstuk te ontgrendelen!",
-            nodeLockTitle: "Vergrendeld", nodeLockText: "Voltooi eerst de vorige les in dit hoofdstuk!",
-            resetTitle: "Voortgang wissen", resetText: "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?"
-        },
-        en: {
-            labelFrom: "From:", labelTo: "To:", reset: "Reset", stop: "✕ Stop",
-            examLabel: "Exam", lessonLabel: "Lesson", examPrompt: "[FINAL EXAM] Translate:",
-            lessonPrompt: "Translate / Answer:", completeTitle: "Lesson Completed! 🎉",
-            completeSub: "Great job!", continueBtn: "Continue",
-            correctMsg: "Awesome! That's correct.", wrongMsg: "Too bad! The correct answer was:",
-            notifTitle: "Notice", notifOk: "Got it", sameLangTitle: "Attention",
-            sameLangText: "Source and target languages cannot be the same!",
-            lockTitle: "Chapter Locked",
-            lockText: "You must complete all lessons of the previous chapter first to unlock this one!",
-            nodeLockTitle: "Locked", nodeLockText: "Complete the previous lesson in this chapter first!",
-            resetTitle: "Clear Progress", resetText: "Are you sure you want to reset all saved lessons and XP?"
-        },
-        de: {
-            labelFrom: "Von:", labelTo: "Nach:", reset: "Zurücksetzen", stop: "✕ Stopp",
-            examLabel: "Test", lessonLabel: "Lektion", examPrompt: "[ABSCHLUSSTEST] Übersetze:",
-            lessonPrompt: "Übersetze / Beantworte:", completeTitle: "Lektion beendet! 🎉",
-            completeSub: "Großartige Leistung!", continueBtn: "Weiter",
-            correctMsg: "Super! Das ist richtig.", wrongMsg: "Schade! Die richtige Antwort war:",
-            notifTitle: "Hinweis", notifOk: "Verstanden", sameLangTitle: "Achtung",
-            sameLangText: "Quell- und Zielsprache dürfen nicht identisch sein!",
-            lockTitle: "Kapitel gesperrt",
-            lockText: "Du musst erst alle Lektionen des vorherigen Kapitels abschließen!",
-            nodeLockTitle: "Gesperrt", nodeLockText: "Schließe zuerst die vorherige Lektion ab!",
-            resetTitle: "Fortschritt zurücksetzen", resetText: "Möchtest du wirklich alle gespeicherten Lektionen und XP zurücksetzen?"
-        },
-        fr: {
-            labelFrom: "De:", labelTo: "Vers:", reset: "Réinitialiser", stop: "✕ Quitter",
-            examLabel: "Examen", lessonLabel: "Leçon", examPrompt: "[EXAMEN FINAL] Traduisez:",
-            lessonPrompt: "Traduisez / Répondez:", completeTitle: "Leçon terminée ! 🎉",
-            completeSub: "Excellent travail !", continueBtn: "Continuer",
-            correctMsg: "Superbe ! C'est correct.", wrongMsg: "Dommage ! La bonne réponse était :",
-            notifTitle: "Avis", notifOk: "Compris", sameLangTitle: "Attention",
-            sameLangText: "La langue source et la langue cible ne peuvent pas être identiques !",
-            lockTitle: "Chapitre verrouillé",
-            lockText: "Vous devez d'abord terminer toutes leçons du chapitre précédent !",
-            nodeLockTitle: "Verrouillé", nodeLockText: "Terminez d'abord la leçon précédente de ce chapitre !",
-            resetTitle: "Effacer la progression", resetText: "Êtes-vous sûr de vouloir réinitialiser toute votre progression ?"
-        },
-        es: {
-            labelFrom: "De:", labelTo: "A:", reset: "Reiniciar", stop: "✕ Salir",
-            examLabel: "Examen", lessonLabel: "Lección", examPrompt: "[EXAMEN FINAL] Traduce:",
-            lessonPrompt: "Traduce / Responde:", completeTitle: "¡Lección completada! 🎉",
-            completeSub: "¡Buen trabajo!", continueBtn: "Continuar",
-            correctMsg: "¡Genial! Es correcto.", wrongMsg: "¡Qué pena! La respuesta correcta era:",
-            notifTitle: "Aviso", notifOk: "Entendido", sameLangTitle: "Atención",
-            sameLangText: "¡El idioma de origen y destino no pueden ser el mismo!",
-            lockTitle: "Capítulo bloqueado",
-            lockText: "¡Debes completar todas las lecciones del capítulo anterior primero!",
-            nodeLockTitle: "Bloqueado", nodeLockText: "¡Completa primero la lección anterior de este capítulo!",
-            resetTitle: "Borrar progreso", resetText: "¿Estás seguro de que quieres restablecer todo tu progreso?"
-        }
-    };
-
-    const chapterNamesMulti = {
-        nl: ["Hoofdstuk 1: Basis & Introductie", "Hoofdstuk 2: Eten & Drinken", "Hoofdstuk 3: Reizen & Vervoer", "Hoofdstuk 4: Familie & Mensen", "Hoofdstuk 5: Huis & Omgeving", "Hoofdstuk 6: Kleuren & Cijfers", "Hoofdstuk 7: Dieren in de Natuur", "Hoofdstuk 8: Hobby's & Sport", "Hoofdstuk 9: School & Werk", "Hoofdstuk 10: Tijd & Weer"],
-        en: ["Chapter 1: Basics & Introduction", "Chapter 2: Food & Drinks", "Chapter 3: Travel & Transport", "Chapter 4: Family & People", "Chapter 5: House & Environment", "Chapter 6: Colors & Numbers", "Chapter 7: Animals in Nature", "Chapter 8: Hobbies & Sport", "Chapter 9: School & Work", "Chapter 10: Time & Weather"],
-        de: ["Kapitel 1: Grundlagen & Einführung", "Kapitel 2: Essen & Trinken", "Kapitel 3: Reisen & Transport", "Kapitel 4: Familie & Personen", "Kapitel 5: Haus & Umgebung", "Kapitel 6: Farben & Zahlen", "Kapitel 7: Tiere in der Natur", "Kapitel 8: Hobbys & Sport", "Kapitel 9: Schule & Arbeit", "Kapitel 10: Zeit & Wetter"],
-        fr: ["Chapitre 1 : Bases & Introduction", "Chapitre 2 : Manger & Boire", "Chapitre 3 : Voyage & Transport", "Chapitre 4 : Famille & Personnes", "Chapitre 5 : Maison & Environnement", "Chapitre 6 : Couleurs & Nombres", "Chapitre 7 : Animaux dans la nature", "Chapitre 8 : Loisirs & Sport", "Chapitre 9 : École & Travail", "Chapitre 10 : Temps & Météo"],
-        es: ["Capítulo 1: Básicos e Introducción", "Capítulo 2: Comida y Bebida", "Capítulo 3: Viajes y Transporte", "Capítulo 4: Familia y Personas", "Capítulo 5: Casa y Entorno", "Capítulo 6: Colores y Números", "Capítulo 7: Animales en la Naturaleza", "Capítulo 8: Aficiones y Deporte", "Capítulo 9: Escuela y Trabajo", "Capítulo 10: Tiempo y Clima"]
-    };
-
-    const chapterDescriptionsMulti = {
-        nl: ["Leer fundamentele woorden en simpele begroetingen.", "Alles over lekker eten, drinken en boodschappen doen.", "Vervoermiddelen, stations en reizen naar het buiteland.", "Familieleden, vrienden en relaties beschrijven.", "Kamers, meubels en je eigen woning.", "De mooiste kleuren en getallen tellen.", "Dieren in het wild en huisdieren.", "Sporten, games spelen en ontspanning.", "Nuttige woorden voor op school en tijdens je werk.", "Het weer vandaag en besef van tijd."],
-        en: ["Learn fundamental words and simple greetings.", "All about great food, drinks, and grocery shopping.", "Means of transport, stations, and traveling abroad.", "Describe family members, friends, and relationships.", "Rooms, furniture, and your own home.", "The most beautiful colors and counting numbers.", "Wild animals and pets.", "Sports, playing games, and relaxation.", "Useful words for school and during your work.", "The weather today and awareness of time."],
-        de: ["Lerne grundlegende Wörter und einfache Begrüßungen.", "Alles über gutes Essen, Trinken und Einkaufen.", "Verkehrsmittel, Bahnhöfe und Auslandsreisen.", "Familienmitglieder, Freunde und Beziehungen beschreiben.", "Zimmer, Möbel und dein eigenes Zuhause.", "Die schönsten Farben und Zahlen zählen.", "Tiere in freier Wildbahn und Haustiere.", "Sport, Spiele spielen und Entspannung.", "Nützliche Wörter für Schule und Arbeit.", "Das Wetter heute und Zeitgefühl."],
-        fr: ["Apprenez des mots fondamentaux et des salutations simples.", "Tout sur la nourriture, les boissons et les courses.", "Moyens de transport, gares et voyages à l'étranger.", "Décrire les membres de la famille, les amis et les relations.", "Pièces, meubles et votre propre maison.", "Les plus belles couleurs et compter les nombres.", "Animaux sauvages et animaux de compagnie.", "Sports, jeux et détente.", "Mots utiles pour l'école et le travail.", "La météo d'aujourd'hui et la notion du temps."],
-        es: ["Aprende palabras fundamentales y saludos sencillos.", "Todo sobre buena comida, bebida y compras.", "Medios de transporte, estaciones y viajes al extranjero.", "Describe a miembros de la familia, amigos y relaciones.", "Habitaciones, muebles y tu propio hogar.", "Los colores más bonitos y contar números.", "Animales salvajes y mascotas.", "Deportes, videojuegos y relajación.", "Palabras útiles para la escuela y el trabajo.", "El tiempo hoy y la conciencia del tiempo."]
-    };
-
-    function t(key) {
-        let lang = appData.fromLang;
-        if (uiTranslations[lang] && uiTranslations[lang][key]) return uiTranslations[lang][key];
-        return uiTranslations["nl"][key];
-    }
-
-    const masterDatabase = {
-        "en": [
-            [["Hallo", "Hello"], ["Hoi", "Hi"], ["Goedemorgen", "Good morning"], ["Goedemiddag", "Good afternoon"], ["Goedenavond", "Good evening"], ["Welterusten", "Good night"], ["Dank je wel", "Thank you"], ["Hartelijk dank", "Many thanks"], ["Tot ziens", "Goodbye"], ["Tot morgen", "See you tomorrow"]],
-            [["Appel", "Apple"], ["Banaan", "Banana"], ["Water", "Water"], ["Brood", "Bread"], ["Melk", "Milk"], ["Kaas", "Cheese"], ["Koffie", "Coffee"], ["Thee", "Tea"], ["Vlees", "Meat"], ["Vis", "Fish"]],
-            [["Trein", "Train"], ["Station", "Station"], ["Bus", "Bus"], ["Auto", "Car"], ["Vliegtuig", "Plane"], ["Fiets", "Bike"], ["Hotel", "Hotel"], ["Luchthaven", "Airport"], ["Schip", "Ship"], ["Taxi", "Taxi"]],
-            [["Vader", "Father"], ["Moeder", "Mother"], ["Broer", "Brother"], ["Zus", "Sister"], ["Zoon", "Son"], ["Dochter", "Daughter"], ["Vriend", "Friend"], ["Man", "Man"], ["Vrouw", "Woman"], ["Kind", "Child"]],
-            [["Huis", "House"], ["Kamer", "Room"], ["Keuken", "Kitchen"], ["Badkamer", "Bathroom"], ["Bed", "Bed"], ["Tafel", "Table"], ["Stoel", "Chair"], ["Deur", "Door"], ["Raam", "Window"], ["Dak", "Roof"]],
-            [["Rood", "Red"], ["Blauw", "Blue"], ["Groen", "Green"], ["Geel", "Yellow"], ["Eén", "One"], ["Twee", "Two"], ["Drie", "Three"], ["Vier", "Four"], ["Vijf", "Five"], ["Zes", "Six"]],
-            [["Hond", "Dog"], ["Kat", "Cat"], ["Paard", "Horse"], ["Koe", "Cow"], ["Vogel", "Bird"], ["Vis", "Fish"], ["Muis", "Mouse"], ["Konijn", "Rabbit"], ["Leeuw", "Lion"], ["Beer", "Bear"]],
-            [["Spel", "Game"], ["Bal", "Ball"], ["Voetbal", "Football"], ["Muziek", "Music"], ["Boek", "Book"], ["Film", "Movie"], ["Sport", "Sport"], ["Dans", "Dance"], ["Race", "Race"], ["Lied", "Song"]],
-            [["School", "School"], ["Boek", "Book"], ["Pen", "Pen"], ["Papier", "Paper"], ["Leraar", "Teacher"], ["Student", "Student"], ["Kantoor", "Office"], ["Baas", "Boss"], ["Taal", "Language"], ["Les", "Lesson"]],
-            [["Tijd", "Time"], ["Dag", "Day"], ["Nacht", "Night"], ["Zon", "Sun"], ["Regen", "Rain"], ["Wind", "Wind"], ["Sneeuw", "Snow"], ["Jaar", "Year"], ["Uur", "Hour"], ["Maand", "Month"]]
-        ],
-        "de": [
-            [["Hallo", "Hallo"], ["Goedemorgen", "Guten Morgen"], ["Goedemiddag", "Guten Tag"], ["Goedenavond", "Guten Abend"], ["Welterusten", "Gute Nacht"], ["Dank je wel", "Danke"], ["Tot ziens", "Tschüss"], ["Alsjeblieft", "Bitte"], ["Ja", "Ja"], ["Nee", "Nein"]],
-            [["Appel", "Apfel"], ["Banaan", "Banane"], ["Water", "Wasser"], ["Brood", "Brot"], ["Melk", "Milch"], ["Kaas", "Käse"], ["Koffie", "Kaffee"], ["Thee", "Tee"], ["Vlees", "Fleisch"], ["Vis", "Fisch"]],
-            Array(10).fill(["Trein", "Zug"]), Array(10).fill(["Vader", "Vater"]), Array(10).fill(["Huis", "Haus"]),
-            Array(10).fill(["Rood", "Rot"]), Array(10).fill(["Hond", "Hund"]), Array(10).fill(["Spel", "Spiel"]),
-            Array(10).fill(["School", "Schule"]), Array(10).fill(["Tijd", "Zeit"])
-        ],
-        "fr": [
-            [["Hallo", "Bonjour"], ["Goedemorgen", "Bonjour"], ["Goedemiddag", "Bon après-midi"], ["Goedenavond", "Bonsoir"], ["Welterusten", "Bonne nuit"], ["Dank je wel", "Merci"], ["Tot ziens", "Au revoir"], ["Alsjeblieft", "S'il vous plaît"], ["Ja", "Oui"], ["Nee", "Non"]],
-            [["Appel", "Pomme"], ["Banaan", "Banane"], ["Water", "Eau"], ["Brood", "Pain"], ["Melk", "Lait"], ["Kaas", "Fromage"], ["Koffie", "Café"], ["Thee", "Thé"], ["Vlees", "Viande"], ["Vis", "Poisson"]],
-            Array(10).fill(["Trein", "Train"]), Array(10).fill(["Vader", "Père"]), Array(10).fill(["Huis", "Maison"]),
-            Array(10).fill(["Rood", "Rouge"]), Array(10).fill(["Hond", "Chien"]), Array(10).fill(["Spel", "Jeu"]),
-            Array(10).fill(["School", "École"]), Array(10).fill(["Tijd", "Temps"])
-        ],
-        "es": [
-            [["Hallo", "Hola"], ["Goedemorgen", "Buenos días"], ["Goedemiddag", "Buenas tardes"], ["Goedenavond", "Buenas noches"], ["Welterusten", "Buenas noches"], ["Dank je wel", "Gracias"], ["Tot ziens", "Adiós"], ["Alsjeblieft", "Por favor"], ["Ja", "Sí"], ["Nee", "No"]],
-            [["Appel", "Manzana"], ["Banaan", "Plátano"], ["Water", "Agua"], ["Brood", "Pan"], ["Melk", "Leche"], ["Kaas", "Queso"], ["Koffie", "Café"], ["Thee", "Té"], ["Vlees", "Carne"], ["Vis", "Pescado"]],
-            Array(10).fill(["Trein", "Tren"]), Array(10).fill(["Vader", "Padre"]), Array(10).fill(["Casa", "Casa"]),
-            Array(10).fill(["Rood", "Rojo"]), Array(10).fill(["Hond", "Perro"]), Array(10).fill(["Spel", "Juego"]),
-            Array(10).fill(["School", "Escuela"]), Array(10).fill(["Tijd", "Tiempo"])
-        ]
-    };
-
-    let appData = JSON.parse(localStorage.getItem('wordly_learn_v9')) || {
-        points: 0, streak: 1, fromLang: "nl", toLang: "en", activeChapter: 0, languageProgress: {}
-    };
-
-    function saveData() {
-        localStorage.setItem('wordly_learn_v9', JSON.stringify(appData));
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        checkExistingUser();
-        updateUIStrings();
-        renderChapterTabs();
-        updateDashboardStats();
-        renderPath();
-
-        window.addEventListener('click', (event) => {
-            if (!event.target.closest('.custom-dropdown-container')) {
-                document.querySelectorAll('.lang-menu-content').forEach(menu => menu.classList.remove('show'));
-            }
-        });
-    });
-
-    function toggleMenu(menuId) {
-        document.querySelectorAll('.lang-menu-content').forEach(m => {
-            if(m.id !== menuId) m.classList.remove('show');
-        });
-        document.getElementById(menuId).classList.toggle('show');
-    }
-
-    function selectLanguage(type, code, name) {
-        if (type === 'from') {
-            if (code === appData.toLang) {
-                showNotification(t("sameLangTitle"), t("sameLangText"));
+            if (!user || !pass) {
+                msg.className = "auth-message error-text";
+                msg.innerText = "Vul alle velden in!";
                 return;
             }
-            appData.fromLang = code;
-        } else {
-            if (code === appData.fromLang) {
-                showNotification(t("sameLangTitle"), t("sameLangText"));
-                return;
+
+            registeredUser = user;
+            registeredPass = pass;
+
+            msg.className = "auth-message success-text";
+            msg.innerText = "Successfully registered!";
+
+            // Na korte vertraging automatisch naar het inlogscherm sturen
+            setTimeout(() => {
+                msg.innerText = "";
+                document.getElementById('reg-user').value = "";
+                document.getElementById('reg-pass').value = "";
+                document.getElementById('register-box').classList.add('hidden');
+                document.getElementById('login-box').classList.remove('hidden');
+            }, 1200);
+        }
+
+        function handleLogin() {
+            const user = document.getElementById('login-user').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+            const msg = document.getElementById('login-msg');
+
+            if (user === registeredUser && pass === registeredPass) {
+                msg.innerText = "";
+                document.getElementById('login-user').value = "";
+                document.getElementById('login-pass').value = "";
+                
+                // Verberg de gehele landing page en toon de echte website
+                document.getElementById('landing-page').classList.add('hidden');
+            } else {
+                msg.className = "auth-message error-text";
+                msg.innerText = "Onjuiste gebruikersnaam of wachtwoord!";
             }
-            appData.toLang = code;
         }
 
-        appData.activeChapter = 0;
-        saveData();
-        updateUIStrings();
-        renderChapterTabs();
-        updateDashboardStats();
-        renderPath();
-        document.querySelectorAll('.lang-menu-content').forEach(m => m.classList.remove('show'));
-    }
-
-    function updateUIStrings() {
-        document.getElementById('from-flag').src = flags[appData.fromLang] || flags.nl;
-        document.getElementById('from-label').innerText = langNames[appData.fromLang];
-        document.getElementById('to-flag').src = flags[appData.toLang] || flags.en;
-        document.getElementById('to-label').innerText = langNames[appData.toLang];
-
-        document.getElementById('label-from-text').innerText = t("labelFrom");
-        document.getElementById('label-to-text').innerText = t("labelTo");
-        document.getElementById('reset-btn-text').innerText = t("reset");
-        document.getElementById('stop-btn-text').innerText = t("stop");
-        document.getElementById('notif-ok-btn').innerText = t("notifOk");
-        document.getElementById('complete-continue-btn').innerText = t("continueBtn");
-        document.getElementById('complete-title-text').innerText = t("completeTitle");
-        document.getElementById('complete-text').innerText = t("completeSub");
-    }
-
-    function updateDashboardStats() {
-        document.getElementById('points-display').innerText = appData.points;
-        document.getElementById('streak-display').innerText = appData.streak;
-        
-        let lang = appData.fromLang;
-        let titles = chapterNamesMulti[lang] || chapterNamesMulti["nl"];
-        let descs = chapterDescriptionsMulti[lang] || chapterDescriptionsMulti["nl"];
-
-        document.getElementById('chapter-title-display').innerText = titles[appData.activeChapter];
-        document.getElementById('chapter-desc-display').innerText = descs[appData.activeChapter];
-    }
-
-    function getActivePairKey() { return `${appData.fromLang}-${appData.toLang}`; }
-
-    function getCurrentLangCompletedMap() {
-        let pairKey = getActivePairKey();
-        if(!appData.languageProgress[pairKey]) {
-            appData.languageProgress[pairKey] = {};
+        function switchToLogin(e) {
+            e.preventDefault();
+            document.getElementById('register-box').classList.add('hidden');
+            document.getElementById('login-box').classList.remove('hidden');
         }
-        return appData.languageProgress[pairKey];
-    }
 
-    function isChapterUnlocked(chapterIndex) {
-        if(chapterIndex === 0) return true;
-        let langProgress = getCurrentLangCompletedMap();
-        let prevChapterKey = `ch${chapterIndex - 1}`;
-        let completedLessons = langProgress[prevChapterKey] || [];
-        return completedLessons.length >= 6;
-    }
+        function switchToRegister(e) {
+            e.preventDefault();
+            document.getElementById('login-box').classList.add('hidden');
+            document.getElementById('register-box').classList.remove('hidden');
+        }
+        // --- EINDE AUTH LOGICA ---
 
-    function renderChapterTabs() {
-        let container = document.getElementById('chapter-tabs-container');
-        container.innerHTML = "";
-        for(let i = 0; i < 10; i++) {
-            let unlocked = isChapterUnlocked(i);
-            let tab = document.createElement('button');
-            tab.className = `chapter-tab ${appData.activeChapter === i ? 'active' : ''} ${!unlocked ? 'locked-tab' : ''}`;
-            tab.innerText = `H${i+1}`;
-            
-            tab.onclick = () => {
-                if(!unlocked) {
-                    showNotification(t("lockTitle"), t("lockText"));
+        const flags = {
+            nl: "https://flagcdn.com/w40/nl.png",
+            en: "https://flagcdn.com/w40/gb.png",
+            de: "https://flagcdn.com/w40/de.png",
+            fr: "https://flagcdn.com/w40/fr.png",
+            es: "https://flagcdn.com/w40/es.png"
+        };
+
+        const langNames = {
+            nl: "Nederlands",
+            en: "Engels",
+            de: "Duits",
+            fr: "Frans",
+            es: "Spaans"
+        };
+
+        const uiTranslations = {
+            nl: {
+                labelFrom: "Van:",
+                labelTo: "Naar:",
+                reset: "Reset",
+                stop: "✕ Stoppen",
+                examLabel: "Toets",
+                lessonLabel: "Les",
+                examPrompt: "[EINDTOETS] Vertaal:",
+                lessonPrompt: "Vertaal / Beantwoord:",
+                completeTitle: "Les Voltooid! 🎉",
+                completeSub: "Geweldig gepresteerd!",
+                continueBtn: "Doorgaan",
+                correctMsg: "Geweldig! Dat is correct.",
+                wrongMsg: "Helaas! Het juiste antwoord was:",
+                notifTitle: "Melding",
+                notifOk: "Begrepen",
+                sameLangTitle: "Let op",
+                sameLangText: "De brontaal en doeltaal mogen niet hetzelfde zijn!",
+                lockTitle: "Hoofdstuk Vergrendeld",
+                lockText: "Je moet eerst alle lessen van het vorige hoofdstuk volledig afronden om dit hoofdstuk te ontgrendelen!",
+                nodeLockTitle: "Vergrendeld",
+                nodeLockText: "Voltooi eerst de vorige les in dit hoofdstuk!",
+                resetTitle: "Voortgang wissen",
+                resetText: "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?"
+            },
+            en: {
+                labelFrom: "From:",
+                labelTo: "To:",
+                reset: "Reset",
+                stop: "✕ Stop",
+                examLabel: "Exam",
+                lessonLabel: "Lesson",
+                examPrompt: "[FINAL EXAM] Translate:",
+                lessonPrompt: "Translate / Answer:",
+                completeTitle: "Lesson Completed! 🎉",
+                completeSub: "Great job!",
+                continueBtn: "Continue",
+                correctMsg: "Awesome! That's correct.",
+                wrongMsg: "Too bad! The correct answer was:",
+                notifTitle: "Notice",
+                notifOk: "Got it",
+                sameLangTitle: "Attention",
+                sameLangText: "Source and target languages cannot be the same!",
+                lockTitle: "Chapter Locked",
+                lockText: "You must complete all lessons of the previous chapter first to unlock this one!",
+                nodeLockTitle: "Locked",
+                nodeLockText: "Complete the previous lesson in this chapter first!",
+                resetTitle: "Clear Progress",
+                resetText: "Are you sure you want to reset all saved lessons and XP?"
+            },
+            de: {
+                labelFrom: "Von:",
+                labelTo: "Nach:",
+                reset: "Zurücksetzen",
+                stop: "✕ Stopp",
+                examLabel: "Test",
+                lessonLabel: "Lektion",
+                examPrompt: "[ABSCHLUSSTEST] Übersetze:",
+                lessonPrompt: "Übersetze / Beantworte:",
+                completeTitle: "Lektion beendet! 🎉",
+                completeSub: "Großartige Leistung!",
+                continueBtn: "Weiter",
+                correctMsg: "Super! Das ist richtig.",
+                wrongMsg: "Schade! Die richtige Antwort war:",
+                notifTitle: "Hinweis",
+                notifOk: "Verstanden",
+                sameLangTitle: "Achtung",
+                sameLangText: "Quell- und Zielsprache dürfen nicht identisch sein!",
+                lockTitle: "Kapitel gesperrt",
+                lockText: "Du musst erst alle Lektionen des vorherigen Kapitels abschließen!",
+                nodeLockTitle: "Gesperrt",
+                nodeLockText: "Schließe zuerst die vorherige Lektion ab!",
+                resetTitle: "Fortschritt zurücksetzen",
+                resetText: "Möchtest du wirklich alle gespeicherten Lektionen und XP zurücksetzen?"
+            },
+            fr: {
+                labelFrom: "De:",
+                labelTo: "Vers:",
+                reset: "Réinitialiser",
+                stop: "✕ Quitter",
+                examLabel: "Examen",
+                lessonLabel: "Leçon",
+                examPrompt: "[EXAMEN FINAL] Traduisez:",
+                lessonPrompt: "Traduisez / Répondez:",
+                completeTitle: "Leçon terminée ! 🎉",
+                completeSub: "Excellent travail !",
+                continueBtn: "Continuer",
+                correctMsg: "Superbe ! C'est correct.",
+                wrongMsg: "Dommage ! La bonne réponse était :",
+                notifTitle: "Avis",
+                notifOk: "Compris",
+                sameLangTitle: "Attention",
+                sameLangText: "La langue source et la langue cible ne peuvent pas être identiques !",
+                lockTitle: "Chapitre verrouillé",
+                lockText: "Vous devez d'abord terminer toutes les leçons du chapitre précédent !",
+                nodeLockTitle: "Verrouillé",
+                nodeLockText: "Terminez d'abord la leçon précédente de ce chapitre !",
+                resetTitle: "Effacer la progression",
+                resetText: "Êtes-vous sûr de vouloir réinitialiser toute votre progression ?"
+            },
+            es: {
+                labelFrom: "De:",
+                labelTo: "A:",
+                reset: "Reiniciar",
+                stop: "✕ Salir",
+                examLabel: "Examen",
+                lessonLabel: "Lección",
+                examPrompt: "[EXAMEN FINAL] Traduce:",
+                lessonPrompt: "Traduce / Responde:",
+                completeTitle: "¡Lección completada! 🎉",
+                completeSub: "¡Buen trabajo!",
+                continueBtn: "Continuar",
+                correctMsg: "¡Genial! Es correcto.",
+                wrongMsg: "¡Qué pena! La respuesta correcta era:",
+                notifTitle: "Aviso",
+                notifOk: "Entendido",
+                sameLangTitle: "Atención",
+                sameLangText: "¡El idioma de origen y destino no pueden ser el mismo!",
+                lockTitle: "Capítulo bloqueado",
+                lockText: "¡Debes completar todas las lecciones del capítulo anterior primero!",
+                nodeLockTitle: "Bloqueado",
+                nodeLockText: "¡Completa primero la lección anterior de este capítulo!",
+                resetTitle: "Borrar progreso",
+                resetText: "¿Estás seguro de que quieres restablecer todo tu progreso?"
+            }
+        };
+
+        const chapterNamesMulti = {
+            nl: [
+                "Hoofdstuk 1: Basis & Introductie",
+                "Hoofdstuk 2: Eten & Drinken",
+                "Hoofdstuk 3: Reizen & Vervoer",
+                "Hoofdstuk 4: Familie & Mensen",
+                "Hoofdstuk 5: Huis & Omgeving",
+                "Hoofdstuk 6: Kleuren & Cijfers",
+                "Hoofdstuk 7: Dieren in de Natuur",
+                "Hoofdstuk 8: Hobby's & Sport",
+                "Hoofdstuk 9: School & Werk",
+                "Hoofdstuk 10: Tijd & Weer"
+            ],
+            en: [
+                "Chapter 1: Basics & Introduction",
+                "Chapter 2: Food & Drinks",
+                "Chapter 3: Travel & Transport",
+                "Chapter 4: Family & People",
+                "Chapter 5: House & Environment",
+                "Chapter 6: Colors & Numbers",
+                "Chapter 7: Animals in Nature",
+                "Chapter 8: Hobbies & Sport",
+                "Chapter 9: School & Work",
+                "Chapter 10: Time & Weather"
+            ],
+            de: [
+                "Kapitel 1: Grundlagen & Einführung",
+                "Kapitel 2: Essen & Trinken",
+                "Kapitel 3: Reisen & Transport",
+                "Kapitel 4: Familie & Personen",
+                "Kapitel 5: Haus & Umgebung",
+                "Kapitel 6: Farben & Zahlen",
+                "Kapitel 7: Tiere in der Natur",
+                "Kapitel 8: Hobbys & Sport",
+                "Kapitel 9: Schule & Arbeit",
+                "Kapitel 10: Zeit & Wetter"
+            ],
+            fr: [
+                "Chapitre 1 : Bases & Introduction",
+                "Chapitre 2 : Manger & Boire",
+                "Chapitre 3 : Voyage & Transport",
+                "Chapitre 4 : Famille & Personnes",
+                "Chapitre 5 : Maison & Environnement",
+                "Chapitre 6 : Couleurs & Nombres",
+                "Chapitre 7 : Animaux dans la nature",
+                "Chapitre 8 : Loisirs & Sport",
+                "Chapitre 9 : École & Travail",
+                "Chapitre 10 : Temps & Météo"
+            ],
+            es: [
+                "Capítulo 1: Básicos e Introducción",
+                "Capítulo 2: Comida y Bebida",
+                "Capítulo 3: Viajes y Transporte",
+                "Capítulo 4: Familia y Personas",
+                "Capítulo 5: Casa y Entorno",
+                "Capítulo 6: Colores y Números",
+                "Capítulo 7: Animales en la Naturaleza",
+                "Capítulo 8: Aficiones y Deporte",
+                "Capítulo 9: Escuela y Trabajo",
+                "Capítulo 10: Tiempo y Clima"
+            ]
+        };
+
+        const chapterDescriptionsMulti = {
+            nl: [
+                "Leer fundamentele woorden en simpele begroetingen.",
+                "Alles over lekker eten, drinken en boodschappen doen.",
+                "Vervoermiddelen, stations en reizen naar het buiteland.",
+                "Familieleden, vrienden en relaties beschrijven.",
+                "Kamers, meubels en je eigen woning.",
+                "De mooiste kleuren en getallen tellen.",
+                "Dieren in het wild en huisdieren.",
+                "Sporten, games spelen en ontspanning.",
+                "Nuttige woorden voor op school en tijdens je werk.",
+                "Het weer vandaag en besef van tijd."
+            ],
+            en: [
+                "Learn fundamental words and simple greetings.",
+                "All about great food, drinks, and grocery shopping.",
+                "Means of transport, stations, and traveling abroad.",
+                "Describe family members, friends, and relationships.",
+                "Rooms, furniture, and your own home.",
+                "The most beautiful colors and counting numbers.",
+                "Wild animals and pets.",
+                "Sports, playing games, and relaxation.",
+                "Useful words for school and during your work.",
+                "The weather today and awareness of time."
+            ],
+            de: [
+                "Lerne grundlegende Wörter und einfache Begrüßungen.",
+                "Alles über gutes Essen, Trinken und Einkaufen.",
+                "Verkehrsmittel, Bahnhöfe und Auslandsreisen.",
+                "Familienmitglieder, Freunde und Beziehungen beschreiben.",
+                "Zimmer, Möbel und dein eigenes Zuhause.",
+                "Die schönsten Farben und Zahlen zählen.",
+                "Tiere in freier Wildbahn und Haustiere.",
+                "Sport, Spiele spielen und Entspannung.",
+                "Nützliche Wörter für Schule und Arbeit.",
+                "Das Wetter heute und Zeitgefühl."
+            ],
+            fr: [
+                "Apprenez des mots fondamentaux et des salutations simples.",
+                "Tout sur la nourriture, les boissons et les courses.",
+                "Moyens de transport, gares et voyages à l'étranger.",
+                "Décrire les membres de la famille, les amis et les relations.",
+                "Pièces, meubles et votre propre maison.",
+                "Les plus belles couleurs et compter les nombres.",
+                "Animaux sauvages et animaux de compagnie.",
+                "Sports, jeux et détente.",
+                "Mots utiles pour l'école et le travail.",
+                "La météo d'aujourd'hui et la notion du temps."
+            ],
+            es: [
+                "Aprende palabras fundamentales y saludos sencillos.",
+                "Todo sobre buena comida, bebida y compras.",
+                "Medios de transporte, estaciones y viajes al extranjero.",
+                "Describe a miembros de la familia, amigos y relaciones.",
+                "Habitaciones, muebles y tu propio hogar.",
+                "Los colores más bonitos y contar números.",
+                "Animales salvajes y mascotas.",
+                "Deportes, videojuegos y relajación.",
+                "Palabras útiles para la escuela y el trabajo.",
+                "El tiempo hoy y la conciencia del tiempo."
+            ]
+        };
+
+        function t(key) {
+            let lang = appData.fromLang;
+            if (uiTranslations[lang] && uiTranslations[lang][key]) {
+                return uiTranslations[lang][key];
+            }
+            return uiTranslations["nl"][key];
+        }
+
+        const masterDatabase = {
+            "en": [
+                [["Hallo", "Hello"], ["Hoi", "Hi"], ["Goedemorgen", "Good morning"], ["Goedemiddag", "Good afternoon"], ["Goedenavond", "Good evening"], ["Welterusten", "Good night"], ["Dank je wel", "Thank you"], ["Hartelijk dank", "Many thanks"], ["Tot ziens", "Goodbye"], ["Tot morgen", "See you tomorrow"]],
+                [["Appel", "Apple"], ["Banaan", "Banana"], ["Water", "Water"], ["Brood", "Bread"], ["Melk", "Milk"], ["Kaas", "Cheese"], ["Koffie", "Coffee"], ["Thee", "Tea"], ["Vlees", "Meat"], ["Vis", "Fish"]],
+                [["Trein", "Train"], ["Station", "Station"], ["Bus", "Bus"], ["Auto", "Car"], ["Vliegtuig", "Plane"], ["Fiets", "Bike"], ["Hotel", "Hotel"], ["Luchthaven", "Airport"], ["Schip", "Ship"], ["Taxi", "Taxi"]],
+                [["Vader", "Father"], ["Moeder", "Mother"], ["Broer", "Brother"], ["Zus", "Sister"], ["Zoon", "Son"], ["Dochter", "Daughter"], ["Vriend", "Friend"], ["Man", "Man"], ["Vrouw", "Woman"], ["Kind", "Child"]],
+                [["Huis", "House"], ["Kamer", "Room"], ["Keuken", "Kitchen"], ["Badkamer", "Bathroom"], ["Bed", "Bed"], ["Tafel", "Table"], ["Stoel", "Chair"], ["Deur", "Door"], ["Raam", "Window"], ["Dak", "Roof"]],
+                [["Rood", "Red"], ["Blauw", "Blue"], ["Groen", "Green"], ["Geel", "Yellow"], ["Eén", "One"], ["Twee", "Two"], ["Drie", "Three"], ["Vier", "Four"], ["Vijf", "Five"], ["Zes", "Six"]],
+                [["Hond", "Dog"], ["Kat", "Cat"], ["Paard", "Horse"], ["Koe", "Cow"], ["Vogel", "Bird"], ["Vis", "Fish"], ["Muis", "Mouse"], ["Konijn", "Rabbit"], ["Leeuw", "Lion"], ["Beer", "Bear"]],
+                [["Spel", "Game"], ["Bal", "Ball"], ["Voetbal", "Football"], ["Muziek", "Music"], ["Boek", "Book"], ["Film", "Movie"], ["Sport", "Sport"], ["Dans", "Dance"], ["Race", "Race"], ["Lied", "Song"]],
+                [["School", "School"], ["Boek", "Book"], ["Pen", "Pen"], ["Papier", "Paper"], ["Leraar", "Teacher"], ["Student", "Student"], ["Kantoor", "Office"], ["Baas", "Boss"], ["Taal", "Language"], ["Les", "Lesson"]],
+                [["Tijd", "Time"], ["Dag", "Day"], ["Nacht", "Night"], ["Zon", "Sun"], ["Regen", "Rain"], ["Wind", "Wind"], ["Sneeuw", "Snow"], ["Jaar", "Year"], ["Uur", "Hour"], ["Maand", "Month"]]
+            ],
+            "de": [
+                [["Hallo", "Hallo"], ["Goedemorgen", "Guten Morgen"], ["Goedemiddag", "Guten Tag"], ["Goedenavond", "Guten Abend"], ["Welterusten", "Gute Nacht"], ["Dank je wel", "Danke"], ["Tot ziens", "Tschüss"], ["Alsjeblieft", "Bitte"], ["Ja", "Ja"], ["Nee", "Nein"]],
+                [["Appel", "Apfel"], ["Banaan", "Banane"], ["Water", "Wasser"], ["Brood", "Brot"], ["Melk", "Milch"], ["Kaas", "Käse"], ["Koffie", "Kaffee"], ["Thee", "Tee"], ["Vlees", "Fleisch"], ["Vis", "Fisch"]],
+                Array(10).fill(["Trein", "Zug"]),
+                Array(10).fill(["Vader", "Vater"]),
+                Array(10).fill(["Huis", "Haus"]),
+                Array(10).fill(["Rood", "Rot"]),
+                Array(10).fill(["Hond", "Hund"]),
+                Array(10).fill(["Spel", "Spiel"]),
+                Array(10).fill(["School", "Schule"]),
+                Array(10).fill(["Tijd", "Zeit"])
+            ],
+            "fr": [
+                [["Hallo", "Bonjour"], ["Goedemorgen", "Bonjour"], ["Goedemiddag", "Bon après-midi"], ["Goedenavond", "Bonsoir"], ["Welterusten", "Bonne nuit"], ["Dank je wel", "Merci"], ["Tot ziens", "Au revoir"], ["Alsjeblieft", "S'il vous plaît"], ["Ja", "Oui"], ["Nee", "Non"]],
+                [["Appel", "Pomme"], ["Banaan", "Banane"], ["Water", "Eau"], ["Brood", "Pain"], ["Melk", "Lait"], ["Kaas", "Fromage"], ["Koffie", "Café"], ["Thee", "Thé"], ["Vlees", "Viande"], ["Vis", "Poisson"]],
+                Array(10).fill(["Trein", "Train"]),
+                Array(10).fill(["Vader", "Père"]),
+                Array(10).fill(["Huis", "Maison"]),
+                Array(10).fill(["Rood", "Rouge"]),
+                Array(10).fill(["Hond", "Chien"]),
+                Array(10).fill(["Spel", "Jeu"]),
+                Array(10).fill(["School", "École"]),
+                Array(10).fill(["Tijd", "Temps"])
+            ],
+            "es": [
+                [["Hallo", "Hola"], ["Goedemorgen", "Buenos días"], ["Goedemiddag", "Buenas tardes"], ["Goedenavond", "Buenas noches"], ["Welterusten", "Buenas noches"], ["Dank je wel", "Gracias"], ["Tot ziens", "Adiós"], ["Alsjeblieft", "Por favor"], ["Ja", "Sí"], ["Nee", "No"]],
+                [["Appel", "Manzana"], ["Banaan", "Plátano"], ["Water", "Agua"], ["Brood", "Pan"], ["Melk", "Leche"], ["Kaas", "Queso"], ["Koffie", "Café"], ["Thee", "Té"], ["Vlees", "Carne"], ["Vis", "Pescado"]],
+                Array(10).fill(["Trein", "Tren"]),
+                Array(10).fill(["Vader", "Padre"]),
+                Array(10).fill(["Casa", "Casa"]),
+                Array(10).fill(["Rood", "Rojo"]),
+                Array(10).fill(["Hond", "Perro"]),
+                Array(10).fill(["Spel", "Juego"]),
+                Array(10).fill(["School", "Escuela"]),
+                Array(10).fill(["Tijd", "Tiempo"])
+            ]
+        };
+
+        let appData = JSON.parse(localStorage.getItem('wordly_learn_v9')) || {
+            points: 0,
+            streak: 1,
+            fromLang: "nl",
+            toLang: "en",
+            activeChapter: 0,
+            languageProgress: {}
+        };
+
+        function saveData() {
+            localStorage.setItem('wordly_learn_v9', JSON.stringify(appData));
+        }
+
+        window.onload = function() {
+            updateUIStrings();
+            renderChapterTabs();
+            updateDashboardStats();
+            renderPath();
+
+            window.onclick = function(event) {
+                if (!event.target.closest('.custom-dropdown-container')) {
+                    document.querySelectorAll('.lang-menu-content').forEach(menu => menu.classList.remove('show'));
+                }
+            };
+        };
+
+        function toggleMenu(menuId) {
+            document.querySelectorAll('.lang-menu-content').forEach(m => {
+                if(m.id !== menuId) m.classList.remove('show');
+            });
+            document.getElementById(menuId).classList.toggle('show');
+        }
+
+        function selectLanguage(type, code, name) {
+            if (type === 'from') {
+                if (code === appData.toLang) {
+                    showNotification(t("sameLangTitle"), t("sameLangText"));
                     return;
                 }
-                appData.activeChapter = i;
+                appData.fromLang = code;
+            } else {
+                if (code === appData.fromLang) {
+                    showNotification(t("sameLangTitle"), t("sameLangText"));
+                    return;
+                }
+                appData.toLang = code;
+            }
+
+            appData.activeChapter = 0;
+            saveData();
+            updateUIStrings();
+            renderChapterTabs();
+            updateDashboardStats();
+            renderPath();
+            document.querySelectorAll('.lang-menu-content').forEach(m => m.classList.remove('show'));
+        }
+
+        function updateUIStrings() {
+            document.getElementById('from-flag').src = flags[appData.fromLang] || flags.nl;
+            document.getElementById('from-label').innerText = langNames[appData.fromLang];
+            document.getElementById('to-flag').src = flags[appData.toLang] || flags.en;
+            document.getElementById('to-label').innerText = langNames[appData.toLang];
+
+            document.getElementById('label-from-text').innerText = t("labelFrom");
+            document.getElementById('label-to-text').innerText = t("labelTo");
+            document.getElementById('reset-btn-text').innerText = t("reset");
+            document.getElementById('stop-btn-text').innerText = t("stop");
+            document.getElementById('notif-ok-btn').innerText = t("notifOk");
+            document.getElementById('complete-continue-btn').innerText = t("continueBtn");
+            document.getElementById('complete-title-text').innerText = t("completeTitle");
+            document.getElementById('complete-text').innerText = t("completeSub");
+        }
+
+        function updateDashboardStats() {
+            document.getElementById('points-display').innerText = appData.points;
+            document.getElementById('streak-display').innerText = appData.streak;
+            
+            let lang = appData.fromLang;
+            let titles = chapterNamesMulti[lang] || chapterNamesMulti["nl"];
+            let descs = chapterDescriptionsMulti[lang] || chapterDescriptionsMulti["nl"];
+
+            document.getElementById('chapter-title-display').innerText = titles[appData.activeChapter];
+            document.getElementById('chapter-desc-display').innerText = descs[appData.activeChapter];
+        }
+
+        function getActivePairKey() {
+            return `${appData.fromLang}-${appData.toLang}`;
+        }
+
+        function getCurrentLangCompletedMap() {
+            let pairKey = getActivePairKey();
+            if(!appData.languageProgress[pairKey]) {
+                appData.languageProgress[pairKey] = {};
+            }
+            return appData.languageProgress[pairKey];
+        }
+
+        function isChapterUnlocked(chapterIndex) {
+            if(chapterIndex === 0) return true;
+            let langProgress = getCurrentLangCompletedMap();
+            let prevChapterKey = `ch${chapterIndex - 1}`;
+            let completedLessons = langProgress[prevChapterKey] || [];
+            return completedLessons.length >= 6;
+        }
+
+        function renderChapterTabs() {
+            let container = document.getElementById('chapter-tabs-container');
+            container.innerHTML = "";
+            for(let i = 0; i < 10; i++) {
+                let unlocked = isChapterUnlocked(i);
+                let tab = document.createElement('button');
+                tab.className = `chapter-tab ${appData.activeChapter === i ? 'active' : ''} ${!unlocked ? 'locked-tab' : ''}`;
+                tab.innerText = `H${i+1}`;
+                
+                tab.onclick = () => {
+                    if(!unlocked) {
+                        showNotification(t("lockTitle"), t("lockText"));
+                        return;
+                    }
+                    appData.activeChapter = i;
+                    saveData();
+                    updateDashboardStats();
+                    renderPath();
+                };
+                container.appendChild(tab);
+            }
+        }
+
+        function renderPath() {
+            renderChapterTabs();
+            let container = document.getElementById('path-container');
+            container.innerHTML = "";
+            
+            let totalNodes = 6;
+            let langProgress = getCurrentLangCompletedMap();
+            let currentKey = `ch${appData.activeChapter}`;
+            let langCompleted = langProgress[currentKey] || [];
+
+            for(let i = 0; i < totalNodes; i++) {
+                let row = document.createElement('div');
+                row.className = `path-row offset-${i % 3}`;
+
+                let isDone = langCompleted.includes(i);
+                let isUnlocked = i === 0 || langCompleted.includes(i - 1);
+                let isExam = (i === totalNodes - 1);
+
+                let node = document.createElement('button');
+                node.className = `duo-node ${isExam ? 'exam-node' : ''} ${isDone ? 'done' : (!isUnlocked ? 'locked' : 'current')}`;
+                if(isDone) node.style.background = isExam ? "#ff9600" : "var(--duo-green)";
+                
+                if(isExam) {
+                    node.innerHTML = `🏆<span class="node-label">${t("examLabel")}</span>`;
+                } else {
+                    node.innerHTML = `${i + 1}<span class="node-label">${t("lessonLabel")}</span>`;
+                }
+                
+                if(isUnlocked) {
+                    node.onclick = () => startLesson(i, isExam);
+                } else {
+                    node.onclick = () => {
+                        showNotification(t("nodeLockTitle"), t("nodeLockText"));
+                    };
+                }
+
+                row.appendChild(node);
+                container.appendChild(row);
+            }
+        }
+
+        function getChapterWordList() {
+            let from = appData.fromLang;
+            let to = appData.toLang;
+            let chapterIdx = appData.activeChapter;
+
+            if (from === "nl" && masterDatabase[to]) {
+                let pairs = masterDatabase[to][chapterIdx] || masterDatabase[to][0];
+                return pairs.map(item => {
+                    let termA = item[0];
+                    let termB = item[1];
+                    let allOpts = (masterDatabase[to][chapterIdx] || masterDatabase[to][0]).map(i => i[1]);
+                    return [termA, termB, allOpts];
+                });
+            } else if (to === "nl" && masterDatabase[from]) {
+                let pairs = masterDatabase[from][chapterIdx] || masterDatabase[from][0];
+                return pairs.map(item => {
+                    let termA = item[1];
+                    let termB = item[0];
+                    let allOpts = (masterDatabase[from][chapterIdx] || masterDatabase[from][0]).map(i => i[0]);
+                    return [termA, termB, allOpts];
+                });
+            } else {
+                let fromPairs = masterDatabase[from] ? (masterDatabase[from][chapterIdx] || masterDatabase[from][0]) : [];
+                let toPairs = masterDatabase[to] ? (masterDatabase[to][chapterIdx] || masterDatabase[to][0]) : [];
+
+                let combined = [];
+                for (let i = 0; i < Math.min(fromPairs.length, toPairs.length); i++) {
+                    let wordInNL = fromPairs[i][0];
+                    let wordFrom = fromPairs[i][1];
+                    let match = toPairs.find(p => p[0].toLowerCase() === wordInNL.toLowerCase());
+                    let wordTo = match ? match[1] : fromPairs[i][1];
+                    let allToOpts = toPairs.map(p => p[1]);
+                    combined.push([wordFrom, wordTo, allToOpts]);
+                }
+                if (combined.length === 0) {
+                    return [["Hello", "Bonjour", ["Bonjour", "Salut", "Adieu", "Merci"]]];
+                }
+                return combined;
+            }
+        }
+
+        let activeQuestions = [], currentQIdx = 0, activeLessonIdx = 0, isCurrentExam = false;
+
+        function startLesson(lessonIdx, isExam) {
+            activeLessonIdx = lessonIdx;
+            isCurrentExam = isExam;
+            let fullWordList = getChapterWordList();
+            activeQuestions = [];
+
+            if(isExam) {
+                let shuffledPool = [...fullWordList].sort(() => 0.5 - Math.random());
+                let count = Math.min(10, shuffledPool.length);
+                for(let q = 0; q < count; q++) {
+                    let item = shuffledPool[q];
+                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+                }
+            } else {
+                let chunkSize = 4;
+                let startIndex = (lessonIdx * chunkSize) % fullWordList.length;
+                for(let q = 0; q < 5; q++) {
+                    let item = fullWordList[(startIndex + q) % fullWordList.length];
+                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+                }
+            }
+
+            currentQIdx = 0;
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-lesson').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if(currentQIdx >= activeQuestions.length) {
+                appData.points += isCurrentExam ? 50 : 20;
+                
+                let langProgress = getCurrentLangCompletedMap();
+                let key = `ch${appData.activeChapter}`;
+                if(!langProgress[key]) langProgress[key] = [];
+                if(!langProgress[key].includes(activeLessonIdx)) {
+                    langProgress[key].push(activeLessonIdx);
+                }
                 saveData();
                 updateDashboardStats();
-                renderPath();
-            };
-            container.appendChild(tab);
-        }
-    }
 
-    function renderPath() {
-        renderChapterTabs();
-        let container = document.getElementById('path-container');
-        container.innerHTML = "";
-        
-        let totalNodes = 6;
-        let langProgress = getCurrentLangCompletedMap();
-        let currentKey = `ch${appData.activeChapter}`;
-        let langCompleted = langProgress[currentKey] || [];
+                document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
+                document.getElementById('page-complete').classList.remove('hidden');
+                return;
+            }
 
-        for(let i = 0; i < totalNodes; i++) {
-            let row = document.createElement('div');
-            row.className = `path-row offset-${i % 3}`;
-
-            let isDone = langCompleted.includes(i);
-            let isUnlocked = i === 0 || langCompleted.includes(i - 1);
-            let isExam = (i === totalNodes - 1);
-
-            let node = document.createElement('button');
-            node.className = `duo-node ${isExam ? 'exam-node' : ''} ${isDone ? 'done' : (!isUnlocked ? 'locked' : 'current')}`;
-            if(isDone) node.style.background = isExam ? "#ff9600" : "var(--duo-green)";
+            let qObj = activeQuestions[currentQIdx];
+            let progressPercent = (currentQIdx / activeQuestions.length) * 100;
+            document.getElementById('lesson-progress-bar').style.width = `${progressPercent}%`;
+            document.getElementById('lesson-progress-text').innerText = `${currentQIdx + 1}/${activeQuestions.length}`;
             
-            if(isExam) {
-                node.innerHTML = `🏆<span class="node-label">${t("examLabel")}</span>`;
+            document.getElementById('question-prompt').innerText = isCurrentExam 
+                ? `${t("examPrompt")} "${qObj.q}"` 
+                : `${t("lessonPrompt")} "${qObj.q}"`;
+
+            let area = document.getElementById('answers-area');
+            area.innerHTML = "";
+            document.getElementById('next-btn').classList.add('hidden');
+
+            let otherOpts = qObj.opts.filter(opt => opt.toLowerCase() !== qObj.a.toLowerCase());
+            otherOpts.sort(() => 0.5 - Math.random());
+            let shuffledOpts = [qObj.a, ...otherOpts.slice(0, 3)].sort(() => 0.5 - Math.random());
+
+            shuffledOpts.forEach(opt => {
+                let btn = document.createElement('button');
+                btn.className = "btn option-btn";
+                btn.innerText = opt;
+                btn.onclick = () => checkMcAnswer(opt, qObj.a);
+                area.appendChild(btn);
+            });
+        }
+
+        function checkMcAnswer(given, correct) {
+            let area = document.getElementById('answers-area');
+            area.querySelectorAll('button').forEach(b => b.disabled = true);
+
+            if(given.toLowerCase() === correct.toLowerCase()) {
+                area.innerHTML += `<div class="feedback-box-correct">${t("correctMsg")}</div>`;
             } else {
-                node.innerHTML = `${i + 1}<span class="node-label">${t("lessonLabel")}</span>`;
+                area.innerHTML += `<div class="feedback-box-wrong">${t("wrongMsg")} <strong>${correct}</strong></div>`;
             }
-            
-            if(isUnlocked) {
-                node.onclick = () => startLesson(i, isExam);
-            } else {
-                node.onclick = () => { showNotification(t("nodeLockTitle"), t("nodeLockText")); };
-            }
-
-            row.appendChild(node);
-            container.appendChild(row);
-        }
-    }
-
-    function getChapterWordList() {
-        let from = appData.fromLang;
-        let to = appData.toLang;
-        let chapterIdx = appData.activeChapter;
-
-        if (from === "nl" && masterDatabase[to]) {
-            let pairs = masterDatabase[to][chapterIdx] || masterDatabase[to][0];
-            return pairs.map(item => [item[0], item[1], (masterDatabase[to][chapterIdx] || masterDatabase[to][0]).map(i => i[1])]);
-        } else if (to === "nl" && masterDatabase[from]) {
-            let pairs = masterDatabase[from][chapterIdx] || masterDatabase[from][0];
-            return pairs.map(item => [item[1], item[0], (masterDatabase[from][chapterIdx] || masterDatabase[from][0]).map(i => i[0])]);
-        } else {
-            let fromPairs = masterDatabase[from] ? (masterDatabase[from][chapterIdx] || masterDatabase[from][0]) : [];
-            let toPairs = masterDatabase[to] ? (masterDatabase[to][chapterIdx] || masterDatabase[to][0]) : [];
-            let combined = [];
-            for (let i = 0; i < Math.min(fromPairs.length, toPairs.length); i++) {
-                let wordInNL = fromPairs[i][0];
-                let match = toPairs.find(p => p[0].toLowerCase() === wordInNL.toLowerCase());
-                let wordTo = match ? match[1] : fromPairs[i][1];
-                let allToOpts = toPairs.map(p => p[1]);
-                combined.push([fromPairs[i][1], wordTo, allToOpts]);
-            }
-            return combined.length > 0 ? combined : [["Hello", "Bonjour", ["Bonjour", "Salut", "Adieu", "Merci"]]];
-        }
-    }
-
-    let activeQuestions = [], currentQIdx = 0, activeLessonIdx = 0, isCurrentExam = false;
-
-    function startLesson(lessonIdx, isExam) {
-        activeLessonIdx = lessonIdx;
-        isCurrentExam = isExam;
-        let fullWordList = getChapterWordList();
-        activeQuestions = [];
-
-        if(isExam) {
-            let shuffledPool = [...fullWordList].sort(() => 0.5 - Math.random());
-            let count = Math.min(10, shuffledPool.length);
-            for(let q = 0; q < count; q++) {
-                let item = shuffledPool[q];
-                activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
-            }
-        } else {
-            let chunkSize = 4;
-            let startIndex = (lessonIdx * chunkSize) % fullWordList.length;
-            for(let q = 0; q < 5; q++) {
-                let item = fullWordList[(startIndex + q) % fullWordList.length];
-                activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
-            }
+            document.getElementById('next-btn').classList.remove('hidden');
         }
 
-        currentQIdx = 0;
-        document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
-        document.getElementById('page-lesson').classList.remove('hidden');
-        loadQuestion();
-    }
+        function nextQuestion() {
+            currentQIdx++;
+            loadQuestion();
+        }
 
-    function loadQuestion() {
-        if(currentQIdx >= activeQuestions.length) {
-            appData.points += isCurrentExam ? 50 : 20;
-            let langProgress = getCurrentLangCompletedMap();
-            let key = `ch${appData.activeChapter}`;
-            if(!langProgress[key]) langProgress[key] = [];
-            if(!langProgress[key].includes(activeLessonIdx)) {
-                langProgress[key].push(activeLessonIdx);
-            }
-            saveData();
+        function backToDashboard() {
             updateDashboardStats();
-
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
-            document.getElementById('page-complete').classList.remove('hidden');
-            return;
+            renderPath();
+            document.querySelectorAll('#page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-dashboard').classList.remove('hidden');
         }
 
-        let qObj = activeQuestions[currentQIdx];
-        let progressPercent = (currentQIdx / activeQuestions.length) * 100;
-        document.getElementById('lesson-progress-bar').style.width = `${progressPercent}%`;
-        document.getElementById('lesson-progress-text').innerText = `${currentQIdx + 1}/${activeQuestions.length}`;
-        
-        document.getElementById('question-prompt').innerText = isCurrentExam 
-            ? `${t("examPrompt")} "${qObj.q}"` 
-            : `${t("lessonPrompt")} "${qObj.q}"`;
-
-        let area = document.getElementById('answers-area');
-        area.innerHTML = "";
-        document.getElementById('next-btn').classList.add('hidden');
-
-        let otherOpts = qObj.opts.filter(opt => opt.toLowerCase() !== qObj.a.toLowerCase());
-        otherOpts.sort(() => 0.5 - Math.random());
-        let shuffledOpts = [qObj.a, ...otherOpts.slice(0, 3)].sort(() => 0.5 - Math.random());
-
-        shuffledOpts.forEach(opt => {
-            let btn = document.createElement('button');
-            btn.className = "app-btn option-btn";
-            btn.innerText = opt;
-            btn.onclick = () => checkMcAnswer(opt, qObj.a);
-            area.appendChild(btn);
-        });
-    }
-
-    function checkMcAnswer(given, correct) {
-        let area = document.getElementById('answers-area');
-        area.querySelectorAll('button').forEach(b => b.disabled = true);
-
-        if(given.toLowerCase() === correct.toLowerCase()) {
-            area.innerHTML += `<div class="feedback-box-correct">${t("correctMsg")}</div>`;
-        } else {
-            area.innerHTML += `<div class="feedback-box-wrong">${t("wrongMsg")} <strong>${correct}</strong></div>`;
+        function resetProgressPrompt() {
+            showNotification(t("resetTitle"), t("resetText"));
+            let modalBtn = document.querySelector('.custom-modal .btn');
+            modalBtn.onclick = function() {
+                localStorage.removeItem('wordly_learn_v9');
+                location.reload();
+            };
         }
-        document.getElementById('next-btn').classList.remove('hidden');
-    }
 
-    function nextQuestion() {
-        currentQIdx++;
-        loadQuestion();
-    }
+        function showNotification(title, text) {
+            document.getElementById('notif-title').innerText = title;
+            document.getElementById('notif-text').innerText = text;
+            document.getElementById('custom-notification').classList.remove('hidden');
+        }
 
-    function backToDashboard() {
-        updateDashboardStats();
-        renderPath();
-        document.querySelectorAll('#page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
-        document.getElementById('page-dashboard').classList.remove('hidden');
-    }
-
-    function resetProgressPrompt() {
-        showNotification(t("resetTitle"), t("resetText"));
-        let modalBtn = document.querySelector('#custom-notification .app-btn');
-        modalBtn.onclick = function() {
-            localStorage.removeItem('wordly_learn_v9');
-            location.reload();
-        };
-    }
-
-    function showNotification(title, text) {
-        document.getElementById('notif-title').innerText = title;
-        document.getElementById('notif-text').innerText = text;
-        document.getElementById('custom-notification').classList.remove('hidden');
-    }
-
-    function closeNotification() {
-        document.getElementById('custom-notification').classList.add('hidden');
-        // Herstel eventueel de standaard knop actie
-        document.querySelector('#custom-notification .app-btn').onclick = closeNotification;
-    }
-  </script>
+        function closeNotification() {
+            document.getElementById('custom-notification').classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
