@@ -920,7 +920,7 @@
                     localStorage.setItem('wordly_logged_in', currentLoggedInUser);
                     
                     setupUserData(currentLoggedInUser);
-                    showLangPromptModal();
+                    initializeAppForUser();
                 } else if (currentLoggedInUser) {
                     setupUserData(currentLoggedInUser);
                     initializeAppForUser();
@@ -1670,7 +1670,6 @@
             if (gekozenZin === juisteZin) {
                 resultaatDiv.style.color = '#278500';
                 resultaatDiv.innerText = "Goed zo! De zin klopt helemaal! 🎉";
-                // FIX: Alleen de woord- en controleknop disablen, de 'next-btn' wordt explicit via class beheerd
                 document.querySelectorAll('.woord-btn').forEach(b => b.disabled = true);
                 appData.mistakes = (appData.mistakes || []).filter(m => m.q !== questionText);
                 saveData();
@@ -1701,7 +1700,6 @@
                 }
             }
             saveData();
-            // FIX: Verwijder 'hidden' zodat de doorgaan knop altijd netjes verschijnt
             document.getElementById('next-btn').classList.remove('hidden');
         }
 
