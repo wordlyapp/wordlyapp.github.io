@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordly Learn </title>
+    
+    <!-- Favicon (Browser tab en app icon) -->
+    <link rel="icon" type="image/jpeg" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
+    <link rel="apple-touch-icon" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -56,7 +61,16 @@
             letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+        }
+
+        /* Styling voor het logo in de header */
+        .logo-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--duo-green);
         }
 
         .nav-controls {
@@ -442,7 +456,7 @@
 
     <header class="top-nav">
         <div class="logo-area">
-            🟢 Wordly Learn
+            <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Wordly Logo" class="logo-img"> Wordly Learn
         </div>
         <div class="nav-controls">
             <div class="lang-switcher-wrapper">
@@ -539,7 +553,6 @@
             es: "Spaans"
         };
 
-        // UI Vertaaltabellen gebaseerd op de gekozen brontaal (appData.fromLang)
         const uiTranslations = {
             nl: {
                 labelFrom: "Van:",
@@ -673,7 +686,7 @@
             if (uiTranslations[lang] && uiTranslations[lang][key]) {
                 return uiTranslations[lang][key];
             }
-            return uiTranslations["nl"][key]; // Fallback naar Nederlands
+            return uiTranslations["nl"][key];
         }
 
         const masterDatabase = {
@@ -816,7 +829,6 @@
             document.getElementById('to-flag').src = flags[appData.toLang] || flags.en;
             document.getElementById('to-label').innerText = langNames[appData.toLang];
 
-            // Vertaal vaste UI elementen naar de gekozen brontaal
             document.getElementById('label-from-text').innerText = t("labelFrom");
             document.getElementById('label-to-text').innerText = t("labelTo");
             document.getElementById('reset-btn-text').innerText = t("reset");
@@ -918,7 +930,6 @@
             }
         }
 
-        // Woordendatabase generator voor flexibele taalrichtingen
         function getChapterWordList() {
             let from = appData.fromLang;
             let to = appData.toLang;
