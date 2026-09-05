@@ -297,7 +297,9 @@
             font-size: 12px;
             font-weight: 800;
             color: #4b4b4b;
+            cursor: pointer;
         }
+        .stat-pill:hover { background: #eee; }
 
         .action-btn {
             background: #fee2e2;
@@ -552,15 +554,98 @@
 
         .hidden { display: none !important; }
 
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+        /* --- ZWARTE KAT MASCOT ANIMATIE STYLING --- */
+        .mascot-container {
             display: flex;
-            justify-content: center;
             align-items: center;
-            z-index: 2000;
+            gap: 12px;
+            background: #1e1e1e;
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+            border-bottom: 4px solid #000;
+            animation: bounceIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .black-cat-avatar {
+            font-size: 32px;
+            animation: catBounce 1s infinite alternate ease-in-out;
+            display: inline-block;
+        }
+
+        @keyframes catBounce {
+            0% { transform: translateY(0) rotate(-5deg); }
+            100% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+        .mascot-speech {
+            font-size: 13px;
+            font-weight: 800;
+            line-height: 1.4;
+        }
+
+        /* --- LEADERBOARD STYLING --- */
+        .leaderboard-container {
+            width: 100%;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .lb-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .lb-tab {
+            flex: 1;
+            padding: 8px;
+            background: #f7f7f7;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-weight: 900;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: center;
+            color: var(--duo-gray-text);
+        }
+        .lb-tab.active {
+            background: var(--duo-light-green);
+            border-color: var(--duo-green);
+            color: var(--duo-green);
+        }
+
+        .lb-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .lb-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fdfdfd;
+            border: 2px solid var(--border);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .lb-item.user-highlight {
+            background: var(--duo-light-green);
+            border-color: var(--duo-green);
+        }
+
+        .lb-rank {
+            width: 24px;
+            color: var(--duo-gray-text);
         }
 
         .custom-modal {
@@ -575,13 +660,23 @@
         }
         .custom-modal h3 { font-size: 18px; font-weight: 900; margin-bottom: 6px; color: #3c3c3c; }
         .custom-modal p { color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px; }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
     </style>
 </head>
 <body>
 
     <!-- LANDING PAGE & AUTHENTICATIE SCHERM -->
     <div id="landing-page">
-        <!-- Start / Welkom Scherm -->
         <div id="landing-hero-box" class="landing-hero">
             <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="landing-logo">
             <h1>Wordly Learn</h1>
@@ -592,7 +687,6 @@
             </div>
         </div>
 
-        <!-- Inlog Formulier -->
         <div id="login-box" class="auth-card hidden">
             <h2>Welkom terug</h2>
             <input type="text" id="login-user" placeholder="Gebruikersnaam">
@@ -602,7 +696,6 @@
             <div id="login-msg" class="auth-message"></div>
         </div>
 
-        <!-- Registratie Formulier -->
         <div id="register-box" class="auth-card hidden">
             <h2>Account Aanmaken</h2>
             <input type="text" id="reg-user" placeholder="Kies een gebruikersnaam">
@@ -661,7 +754,7 @@
 
             <div class="top-stats-bar">
                 <div class="stat-pill">🔥 <span id="streak-display">1</span></div>
-                <div class="stat-pill">⚡ <span id="points-display">0</span> XP</div>
+                <div class="stat-pill" onclick="openLeaderboard()">🏆 <span id="points-display">0</span> XP</div>
             </div>
             <button class="action-btn logout-btn" id="logout-btn-text" onclick="logoutUser()">Uitloggen</button>
             <button class="action-btn" id="reset-btn-text" onclick="resetProgressPrompt()">Reset</button>
@@ -670,6 +763,7 @@
 
     <main class="workspace">
         <div class="content-container">
+            <!-- Dashboard / Pad Scherm -->
             <div id="page-dashboard" style="width: 100%;">
                 <div class="chapter-header">
                     <h2 id="chapter-title-display">Hoofdstuk 1: Basis & Introductie</h2>
@@ -681,7 +775,13 @@
                 <div class="duo-path" id="path-container"></div>
             </div>
 
+            <!-- Les Scherm met Zwarte Kat Mascot -->
             <div id="page-lesson" class="card page-section hidden">
+                <div id="cat-mascot-box" class="mascot-container hidden">
+                    <div class="black-cat-avatar">🐈‍⬛</div>
+                    <div id="cat-speech-text" class="mascot-speech"></div>
+                </div>
+
                 <div class="lesson-top-bar">
                     <button class="back-btn" id="stop-btn-text" onclick="backToDashboard()">✕ Stoppen</button>
                     <div class="progress-bar-container">
@@ -696,10 +796,27 @@
                 <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Doorgaan</button>
             </div>
 
+            <!-- Les Voltooid Scherm -->
             <div id="page-complete" class="card page-section hidden" style="text-align: center;">
                 <h2 id="complete-title-text" style="font-size: 22px; font-weight: 900; color: var(--duo-green); margin-bottom: 8px;">Les Voltooid! 🎉</h2>
                 <p id="complete-text" style="color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px;">Geweldig gepresteerd!</p>
                 <button class="btn" id="complete-continue-btn" onclick="backToDashboard()">Doorgaan</button>
+            </div>
+
+            <!-- Leaderboard Scherm -->
+            <div id="page-leaderboard" class="card page-section hidden">
+                <div class="lesson-top-bar" style="margin-bottom: 12px;">
+                    <button class="back-btn" onclick="backToDashboard()">← <span id="lb-back-text">Terug</span></button>
+                    <h3 id="lb-main-title" style="font-size: 16px; font-weight: 900;">Leaderboard</h3>
+                    <div></div>
+                </div>
+                <div class="leaderboard-container">
+                    <div class="lb-tabs">
+                        <div id="lb-tab-weekly" class="lb-tab active" onclick="switchLeaderboard('weekly')"></div>
+                        <div id="lb-tab-alltime" class="lb-tab" onclick="switchLeaderboard('alltime')"></div>
+                    </div>
+                    <div id="lb-list-container" class="lb-list"></div>
+                </div>
             </div>
 
         </div>
@@ -815,6 +932,7 @@
             es: "Spaans"
         };
 
+        // UI vertalingen: gegarandeerd ALTIJD in de geselecteerde brontaal
         const uiTranslations = {
             nl: {
                 labelFrom: "Van:", labelTo: "Naar:", reset: "Reset", stop: "✕ Stoppen", logout: "Uitloggen",
@@ -825,7 +943,15 @@
                 sameLangText: "De brontaal en doeltaal mogen niet hetzelfde zijn!",
                 lockTitle: "Hoofdstuk Vergrendeld", lockText: "Je moet eerst alle lessen van het vorige hoofdstuk afronden!",
                 nodeLockTitle: "Vergrendeld", nodeLockText: "Voltooi eerst de vorige les in dit hoofdstuk!",
-                resetTitle: "Voortgang wissen", resetText: "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?"
+                resetTitle: "Voortgang wissen", resetText: "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?",
+                lbTitle: "Leaderboard", lbWeekly: "Wekelijks", lbAllTime: "All-Time", lbBack: "Terug",
+                catQuotes: [
+                    "Miauwerd! Jij gaat als een speer!",
+                    "Purrr... Wat een fantastisch antwoord!",
+                    "Een echte kampioen geeft nooit op!",
+                    "Hou vol! Je doet het geweldig!",
+                    "Mijn zwarte klauwen zeggen: dit is correct!"
+                ]
             },
             en: {
                 labelFrom: "From:", labelTo: "To:", reset: "Reset", stop: "✕ Stop", logout: "Log out",
@@ -836,7 +962,15 @@
                 sameLangText: "Source and target languages cannot be the same!",
                 lockTitle: "Chapter Locked", lockText: "You must complete all lessons of the previous chapter first!",
                 nodeLockTitle: "Locked", nodeLockText: "Complete the previous lesson in this chapter first!",
-                resetTitle: "Clear Progress", resetText: "Are you sure you want to reset all saved lessons and XP?"
+                resetTitle: "Clear Progress", resetText: "Are you sure you want to reset all saved lessons and XP?",
+                lbTitle: "Leaderboard", lbWeekly: "Weekly", lbAllTime: "All-Time", lbBack: "Back",
+                catQuotes: [
+                    "Meow! You're on fire!",
+                    "Purrr... What a fantastic answer!",
+                    "A true champion never gives up!",
+                    "Keep going! You're doing great!",
+                    "My black claws say: spot on!"
+                ]
             },
             de: {
                 labelFrom: "Von:", labelTo: "Nach:", reset: "Zurücksetzen", stop: "✕ Stopp", logout: "Abmelden",
@@ -847,7 +981,15 @@
                 sameLangText: "Quell- und Zielsprache dürfen nicht identisch sein!",
                 lockTitle: "Kapitel gesperrt", lockText: "Du musst erst alle Lektionen des vorherigen Kapitels abschließen!",
                 nodeLockTitle: "Gesperrt", nodeLockText: "Schließe zuerst die vorherige Lektion ab!",
-                resetTitle: "Fortschritt zurücksetzen", resetText: "Möchtest du wirklich alle gespeicherten Lektionen und XP zurücksetzen?"
+                resetTitle: "Fortschritt zurücksetzen", resetText: "Möchtest du wirklich alle gespeicherten Lektionen und XP zurücksetzen?",
+                lbTitle: "Bestenliste", lbWeekly: "Wöchentlich", lbAllTime: "All-Time", lbBack: "Zurück",
+                catQuotes: [
+                    "Miau! Du bist spitze!",
+                    "Purrr... Was für eine tolle Antwort!",
+                    "Ein wahrer Champion gibt nie auf!",
+                    "Weiter so! Du machst das großartig!",
+                    "Meine schwarzen Pfoten sagen: richtig!"
+                ]
             },
             fr: {
                 labelFrom: "De:", labelTo: "Vers:", reset: "Réinitialiser", stop: "✕ Quitter", logout: "Déconnexion",
@@ -858,7 +1000,15 @@
                 sameLangText: "La langue source et la langue cible ne peuvent pas être identiques !",
                 lockTitle: "Chapitre verrouillé", lockText: "Vous devez d'abord terminer toutes les leçons du chapitre précédent !",
                 nodeLockTitle: "Verrouillé", nodeLockText: "Terminez d'abord la leçon précédente de ce chapitre !",
-                resetTitle: "Effacer la progression", resetText: "Êtes-vous sûr de vouloir réinitialiser toute votre progression ?"
+                resetTitle: "Effacer la progression", resetText: "Êtes-vous sûr de vouloir réinitialiser toute votre progression ?",
+                lbTitle: "Classement", lbWeekly: "Hebdomadaire", lbAllTime: "All-Time", lbBack: "Retour",
+                catQuotes: [
+                    "Miaou ! Tu gères un max !",
+                    "Purrr... Quelle excellente réponse !",
+                    "Un vrai champion n'abandonne jamais !",
+                    "Continue comme ça !",
+                    "Mes pattes noires approuvent !"
+                ]
             },
             es: {
                 labelFrom: "De:", labelTo: "A:", reset: "Reiniciar", stop: "✕ Salir", logout: "Cerrar sesión",
@@ -867,9 +1017,17 @@
                 correctMsg: "¡Genial! Es correcto.", wrongMsg: "¡Qué pena! La respuesta correcta era:",
                 notifTitle: "Aviso", notifOk: "Entendido", sameLangTitle: "Atención",
                 sameLangText: "¡El idioma de origen y destino no pueden ser el mismo!",
-                lockTitle: "Capítulo bloqueado", lockText: "¡Debes completar todas las lecciones del capítulo anterior primero!",
+                lockTitle: "Capítulo bloqueado", lockText: "¡Debes completar todas lecciones del capítulo anterior primero!",
                 nodeLockTitle: "Bloqueado", nodeLockText: "¡Completa primero la lección anterior de este capítulo!",
-                resetTitle: "Borrar progreso", resetText: "¿Estás seguro de que quieres restablecer todo tu progreso?"
+                resetTitle: "Borrar progreso", resetText: "¿Estás seguro de que quieres restablecer todo tu progreso?",
+                lbTitle: "Clasificación", lbWeekly: "Semanal", lbAllTime: "All-Time", lbBack: "Volver",
+                catQuotes: [
+                    "¡Miau! ¡Lo estás bordando!",
+                    "Purrr... ¡Qué respuesta tan brillante!",
+                    "¡Un verdadero campeón nunca se rinde!",
+                    "¡Sigue así, vas genial!",
+                    "¡Mis garras negras dicen que vas perfecto!"
+                ]
             }
         };
 
@@ -1024,6 +1182,12 @@
             document.getElementById('complete-continue-btn').innerText = t("continueBtn");
             document.getElementById('complete-title-text').innerText = t("completeTitle");
             document.getElementById('complete-text').innerText = t("completeSub");
+
+            // Leaderboard UI strings in de geselecteerde brontaal
+            document.getElementById('lb-main-title').innerText = t("lbTitle");
+            document.getElementById('lb-tab-weekly').innerText = t("lbWeekly");
+            document.getElementById('lb-tab-alltime').innerText = t("lbAllTime");
+            document.getElementById('lb-back-text').innerText = t("lbBack");
         }
 
         function updateDashboardStats() {
@@ -1188,9 +1352,26 @@
             }
 
             currentQIdx = 0;
-            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-lesson').classList.remove('hidden');
+            
+            // Toon de zwarte kat mascot bij start van de les
+            triggerCatMascot();
             loadQuestion();
+        }
+
+        function triggerCatMascot() {
+            let catBox = document.getElementById('cat-mascot-box');
+            let quotes = uiTranslations[appData.fromLang]?.catQuotes || uiTranslations["nl"].catQuotes;
+            let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            
+            document.getElementById('cat-speech-text').innerText = randomQuote;
+            catBox.classList.remove('hidden');
+            
+            // Laat de kat na 4 seconden subtiel verdwijnen tijdens de les om niet in de weg te zitten
+            setTimeout(() => {
+                catBox.classList.add('hidden');
+            }, 4500);
         }
 
         function loadQuestion() {
@@ -1206,9 +1387,14 @@
                 saveData();
                 updateDashboardStats();
 
-                document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
+                document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
                 document.getElementById('page-complete').classList.remove('hidden');
                 return;
+            }
+
+            // Trigger de zwarte kat af en toe (bijv. om de 2 vragen)
+            if (currentQIdx > 0 && currentQIdx % 2 === 0) {
+                triggerCatMascot();
             }
 
             let qObj = activeQuestions[currentQIdx];
@@ -1257,8 +1443,65 @@
         function backToDashboard() {
             updateDashboardStats();
             renderPath();
-            document.querySelectorAll('#page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('#page-lesson, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-dashboard').classList.remove('hidden');
+        }
+
+        // --- LEADERBOARD LOGICA (WEEKLY & ALL-TIME) ---
+        let currentLbType = 'weekly';
+
+        function openLeaderboard() {
+            document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-leaderboard').classList.remove('hidden');
+            renderLeaderboardData(currentLbType);
+        }
+
+        function switchLeaderboard(type) {
+            currentLbType = type;
+            document.getElementById('lb-tab-weekly').className = `lb-tab ${type === 'weekly' ? 'active' : ''}`;
+            document.getElementById('lb-tab-alltime').className = `lb-tab ${type === 'alltime' ? 'active' : ''}`;
+            renderLeaderboardData(type);
+        }
+
+        function renderLeaderboardData(type) {
+            let container = document.getElementById('lb-list-container');
+            container.innerHTML = "";
+
+            // Verzamel accounts uit localStorage om een realistisch leaderboard te tonen
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+            let usersList = [];
+
+            for (let username in accounts) {
+                let pnts = accounts[username].data.points || 0;
+                // Voor wekelijks simuleren we een logische verdeling op basis van all-time punten, of tonen exact
+                let weeklyPnts = type === 'weekly' ? Math.floor(pnts * 0.4) : pnts;
+                usersList.push({ name: username, xp: weeklyPnts });
+            }
+
+            // Voeg altijd de huidige actieve gebruiker toe als er nog geen accounts zijn opgeslagen
+            if (!usersList.some(u => u.name === currentLoggedInUser)) {
+                usersList.push({ name: currentLoggedInUser || "Jij", xp: appData.points });
+            }
+
+            // Sorteer op meeste XP
+            usersList.sort((a, b) => b.xp - a.xp);
+
+            usersList.forEach((user, index) => {
+                let item = document.createElement('div');
+                let isMe = user.name === currentLoggedInUser;
+                item.className = `lb-item ${isMe ? 'user-highlight' : ''}`;
+                
+                let medal = index === 0 ? "🥇" : (index === 1 ? "🥈" : (index === 2 ? "🥉" : `#${index + 1}`));
+                
+                item.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-weight: 900; width: 24px; text-align: center;">${medal}</span>
+                        <span>${user.name} ${isMe ? "(Jij)" : ""}</span>
+                    </div>
+                    <span style="color: var(--duo-green);">${user.xp} XP</span>
+                `;
+                container.appendChild(item);
+            });
         }
 
         function resetProgressPrompt() {
