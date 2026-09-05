@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordly AI - NextGen Language Suite</title>
+    <title>Wordly AI - Dynamic Adaptive Engine</title>
     <style>
         :root {
             --duo-green: #58cc02;
@@ -15,6 +15,8 @@
             --bg: #f8fafc;
             --card-bg: #ffffff;
             --border: #e2e8f0;
+            --accent-blue: #1cb0f6;
+            --accent-blue-shadow: #1899d6;
         }
 
         * { box-sizing: border-box; }
@@ -288,6 +290,48 @@
         }
         .option-btn:hover { background: #f8fafc; border-color: var(--duo-green); transform: translateX(4px); }
 
+        /* Klikbare woordenschat bubbels (voor zin-bouwen & woord-selectie) */
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border: 2px dashed var(--border);
+            border-radius: 18px;
+            min-height: 90px;
+            align-content: flex-start;
+        }
+
+        .word-bubble {
+            background: white;
+            border: 2px solid var(--border);
+            border-bottom: 4px solid var(--border);
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.1s;
+            user-select: none;
+        }
+        .word-bubble:hover { border-color: var(--accent-blue); background: #f0f9ff; }
+        .word-bubble:active { transform: translateY(2px); border-bottom-width: 2px; }
+
+        .target-slot {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 20px;
+            background: #ffffff;
+            border: 2px solid var(--border);
+            border-radius: 18px;
+            min-height: 80px;
+            align-content: center;
+        }
+
         .hidden { display: none !important; }
 
         .feedback-box-correct {
@@ -351,9 +395,8 @@
         <div>
             <div class="sidebar-logo">🟢 Wordly AI</div>
             <div class="sidebar-menu">
-                <a class="menu-item active" onclick="switchTab('learn')">🗺️ Leerpad</a>
-                <a class="menu-item" onclick="startAiLevelFinder()">🤖 AI Niveau Test</a>
-                <a class="menu-item" onclick="switchTab('settings')">⚙️ Instellingen</a>
+                <a class="menu-item active" onclick="switchTab('learn')">🗺️ Adaptief Leerpad</a>
+                <a class="menu-item" onclick="switchTab('settings')">⚙️ Systeem Status</a>
             </div>
         </div>
         <div style="border-top: 2px solid var(--border); padding-top: 16px;">
@@ -385,8 +428,9 @@
                 </select>
             </div>
             <div class="top-stats-bar">
-                <div class="stat-pill" id="streak-display">🔥 1 streak</div>
+                <div class="stat-pill" id="difficulty-display">⚡ Moeilijkheidsgraad: 1</div>
                 <div class="stat-pill" id="points-display">⚡ 0 XP</div>
+                <div class="stat-pill" id="streak-display">🔥 1 streak</div>
             </div>
         </div>
 
@@ -397,14 +441,18 @@
                 <!-- DASHBOARD / LEERPAD -->
                 <div id="page-dashboard" class="page-section" style="width: 100%;">
                     <div id="view-learn" style="width: 100%;">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <h2 style="margin-bottom: 6px;">Jouw Persoonlijke Lespad</h2>
+                            <p style="margin: 0;">Hoe verder je komt, hoe slimmer en moeilijker de lessen worden!</p>
+                        </div>
                         <div class="duo-path" id="path-container"></div>
                     </div>
 
                     <div id="view-settings" class="card hidden">
-                        <h2>Instellingen & AI Status</h2>
-                        <p>Huidig vastgesteld niveau voor deze taal: <strong id="current-level-display" style="color: var(--duo-green);">Beginner</strong></p>
-                        <button class="btn" onclick="startAiLevelFinder()">🤖 Start AI Niveau Bepaling</button>
-                        <p style="margin-top: 20px; font-size: 14px;">Alle voortgang en XP worden veilig lokaal opgeslagen op je eigen apparaat.</p>
+                        <h2>Adaptief Systeem</h2>
+                        <p>Huidige automatische moeilijkheidsfactor: <strong id="current-diff-display" style="color: var(--duo-green);">Niveau 1</strong></p>
+                        <p>Aantal foutloze lessen op rij: <strong id="current-streak-perfect" style="color: var(--accent-blue);">0</strong> (Bij 2 foutloze lessen schakelt de AI automatisch op naar een hoger niveau!)</p>
+                        <p style="margin-top: 20px; font-size: 14px;">Alle voortgang en XP worden lokaal opgeslagen.</p>
                     </div>
                 </div>
 
@@ -412,17 +460,20 @@
                 <div id="page-lesson" class="card page-section hidden">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                         <button class="btn" style="width: auto; padding: 10px 18px; margin:0; background:#f1f5f9; border-bottom-color:#cbd5e1; color:#64748b; box-shadow:none;" onclick="backToDashboard()">✕ Stoppen</button>
-                        <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text);">Vraag 1 van 10</span>
+                        <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text);">Vraag 1 van 6</span>
                     </div>
-                    <h3 id="question-prompt" style="font-size: 24px; font-weight: 800; margin-bottom: 24px; color: #1e293b;">Vertaal dit</h3>
+                    <h3 id="question-prompt" style="font-size: 24px; font-weight: 800; margin-bottom: 20px; color: #1e293b;">Vertaal dit</h3>
+                    
+                    <!-- Dynamische invoer plekken afhankelijk van opdrachttype -->
                     <div id="answers-area"></div>
+                    
                     <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Doorgaan</button>
                 </div>
 
                 <!-- VOLTOOID SCHERM -->
                 <div id="page-complete" class="card page-section hidden" style="text-align: center;">
-                    <h2 style="font-size: 34px; color: var(--duo-green);">Les Voltooid! 🎉</h2>
-                    <p>Fenomenaal gedaan! Je hebt deze les succesvol afgerond en extra XP veiliggesteld.</p>
+                    <h2 id="complete-title" style="font-size: 34px; color: var(--duo-green);">Les Voltooid! 🎉</h2>
+                    <p id="complete-text">Fenomenaal gedaan! Je hebt deze les succesvol afgerond.</p>
                     <button class="btn" onclick="backToDashboard()">Doorgaan</button>
                 </div>
 
@@ -464,111 +515,115 @@
             } catch(e) {}
         }
 
-        // Uitgebreide Woordenbank voor 14 talen (met categorieën en uitstekende zinnen)
+        // Massale rijke woordenbank & zinnen/grammatica per taal
         const vocabData = {
             en: [
-                { nl: "Hallo", target: "Hello", type: "Basis" }, { nl: "Goedemorgen", target: "Good morning", type: "Basis" }, { nl: "Dank je wel", target: "Thank you", type: "Basis" }, { nl: "Hoe gaat het?", target: "How are you?", type: "Zinnen" }, { nl: "Tot ziens", target: "Goodbye", type: "Basis" },
-                { nl: "Water", target: "Water", type: "Woorden" }, { nl: "Huis", target: "House", type: "Woorden" }, { nl: "Boek", target: "Book", type: "Woorden" }, { nl: "Computer", target: "Computer", type: "Geavanceerd" }, { nl: "Reizen", target: "Travel", type: "Geavanceerd" },
-                { nl: "Ik hou van programmeren", target: "I love programming", type: "Zinnen" }, { nl: "Waar is het station?", target: "Where is the station?", type: "Zinnen" }, { nl: "Wetenschap", target: "Science", type: "Geavanceerd" }, { nl: "Oplossing", target: "Solution", type: "Geavanceerd" }
+                { nl: "Hallo", target: "Hello", grammar: "Groet", type: "vocab" },
+                { nl: "Goedemorgen", target: "Good morning", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het met jou?", target: "How are you doing today?", grammar: "Vraag / Zinnen", type: "builder" },
+                { nl: "Ik hou heel erg van programmeren", target: "I love programming very much", grammar: "Zinnen", type: "builder" },
+                { nl: "Waar is het dichtstbijzijnde station?", target: "Where is the nearest station?", grammar: "Reizen", type: "builder" },
+                { nl: "Kies de correcte verleden tijd van 'to go':", target: "went", options: ["goed", "gone", "went", "going"], grammar: "Grammatica (Past tense)", type: "mc" },
+                { nl: "Welk woord is een zelfstandig naamwoord?", target: "Computer", options: ["Run", "Computer", "Quickly", "Beautiful"], grammar: "Grammatica (Woordsoort)", type: "mc" }
             ],
             de: [
-                { nl: "Hallo", target: "Hallo", type: "Basis" }, { nl: "Goedemorgen", target: "Guten Morgen", type: "Basis" }, { nl: "Dank je wel", target: "Danke schön", type: "Basis" }, { nl: "Hoe gaat het?", target: "Wie geht es dir?", type: "Zinnen" }, { nl: "Tot ziens", target: "Auf Wiedersehen", type: "Basis" },
-                { nl: "Water", target: "Wasser", type: "Woorden" }, { nl: "Huis", target: "Haus", type: "Woorden" }, { nl: "Boek", target: "Buch", type: "Woorden" }, { nl: "Computer", target: "Computer", type: "Geavanceerd" }, { nl: "Reizen", target: "Reisen", type: "Geavanceerd" },
-                { nl: "Ik spreek weinig Duits", target: "Ich spreche wenig Deutsch", type: "Zinnen" }, { nl: "Waar is het station?", target: "Wo ist der Bahnhof?", type: "Zinnen" }, { nl: "Wetenschap", target: "Wissenschaft", type: "Geavanceerd" }, { nl: "Oplossing", target: "Lösung", type: "Geavanceerd" }
+                { nl: "Hallo", target: "Hallo", grammar: "Groet", type: "vocab" },
+                { nl: "Goedemorgen", target: "Guten Morgen", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het met jou?", target: "Wie geht es dir heute?", grammar: "Vraag / Zinnen", type: "builder" },
+                { nl: "Ik spreek helaas heel weinig Duits", target: "Ich spreche leider sehr wenig Deutsch", grammar: "Zinnen", type: "builder" },
+                { nl: "Waar is het treinstation?", target: "Wo ist der Bahnhof?", grammar: "Reizen", type: "builder" },
+                { nl: "Kies de juiste naamval na 'mit':", target: "Dativ", options: ["Akkusativ", "Dativ", "Genitiv", "Nominativ"], grammar: "Grammatica", type: "mc" }
             ],
             es: [
-                { nl: "Hallo", target: "Hola", type: "Basis" }, { nl: "Goedemorgen", target: "Buenos días", type: "Basis" }, { nl: "Dank je wel", target: "Gracias", type: "Basis" }, { nl: "Hoe gaat het?", target: "¿Cómo estás?", type: "Zinnen" }, { nl: "Tot ziens", target: "Adiós", type: "Basis" },
-                { nl: "Water", target: "Agua", type: "Woorden" }, { nl: "Huis", target: "Casa", type: "Woorden" }, { nl: "Boek", target: "Libro", type: "Woorden" }, { nl: "Computer", target: "Computadora", type: "Geavanceerd" }, { nl: "Reizen", target: "Viajar", type: "Geavanceerd" },
-                { nl: "Ik hou van Spanje", target: "Me encanta España", type: "Zinnen" }, { nl: "Waar is het station?", target: "¿Dónde está la estación?", type: "Zinnen" }, { nl: "Wetenschap", target: "Ciencia", type: "Geavanceerd" }, { nl: "Oplossing", target: "Solución", type: "Geavanceerd" }
+                { nl: "Hallo", target: "Hola", grammar: "Groet", type: "vocab" },
+                { nl: "Goedemorgen", target: "Buenos días", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "¿Cómo estás hoy?", grammar: "Zinnen", type: "builder" },
+                { nl: "Ik hou van reizen door Spanje", target: "Me encanta viajar por España", grammar: "Zinnen", type: "builder" },
+                { nl: "Waar is het treinstation?", target: "¿Dónde está la estación de tren?", grammar: "Reizen", type: "builder" },
+                { nl: "Kies het juiste werkwoord voor 'yo' (ser):", target: "soy", options: ["soy", "eres", "es", "somos"], grammar: "Grammatica (Conjugatie)", type: "mc" }
             ],
             fr: [
-                { nl: "Hallo", target: "Bonjour", type: "Basis" }, { nl: "Goedemorgen", target: "Bonjour", type: "Basis" }, { nl: "Dank je wel", target: "Merci", type: "Basis" }, { nl: "Hoe gaat het?", target: "Comment ça va?", type: "Zinnen" }, { nl: "Tot ziens", target: "Au revoir", type: "Basis" },
-                { nl: "Water", target: "Eau", type: "Woorden" }, { nl: "Huis", target: "Maison", type: "Woorden" }, { nl: "Boek", target: "Livre", type: "Woorden" }, { nl: "Computer", target: "Ordinateur", type: "Geavanceerd" }, { nl: "Reizen", target: "Voyager", type: "Geavanceerd" },
-                { nl: "Ik spreek Frans", target: "Je parle français", type: "Zinnen" }, { nl: "Waar is het station?", target: "Où est la gare?", type: "Zinnen" }
+                { nl: "Hallo", target: "Bonjour", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "Comment ça va?", grammar: "Zinnen", type: "builder" },
+                { nl: "Ik spreek vloeiend Frans", target: "Je parle couramment français", grammar: "Zinnen", type: "builder" },
+                { nl: "Waar is het station?", target: "Où est la gare?", grammar: "Reizen", type: "builder" }
             ],
             it: [
-                { nl: "Hallo", target: "Ciao", type: "Basis" }, { nl: "Goedemorgen", target: "Buongiorno", type: "Basis" }, { nl: "Dank je wel", target: "Grazie", type: "Basis" }, { nl: "Hoe gaat het?", target: "Come stai?", type: "Zinnen" }, { nl: "Tot ziens", target: "Arrivederci", type: "Basis" },
-                { nl: "Water", target: "Acqua", type: "Woorden" }, { nl: "Huis", target: "Casa", type: "Woorden" }, { nl: "Boek", target: "Libro", type: "Woorden" }, { nl: "Computer", target: "Computer", type: "Geavanceerd" }, { nl: "Reizen", target: "Viaggiare", type: "Geavanceerd" }
+                { nl: "Hallo", target: "Ciao", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "Come stai?", grammar: "Zinnen", type: "builder" },
+                { nl: "Ik hou van pizza", target: "Mi piace la pizza", grammar: "Zinnen", type: "builder" }
             ],
             pt: [
-                { nl: "Hallo", target: "Olá", type: "Basis" }, { nl: "Goedemorgen", target: "Bom dia", type: "Basis" }, { nl: "Dank je wel", target: "Obrigado", type: "Basis" }, { nl: "Hoe gaat het?", target: "Tudo bem?", type: "Zinnen" }, { nl: "Tot ziens", target: "Adeus", type: "Basis" },
-                { nl: "Water", target: "Água", type: "Woorden" }, { nl: "Huis", target: "Casa", type: "Woorden" }, { nl: "Boek", target: "Livro", type: "Woorden" }
+                { nl: "Hallo", target: "Olá", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "Tudo bem?", grammar: "Zinnen", type: "builder" }
             ],
             ru: [
-                { nl: "Hallo", target: "Привет", type: "Basis" }, { nl: "Goedemorgen", target: "Доброе утро", type: "Basis" }, { nl: "Dank je wel", target: "Спасибо", type: "Basis" }, { nl: "Hoe gaat het?", target: "Как дела?", type: "Zinnen" }, { nl: "Tot ziens", target: "До свидания", type: "Basis" },
-                { nl: "Water", target: "Вода", type: "Woorden" }, { nl: "Huis", target: "Дом", type: "Woorden" }
+                { nl: "Hallo", target: "Привет", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "Как дела?", grammar: "Zinnen", type: "builder" }
             ],
             ja: [
-                { nl: "Hallo", target: "こんにちは", type: "Basis" }, { nl: "Goedemorgen", target: "おはようございます", type: "Basis" }, { nl: "Dank je wel", target: "ありがとう", type: "Basis" }, { nl: "Hoe gaat het?", target: "お元気ですか", type: "Zinnen" },
-                { nl: "Water", target: "水", type: "Woorden" }, { nl: "Huis", target: "家", type: "Woorden" }, { nl: "Boek", target: "本", type: "Woorden" }
+                { nl: "Hallo", target: "こんにちは", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "お元気ですか", grammar: "Zinnen", type: "builder" }
             ],
             zh: [
-                { nl: "Hallo", target: "你好", type: "Basis" }, { nl: "Goedemorgen", target: "早上好", type: "Basis" }, { nl: "Dank je wel", target: "谢谢", type: "Basis" }, { nl: "Hoe gaat het?", target: "你好吗？", type: "Zinnen" },
-                { nl: "Water", target: "水", type: "Woorden" }, { nl: "Huis", target: "房子", type: "Woorden" }
+                { nl: "Hallo", target: "你好", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "你好吗？", grammar: "Zinnen", type: "builder" }
             ],
             tr: [
-                { nl: "Hallo", target: "Merhaba", type: "Basis" }, { nl: "Goedemorgen", target: "Günaydın", type: "Basis" }, { nl: "Dank je wel", target: "Teşekkür ederim", type: "Basis" }, { nl: "Hoe gaat het?", target: "Nasılsın?", type: "Zinnen" },
-                { nl: "Water", target: "Su", type: "Woorden" }, { nl: "Huis", target: "Ev", type: "Woorden" }
+                { nl: "Hallo", target: "Merhaba", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "Nasılsın?", grammar: "Zinnen", type: "builder" }
             ],
             sv: [
-                { nl: "Hallo", target: "Hej", type: "Basis" }, { nl: "Goedemorgen", target: "God morgon", type: "Basis" }, { nl: "Dank je wel", target: "Tack", type: "Basis" }, { nl: "Hoe gaat het?", target: "Hur mår du?", type: "Zinnen" }, { nl: "Water", target: "Vatten", type: "Woorden" }
+                { nl: "Hallo", target: "Hej", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "Hur mår du?", grammar: "Zinnen", type: "builder" }
             ],
             no: [
-                { nl: "Hallo", target: "Hei", type: "Basis" }, { nl: "Goedemorgen", target: "God morgen", type: "Basis" }, { nl: "Dank je wel", target: "Takk", type: "Basis" }, { nl: "Hoe gaat het?", target: "Hvordan har du det?", type: "Zinnen" }, { nl: "Water", target: "Vann", type: "Woorden" }
+                { nl: "Hallo", target: "Hei", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "Hvordan har du det?", grammar: "Zinnen", type: "builder" }
             ],
             da: [
-                { nl: "Hallo", target: "Hej", type: "Basis" }, { nl: "Goedemorgen", target: "Godmorgen", type: "Basis" }, { nl: "Dank je wel", target: "Tak", type: "Basis" }, { nl: "Hoe gaat het?", target: "Hvordan går det?", type: "Zinnen" }, { nl: "Water", target: "Vand", type: "Woorden" }
+                { nl: "Hallo", target: "Hej", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "Hvordan går det?", grammar: "Zinnen", type: "builder" }
             ],
             pl: [
-                { nl: "Hallo", target: "Cześć", type: "Basis" }, { nl: "Goedemorgen", target: "Dzień dobry", type: "Basis" }, { nl: "Dank je wel", target: "Dziękuję", type: "Basis" }, { nl: "Hoe gaat het?", target: "Jak się masz?", type: "Zinnen" }, { nl: "Water", target: "Woda", type: "Woorden" }
+                { nl: "Hallo", target: "Cześć", grammar: "Groet", type: "vocab" },
+                { nl: "Hoe gaat het?", target: "Jak się masz?", grammar: "Zinnen", type: "builder" }
             ]
         };
 
-        let appData = JSON.parse(localStorage.getItem('wordly_ai_master_data')) || {
+        let appData = JSON.parse(localStorage.getItem('wordly_ai_adaptive_v2')) || {
             points: 0,
             streak: 1,
+            difficulty: 1,
+            perfectStreak: 0,
             completed: {},
-            levels: {},
             targetLang: "en"
         };
 
         function saveData() {
-            localStorage.setItem('wordly_ai_master_data', JSON.stringify(appData));
+            localStorage.setItem('wordly_ai_adaptive_v2', JSON.stringify(appData));
         }
 
         window.onload = function() {
             let lang = appData.targetLang || "en";
             document.getElementById('target-lang-select').value = lang;
             updateDashboardStats();
-            checkAndRunInitialFinder();
+            renderPath();
         };
 
         function updateDashboardStats() {
             document.getElementById('points-display').innerText = "⚡ " + appData.points + " XP";
             document.getElementById('streak-display').innerText = "🔥 " + appData.streak + " streak";
-            let lang = appData.targetLang || "en";
-            let lvl = appData.levels[lang] || "Beginner";
-            document.getElementById('current-level-display').innerText = lvl.toUpperCase();
+            document.getElementById('difficulty-display').innerText = `⚡ Niveau: ${appData.difficulty}`;
+            document.getElementById('current-diff-display').innerText = `Niveau ${appData.difficulty}`;
+            document.getElementById('current-streak-perfect').innerText = appData.perfectStreak;
         }
 
         function changeTargetLanguage() {
             appData.targetLang = document.getElementById('target-lang-select').value;
             saveData();
             updateDashboardStats();
-            checkAndRunInitialFinder();
-        }
-
-        function checkAndRunInitialFinder() {
-            let lang = appData.targetLang;
-            if(!appData.levels[lang]) {
-                showNotification("🤖 AI Niveau Detector", "Welkom! Om te zorgen dat het lespad perfect op jou aans ሌሎች, start de AI nu een korte niveau-test.");
-                document.querySelector('.custom-modal .btn').onclick = function() {
-                    closeNotification();
-                    startAiLevelFinder();
-                };
-            } else {
-                renderPath();
-            }
+            renderPath();
         }
 
         function switchTab(tab) {
@@ -583,110 +638,74 @@
             if(activeBtn) activeBtn.classList.add('active');
         }
 
-        // --- AI NIVEAU TEST LOGICA ---
-        let isAiFinding = false;
-        let aiTestScore = 0;
-        let aiTestQuestions = [];
-
-        function startAiLevelFinder() {
-            isAiFinding = true;
-            aiTestScore = 0;
-            let list = vocabData[appData.targetLang] || vocabData.en;
-            
-            let shuffled = [...list].sort(() => 0.5 - Math.random()).slice(0, 5);
-            aiTestQuestions = shuffled.map(item => {
-                let wrongOpts = list.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.target);
-                wrongOpts.push(item.target);
-                wrongOpts.sort(() => 0.5 - Math.random());
-                return {
-                    prompt: `[AI Test] Vertaal naar gekozen taal: "${item.nl}"`,
-                    options: wrongOpts,
-                    correct: item.target
-                };
-            });
-
-            currentQIdx = 0;
-            document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
-            document.getElementById('page-lesson').classList.remove('hidden');
-            loadAiQuestion();
-        }
-
-        function loadAiQuestion() {
-            if(currentQIdx >= aiTestQuestions.length) {
-                let assignedLevel = "beginner";
-                if(aiTestScore >= 4) assignedLevel = "advanced";
-                else if(aiTestScore >= 2) assignedLevel = "intermediate";
-
-                appData.levels[appData.targetLang] = assignedLevel;
-                if(!appData.completed[appData.targetLang]) appData.completed[appData.targetLang] = [];
-                
-                saveData();
-                isAiFinding = false;
-
-                showNotification("🎉 Niveau Vastgesteld!", `De AI heeft je niveau ingeschat als: ${assignedLevel.toUpperCase()}. Je pad is klaar.`);
-                document.querySelector('.custom-modal .btn').onclick = function() {
-                    closeNotification();
-                    backToDashboard();
-                };
-                return;
-            }
-
-            let q = aiTestQuestions[currentQIdx];
-            document.getElementById('lesson-progress-text').innerText = `AI Niveau Vraag ${currentQIdx + 1} van 5`;
-            document.getElementById('question-prompt').innerText = q.prompt;
-
-            let area = document.getElementById('answers-area');
-            area.innerHTML = "";
-            document.getElementById('next-btn').classList.add('hidden');
-
-            q.options.forEach(opt => {
-                let btn = document.createElement('button');
-                btn.className = "btn option-btn";
-                btn.innerText = opt;
-                btn.onclick = () => checkAiAnswer(opt, q.correct);
-                area.appendChild(btn);
-            });
-        }
-
-        function checkAiAnswer(given, correct) {
-            let area = document.getElementById('answers-area');
-            if(given.toLowerCase() === correct.toLowerCase()) {
-                playSound('correct');
-                aiTestScore++;
-                area.innerHTML = `<div class="feedback-box-correct">Correct!</div>`;
-            } else {
-                playSound('wrong');
-                area.innerHTML = `<div class="feedback-box-wrong">Niet juist. Het goede antwoord was: <strong>${correct}</strong></div>`;
-            }
-            document.getElementById('next-btn').classList.remove('hidden');
-        }
-
-        // --- LESSEN GENERATOR ---
-        function generateLessonsForCurrentLang() {
+        // --- DYNAMISCHE LESSEN GENERATOR OP BASIS VAN MOEILIJKHEIDSGRAAD ---
+        function generateAdaptiveLessons() {
             let list = vocabData[appData.targetLang] || vocabData.en;
             const lessons = [];
-            let qList = [];
-            let counter = 1;
+            let totalLessonsCount = 12; // Uitgebreid pad
 
-            for(let i = 0; i < 8; i++) {
-                for(let j = 0; j < list.length; j++) {
-                    let item = list[j];
-                    let wrongOpts = list.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.target);
-                    wrongOpts.push(item.target);
-                    wrongOpts.sort(() => 0.5 - Math.random());
+            for(let i = 1; i <= totalLessonsCount; i++) {
+                let qList = [];
+                let questionCount = 5 + Math.min(appData.difficulty, 4); // Hoe hoger het niveau, hoe meer vragen per les
 
-                    qList.push({
-                        prompt: `Vertaal: "${item.nl}"`,
-                        options: wrongOpts,
-                        correct: item.target
-                    });
+                for(let q = 0; q < questionCount; q++) {
+                    let baseItem = list[(i + q) % list.length];
+                    let typeChoice = (q % 3 === 0) ? "builder" : ((q % 3 === 1) ? "mc" : "vocab");
 
-                    if(qList.length >= 6 || (i === 7 && j === list.length - 1)) {
-                        lessons.push({ id: `lesson_${appData.targetLang}_${counter}`, title: `${counter}`, sub: item.type || "Les", questions: [...qList] });
-                        qList = [];
-                        counter++;
+                    if(baseItem.type === "mc" || typeChoice === "mc") {
+                        if(baseItem.options) {
+                            qList.push({
+                                type: "mc",
+                                prompt: `[Grammatica / Vraag] ${baseItem.nl}`,
+                                correct: baseItem.target,
+                                options: [...baseItem.options].sort(() => 0.5 - Math.random()),
+                                grammar: baseItem.grammar
+                            });
+                        } else {
+                            let wrongOpts = list.filter(x => x.target !== baseItem.target).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.target);
+                            wrongOpts.push(baseItem.target);
+                            wrongOpts.sort(() => 0.5 - Math.random());
+                            qList.push({
+                                type: "mc",
+                                prompt: `Vertaal correct: "${baseItem.nl}"`,
+                                correct: baseItem.target,
+                                options: wrongOpts,
+                                grammar: baseItem.grammar
+                            });
+                        }
+                    } else if(typeChoice === "builder" && baseItem.target.includes(" ")) {
+                        // Zin-bouw oefening door op woorden te klikken!
+                        let words = baseItem.target.split(" ");
+                        let shuffledWords = [...words].sort(() => 0.5 - Math.random());
+                        qList.push({
+                            type: "builder",
+                            prompt: `Klik de woorden in de juiste volgorde om te vertalen: "${baseItem.nl}"`,
+                            correctWords: words,
+                            shuffledWords: shuffledWords,
+                            grammar: baseItem.grammar
+                        });
+                    } else {
+                        // Standaard klikbare multiple choice vertaling
+                        let wrongOpts = list.filter(x => x.target !== baseItem.target).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.target);
+                        wrongOpts.push(baseItem.target);
+                        wrongOpts.sort(() => 0.5 - Math.random());
+                        qList.push({
+                            type: "mc",
+                            prompt: `Wat is de juiste vertaling van: "${baseItem.nl}"`,
+                            correct: baseItem.target,
+                            options: wrongOpts,
+                            grammar: baseItem.grammar
+                        });
                     }
                 }
+
+                lessons.push({
+                    id: `lesson_${appData.targetLang}_${i}`,
+                    title: `${i}`,
+                    sub: `Les ${i} (Moeilijkheidsgraad ${appData.difficulty})`,
+                    questions: qList,
+                    errorsCount: 0
+                });
             }
             return lessons;
         }
@@ -694,7 +713,7 @@
         function renderPath() {
             let container = document.getElementById('path-container');
             container.innerHTML = "";
-            let lessons = generateLessonsForCurrentLang();
+            let lessons = generateAdaptiveLessons();
             let pattern = [1, 2, 1, 2, 1];
             let idx = 0, pIdx = 0;
             let langCompleted = appData.completed[appData.targetLang] || [];
@@ -712,7 +731,7 @@
                     let node = document.createElement('button');
                     node.className = `duo-node ${isDone ? 'done' : (!isUnlocked ? 'locked' : 'current')}`;
                     if(isDone) node.style.background = "#58cc02";
-                    node.innerHTML = `${les.title}<span class="node-label">Ster</span>`;
+                    node.innerHTML = `${les.title}<span class="node-label">Niveau</span>`;
                     
                     if(isUnlocked) {
                         node.onclick = () => startLesson(les.id, lessons);
@@ -726,65 +745,165 @@
             }
         }
 
-        let activeQuestions = [], currentQIdx = 0, activeLesId = "";
+        let activeQuestions = [], currentQIdx = 0, activeLesId = "", currentLessonErrors = 0;
         function startLesson(id, allLessons) {
-            isAiFinding = false;
             activeLesId = id;
-            activeQuestions = allLessons.find(l => l.id === id).questions;
+            let lesObj = allLessons.find(l => l.id === id);
+            activeQuestions = lesObj.questions;
             currentQIdx = 0;
+            currentLessonErrors = 0;
             document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-lesson').classList.remove('hidden');
             loadQuestion();
         }
 
         function loadQuestion() {
-            if(isAiFinding) {
-                loadAiQuestion();
-                return;
-            }
-
             if(currentQIdx >= activeQuestions.length) {
-                appData.points += 25;
+                // Les afgerond! Check adaptief niveau
+                appData.points += 30;
                 if(!appData.completed[appData.targetLang]) appData.completed[appData.targetLang] = [];
                 if(!appData.completed[appData.targetLang].includes(activeLesId)) {
                     appData.completed[appData.targetLang].push(activeLesId);
                 }
+
+                let messageExtra = "";
+                if(currentLessonErrors === 0) {
+                    appData.perfectStreak++;
+                    if(appData.perfectStreak >= 2) {
+                        appData.difficulty++;
+                        appData.perfectStreak = 0;
+                        messageExtra = ` 🔥 GEWELDIG! 2 foutloze lessen op rij! Je niveau is automatisch verhoogd naar <strong>Niveau ${appData.difficulty}</strong>!`;
+                    } else {
+                        messageExtra = ` Foutloze les! Nog 1 foutloze les en je gaat in moeilijkheidsgraad omhoog.`;
+                    }
+                } else {
+                    appData.perfectStreak = 0; // Reset bij fouten
+                    messageExtra = ` Je had ${currentLessonErrors} fout(en). Blijf oefenen op dit niveau!`;
+                }
+
                 saveData();
                 updateDashboardStats();
+
                 document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
                 document.getElementById('page-complete').classList.remove('hidden');
+                document.getElementById('complete-text').innerHTML = `Je hebt deze les succesvol afgerond! ${messageExtra}`;
                 return;
             }
+
             let q = activeQuestions[currentQIdx];
-            document.getElementById('lesson-progress-text').innerText = `Vraag ${currentQIdx + 1} van ${activeQuestions.length}`;
+            document.getElementById('lesson-progress-text').innerText = `Vraag ${currentQIdx + 1} van ${activeQuestions.length} (${q.grammar || 'Algemeen'})`;
             document.getElementById('question-prompt').innerText = q.prompt;
 
             let area = document.getElementById('answers-area');
             area.innerHTML = "";
             document.getElementById('next-btn').classList.add('hidden');
 
-            q.options.forEach(opt => {
-                let btn = document.createElement('button');
-                btn.className = "btn option-btn";
-                btn.innerText = opt;
-                btn.onclick = () => checkAnswer(opt, q.correct);
-                area.appendChild(btn);
-            });
+            if(q.type === 'mc') {
+                q.options.forEach(opt => {
+                    let btn = document.createElement('button');
+                    btn.className = "btn option-btn";
+                    btn.innerText = opt;
+                    btn.onclick = () => checkMcAnswer(opt, q.correct);
+                    area.appendChild(btn);
+                });
+            } else if(q.type === 'builder') {
+                renderSentenceBuilder(q);
+            }
         }
 
-        function checkAnswer(given, correct) {
-            if(isAiFinding) {
-                checkAiAnswer(given, correct);
-                return;
+        // Zin-bouwer logica: Klik op woorden om ze in de juiste volgorde te zetten
+        function renderSentenceBuilder(q) {
+            let area = document.getElementById('answers-area');
+            let selectedWords = [];
+
+            area.innerHTML = `
+                <div style="font-weight:800; font-size:14px; color:#64748b; margin-bottom:8px;">Jouw zin:</div>
+                <div id="target-slot" class="target-slot"></div>
+                <div style="font-weight:800; font-size:14px; color:#64748b; margin-bottom:8px; margin-top:16px;">Beschikbare woorden (klik om toe te voegen):</div>
+                <div id="word-bank" class="word-bank"></div>
+                <div id="builder-feedback"></div>
+            `;
+
+            let slotDiv = document.getElementById('target-slot');
+            let bankDiv = document.getElementById('word-bank');
+
+            function updateUI() {
+                slotDiv.innerHTML = "";
+                bankDiv.innerHTML = "";
+
+                if(selectedWords.length === 0) {
+                    slotDiv.innerHTML = `<span style="color:#94a3b8; font-style:italic;">Klik hieronder op de woorden...</span>`;
+                }
+
+                selectedWords.forEach((item, idx) => {
+                    let bubble = document.createElement('div');
+                    bubble.className = "word-bubble";
+                    bubble.style.background = "#e0f2fe";
+                    bubble.style.borderColor = "#0284c7";
+                    bubble.innerText = item.word;
+                    bubble.onclick = () => {
+                        selectedWords.splice(idx, 1);
+                        updateUI();
+                    };
+                    slotDiv.appendChild(bubble);
+                });
+
+                q.shuffledWords.forEach((w, idx) => {
+                    // Check of woord al gebruikt is
+                    let usedCount = selectedWords.filter(s => s.originalIdx === idx).length;
+                    if(usedCount === 0) {
+                        let bubble = document.createElement('div');
+                        bubble.className = "word-bubble";
+                        bubble.innerText = w;
+                        bubble.onclick = () => {
+                            selectedWords.push({ word: w, originalIdx: idx });
+                            updateUI();
+                        };
+                        bankDiv.appendChild(bubble);
+                    }
+                });
             }
 
+            updateUI();
+
+            // Toevoegen van een controle knop voor de zin-bouwer
+            let checkBtn = document.createElement('button');
+            checkBtn.className = "btn";
+            checkBtn.innerText = "Controleer Zin";
+            checkBtn.style.marginTop = "20px";
+            checkBtn.onclick = () => {
+                let userSentence = selectedWords.map(s => s.word).join(" ");
+                let correctSentence = q.correctWords.join(" ");
+
+                if(userSentence.toLowerCase() === correctSentence.toLowerCase()) {
+                    playSound('correct');
+                    document.getElementById('builder-feedback').innerHTML = `<div class="feedback-box-correct">Helemaal correct! Uitstekend gedaan.</div>`;
+                    checkBtn.classList.add('hidden');
+                    document.getElementById('next-btn').classList.remove('hidden');
+                } else {
+                    playSound('wrong');
+                    currentLessonErrors++;
+                    document.getElementById('builder-feedback').innerHTML = `<div class="feedback-box-wrong">Niet juist. De juiste zin was: <strong>${correctSentence}</strong></div>`;
+                    checkBtn.classList.add('hidden');
+                    document.getElementById('next-btn').classList.remove('hidden');
+                }
+            };
+            area.appendChild(checkBtn);
+        }
+
+        function checkMcAnswer(given, correct) {
             let area = document.getElementById('answers-area');
+            // Disable alle knoppen
+            let buttons = area.querySelectorAll('button');
+            buttons.forEach(b => b.disabled = true);
+
             if(given.toLowerCase() === correct.toLowerCase()) {
                 playSound('correct');
-                area.innerHTML = `<div class="feedback-box-correct">Geweldig gedaan! Ga zo door.</div>`;
+                area.innerHTML += `<div class="feedback-box-correct">Geweldig gedaan! Correct antwoord.</div>`;
             } else {
                 playSound('wrong');
-                area.innerHTML = `<div class="feedback-box-wrong">Helaas! Het juiste antwoord was: <strong>${correct}</strong></div>`;
+                currentLessonErrors++;
+                area.innerHTML += `<div class="feedback-box-wrong">Helaas! Het juiste antwoord was: <strong>${correct}</strong></div>`;
             }
             document.getElementById('next-btn').classList.remove('hidden');
         }
@@ -802,10 +921,10 @@
         }
 
         function resetProgressPrompt() {
-            showNotification("Voortgang resetten", "Weet je zeker dat je alle opgeslagen data wilt wissen?");
+            showNotification("Voortgang resetten", "Weet je zeker dat je alle opgeslagen data en je adaptieve niveau wilt resetten?");
             let modalBtn = document.querySelector('.custom-modal .btn');
             modalBtn.onclick = function() {
-                localStorage.removeItem('wordly_ai_master_data');
+                localStorage.removeItem('wordly_ai_adaptive_v2');
                 location.reload();
             };
         }
