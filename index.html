@@ -719,23 +719,7 @@
             align-items: center;
             z-index: 5000;
         }
-    
-        .profile-compact-modal {
-            width: min(360px, calc(100vw - 28px)) !important;
-            max-width: 360px !important;
-            max-height: min(520px, calc(100vh - 40px));
-            overflow-y: auto;
-            box-sizing: border-box;
-            padding: 22px !important;
-        }
-        @media (max-width: 600px) {
-            .profile-compact-modal {
-                width: calc(100vw - 24px) !important;
-                max-height: calc(100vh - 24px);
-                padding: 18px !important;
-            }
-        }
-</style>
+    </style>
 </head>
 <body>
 
@@ -859,19 +843,16 @@
 
     <!-- PROFIEL MODAL -->
     <div id="profile-modal" class="modal-overlay hidden">
-        <div class="custom-modal profile-compact-modal">
-            <button class="auth-close" onclick="closeProfileModal()" aria-label="Close" style="float:right;">×</button>
-            <h3 id="profile-username-title">Profile</h3>
-            <p id="profile-details-text">Your statistics and progress</p>
-
-            <div style="background:#f7f7f7;padding:12px;border-radius:var(--radius-sm);border:2px solid var(--border);margin-bottom:15px;text-align:left;font-size:13px;font-weight:800;line-height:1.8;">
-                <div>👤 User: <span id="prof-user" style="color:var(--duo-green);"></span></div>
-                <div>🔥 Streak: <span id="prof-streak"></span> days</div>
-                <div>🏆 Total XP: <span id="prof-xp"></span></div>
-                <div>📚 Active Chapter: <span id="prof-chapter"></span></div>
+        <div class="custom-modal">
+            <h3 id="profile-username-title">Gebruikersprofiel</h3>
+            <p id="profile-details-text">Statistieken en voortgang</p>
+            <div style="background: #f7f7f7; padding: 12px; border-radius: var(--radius-sm); border: 2px solid var(--border); margin-bottom: 15px; text-align: left; font-size: 13px; font-weight: 800;">
+                <div>👤 Gebruiker: <span id="prof-user" style="color: var(--duo-green);"></span></div>
+                <div>🔥 Streak: <span id="prof-streak"></span> dagen</div>
+                <div>🏆 Totale XP: <span id="prof-xp"></span></div>
+                <div>📚 Actief Hoofdstuk: <span id="prof-chapter"></span></div>
             </div>
-
-            <button class="btn" onclick="closeProfileModal()">Close</button>
+            <button class="btn" onclick="closeProfileModal()">Sluiten</button>
         </div>
     </div>
 
@@ -926,7 +907,7 @@
                 <div class="stat-pill" onclick="openLeaderboard()">🏆 <span id="points-display">0</span> XP</div>
                 <div class="stat-pill" title="Aantal online Wordly-accounts">👥 <span id="registered-count">—</span></div>
             </div>
-            <button class="action-btn profile-btn" onclick="openProfileModal()">Profile</button>
+            <button class="action-btn profile-btn" onclick="openProfileModal()">Profiel</button>
             <button class="action-btn logout-btn" id="logout-btn-text" onclick="logoutUser()">Log out</button>
         </div>
     </header>
@@ -1076,7 +1057,7 @@
                 return;
             }
 
-            const name = cleanAccountName(document.getElementById('auth-name').value);
+            const name = document.getElementById('auth-name').value.trim();
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value;
             const errorBox = document.getElementById('auth-error');
@@ -1158,7 +1139,7 @@
                     activeChapter: 0,
                     languageProgress: {},
                     mistakes: [],
-                    name: cleanAccountName(user.displayName || (user.email || 'Player').split('@')[0]),
+                    name: user.displayName || (user.email || 'Player').split('@')[0],
                     email: user.email || '',
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -1167,23 +1148,8 @@
                 await updateLeaderboardEntry(initialData.points, initialData.name);
             } else {
                 const data = snap.data() || {};
-                const rawName = user.displayName || data.name || (user.email || '').split('@')[0] || 'Player';
-                const cleanedName = cleanAccountName(rawName);
-                const patch = {};
-                if (data.name !== cleanedName || (user.displayName && user.displayName !== cleanedName)) {
-                    patch.name = cleanedName;
-                }
-                if (user.email && data.email !== user.email) patch.email = user.email;
-                if (Object.keys(patch).length) {
-                    patch.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
-                    await ref.set(patch, { merge: true });
-                }
-                if (currentFirebaseUser) {
-                    currentLoggedInUser = cleanedName;
-                    if (user.displayName !== cleanedName) {
-                        try { await user.updateProfile({ displayName: cleanedName }); } catch (e) { console.warn('Could not clean display name', e); }
-                    }
-                    await updateLeaderboardEntry(Number(data.points) || 0, cleanedName);
+                if (user.displayName && data.name !== user.displayName) {
+                    await ref.set({ name: user.displayName, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
                 }
             }
         }
@@ -1209,10 +1175,10 @@
 
         function cleanLeaderboardName(name) {
             let cleaned = String(name ?? '').trim();
-            // Never show the old broken "NaN" prefix in the leaderboard.
-            cleaned = cleaned.replace(/^nan(?:\s*[-:]?\s*)/i, '').trim();
-            if (!cleaned || /^nan$/i.test(cleaned)) cleaned = 'Player';
-            return cleaned;
+            // Oude bug maakte namen zoals "NaNRik" / "NaNrik".
+            cleaned = cleaned.replace(/^nan\s*/i, '').trim();
+            cleaned = cleaned.replace(/nan/gi, '').trim();
+            return cleaned || 'Player';
         }
 
         async function updateLeaderboardEntry(xp, name) {
@@ -1240,29 +1206,15 @@
         }
 
         function openProfileModal() {
-            const data = appData || {};
-            const name = cleanAccountName(
-                (currentFirebaseUser && currentFirebaseUser.displayName) ||
-                currentLoggedInUser ||
-                (currentFirebaseUser && currentFirebaseUser.email ? currentFirebaseUser.email.split('@')[0] : '') ||
-                'Player'
-            );
-            document.getElementById('prof-user').innerText = name;
-            document.getElementById('prof-streak').innerText = data.streak ?? 0;
-            document.getElementById('prof-xp').innerText = Number(data.points) || 0;
-            document.getElementById('prof-chapter').innerText = (Number(data.activeChapter) || 0) + 1;
+            document.getElementById('prof-user').innerText = currentLoggedInUser || "Onbekend";
+            document.getElementById('prof-streak').innerText = appData.streak;
+            document.getElementById('prof-xp').innerText = appData.points;
+            document.getElementById('prof-chapter').innerText = appData.activeChapter + 1;
             document.getElementById('profile-modal').classList.remove('hidden');
         }
 
         function closeProfileModal() {
             document.getElementById('profile-modal').classList.add('hidden');
-        }
-
-        function cleanAccountName(name) {
-            let cleaned = String(name ?? '').trim();
-            cleaned = cleaned.replace(/^nan(?:\s*[-:]?\s*)/i, '').trim();
-            if (!cleaned || /^nan$/i.test(cleaned)) return 'Player';
-            return cleaned;
         }
 
         const flags = {
@@ -1573,7 +1525,7 @@
                     activeChapter: Number(appData.activeChapter) || 0,
                     languageProgress: appData.languageProgress || {},
                     mistakes: appData.mistakes || [],
-                    name: cleanAccountName(currentFirebaseUser.displayName || currentLoggedInUser || 'Player'),
+                    name: cleanLeaderboardName(currentFirebaseUser.displayName || currentLoggedInUser || 'Player'),
                     email: currentFirebaseUser.email || '',
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
@@ -2122,7 +2074,7 @@
             renderLeaderboardData();
         }
 
-        async async function renderLeaderboardData() {
+        async function renderLeaderboardData() {
             const container = document.getElementById('lb-list-container');
             container.innerHTML = '<div style="padding:20px;text-align:center;font-weight:800;color:#777;">Leaderboard laden…</div>';
 
