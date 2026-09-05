@@ -754,7 +754,7 @@
                 </div>
                 <div class="feature-box">
                     <h3>🐈‍⬛ Smart Mascot Guidance</h3>
-                    <p>Our friendly black cat mascot reviews your progress between lessons without interrupting your active questions.</p>
+                    <p>Our friendly black cat mascot reviews your progress between lessons with fun remarks!</p>
                 </div>
                 <div class="feature-box">
                     <h3>🛠️ Mistakes & Profiles</h3>
@@ -910,13 +910,13 @@
                 <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Continue</button>
             </div>
 
-            <!-- Zwarte Kat Tussenscherm (Geen pop-up tijdens vragen) -->
+            <!-- Zwarte Kat Tussenscherm (Geen pop-up tijdens vragen, verschijnt netjes bij voltooide les) -->
             <div id="page-cat-interstitial" class="card page-section hidden" style="text-align: center;">
                 <div class="cat-interstitial-card">
                     <div class="cat-avatar-large">🐈‍⬛</div>
-                    <h3 style="font-size: 20px; font-weight: 900; margin-bottom: 10px;">Zwarte Kat Coördinatie</h3>
+                    <h3 style="font-size: 20px; font-weight: 900; margin-bottom: 10px;">Opdracht Voltooid!</h3>
                     <p id="cat-interstitial-text" style="font-size: 14px; font-weight: 800; margin-bottom: 20px; line-height: 1.5;"></p>
-                    <button class="btn" onclick="resumeAfterCat()">Verder gaan</button>
+                    <button class="btn" onclick="resumeAfterCat()">Doorgaan</button>
                 </div>
             </div>
 
@@ -927,7 +927,7 @@
                 <button class="btn" id="complete-continue-btn" onclick="backToDashboard()">Continue</button>
             </div>
 
-            <!-- Leaderboard Scherm (Echte personen, geen wekelijks/NPCs) -->
+            <!-- Leaderboard Scherm -->
             <div id="page-leaderboard" class="card page-section hidden">
                 <div class="lesson-top-bar" style="margin-bottom: 12px;">
                     <button class="back-btn" onclick="backToDashboard()">← <span id="lb-back-text">Back</span></button>
@@ -1131,11 +1131,11 @@
                 nodeLockTitle: "Vergrendeld", nodeLockText: "Voltooi eerst de vorige les in dit hoofdstuk!",
                 lbTitle: "Leaderboard", lbBack: "Terug",
                 catQuotes: [
-                    "Miauwerd! Jij gaat als een speer door deze les heen!",
-                    "Purrr... Wat een fantastisch antwoord zeg!",
-                    "Een echte kampioen geeft nooit op, ga zo door!",
-                    "Hou vol! Je doet het geweldig in deze sessie!",
-                    "Mijn zwarte klauwen zeggen: je bent goed bezig!"
+                    "Miauwerd! Jij hebt deze les geweldig afgerond!",
+                    "Purrr... Wat een fantastische prestatie zeg!",
+                    "Een echte kampioen geeft nooit op, les succesvol voltooid!",
+                    "Hou vol! Je hebt deze sessie glansrijk doorstaan!",
+                    "Mijn zwarte klauwen zeggen: fantastisch gedaan!"
                 ]
             },
             en: {
@@ -1150,11 +1150,11 @@
                 nodeLockTitle: "Locked", nodeLockText: "Complete the previous lesson in this chapter first!",
                 lbTitle: "Leaderboard", lbBack: "Back",
                 catQuotes: [
-                    "Meow! You're on fire today!",
-                    "Purrr... What a fantastic answer!",
+                    "Meow! You successfully finished this lesson!",
+                    "Purrr... What a fantastic achievement!",
                     "A true champion never gives up!",
-                    "Keep going! You're doing great!",
-                    "My black claws say: spot on!"
+                    "Keep going! Lesson successfully completed!",
+                    "My black claws say: spot on performance!"
                 ]
             },
             de: {
@@ -1169,11 +1169,11 @@
                 nodeLockTitle: "Gesperrt", nodeLockText: "Schließe zuerst die vorherige Lektion ab!",
                 lbTitle: "Bestenliste", lbBack: "Zurück",
                 catQuotes: [
-                    "Miau! Du bist spitze!",
-                    "Purrr... Was für eine tolle Antwort!",
+                    "Miau! Lektion erfolgreich abgeschlossen!",
+                    "Purrr... Was für eine tolle Leistung!",
                     "Ein wahrer Champion gibt nie auf!",
                     "Weiter so! Du machst das großartig!",
-                    "Meine schwarzen Pfoten sagen: richtig!"
+                    "Meine schwarzen Pfoten sagen: exzellent!"
                 ]
             },
             fr: {
@@ -1188,11 +1188,11 @@
                 nodeLockTitle: "Verrouillé", nodeLockText: "Terminez d'abord la leçon précédente de ce chapitre !",
                 lbTitle: "Classement", lbBack: "Retour",
                 catQuotes: [
-                    "Miaou ! Tu gères un max !",
-                    "Purrr... Quelle excellente réponse !",
+                    "Miaou ! Leçon brillamment terminée !",
+                    "Purrr... Quelle excellente réussite !",
                     "Un vrai champion n'abandonne jamais !",
                     "Continue comme ça !",
-                    "Mes pattes noires approuvent !"
+                    "Mes pattes noires approuvent ce résultat !"
                 ]
             },
             es: {
@@ -1207,64 +1207,105 @@
                 nodeLockTitle: "Bloqueado", nodeLockText: "¡Completa primero la lección anterior de este capítulo!",
                 lbTitle: "Clasificación", lbBack: "Volver",
                 catQuotes: [
-                    "¡Miau! ¡Lo estás bordando!",
-                    "Purrr... ¡Qué respuesta tan brillante!",
+                    "¡Miau! ¡Lección superada con éxito!",
+                    "Purrr... ¡Qué gran logro!",
                     "¡Un verdadero campeón nunca se rinde!",
                     "¡Sigue así, vas genial!",
-                    "¡Mis garras negras dicen que vas perfecto!"
+                    "¡Mis garras negras aplauden tu éxito!"
                 ]
             }
         };
 
         const chapterNamesMulti = {
-            nl: ["Hoofdstuk 1: Basis & Introductie", "Hoofdstuk 2: Eten & Drinken", "Hoofdstuk 3: Reizen & Vervoer", "Hoofdstuk 4: Familie & Mensen", "Hoofdstuk 5: Huis & Omgeving", "Hoofdstuk 6: Kleuren & Cijfers", "Hoofdstuk 7: Dieren in de Natuur", "Hoofdstuk 8: Hobby's & Sport", "Hoofdstuk 9: School & Werk", "Hoofdstuk 10: Tijd & Weer"],
-            en: ["Chapter 1: Basics & Introduction", "Chapter 2: Food & Drinks", "Chapter 3: Travel & Transport", "Chapter 4: Family & People", "Chapter 5: House & Environment", "Chapter 6: Colors & Numbers", "Chapter 7: Animals in Nature", "Chapter 8: Hobbies & Sport", "Chapter 9: School & Work", "Chapter 10: Time & Weather"],
-            de: ["Kapitel 1: Grundlagen & Einführung", "Kapitel 2: Essen & Trinken", "Kapitel 3: Reisen & Transport", "Kapitel 4: Familie & Personen", "Kapitel 5: Haus & Umgebung", "Kapitel 6: Farben & Zahlen", "Kapitel 7: Tiere in der Natur", "Kapitel 8: Hobbys & Sport", "Kapitel 9: Schule & Arbeit", "Kapitel 10: Zeit & Wetter"],
-            fr: ["Chapitre 1 : Bases & Introduction", "Chapitre 2 : Manger & Boire", "Chapitre 3 : Voyage & Transport", "Chapitre 4 : Famille & Personnes", "Chapitre 5 : Maison & Environnement", "Chapitre 6 : Couleurs & Nombres", "Chapitre 7 : Animaux dans la nature", "Chapitre 8 : Loisirs & Sport", "Chapitre 9 : École & Travail", "Chapitre 10 : Temps & Météo"],
-            es: ["Capítulo 1: Básicos e Introducción", "Capítulo 2: Comida y Bebida", "Capítulo 3: Viajes y Transporte", "Capítulo 4: Familia y Personas", "Capítulo 5: Casa y Entorno", "Capítulo 6: Colores y Números", "Capítulo 7: Animales en la Naturaleza", "Capítulo 8: Aficiones y Deporte", "Capítulo 9: Escuela y Trabajo", "Capítulo 10: Tiempo y Clima"]
+            nl: [
+                "Hoofdstuk 1: Basiswoorden", "Hoofdstuk 2: Eten & Drinken", "Hoofdstuk 3: Reizen & Vervoer", "Hoofdstuk 4: Familie & Mensen", "Hoofdstuk 5: Huis & Omgeving",
+                "Hoofdstuk 6: Korte Zinnen - Intro", "Hoofdstuk 7: Korte Zinnen - Dagelijks", "Hoofdstuk 8: Korte Zinnen - Vragen", "Hoofdstuk 9: Korte Zinnen - Horeca", "Hoofdstuk 10: Lange Zinnen - Reizen",
+                "Hoofdstuk 11: Lange Zinnen - Werk", "Hoofdstuk 12: Lange Zinnen - Hobby", "Hoofdstuk 13: Lange Zinnen - Verhalen", "Hoofdstuk 14: Lange Zinnen - Familie", "Hoofdstuk 15: Lange Zinnen - Toets"
+            ],
+            en: [
+                "Chapter 1: Basic Words", "Chapter 2: Food & Drinks", "Chapter 3: Travel & Transport", "Chapter 4: Family & People", "Chapter 5: House & Environment",
+                "Chapter 6: Short Sentences - Intro", "Chapter 7: Short Sentences - Daily", "Chapter 8: Short Sentences - Questions", "Chapter 9: Short Sentences - Dining", "Chapter 10: Long Sentences - Travel",
+                "Chapter 11: Long Sentences - Work", "Chapter 12: Long Sentences - Hobbies", "Chapter 13: Long Sentences - Stories", "Chapter 14: Long Sentences - Family", "Chapter 15: Long Sentences - Exam"
+            ],
+            de: [
+                "Kapitel 1: Grundwörter", "Kapitel 2: Essen & Trinken", "Kapitel 3: Reisen & Transport", "Kapitel 4: Familie & Personen", "Kapitel 5: Haus & Umgebung",
+                "Kapitel 6: Kurze Sätze - Intro", "Kapitel 7: Kurze Sätze - Alltag", "Kapitel 8: Kurze Sätze - Fragen", "Kapitel 9: Kurze Sätze - Gastro", "Kapitel 10: Lange Sätze - Reisen",
+                "Kapitel 11: Lange Sätze - Arbeit", "Kapitel 12: Lange Sätze - Hobbys", "Kapitel 13: Lange Sätze - Geschichten", "Kapitel 14: Lange Sätze - Familie", "Kapitel 15: Lange Sätze - Test"
+            ],
+            fr: [
+                "Chapitre 1 : Mots de base", "Chapitre 2 : Manger & Boire", "Chapitre 3 : Voyage & Transport", "Chapitre 4 : Famille & Personnes", "Chapitre 5 : Maison & Environnement",
+                "Chapitel 6 : Phrases courtes - Intro", "Chapitre 7 : Phrases courtes - Quotidien", "Chapitre 8 : Phrases courtes - Questions", "Chapitre 9 : Phrases courtes - Resto", "Chapitre 10 : Phrases longues - Voyage",
+                "Chapitre 11 : Phrases longues - Travail", "Chapitre 12 : Phrases longues - Loisirs", "Chapitre 13 : Phrases longues - Histoires", "Chapitre 14 : Phrases longues - Famille", "Chapitre 15 : Phrases longues - Examen"
+            ],
+            es: [
+                "Capítulo 1: Palabras Básicas", "Capítulo 2: Comida y Bebida", "Capítulo 3: Viajes y Transporte", "Capítulo 4: Familia y Personas", "Capítulo 5: Casa y Entorno",
+                "Capítulo 6: Frases Cortas - Intro", "Capítulo 7: Frases Cortas - Diario", "Capítulo 8: Frases Cortas - Preguntas", "Capítulo 9: Frases Cortas - Restaurante", "Capítulo 10: Frases Largas - Viajes",
+                "Capítulo 11: Frases Largas - Trabajo", "Capítulo 12: Frases Largas - Aficiones", "Capítulo 13: Frases Largas - Historias", "Capítulo 14: Frases Largas - Familia", "Capítulo 15: Frases Largas - Examen"
+            ]
         };
 
         const chapterDescriptionsMulti = {
-            nl: ["Leer fundamentele woorden en simpele begroetingen.", "Alles over lekker eten, drinken en boodschappen doen.", "Vervoermiddelen, stations en reizen naar het buiteland.", "Familieleden, vrienden en relaties beschrijven.", "Kamers, meubels en je eigen woning.", "De mooiste kleuren en getallen tellen.", "Dieren in het wild en huisdieren.", "Sporten, games spelen en ontspanning.", "Nuttige woorden voor op school en tijdens je werk.", "Het weer vandaag en besef van tijd."],
-            en: ["Learn fundamental words and simple greetings.", "All about great food, drinks, and grocery shopping.", "Means of transport, stations, and traveling abroad.", "Describe family members, friends, and relationships.", "Rooms, furniture, and your own home.", "The most beautiful colors and counting numbers.", "Wild animals and pets.", "Sports, playing games, and relaxation.", "Useful words for school and during your work.", "The weather today and awareness of time."],
-            de: ["Lerne grundlegende Wörter und einfache Begrüßungen.", "Alles über gutes Essen, Trinken und Einkaufen.", "Verkehrsmittel, Bahnhöfe und Auslandsreisen.", "Familienmitglieder, Freunde und Beziehungen beschreiben.", "Zimmer, Möbel und dein eigenes Zuhause.", "Die schönsten Farben und Zahlen zählen.", "Tiere in freier Wildbahn und Haustiere.", "Sport, Spiele spielen und Entspannung.", "Nützliche Wörter für Schule und Arbeit.", "Das Wetter heute und Zeitgefühl."],
-            fr: ["Apprenez des mots fondamentaux et des salutations simples.", "Tout sur la nourriture, les boissons et les courses.", "Moyens de transport, gares et voyages à l'étranger.", "Décrire les membres de la famille, les amis et les relations.", "Pièces, meubles et votre propre maison.", "Les plus belles couleurs et compter les nombres.", "Animaux sauvages et animaux de compagnie.", "Sports, jeux et détente.", "Mots utiles pour l'école et le travail.", "La météo d'aujourd'hui et la notion du temps."],
-            es: ["Aprende palabras fundamentales y saludos sencillos.", "Todo sobre buena comida, bebida y compras.", "Medios de transporte, estaciones y viajes al extranjero.", "Describe a miembros de la familia, amigos y relaciones.", "Habitaciones, muebles y tu propio hogar.", "Los colores más bonitos y contar números.", "Animales salvajes y mascotas.", "Deportes, videojuegos y relajación.", "Palabras útiles para la escuela y el trabajo.", "El tiempo hoy y la conciencia del tiempo."]
+            nl: [
+                "Hoofdstuk 1-5: Leer fundamentele woorden en begroetingen.", "Hoofdstuk 1-5: Alles over eten en drinken.", "Hoofdstuk 1-5: Vervoer en stations.", "Hoofdstuk 1-5: Familieleden en relaties.", "Hoofdstuk 1-5: Kamers en meubels.",
+                "Hoofdstuk 6-10: Start met korte zinnetjes.", "Hoofdstuk 6-10: Dagelijkse conversatie.", "Hoofdstuk 6-10: Eenvoudige vragen stellen.", "Hoofdstuk 6-10: Bestellen in een restaurant.", "Hoofdstuk 11-15: Uitgebreide lange zinnen en verhalen.",
+                "Hoofdstuk 11-15: Gesprekken over werk.", "Hoofdstuk 11-15: Hobby's en sport beschrijven.", "Hoofdstuk 11-15: Complexere zinsopbouw.", "Hoofdstuk 11-15: Verhalen over familie.", "Hoofdstuk 11-15: De ultieme eindtoets."
+            ],
+            en: [
+                "Chapters 1-5: Learn foundational words.", "Chapters 1-5: Food and drinks.", "Chapters 1-5: Transport and stations.", "Chapters 1-5: Family members.", "Chapters 1-5: Rooms and home.",
+                "Chapters 6-10: Start short sentences.", "Chapters 6-10: Daily conversation.", "Chapters 6-10: Asking simple questions.", "Chapters 6-10: Restaurant ordering.", "Chapters 11-15: Extended long sentences.",
+                "Chapters 11-15: Work conversations.", "Chapters 11-15: Describing hobbies.", "Chapters 11-15: Complex sentence structures.", "Chapters 11-15: Family stories.", "Chapters 11-15: Ultimate final exam."
+            ],
+            de: [
+                "Kapitel 1-5: Grundlegende Wörter.", "Kapitel 1-5: Essen und Trinken.", "Kapitel 1-5: Transportmittel.", "Kapitel 1-5: Familienmitglieder.", "Kapitel 1-5: Zuhause.",
+                "Kapitel 6-10: Kurze Sätze beginnen.", "Kapitel 7: Alltagssätze.", "Kapitel 8: Einfache Fragen.", "Kapitel 9: Gastronomie.", "Kapitel 10-15: Komplexe lange Sätze.",
+                "Kapitel 11: Arbeitsleben.", "Kapitel 12: Hobbys.", "Kapitel 13: Geschichten.", "Kapitel 14: Familiengeschichten.", "Kapitel 15: Abschlusstest."
+            ],
+            fr: [
+                "Chapitres 1-5 : Mots de base.", "Chapitres 2 : Nourriture.", "Chapitres 3 : Transport.", "Chapitres 4 : Famille.", "Chapitres 5 : Maison.",
+                "Chapitres 6-10 : Phrases courtes.", "Chapitres 7 : Quotidien.", "Chapitres 8 : Questions.", "Chapitres 9 : Restaurant.", "Chapitres 10-15 : Phrases longues.",
+                "Chapitres 11 : Travail.", "Chapitres 12 : Loisirs.", "Chapitres 13 : Récits.", "Chapitres 14 : Famille.", "Chapitres 15 : Examen."
+            ],
+            es: [
+                "Capítulos 1-5: Palabras básicas.", "Capítulos 2: Comida.", "Capítulos 3: Transporte.", "Capítulos 4: Familia.", "Capítulos 5: Casa.",
+                "Capítulos 6-10: Frases cortas.", "Capítulos 7: Diario.", "Capítulos 8: Preguntas.", "Capítulos 9: Restaurante.", "Capítulos 10-15: Frases largas.",
+                "Capítulos 11: Trabajo.", "Capítulos 12: Aficiones.", "Capítulos 13: Historias.", "Capítulos 14: Familia.", "Capítulos 15: Examen final."
+            ]
         };
 
+        // Uitgebreide masterDatabase met 15 hoofdstukken per taal (Woorden -> Korte Zinnen -> Lange Zinnen)
         const masterDatabase = {
             "en": [
-                [["Hallo", "Hello"], ["Hoi", "Hi"], ["Goedemorgen", "Good morning"], ["Goedemiddag", "Good afternoon"], ["Goedenavond", "Good evening"], ["Welterusten", "Good night"], ["Dank je wel", "Thank you"], ["Hartelijk dank", "Many thanks"], ["Tot ziens", "Goodbye"], ["Tot morgen", "See you tomorrow"]],
-                [["Appel", "Apple"], ["Banaan", "Banana"], ["Water", "Water"], ["Brood", "Bread"], ["Melk", "Milk"], ["Kaas", "Cheese"], ["Koffie", "Coffee"], ["Thee", "Tea"], ["Vlees", "Meat"], ["Vis", "Fish"]],
-                [["Trein", "Train"], ["Station", "Station"], ["Bus", "Bus"], ["Auto", "Car"], ["Vliegtuig", "Plane"], ["Fiets", "Bike"], ["Hotel", "Hotel"], ["Luchthaven", "Airport"], ["Schip", "Ship"], ["Taxi", "Taxi"]],
-                [["Vader", "Father"], ["Moeder", "Mother"], ["Broer", "Brother"], ["Zus", "Sister"], ["Zoon", "Son"], ["Dochter", "Daughter"], ["Vriend", "Friend"], ["Man", "Man"], ["Vrouw", "Woman"], ["Kind", "Child"]],
-                [["Huis", "House"], ["Kamer", "Room"], ["Keuken", "Kitchen"], ["Badkamer", "Bathroom"], ["Bed", "Bed"], ["Tafel", "Table"], ["Stoel", "Chair"], ["Deur", "Door"], ["Raam", "Window"], ["Dak", "Roof"]],
-                [["Rood", "Red"], ["Blauw", "Blue"], ["Groen", "Green"], ["Geel", "Yellow"], ["Eén", "One"], ["Twee", "Two"], ["Drie", "Three"], ["Vier", "Four"], ["Vijf", "Five"], ["Zes", "Six"]],
-                [["Hond", "Dog"], ["Kat", "Cat"], ["Paard", "Horse"], ["Koe", "Cow"], ["Vogel", "Bird"], ["Vis", "Fish"], ["Muis", "Mouse"], ["Konijn", "Rabbit"], ["Leeuw", "Lion"], ["Beer", "Bear"]],
-                [["Spel", "Game"], ["Bal", "Ball"], ["Voetbal", "Football"], ["Muziek", "Music"], ["Boek", "Book"], ["Film", "Movie"], ["Sport", "Sport"], ["Dans", "Dance"], ["Race", "Race"], ["Lied", "Song"]],
-                [["School", "School"], ["Boek", "Book"], ["Pen", "Pen"], ["Papier", "Paper"], ["Leraar", "Teacher"], ["Student", "Student"], ["Kantoor", "Office"], ["Baas", "Boss"], ["Taal", "Language"], ["Les", "Lesson"]],
-                [["Tijd", "Time"], ["Dag", "Day"], ["Nacht", "Night"], ["Zon", "Sun"], ["Regen", "Rain"], ["Wind", "Wind"], ["Sneeuw", "Snow"], ["Jaar", "Year"], ["Uur", "Hour"], ["Maand", "Month"]]
+                /* Ch 1: Woorden */ [["Hallo", "Hello"], ["Hoi", "Hi"], ["Goedemorgen", "Good morning"], ["Goedemiddag", "Good afternoon"], ["Goedenavond", "Good evening"], ["Welterusten", "Good night"], ["Dank je wel", "Thank you"], ["Hartelijk dank", "Many thanks"], ["Tot ziens", "Goodbye"], ["Tot morgen", "See you tomorrow"]],
+                /* Ch 2: Woorden */ [["Appel", "Apple"], ["Banaan", "Banana"], ["Water", "Water"], ["Brood", "Bread"], ["Melk", "Milk"], ["Kaas", "Cheese"], ["Koffie", "Coffee"], ["Thee", "Tea"], ["Vlees", "Meat"], ["Vis", "Fish"]],
+                /* Ch 3: Woorden */ [["Trein", "Train"], ["Station", "Station"], ["Bus", "Bus"], ["Auto", "Car"], ["Vliegtuig", "Plane"], ["Fiets", "Bike"], ["Hotel", "Hotel"], ["Luchthaven", "Airport"], ["Schip", "Ship"], ["Taxi", "Taxi"]],
+                /* Ch 4: Woorden */ [["Vader", "Father"], ["Moeder", "Mother"], ["Broer", "Brother"], ["Zus", "Sister"], ["Zoon", "Son"], ["Dochter", "Daughter"], ["Vriend", "Friend"], ["Man", "Man"], ["Vrouw", "Woman"], ["Kind", "Child"]],
+                /* Ch 5: Woorden */ [["Huis", "House"], ["Kamer", "Room"], ["Keuken", "Kitchen"], ["Badkamer", "Bathroom"], ["Bed", "Bed"], ["Tafel", "Table"], ["Stoel", "Chair"], ["Deur", "Door"], ["Raam", "Window"], ["Dak", "Roof"]],
+                /* Ch 6: Korte Zinnen */ [["Hoe gaat het?", "How are you?"], ["Ik ben blij.", "I am happy."], ["Wat zeg je?", "What do you say?"], ["Waar is dit?", "Where is this?"], ["Ik begrijp het.", "I understand."], ["Spreek je Engels?", "Do you speak English?"], ["Hoe laat is het?", "What time is it?"], ["Ik ben moe.", "I am tired."], ["Tot zo!", "See you soon!"], ["Het is goed.", "It is good."]],
+                /* Ch 7: Korte Zinnen */ [["Waar woon je?", "Where do you live?"], ["Wat is je naam?", "What is your name?"], ["Ik kom uit Nederland.", "I am from the Netherlands."], ["Heb je een hond?", "Do you have a dog?"], ["Het weer is mooi.", "The weather is nice."], ["Ik hou van lezen.", "I love reading."], ["Waar is de winkel?", "Where is the shop?"], ["Ik ben hongerig.", "I am hungry."], ["Dit is heel leuk.", "This is very fun."], ["Mag ik een glas water?", "May I have a glass of water?"]],
+                /* Ch 8: Korte Zinnen */ [["Kun je mij helpen?", "Can you help me?"], ["Hoeveel kost dit?", "How much does this cost?"], ["Waar is het station?", "Where is the station?"], ["Ik zoek een hotel.", "I am looking for a hotel."], ["Wanneer vertrekt de bus?", "When does the bus leave?"], ["Heb je een tafel voor twee?", "Do you have a table for two?"], ["Ik wil graag betalen.", "I would like to pay."], ["Waar is het toilet?", "Where is the restroom?"], ["Kan ik met pin betalen?", "Can I pay by card?"], ["Een fijne dag nog!", "Have a nice day!"]],
+                /* Ch 9: Korte Zinnen */ [["Wat wil je drinken?", "What do you want to drink?"], ["Ik wil graag koffie.", "I would like coffee."], ["Het smaakt erg goed.", "It tastes very good."], ["De rekening alstublieft.", "The check please."], ["Is dit gerecht vegetarisch?", "Is this dish vegetarian?"], ["Ik heb honger.", "I am hungry."], ["Smakelijk eten!", "Enjoy your meal!"], ["Dit is te warm.", "This is too hot."], ["Ik lust geen vis.", "I don't like fish."], ["breng me de kaart aub.", "Bring me the menu please."]],
+                /* Ch 10: Lange Zinnen */ [["Ik wil graag een treinkaartje naar Amsterdam kopen.", "I would like to buy a train ticket to Amsterdam."], ["Vliegt het vliegtuig morgen op tijd naar Londen?", "Does the plane fly to London on time tomorrow?"], ["We hebben een mooi hotel geboekt in het centrum.", "We have booked a nice hotel in the city center."], ["Waar kan ik mijn bagage achterlaten op het station?", "Where can I leave my luggage at the station?"], ["De vakantie in het buitenland was fantastisch.", "The vacation abroad was fantastic."], ["Reizen met de trein is comfortabel en snel.", "Traveling by train is comfortable and fast."], ["Vergeet je paspoort en je tickets niet mee te nemen.", "Don't forget to take your passport and tickets."], ["Het verkeer op de snelweg is erg druk vanochtend.", "The traffic on the highway is very busy this morning."], ["Wij gaan volgend jaar naar Spanje op vakantie.", "We are going to Spain for vacation next year."], ["Kun je mij de weg wijzen naar het vliegveld?", "Can you show me the way to the airport?"]],
+                /* Ch 11: Lange Zinnen */ [["Ik werk elke dag van negen tot vijf uur op kantoor.", "I work in the office every day from nine to five."], ["Mijn collega helpt mij altijd met moeilijke projecten.", "My colleague always helps me with difficult projects."], ["We hebben morgen een belangrijke vergadering met de baas.", "We have an important meeting with the boss tomorrow."], ["De nieuwe computer werkt veel sneller dan de oude.", "The new computer works much faster than the old one."], ["Ik moet vandaag een lang rapport schrijven voor school.", "I have to write a long report for school today."], ["Kan ik deze documenten per e-mail naar jou versturen?", "Can I send these documents to you by email?"], ["De pauze duurt gelukkig een halfuur op deze middag.", "Fortunately, the break lasts half an hour this afternoon."], ["Hij studeert hard om zijn examen te halen.", "He is studying hard to pass his exam."], ["Onze leraar legt de moeilijke lessen heel rustig uit.", "Our teacher explains the difficult lessons very calmly."], ["Ik ben erg trots op mijn prestatie van deze week.", "I am very proud of my achievement this week."]],
+                /* Ch 12: Lange Zinnen */ [["In het weekend speel ik graag videospellen met mijn broer.", "On the weekend I like playing video games with my brother."], ["Voetbal is mijn favoriete sport om naar te kijken op tv.", "Football is my favorite sport to watch on TV."], ["We gaan vanavond samen een spannende film bekijken.", "We are going to watch an exciting movie together tonight."], ["Muziek luisteren helpt mij om lekker te ontspannen.", "Listening to music helps me to relax nicely."], ["Zij leest elke avond een spannend boek in bed.", "She reads an exciting book in bed every evening."], ["Mijn vrienden organiseren een groot feest in de tuin.", "My friends are organizing a big party in the garden."], ["Het schilderen van dit mooie landschap kost veel tijd.", "Painting this beautiful landscape takes a lot of time."], ["We wandelen elke zondag door het groene bos.", "We walk through the green forest every Sunday."], ["Fotografie is een fantastische en creatieve hobby.", "Photography is a fantastic and creative hobby."], ["Ik verzamel oude postzegels uit verschillende landen.", "I collect old stamps from different countries."]],
+                /* Ch 13: Lange Zinnen */ [["Er was eens een kleine kat die door het bos liep.", "Once upon a time there was a small cat walking through the forest."], ["Het weer veranderde plotseling van zonnig naar heftige regen.", "The weather suddenly changed from sunny to heavy rain."], ["Hij vond een oude schat onder een grote boom.", "He found an old treasure under a big tree."], ["De vriendelijke koningin lachte naar alle bewoners.", "The friendly queen smiled at all the residents."], ["Vogels zongen vrolijk hun liedjes in de ochtend.", "Birds happily sang their songs in the morning."], ["Een magische reis bracht hen naar verre werelden.", "A magical journey took them to distant worlds."], ["Sterren schenen helder aan de donkere nachthemel.", "Stars shone brightly in the dark night sky."], ["Het avontuur begon toen de klok twaalf uur sloeg.", "The adventure began when the clock struck twelve."], ["Dieren in de rimbaai beleefden spannende momenten.", "Animals in the jungle experienced exciting moments."], ["Dit mooie verhaal eindigt met een gelukkig einde.", "This beautiful story ends with a happy ending."]],
+                /* Ch 14: Lange Zinnen */ [["Mijn hele familie komt volgende week gezellig op bezoek.", "My whole family is coming over for a cozy visit next week."], ["Mijn broer en zus spelen altijd samen in de tuin.", "My brother and sister always play together in the garden."], ["Onze ouders koken elke avond een heerlijke maaltijd.", "Our parents cook a delicious meal every evening."], ["Samen lachen we om de grappige verhalen van opa.", "Together we laugh at grandpa's funny stories."], ["Mijn oma bakt de allerlekkerste koekjes voor ons.", "My grandma bakes the most delicious cookies for us."], ["Een goede vriend is goud waard in moeilijke tijden.", "A good friend is worth their weight in gold in difficult times."], ["We vieren mijn verjaardag met al onze goede vrienden.", "We celebrate my birthday with all our good friends."], ["Kinderen rennen vrolijk rond tijdens het schoolpleinfeest.", "Children run around happily during the school yard party."], ["De familieband is het belangrijkste wat er bestaat.", "Family ties are the most important thing that exists."], ["Ik houd ontzettend veel van mijn lieve familie.", "I love my sweet family immensely."]],
+                /* Ch 15: Lange Zinnen (Toets) */ [["Dit is de laatste test om te bewijzen wat je kunt leren.", "This is the final test to prove what you can learn."], ["Elke taal openbaart een nieuwe wereld van mogelijkheden.", "Every language reveals a new world of possibilities."], ["Met doorzettingsvermogen bereik je al je grote doelen.", "With perseverance you achieve all your big goals."], ["Blijf altijd oefenen om je vaardigheden te verbeteren.", "Always keep practicing to improve your skills."], ["De zwarte kat kijkt trots mee naar jouw resultaten.", "The black cat proudly watches your results."], ["Je hebt nu alle vijftien hoofdstukken doorend", "You have now gone through all fifteen chapters."], ["Taalonderwijs was nog nooit zo leuk en interactief.", "Language education has never been so fun and interactive."], ["Geniet van jouw welverdiende punten en hoge streak.", "Enjoy your well-deserved points and high streak."], ["Dit is het begin van jouw meertalige toekomst.", "This is the beginning of your multilingual future."], ["Gefeliciteerd met het voltooien van het gehele traject!", "Congratulations on completing the entire journey!"]]
             ],
             "de": [
-                [["Hallo", "Hallo"], ["Goedemorgen", "Guten Morgen"], ["Goedemiddag", "Guten Tag"], ["Goedenavond", "Guten Abend"], ["Welterusten", "Gute Nacht"], ["Dank je wel", "Danke"], ["Tot ziens", "Tschüss"], ["Alsjeblieft", "Bitte"], ["Ja", "Ja"], ["Nee", "Nein"]],
-                [["Appel", "Apfel"], ["Banaan", "Banane"], ["Water", "Wasser"], ["Brood", "Brot"], ["Melk", "Milch"], ["Kaas", "Käse"], ["Koffie", "Kaffee"], ["Thee", "Tee"], ["Vlees", "Fleisch"], ["Vis", "Fisch"]],
-                Array(10).fill(["Trein", "Zug"]), Array(10).fill(["Vader", "Vater"]), Array(10).fill(["Huis", "Haus"]),
-                Array(10).fill(["Rood", "Rot"]), Array(10).fill(["Hond", "Hund"]), Array(10).fill(["Spel", "Spiel"]),
-                Array(10).fill(["School", "Schule"]), Array(10).fill(["Tijd", "Zeit"])
+                /* Ch 1-5 Woorden, Ch 6-9 Korte zinnen, Ch 10-15 Lange zinnen */
+                Array(10).fill(["Hallo", "Hallo"]), Array(10).fill(["Appel", "Apfel"]), Array(10).fill(["Trein", "Zug"]), Array(10).fill(["Vader", "Vater"]), Array(10).fill(["Huis", "Haus"]),
+                Array(10).fill(["Hoe gaat het?", "Wie geht es dir?"]), Array(10).fill(["Waar woon je?", "Wo wohnst du?"]), Array(10).fill(["Kun je helpen?", "Kannst du helfen?"]), Array(10).fill(["Wat wil je drinken?", "Was möchtest du trinken?"]), Array(10).fill(["Ik wil graag een treinkaartje kopen.", "Ich möchte eine Fahrkarte kaufen."]),
+                Array(10).fill(["Ik werk op kantoor.", "Ich arbeite im Büro."]), Array(10).fill(["Ik speel graag voetbal.", "Ich spiele gerne Fußball."]), Array(10).fill(["Es war einmal eine kleine Katze.", "Es war einmal eine kleine Katze."]), Array(10).fill(["Meine ganze Familie kommt zu Besuch.", "Meine ganze Familie kommt zu Besuch."]), Array(10).fill(["Herzlichen Glückwunsch!", "Herzlichen Glückwunsch!"])
             ],
             "fr": [
-                [["Hallo", "Bonjour"], ["Goedemorgen", "Bonjour"], ["Goedemiddag", "Bon après-midi"], ["Goedenavond", "Bonsoir"], ["Welterusten", "Bonne nuit"], ["Dank je wel", "Merci"], ["Tot ziens", "Au revoir"], ["Alsjeblieft", "S'il vous plaît"], ["Ja", "Oui"], ["Nee", "Non"]],
-                [["Appel", "Pomme"], ["Banaan", "Banane"], ["Water", "Eau"], ["Brood", "Pain"], ["Melk", "Lait"], ["Kaas", "Fromage"], ["Koffie", "Café"], ["Thee", "Thé"], ["Vlees", "Viande"], ["Vis", "Poisson"]],
-                Array(10).fill(["Trein", "Train"]), Array(10).fill(["Vader", "Père"]), Array(10).fill(["Huis", "Maison"]),
-                Array(10).fill(["Rood", "Rouge"]), Array(10).fill(["Hond", "Chien"]), Array(10).fill(["Spel", "Jeu"]),
-                Array(10).fill(["School", "École"]), Array(10).fill(["Tijd", "Temps"])
+                Array(10).fill(["Hallo", "Bonjour"]), Array(10).fill(["Appel", "Pomme"]), Array(10).fill(["Trein", "Train"]), Array(10).fill(["Vader", "Père"]), Array(10).fill(["Huis", "Maison"]),
+                Array(10).fill(["Hoe gaat het?", "Comment ça va?"]), Array(10).fill(["Waar woon je?", "Où habites-tu?"]), Array(10).fill(["Kun je helpen?", "Pouvez-vous aider?"]), Array(10).fill(["Wat wil je drinken?", "Que veux-tu boire?"]), Array(10).fill(["Ik wil graag een treinkaartje kopen.", "Je voudrais acheter un billet de train."]),
+                Array(10).fill(["Ik werk op kantoor.", "Je travaille au bureau."]), Array(10).fill(["Ik speel graag voetbal.", "J'aime jouer au football."]), Array(10).fill(["Il était une fois un petit chat.", "Il était une fois un petit chat."]), Array(10).fill(["Toute ma famille vient en visite.", "Toute ma famille vient en visite."]), Array(10).fill(["Félicitations pour tout!", "Félicitations pour tout!"])
             ],
             "es": [
-                [["Hallo", "Hola"], ["Goedemorgen", "Buenos días"], ["Goedemiddag", "Buenas tardes"], ["Goedenavond", "Buenas noches"], ["Welterusten", "Buenas noches"], ["Dank je wel", "Gracias"], ["Tot ziens", "Adiós"], ["Alsjeblieft", "Por favor"], ["Ja", "Sí"], ["Nee", "No"]],
-                [["Appel", "Manzana"], ["Banaan", "Plátano"], ["Water", "Agua"], ["Brood", "Pan"], ["Melk", "Leche"], ["Kaas", "Queso"], ["Koffie", "Café"], ["Thee", "Té"], ["Vlees", "Carne"], ["Vis", "Pescado"]],
-                Array(10).fill(["Trein", "Tren"]), Array(10).fill(["Vader", "Padre"]), Array(10).fill(["Casa", "Casa"]),
-                Array(10).fill(["Rood", "Rojo"]), Array(10).fill(["Hond", "Perro"]), Array(10).fill(["Spel", "Juego"]),
-                Array(10).fill(["School", "Escuela"]), Array(10).fill(["Tijd", "Tiempo"])
+                Array(10).fill(["Hallo", "Hola"]), Array(10).fill(["Appel", "Manzana"]), Array(10).fill(["Trein", "Tren"]), Array(10).fill(["Vader", "Padre"]), Array(10).fill(["Huis", "Casa"]),
+                Array(10).fill(["Hoe gaat het?", "¿Cómo estás?"]), Array(10).fill(["Waar woon je?", "¿Dónde vives?"]), Array(10).fill(["Kun je helpen?", "¿Puedes ayudar?"]), Array(10).fill(["Wat wil je drinken?", "¿Qué quieres beber?"]), Array(10).fill(["Ik wil graag een treinkaartje kopen.", "Quiero comprar un billete de tren."]),
+                Array(10).fill(["Ik werk op kantoor.", "Trabajo en la oficina."]), Array(10).fill(["Ik speel graag voetbal.", "Me gusta jugar al fútbol."]), Array(10).fill(["Érase una vez un gato pequeño.", "Érase una vez un gato pequeño."]), Array(10).fill(["Toda mi familia viene de visita.", "Toda mi familia viene de visita."]), Array(10).fill(["¡Felicitaciones por completar el curso!", "¡Felicitaciones por completar el curso!"])
             ]
         };
 
@@ -1409,7 +1450,7 @@
         function renderChapterTabs() {
             let container = document.getElementById('chapter-tabs-container');
             container.innerHTML = "";
-            for(let i = 0; i < 10; i++) {
+            for(let i = 0; i < 15; i++) { // Aangepast naar 15 hoofdstukken
                 let unlocked = isChapterUnlocked(i);
                 let tab = document.createElement('button');
                 tab.className = `chapter-tab ${appData.activeChapter === i ? 'active' : ''} ${!unlocked ? 'locked-tab' : ''}`;
@@ -1434,7 +1475,7 @@
             let container = document.getElementById('path-container');
             container.innerHTML = "";
             
-            let totalNodes = 6; // 0 tot 3 normale lessen, 4 is Fouten verbeteren, 5 is Eindtoets
+            let totalNodes = 6; 
             let langProgress = getCurrentLangCompletedMap();
             let currentKey = `ch${appData.activeChapter}`;
             let langCompleted = langProgress[currentKey] || [];
@@ -1526,13 +1567,21 @@
             let fullWordList = getChapterWordList();
             activeQuestions = [];
 
+            // Aangepast: Les 3 en 4 krijgen korte zinnetjes, en de toets bevat specifiek 3 zinnen die gelinkt zijn aan het hoofdstuk[cite: 4]
             if(isExam) {
                 let shuffledPool = [...fullWordList].sort(() => 0.5 - Math.random());
                 let count = Math.min(10, shuffledPool.length);
                 for(let q = 0; q < count; q++) {
                     let item = shuffledPool[q];
+                    // Pak specifiek 3 zinnen uit de pool als garantie voor de lesrelevante toets-items
                     activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
                 }
+            } else if (lessonIdx === 2 || lessonIdx === 3) {
+                // Les 3 en 4 specifieke korte zinnetjes selectie
+                let subset = fullWordList.slice(0, Math.min(5, fullWordList.length));
+                subset.forEach(item => {
+                    activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
+                });
             } else {
                 let chunkSize = 4;
                 let startIndex = (lessonIdx * chunkSize) % fullWordList.length;
@@ -1587,8 +1636,7 @@
 
         function resumeAfterCat() {
             document.getElementById('page-cat-interstitial').classList.add('hidden');
-            document.getElementById('page-lesson').classList.remove('hidden');
-            proceedNextQuestion();
+            document.getElementById('page-complete').classList.remove('hidden');
         }
 
         function loadQuestion() {
@@ -1604,8 +1652,8 @@
                 saveData();
                 updateDashboardStats();
 
-                document.querySelectorAll('#page-dashboard, #page-lesson, #page-cat-interstitial, #page-complete, #page-leaderboard').forEach(p => p.classList.add('hidden'));
-                document.getElementById('page-complete').classList.remove('hidden');
+                // Toon de zwarte kat direct bij de afronding van de opdracht/les i.p.v. tijdens de vragen[cite: 4]
+                triggerCatInterstitial();
                 return;
             }
 
@@ -1657,14 +1705,6 @@
 
         function nextQuestion() {
             currentQIdx++;
-            if (currentQIdx > 0 && currentQIdx % 2 === 0 && currentQIdx < activeQuestions.length) {
-                triggerCatInterstitial();
-            } else {
-                proceedNextQuestion();
-            }
-        }
-
-        function proceedNextQuestion() {
             loadQuestion();
         }
 
