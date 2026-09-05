@@ -580,6 +580,8 @@
         }
 
         .hidden { display: none !important; }
+        /* Fallback: Start Now also works without JavaScript via the URL hash. */
+        .modal-overlay.hidden:target { display: flex !important; }
 
         /* --- ZIN OPBOUWEN STYLING --- */
         .antwoord-zone {
@@ -728,7 +730,7 @@
                 <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="logo-img"> Wordly Learn
             </div>
             <div style="display: flex; gap: 10px;">
-                <button type="button" class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="document.getElementById('auth-modal').classList.remove('hidden'); document.getElementById('auth-email').focus();">Start Now</button>
+                <a class="btn" style="margin:0; padding: 6px 14px; font-size: 12px; text-decoration:none;" href="#auth-modal" onclick="document.getElementById('auth-modal').classList.remove('hidden'); document.getElementById('auth-email').focus();">Start Now</a>
             </div>
         </header>
 
@@ -738,7 +740,7 @@
                 <h1>The smartest and most fun way to learn languages for free.</h1>
                 <p>Master vocabulary easily on any device with bite-sized lessons, interactive paths, and fun achievements designed to keep you motivated every single day.</p>
                 <div class="landing-buttons">
-                    <button type="button" class="btn" onclick="document.getElementById('auth-modal').classList.remove('hidden'); document.getElementById('auth-email').focus();">Start Now</button>
+                    <a class="btn" href="#auth-modal" onclick="document.getElementById('auth-modal').classList.remove('hidden'); document.getElementById('auth-email').focus();" style="text-decoration:none;">Start Now</a>
                 </div>
             </div>
 
