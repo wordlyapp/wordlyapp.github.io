@@ -14,7 +14,8 @@
     "appId": "com.wordly.app",
     "productName": "Wordly",
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "build/icon.ico"
     }
   }
 }
