@@ -474,9 +474,9 @@
             es: "https://flagcdn.com/w40/es.png"
         };
 
-        // Uitgebreide woordenlijst per taalcombinatie en hoofdstuk
-        const chapterDictionary = {
-            "nl-en": [
+        // Woordenlijsten opgeslagen met [Nederlands, Doeltaal, [Opties in doeltaal]]
+        const baseDictionaries = {
+            "en": [
                 /* Hoofdstuk 1 */
                 [["Hallo", "Hello", ["Hello", "Goodbye", "Please", "Thanks"]], ["Hoi", "Hi", ["Hi", "Bye", "Please", "Thanks"]], ["Goedemorgen", "Good morning", ["Good night", "Good morning", "Hello", "See you"]], ["Goedemiddag", "Good afternoon", ["Good morning", "Good afternoon", "Good night", "Hello"]], ["Goedenavond", "Good evening", ["Good morning", "Good afternoon", "Good evening", "Goodbye"]], ["Welterusten", "Good night", ["Good morning", "Good night", "Hello", "Goodbye"]], ["Dank je wel", "Thank you", ["Please", "Thank you", "Sorry", "Yes"]], ["Hartelijk dank", "Many thanks", ["No thanks", "Many thanks", "Please", "Sorry"]], ["Tot ziens", "Goodbye", ["Hello", "Good morning", "Goodbye", "Welcome"]], ["Tot morgen", "See you tomorrow", ["See you later", "See you tomorrow", "Goodbye", "Good night"]]],
                 /* Hoofdstuk 2 */
@@ -498,12 +498,11 @@
                 /* Hoofdstuk 10 */
                 [["Tijd", "Time", ["Day", "Time", "Year", "Hour"]], ["Dag", "Day", ["Night", "Day", "Week", "Month"]], ["Nacht", "Night", ["Day", "Night", "Evening", "Morning"]], ["Zon", "Sun", ["Moon", "Sun", "Star", "Cloud"]], ["Regen", "Rain", ["Snow", "Rain", "Wind", "Storm"]], ["Wind", "Wind", ["Rain", "Wind", "Air", "Storm"]], ["Sneeuw", "Snow", ["Rain", "Snow", "Ice", "Cold"]], ["Jaar", "Year", ["Month", "Year", "Day", "Time"]], ["Uur", "Hour", ["Minute", "Hour", "Second", "Day"]], ["Maand", "Month", ["Year", "Month", "Week", "Day"]]]
             ],
-            "nl-de": [
+            "de": [
                 /* Hoofdstuk 1 */
                 [["Hallo", "Hallo", ["Hallo", "Tschüss", "Bitte", "Danke"]], ["Goedemorgen", "Guten Morgen", ["Gute Nacht", "Guten Morgen", "Hallo", "Tschüss"]], ["Goedemiddag", "Guten Tag", ["Guten Morgen", "Guten Tag", "Guten Abend", "Hallo"]], ["Goedenavond", "Guten Abend", ["Guten Morgen", "Guten Tag", "Guten Abend", "Tschüss"]], ["Welterusten", "Gute Nacht", ["Guten Morgen", "Gute Nacht", "Hallo", "Tschüss"]], ["Dank je wel", "Danke", ["Bitte", "Danke", "Entschuldigung", "Ja"]], ["Tot ziens", "Tschüss", ["Hallo", "Guten Morgen", "Tschüss", "Willkommen"]], ["Alsjeblieft", "Bitte", ["Bitte", "Danke", "Entschuldigung", "Nein"]], ["Ja", "Ja", ["Nein", "Ja", "Vielleicht", "Bitte"]], ["Nee", "Nein", ["Ja", "Nein", "Vielleicht", "Danke"]]],
                 /* Hoofdstuk 2 */
                 [["Appel", "Apfel", ["Banane", "Apfel", "Wasser", "Brot"]], ["Banaan", "Banane", ["Apfel", "Banane", "Orange", "Traube"]], ["Water", "Wasser", ["Milch", "Wasser", "Saft", "Wein"]], ["Brood", "Brot", ["Käse", "Brot", "Butter", "Fleisch"]], ["Melk", "Milch", ["Wasser", "Milch", "Tee", "Kaffee"]], ["Kaas", "Käse", ["Käse", "Butter", "Fleisch", "Fisch"]], ["Koffie", "Kaffee", ["Tee", "Kaffee", "Wasser", "Saft"]], ["Thee", "Tee", ["Kaffee", "Tee", "Milch", "Soda"]], ["Vlees", "Fleisch", ["Fisch", "Fleisch", "Hähnchen", "Gemüse"]], ["Vis", "Fisch", ["Fleisch", "Fisch", "Ei", "Reis"]]],
-                /* H3 t/m H10 generieke opvullijsten voor Duits */
                 Array(10).fill(["Zug", "Zug", ["Bus", "Zug", "Auto", "Flugzeug"]]),
                 Array(10).fill(["Vater", "Vater", ["Mutter", "Vater", "Bruder", "Schwester"]]),
                 Array(10).fill(["Haus", "Haus", ["Hotel", "Haus", "Schule", "Laden"]]),
@@ -513,12 +512,11 @@
                 Array(10).fill(["Schule", "Schule", ["Büro", "Schule", "Buch", "Stift"]]),
                 Array(10).fill(["Zeit", "Zeit", ["Tag", "Zeit", "Nacht", "Jahr"]])
             ],
-            "nl-fr": [
+            "fr": [
                 /* Hoofdstuk 1 */
                 [["Hallo", "Bonjour", ["Bonjour", "Au revoir", "S'il vous plaît", "Merci"]], ["Goedemorgen", "Bonjour", ["Bonne nuit", "Bonjour", "Salut", "Au revoir"]], ["Goedemiddag", "Bon après-midi", ["Bonjour", "Bon après-midi", "Bonne nuit", "Salut"]], ["Goedenavond", "Bonsoir", ["Bonjour", "Bon après-midi", "Bonsoir", "Au revoir"]], ["Welterusten", "Bonne nuit", ["Bonjour", "Bonne nuit", "Salut", "Au revoir"]], ["Dank je wel", "Merci", ["S'il vous plaît", "Merci", "Pardon", "Oui"]], ["Tot ziens", "Au revoir", ["Bonjour", "Salut", "Au revoir", "Bienvenue"]], ["Alsjeblieft", "S'il vous plaît", ["S'il vous plaît", "Merci", "Pardon", "Non"]], ["Ja", "Oui", ["Non", "Oui", "Peut-être", "S'il vous plaît"]], ["Nee", "Non", ["Oui", "Non", "Peut-être", "Merci"]]],
                 /* Hoofdstuk 2 */
                 [["Appel", "Pomme", ["Banane", "Pomme", "Eau", "Pain"]], ["Banaan", "Banane", ["Pomme", "Banane", "Orange", "Raisin"]], ["Water", "Eau", ["Lait", "Eau", "Jus", "Vin"]], ["Brood", "Pain", ["Fromage", "Pain", "Beurre", "Viande"]], ["Melk", "Lait", ["Eau", "Lait", "Thé", "Café"]], ["Kaas", "Fromage", ["Fromage", "Beurre", "Viande", "Poisson"]], ["Koffie", "Café", ["Thé", "Café", "Eau", "Jus"]], ["Thee", "Thé", ["Café", "Thé", "Lait", "Soda"]], ["Vlees", "Viande", ["Poisson", "Viande", "Poulet", "Légume"]], ["Vis", "Poisson", ["Viande", "Poisson", "Œuf", "Riz"]]],
-                /* H3 t/m H10 voor Frans */
                 Array(10).fill(["Train", "Train", ["Bus", "Train", "Voiture", "Avion"]]),
                 Array(10).fill(["Père", "Père", ["Mère", "Père", "Frère", "Sœur"]]),
                 Array(10).fill(["Maison", "Maison", ["Hôtel", "Maison", "École", "Magasin"]]),
@@ -528,12 +526,11 @@
                 Array(10).fill(["École", "École", ["Bureau", "École", "Livre", "Stylo"]]),
                 Array(10).fill(["Temps", "Temps", ["Jour", "Temps", "Nuit", "Année"]])
             ],
-            "nl-es": [
+            "es": [
                 /* Hoofdstuk 1 */
                 [["Hallo", "Hola", ["Hola", "Adiós", "Por favor", "Gracias"]], ["Goedemorgen", "Buenos días", ["Buenas noches", "Buenos días", "Hola", "Adiós"]], ["Goedemiddag", "Buenas tardes", ["Buenos días", "Buenas tardes", "Buenas noches", "Hola"]], ["Goedenavond", "Buenas noches", ["Buenos días", "Buenas tardes", "Buenas noches", "Adiós"]], ["Welterusten", "Buenas noches", ["Buenos días", "Buenas noches", "Hola", "Adiós"]], ["Dank je wel", "Gracias", ["Por favor", "Gracias", "Lo siento", "Sí"]], ["Tot ziens", "Adiós", ["Hola", "Buenos días", "Adiós", "Bienvenido"]], ["Alsjeblieft", "Por favor", ["Por favor", "Gracias", "Lo siento", "No"]], ["Ja", "Sí", ["No", "Sí", "Tal vez", "Por favor"]], ["Nee", "No", ["Sí", "No", "Tal vez", "Gracias"]]],
                 /* Hoofdstuk 2 */
                 [["Appel", "Manzana", ["Plátano", "Manzana", "Agua", "Pan"]], ["Banaan", "Plátano", ["Manzana", "Plátano", "Naranja", "Uva"]], ["Water", "Agua", ["Leche", "Agua", "Jugo", "Vino"]], ["Brood", "Pan", ["Queso", "Pan", "Mantequilla", "Carne"]], ["Melk", "Leche", ["Agua", "Leche", "Té", "Café"]], ["Kaas", "Queso", ["Queso", "Mantequilla", "Carne", "Pescado"]], ["Koffie", "Café", ["Té", "Café", "Agua", "Jugo"]], ["Thee", "Té", ["Café", "Té", "Leche", "Refresco"]], ["Vlees", "Carne", ["Pescado", "Carne", "Pollo", "Verdura"]], ["Vis", "Pescado", ["Carne", "Pescado", "Huevo", "Arroz"]]],
-                /* H3 t/m H10 voor Spaans */
                 Array(10).fill(["Tren", "Tren", ["Autobús", "Tren", "Coche", "Avión"]]),
                 Array(10).fill(["Padre", "Padre", ["Madre", "Padre", "Hermano", "Hermana"]]),
                 Array(10).fill(["Casa", "Casa", ["Hotel", "Casa", "Escuela", "Tienda"]]),
@@ -545,14 +542,28 @@
             ]
         };
 
-        // Zorg dat omgekeerde combinaties ook werken (fallback naar nl-en of genereren)
-        // Als een combinatie niet in de dictionary staat, maken we een veilige fallback aan
-        function getDictionaryForPair(pairKey) {
-            if (chapterDictionary[pairKey]) {
-                return chapterDictionary[pairKey];
+        // Dynamische woordenlijst generator die automatisch omdraait als je van Vreemde Taal -> Nederlands kiest
+        function getChapterWordList() {
+            let from = appData.fromLang;
+            let to = appData.toLang;
+            let targetLangKey = (to === "nl") ? from : to;
+            
+            let rawList = baseDictionaries[targetLangKey] || baseDictionaries["en"];
+            let chapterWords = rawList[appData.activeChapter] || rawList[0];
+
+            // Als "Van" een vreemde taal is en "Naar" Nederlands, draaien we de lijst automatisch om!
+            if (from !== "nl" && to === "nl") {
+                return chapterWords.map(item => {
+                    let dutchWord = item[0];
+                    let foreignWord = item[1];
+                    // Haal alle mogelijke Nederlandse woorden op uit de basislijst van dit hoofdstuk voor de foute opties
+                    let allDutchOpts = chapterWords.map(i => i[0]);
+                    // Zorg dat het juiste antwoord ertussen zit en shuffle
+                    return [foreignWord, dutchWord, allDutchOpts];
+                });
             }
-            // Fallback voor andere combinaties (bijv. en-nl of de-nl)
-            return chapterDictionary["nl-en"];
+
+            return chapterWords;
         }
 
         const chapterNames = [
@@ -581,14 +592,13 @@
             "Het weer vandaag en besef van tijd."
         ];
 
-        // Globale app data inclusief losse voortgang per taalpaar
         let appData = JSON.parse(localStorage.getItem('wordly_ai_v8')) || {
             points: 0,
             streak: 1,
             fromLang: "nl",
             toLang: "en",
             activeChapter: 0,
-            languageProgress: {} // Slaat per taalpaar (bijv. "nl-en") de voltooide lessen op
+            languageProgress: {}
         };
 
         function saveData() {
@@ -622,7 +632,7 @@
 
             appData.fromLang = newFrom;
             appData.toLang = newTo;
-            appData.activeChapter = 0; // Terug naar hoofdstuk 1 of behoud laatst gekozen hoofdstuk indien gewenst
+            appData.activeChapter = 0;
             updateFlags();
             saveData();
             renderChapterTabs();
@@ -641,7 +651,6 @@
             return `${appData.fromLang}-${appData.toLang}`;
         }
 
-        // Haalt de voltooide lessen op voor HUIDIGE taalpaar
         function getCurrentLangCompletedMap() {
             let pairKey = getActivePairKey();
             if(!appData.languageProgress[pairKey]) {
@@ -655,7 +664,7 @@
             let langProgress = getCurrentLangCompletedMap();
             let prevChapterKey = `ch${chapterIndex - 1}`;
             let completedLessons = langProgress[prevChapterKey] || [];
-            return completedLessons.length >= 6; // 5 lessen + 1 examen
+            return completedLessons.length >= 6;
         }
 
         function renderChapterTabs() {
@@ -681,25 +690,12 @@
             }
         }
 
-        function getChapterWordList() {
-            let pairKey = getActivePairKey();
-            let dictPair = getDictionaryForPair(pairKey);
-            let chapterWords = dictPair[appData.activeChapter];
-            if (!chapterWords || chapterWords.length === 0) {
-                chapterWords = [
-                    ["Word", "Woord", ["Woord", "Zin", "Taal", "Boek"]],
-                    ["Learn", "Leren", ["Leren", "Schrijven", "Lezen", "Horen"]]
-                ];
-            }
-            return chapterWords;
-        }
-
         function renderPath() {
             renderChapterTabs();
             let container = document.getElementById('path-container');
             container.innerHTML = "";
             
-            let totalNodes = 6; // 5 normale lessen + 1 eindtoets
+            let totalNodes = 6;
             let langProgress = getCurrentLangCompletedMap();
             let currentKey = `ch${appData.activeChapter}`;
             let langCompleted = langProgress[currentKey] || [];
@@ -769,7 +765,6 @@
             if(currentQIdx >= activeQuestions.length) {
                 appData.points += isCurrentExam ? 50 : 20;
                 
-                // Voortgang opslaan in het specifieke taalpaar record
                 let langProgress = getCurrentLangCompletedMap();
                 let key = `ch${appData.activeChapter}`;
                 if(!langProgress[key]) langProgress[key] = [];
