@@ -52,6 +52,7 @@
             letter-spacing: -0.5px;
         }
 
+        /* De Zwarte Kat Mascotte */
         .cat-mascot {
             width: 52px;
             height: 52px;
@@ -293,7 +294,6 @@
             font-size: 15px;
         }
 
-        /* Duolingo-style Path Layout */
         .path-container {
             display: flex;
             flex-direction: column;
@@ -434,19 +434,13 @@
             background: #fff3ed;
             border-color: var(--primary);
         }
-
-        .word-chip.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary-hover);
-        }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo-area">
-            <div class="cat-mascot" id="mascot" onclick="triggerMascot('bounce'); playSound('correct');" title="Meow!">
+            <div class="cat-mascot" id="mascot" onclick="triggerMascot('bounce'); playSound('correct');" title="Miauw!">
                 <div class="cat-face">
                     <div class="cat-eye"></div>
                     <div class="cat-nose">
@@ -482,27 +476,27 @@
 
         <!-- PAGE: ONBOARDING - UI LANG -->
         <div id="page-onboard-ui" class="card page-section hidden">
-            <h2 id="ui-title">Select Default Language</h2>
-            <p id="ui-desc">Choose the display language for the app.</p>
+            <h2>Select Default Language</h2>
+            <p>Choose the display language for the app.</p>
             <select id="ui-lang-select">
                 <option value="en">English</option>
                 <option value="nl">Nederlands</option>
             </select>
-            <button class="btn" id="btn-save-ui" onclick="saveUILanguage()">Continue</button>
+            <button class="btn" onclick="saveUILanguage()">Continue</button>
         </div>
 
         <!-- PAGE: ONBOARDING - DIRECTION -->
         <div id="page-onboard-dir" class="card page-section hidden">
-            <h2 id="dir-title">Select Course</h2>
-            <p id="dir-desc">Choose which language pair you want to master.</p>
+            <h2>Select Course</h2>
+            <p>Choose which language pair you want to master.</p>
             <button class="btn option-btn" onclick="setDirection('en-nl')">English - Nederlands</button>
             <button class="btn option-btn" onclick="setDirection('nl-en')">Nederlands - Engels</button>
         </div>
 
         <!-- PAGE: ONBOARDING - LEVEL -->
         <div id="page-onboard-level" class="card page-section hidden">
-            <h2 id="level-title">How proficient are you?</h2>
-            <p id="level-desc">Select your current level to tailor your lessons.</p>
+            <h2>How proficient are you?</h2>
+            <p>Select your current level to tailor your lessons.</p>
             
             <button class="btn option-btn" onclick="setProficiency('beginner')">Beginner (Little to no experience)</button>
             <button class="btn option-btn" onclick="setProficiency('intermediate')">Intermediate (Pretty good)</button>
@@ -511,8 +505,8 @@
 
         <!-- PAGE: ONBOARDING - GOAL -->
         <div id="page-onboard-goal" class="card page-section hidden">
-            <h2 id="goal-title">Why do you want to learn?</h2>
-            <p id="goal-desc">Select your main goal.</p>
+            <h2>Why do you want to learn?</h2>
+            <p>Select your main goal.</p>
             
             <button class="btn option-btn" onclick="setGoal('Travel')">Travel</button>
             <button class="btn option-btn" onclick="setGoal('School')">School</button>
@@ -596,9 +590,9 @@
 
         <!-- PAGE: COMPLETE -->
         <div id="page-complete" class="card page-section hidden" style="text-align: center;">
-            <h2 id="complete-title">Great job!</h2>
-            <p id="complete-desc">You successfully completed this lesson and earned points.</p>
-            <button class="btn" id="btn-back-dash" onclick="backToDashboard()">Back to Lessons</button>
+            <h2>Great job!</h2>
+            <p>You successfully completed this lesson and earned points.</p>
+            <button class="btn" onclick="backToDashboard()">Back to Lessons</button>
         </div>
     </main>
 
@@ -649,9 +643,7 @@
             nl: { lessonsCount: "Voltooid: ", pointsCount: "Punten: ", createAccount: "Account Aanmaken", login: "Inloggen", authDesc: "Maak een privé beveiligd account aan om te beginnen.", loginDesc: "Log in op je privé account." }
         };
 
-        // Massive database containing words & advanced complex terms/sentences
         const masterDatabase = [
-            // Words
             { type: "word", en: "Dog", nl: "Hond", difficulty: 3 },
             { type: "word", en: "Cat", nl: "Kat", difficulty: 3 },
             { type: "word", en: "House", nl: "Huis", difficulty: 3 },
@@ -687,8 +679,6 @@
             { type: "word", en: "River", nl: "Rivier", difficulty: 5 },
             { type: "word", en: "Ocean", nl: "Maan", difficulty: 6 },
             { type: "word", en: "Journey", nl: "Reis", difficulty: 6 },
-
-            // Advanced sentences / complex phrases
             { type: "sentence", en: "The brown dog runs quickly across the green street.", nl: "De bruine hond rent snel over de groene straat.", difficulty: 7 },
             { type: "sentence", en: "She reads an interesting book in her cozy room.", nl: "Zij leest een interessant boek in haar gezellige kamer.", difficulty: 7 },
             { type: "sentence", en: "We are traveling to a wonderful city this summer.", nl: "Wij reizen deze zomer naar een prachtige stad.", difficulty: 8 },
@@ -718,7 +708,6 @@
             } else if (proficiency === 'intermediate') {
                 pool = masterDatabase.filter(x => x.difficulty <= 7);
             } else if (proficiency === 'advanced') {
-                // Advanced includes complex words and full sentences, mixed up!
                 pool = masterDatabase;
             }
 
@@ -731,23 +720,13 @@
                 let isNLtoEN = direction === "nl-en";
                 let promptText = isNLtoEN ? `Translate to English: "${item.nl}"` : `Vertaal naar het Nederlands: "${item.en}"`;
                 let correctAns = isNLtoEN ? item.en : item.nl;
-
-                // Alternate between multiple choice and typing/word building exercises
                 let exerciseType = (i % 2 === 0) ? "multiple-choice" : "word-builder";
 
                 let options = [];
-                if (exerciseType === "multiple-choice") {
-                    let wrongOpts = pool.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3);
-                    options = wrongOpts.map(x => isNLtoEN ? x.en : x.nl);
-                    options.push(correctAns);
-                    options.sort(() => 0.5 - Math.random());
-                } else {
-                    // Word builder / scramble chips
-                    let wrongWords = pool.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3);
-                    options = wrongWords.map(x => isNLtoEN ? x.en : x.nl);
-                    options.push(correctAns);
-                    options.sort(() => 0.5 - Math.random());
-                }
+                let wrongOpts = pool.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3);
+                options = wrongOpts.map(x => isNLtoEN ? x.en : x.nl);
+                options.push(correctAns);
+                options.sort(() => 0.5 - Math.random());
 
                 currentQList.push({
                     type: exerciseType,
@@ -777,7 +756,6 @@
         let currentQuestionIndex = 0;
         let lessonEarnedPoints = 0;
 
-        // Auto-login session check on page load
         window.onload = function() {
             const savedUser = localStorage.getItem('wordly_current_session');
             if (savedUser) {
@@ -908,7 +886,6 @@
             container.innerHTML = "";
 
             const lessons = generateLessons(currentUser.direction || "en-nl", currentUser.proficiency || "intermediate");
-            
             let rowPattern = [1, 2, 1, 2, 1];
             let lessonIndex = 0;
             let patternIdx = 0;
@@ -961,7 +938,6 @@
                 saveUser();
                 updateUIText();
                 triggerMascot('bounce');
-                
                 showPage('page-complete');
                 return;
             }
@@ -1037,7 +1013,6 @@
             
             let tourneyScore = Math.floor(Math.random() * 80) + 20;
             let rank = Math.floor(Math.random() * 5) + 1;
-            
             let reward = 0;
             if (rank <= 3) {
                 reward = 95;
@@ -1049,7 +1024,6 @@
 
             saveUser();
             updateUIText();
-
             alert(`Tournament ended!\nYour score: ${tourneyScore}\nRank: #${rank}\nReward earned: ${reward} points!`);
         }
 
