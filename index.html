@@ -8,8 +8,10 @@
     <!-- Google AdSense / Eigendom Verificatie -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6951847135196559" crossorigin="anonymous"></script>
 
-    <!-- Auth0 SPA JS SDK -->
-    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+    <!-- Firebase Web SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
     <link rel="icon" type="image/jpeg" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
     <link rel="apple-touch-icon" href="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg">
@@ -682,6 +684,29 @@
         .custom-modal h3 { font-size: 18px; font-weight: 900; margin-bottom: 6px; color: #3c3c3c; }
         .custom-modal p { color: var(--duo-gray-text); font-size: 13px; font-weight: 700; margin-bottom: 20px; }
         
+        .auth-modal {
+            width: min(420px, calc(100vw - 32px));
+            background: #fff;
+            border-radius: 22px;
+            padding: 26px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.25);
+            text-align: left;
+        }
+        .auth-modal h2 { margin: 0 0 6px; font-size: 25px; font-weight: 900; }
+        .auth-modal p { margin: 0 0 18px; color: var(--duo-gray-text); font-size: 13px; font-weight: 700; }
+        .auth-input {
+            width: 100%; box-sizing: border-box; padding: 13px 14px; margin: 6px 0 10px;
+            border: 2px solid var(--border); border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 700;
+            outline: none;
+        }
+        .auth-input:focus { border-color: var(--accent-blue); }
+        .auth-switch { display:flex; gap:8px; margin-bottom:16px; }
+        .auth-switch button { flex:1; border:2px solid var(--border); background:#f7f7f7; padding:10px; border-radius:10px; font-family:inherit; font-weight:900; cursor:pointer; }
+        .auth-switch button.active { border-color:var(--duo-green); background:var(--duo-light-green); }
+        .auth-error { min-height: 18px; color:#d32f2f; font-size:12px; font-weight:800; margin:2px 0 8px; }
+        .auth-close { position:absolute; right:14px; top:12px; border:0; background:transparent; font-size:24px; cursor:pointer; color:#777; }
+        .auth-note { text-align:center; margin-top:12px; font-size:11px; color:#888; font-weight:700; }
+
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -696,14 +721,14 @@
 </head>
 <body>
 
-    <!-- LANDING PAGE & AUTH0 AUTHENTICATIE SCHERM -->
+    <!-- LANDING PAGE & FIREBASE AUTHENTICATIE SCHERM -->
     <div id="landing-page">
         <header class="landing-header-bar">
             <div class="logo-area">
                 <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" class="logo-img"> Wordly Learn
             </div>
             <div style="display: flex; gap: 10px;">
-                <button class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="startAuth0Login()">Start Now</button>
+                <button class="btn" style="margin:0; padding: 6px 14px; font-size: 12px;" onclick="openAuthModal()">Start Now</button>
             </div>
         </header>
 
@@ -713,7 +738,7 @@
                 <h1>The smartest and most fun way to learn languages for free.</h1>
                 <p>Master vocabulary easily on any device with bite-sized lessons, interactive paths, and fun achievements designed to keep you motivated every single day.</p>
                 <div class="landing-buttons">
-                    <button class="btn" onclick="startAuth0Login()">Start Now</button>
+                    <button class="btn" onclick="openAuthModal()">Start Now</button>
                 </div>
             </div>
 
@@ -735,6 +760,36 @@
                     <p>Review your mistakes before taking exams and track your personal statistics with dedicated user profiles.</p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE LOGIN / REGISTRATIE MODAL -->
+    <div id="auth-modal" class="modal-overlay hidden">
+        <div class="auth-modal" style="position:relative;">
+            <button class="auth-close" onclick="closeAuthModal()" aria-label="Close">×</button>
+            <h2 id="auth-title">Inloggen bij Wordly</h2>
+            <p id="auth-subtitle">Je voortgang wordt online opgeslagen en werkt op al je apparaten.</p>
+
+            <div class="auth-switch">
+                <button id="auth-login-tab" class="active" onclick="setAuthMode('login')">Inloggen</button>
+                <button id="auth-register-tab" onclick="setAuthMode('register')">Account maken</button>
+            </div>
+
+            <div id="auth-name-wrap" class="hidden">
+                <label style="font-size:12px;font-weight:900;">Naam</label>
+                <input id="auth-name" class="auth-input" type="text" autocomplete="name" placeholder="Bijv. Sam">
+            </div>
+
+            <label style="font-size:12px;font-weight:900;">E-mail</label>
+            <input id="auth-email" class="auth-input" type="email" autocomplete="email" placeholder="jij@email.com">
+
+            <label style="font-size:12px;font-weight:900;">Wachtwoord</label>
+            <input id="auth-password" class="auth-input" type="password" autocomplete="current-password" placeholder="Minimaal 6 tekens">
+
+            <div id="auth-error" class="auth-error"></div>
+            <button id="auth-submit" class="btn" style="width:100%;" onclick="submitAuth()">Inloggen</button>
+            <button id="forgot-password-btn" style="width:100%;margin-top:9px;border:0;background:transparent;color:var(--accent-blue);font-family:inherit;font-weight:900;cursor:pointer;" onclick="resetPassword()">Wachtwoord vergeten?</button>
+            <div class="auth-note">Je account en Wordly-voortgang worden in Firebase opgeslagen.</div>
         </div>
     </div>
 
@@ -848,6 +903,7 @@
             <div class="top-stats-bar">
                 <div class="stat-pill">🔥 <span id="streak-display">1</span></div>
                 <div class="stat-pill" onclick="openLeaderboard()">🏆 <span id="points-display">0</span> XP</div>
+                <div class="stat-pill" title="Aantal online Wordly-accounts">👥 <span id="registered-count">—</span></div>
             </div>
             <button class="action-btn profile-btn" onclick="openProfileModal()">Profiel</button>
             <button class="action-btn logout-btn" id="logout-btn-text" onclick="logoutUser()">Log out</button>
@@ -918,82 +974,205 @@
     </main>
 
     <script>
-        // --- AUTH0 & ACCOUNT LOGICA ---
-        let auth0Client = null;
-        let currentLoggedInUser = localStorage.getItem('wordly_logged_in') || null;
+        // --- FIREBASE AUTHENTICATIE & ONLINE ACCOUNT LOGICA ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyBqFJbyfyOlEwxhoPxZusOsqZT32f0P7H4",
+            authDomain: "wordlyappnl.firebaseapp.com",
+            projectId: "wordlyappnl",
+            storageBucket: "wordlyappnl.firebasestorage.app",
+            messagingSenderId: "403950885543",
+            appId: "1:403950885543:web:6031d7a7e3de4abb36d982",
+            measurementId: "G-GW6CRFE0X1"
+        };
 
-        async function initAuth0() {
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let currentFirebaseUser = null;
+        let currentLoggedInUser = null;
+        let authMode = 'login';
+
+        function openAuthModal(mode = 'login') {
+            setAuthMode(mode);
+            document.getElementById('auth-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('auth-email').focus(), 50);
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+            document.getElementById('auth-error').innerText = '';
+        }
+
+        function setAuthMode(mode) {
+            authMode = mode;
+            const register = mode === 'register';
+            document.getElementById('auth-title').innerText = register ? 'Maak je Wordly-account' : 'Inloggen bij Wordly';
+            document.getElementById('auth-subtitle').innerText = register
+                ? 'Maak één account. Je XP en voortgang worden daarna online bewaard.'
+                : 'Log in om je online Wordly-voortgang op elk apparaat te gebruiken.';
+            document.getElementById('auth-name-wrap').classList.toggle('hidden', !register);
+            document.getElementById('auth-login-tab').classList.toggle('active', !register);
+            document.getElementById('auth-register-tab').classList.toggle('active', register);
+            document.getElementById('auth-submit').innerText = register ? 'Account maken' : 'Inloggen';
+            document.getElementById('forgot-password-btn').classList.toggle('hidden', register);
+            document.getElementById('auth-password').autocomplete = register ? 'new-password' : 'current-password';
+            document.getElementById('auth-error').innerText = '';
+        }
+
+        function friendlyAuthError(error) {
+            const map = {
+                'auth/email-already-in-use': 'Dit e-mailadres heeft al een Wordly-account. Log in.',
+                'auth/invalid-email': 'Vul een geldig e-mailadres in.',
+                'auth/weak-password': 'Je wachtwoord moet minimaal 6 tekens bevatten.',
+                'auth/user-not-found': 'Geen account gevonden met dit e-mailadres.',
+                'auth/wrong-password': 'Het wachtwoord is niet juist.',
+                'auth/invalid-credential': 'E-mailadres of wachtwoord is niet juist.',
+                'auth/too-many-requests': 'Te veel pogingen. Probeer het later opnieuw.',
+                'auth/network-request-failed': 'Geen internetverbinding. Controleer je verbinding en probeer opnieuw.'
+            };
+            return map[error.code] || error.message || 'Er ging iets mis. Probeer opnieuw.';
+        }
+
+        async function submitAuth() {
+            const name = document.getElementById('auth-name').value.trim();
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-password').value;
+            const errorBox = document.getElementById('auth-error');
+            const submit = document.getElementById('auth-submit');
+
+            errorBox.innerText = '';
+            if (!email || !email.includes('@')) {
+                errorBox.innerText = 'Vul een geldig e-mailadres in.';
+                return;
+            }
+            if (password.length < 6) {
+                errorBox.innerText = 'Je wachtwoord moet minimaal 6 tekens bevatten.';
+                return;
+            }
+            if (authMode === 'register' && !name) {
+                errorBox.innerText = 'Vul eerst je naam in.';
+                return;
+            }
+
+            submit.disabled = true;
+            submit.style.opacity = '0.6';
+
             try {
-                auth0Client = await auth0.createAuth0Client({
-                    domain: 'dev-lql5ujqw06xmyjoo.us.auth0.com',
-                    clientId: 'Zh28r6Lsy7SNi7cNqXaVXRRYmZyPoYn8',
-                    authorizationParams: {
-                        redirect_uri: window.location.origin
+                if (authMode === 'register') {
+                    const result = await auth.createUserWithEmailAndPassword(email, password);
+                    if (name) {
+                        await result.user.updateProfile({ displayName: name });
                     }
-                });
-
-                const query = window.location.search;
-                if (query.includes("code=") && query.includes("state=")) {
-                    await auth0Client.handleRedirectCallback();
-                    window.history.replaceState({}, document.title, window.location.pathname);
+                    currentFirebaseUser = result.user;
+                    currentLoggedInUser = result.user.displayName || name || email;
+                    await ensureUserDocument(result.user);
+                    await loadDataFromFirebase();
+                    closeAuthModal();
+                    await initializeAppForUser();
+                } else {
+                    const result = await auth.signInWithEmailAndPassword(email, password);
+                    currentFirebaseUser = result.user;
+                    currentLoggedInUser = result.user.displayName || result.user.email;
+                    await ensureUserDocument(result.user);
+                    await loadDataFromFirebase();
+                    closeAuthModal();
+                    await initializeAppForUser();
                 }
-
-                const isAuthenticated = await auth0Client.isAuthenticated();
-                if (isAuthenticated) {
-                    const user = await auth0Client.getUser();
-                    currentLoggedInUser = user.email || user.name || "user@auth0";
-                    localStorage.setItem('wordly_logged_in', currentLoggedInUser);
-                    
-                    setupUserData(currentLoggedInUser);
-                    initializeAppForUser();
-                } else if (currentLoggedInUser) {
-                    setupUserData(currentLoggedInUser);
-                    initializeAppForUser();
-                }
-            } catch (err) {
-                console.error("Auth0 initialization error:", err);
+            } catch (error) {
+                console.error('Firebase auth error:', error);
+                errorBox.innerText = friendlyAuthError(error);
+            } finally {
+                submit.disabled = false;
+                submit.style.opacity = '1';
             }
         }
 
-        async function startAuth0Login() {
-            if (!auth0Client) return;
-            try {
-                await auth0Client.loginWithRedirect();
-            } catch (err) {
-                console.error("Auth0 login error:", err);
+        async function resetPassword() {
+            const email = document.getElementById('auth-email').value.trim();
+            const errorBox = document.getElementById('auth-error');
+            if (!email || !email.includes('@')) {
+                errorBox.innerText = 'Vul eerst je e-mailadres in.';
+                return;
             }
+            try {
+                await auth.sendPasswordResetEmail(email);
+                errorBox.style.color = 'var(--duo-green-hover)';
+                errorBox.innerText = 'Resetmail verstuurd. Controleer je inbox.';
+            } catch (error) {
+                errorBox.style.color = '#d32f2f';
+                errorBox.innerText = friendlyAuthError(error);
+            }
+        }
+
+        async function ensureUserDocument(user) {
+            const ref = db.collection('users').doc(user.uid);
+            const snap = await ref.get();
+            if (!snap.exists) {
+                const initialData = {
+                    points: 0,
+                    streak: 1,
+                    fromLang: 'nl',
+                    toLang: 'en',
+                    activeChapter: 0,
+                    languageProgress: {},
+                    mistakes: [],
+                    name: user.displayName || (user.email || 'Player').split('@')[0],
+                    email: user.email || '',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                await ref.set(initialData);
+                await updateLeaderboardEntry(initialData.points, initialData.name);
+            } else {
+                const data = snap.data() || {};
+                if (user.displayName && data.name !== user.displayName) {
+                    await ref.set({ name: user.displayName, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+                }
+            }
+        }
+
+        async function loadDataFromFirebase() {
+            if (!currentFirebaseUser) return;
+            const snap = await db.collection('users').doc(currentFirebaseUser.uid).get();
+            if (!snap.exists) {
+                await ensureUserDocument(currentFirebaseUser);
+                return;
+            }
+            const data = snap.data() || {};
+            appData = {
+                points: Number.isFinite(data.points) ? data.points : 0,
+                streak: Number.isFinite(data.streak) ? data.streak : 1,
+                fromLang: data.fromLang || 'nl',
+                toLang: data.toLang || 'en',
+                activeChapter: Number.isFinite(data.activeChapter) ? data.activeChapter : 0,
+                languageProgress: data.languageProgress || {},
+                mistakes: data.mistakes || []
+            };
+        }
+
+        async function updateLeaderboardEntry(xp, name) {
+            if (!currentFirebaseUser) return;
+            await db.collection('leaderboard').doc(currentFirebaseUser.uid).set({
+                name: name || currentLoggedInUser || 'Player',
+                xp: Number(xp) || 0,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
         }
 
         async function logoutUser() {
-            localStorage.removeItem('wordly_logged_in');
-            currentLoggedInUser = null;
-            if (auth0Client) {
-                auth0Client.logout({
-                    logoutParams: {
-                        returnTo: window.location.origin
-                    }
-                });
-            } else {
+            try {
+                await saveData();
+                await auth.signOut();
                 location.reload();
+            } catch (error) {
+                console.error('Logout error:', error);
             }
         }
 
-        function setupUserData(userEmail) {
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if (!accounts[userEmail]) {
-                accounts[userEmail] = {
-                    data: {
-                        points: 0,
-                        streak: 1,
-                        fromLang: "nl",
-                        toLang: "en",
-                        activeChapter: 0,
-                        languageProgress: {},
-                        mistakes: []
-                    }
-                };
-                localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
-            }
+        function setupUserData(user) {
+            currentFirebaseUser = user;
+            currentLoggedInUser = user.displayName || user.email || 'Player';
         }
 
         function openProfileModal() {
@@ -1029,11 +1208,8 @@
 
         function showLangPromptModal() {
             document.getElementById('landing-page').classList.add('hidden');
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if(accounts[currentLoggedInUser] && accounts[currentLoggedInUser].data) {
-                promptTempFrom = accounts[currentLoggedInUser].data.fromLang || "nl";
-                promptTempTo = accounts[currentLoggedInUser].data.toLang || "en";
-            }
+            promptTempFrom = appData.fromLang || "nl";
+            promptTempTo = appData.toLang || "en";
             updatePromptModalUI();
             document.getElementById('lang-prompt-modal').classList.remove('hidden');
         }
@@ -1308,17 +1484,60 @@
             mistakes: []
         };
 
-        function saveData() {
-            if (!currentLoggedInUser) return;
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if (accounts[currentLoggedInUser]) {
-                accounts[currentLoggedInUser].data = appData;
-                localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
+        async function saveData() {
+            if (!currentFirebaseUser) return;
+            try {
+                const payload = {
+                    points: Number(appData.points) || 0,
+                    streak: Number(appData.streak) || 1,
+                    fromLang: appData.fromLang || 'nl',
+                    toLang: appData.toLang || 'en',
+                    activeChapter: Number(appData.activeChapter) || 0,
+                    languageProgress: appData.languageProgress || {},
+                    mistakes: appData.mistakes || [],
+                    name: currentFirebaseUser.displayName || currentLoggedInUser || 'Player',
+                    email: currentFirebaseUser.email || '',
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                await db.collection('users').doc(currentFirebaseUser.uid).set(payload, { merge: true });
+                await updateLeaderboardEntry(payload.points, payload.name);
+                updateRegisteredAccountsCount();
+            } catch (error) {
+                console.error('Online opslaan mislukt:', error);
+            }
+        }
+
+        async function updateRegisteredAccountsCount() {
+            try {
+                const snapshot = await db.collection('leaderboard').get();
+                const el = document.getElementById('registered-count');
+                if (el) el.innerText = snapshot.size;
+            } catch (error) {
+                console.warn('Account count kon niet worden geladen:', error);
+                const el = document.getElementById('registered-count');
+                if (el) el.innerText = '—';
             }
         }
 
         window.onload = function() {
-            initAuth0();
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    try {
+                        setupUserData(user);
+                        await ensureUserDocument(user);
+                        await loadDataFromFirebase();
+                        await initializeAppForUser();
+                    } catch (error) {
+                        console.error('Firebase gebruikersdata kon niet worden geladen:', error);
+                        showNotification('Fout', 'Je account kon niet worden geladen. Controleer je internetverbinding en probeer opnieuw.');
+                    }
+                } else {
+                    currentFirebaseUser = null;
+                    currentLoggedInUser = null;
+                    document.getElementById('landing-page').classList.remove('hidden');
+                }
+            });
 
             window.onclick = function(event) {
                 if (!event.target.closest('.custom-dropdown-container')) {
@@ -1327,20 +1546,30 @@
             };
         };
 
-        function initializeAppForUser() {
+        async function initializeAppForUser() {
             document.getElementById('landing-page').classList.add('hidden');
+            document.getElementById('auth-modal').classList.add('hidden');
             document.getElementById('lang-prompt-modal').classList.add('hidden');
-            
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            if (accounts[currentLoggedInUser] && accounts[currentLoggedInUser].data) {
-                appData = accounts[currentLoggedInUser].data;
-                if(!appData.mistakes) appData.mistakes = [];
+
+            if (!appData || typeof appData !== 'object') {
+                appData = {
+                    points: 0,
+                    streak: 1,
+                    fromLang: 'nl',
+                    toLang: 'en',
+                    activeChapter: 0,
+                    languageProgress: {},
+                    mistakes: []
+                };
             }
+            if (!appData.mistakes) appData.mistakes = [];
+            if (!appData.languageProgress) appData.languageProgress = {};
 
             updateUIStrings();
             renderChapterTabs();
             updateDashboardStats();
             renderPath();
+            updateRegisteredAccountsCount();
         }
 
         function toggleMenu(menuId) {
@@ -1790,40 +2019,42 @@
             renderLeaderboardData();
         }
 
-        function renderLeaderboardData() {
-            let container = document.getElementById('lb-list-container');
-            container.innerHTML = "";
+        async function renderLeaderboardData() {
+            const container = document.getElementById('lb-list-container');
+            container.innerHTML = '<div style="padding:20px;text-align:center;font-weight:800;color:#777;">Leaderboard laden…</div>';
 
-            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
-            let usersList = [];
+            try {
+                const snapshot = await db.collection('leaderboard').orderBy('xp', 'desc').limit(100).get();
+                container.innerHTML = '';
 
-            for (let username in accounts) {
-                let pnts = accounts[username].data.points || 0;
-                usersList.push({ name: username, xp: pnts });
+                if (snapshot.empty) {
+                    container.innerHTML = '<div style="padding:20px;text-align:center;font-weight:800;color:#777;">Nog geen spelers.</div>';
+                    return;
+                }
+
+                snapshot.forEach((doc, index) => {
+                    const user = doc.data() || {};
+                    const isMe = currentFirebaseUser && doc.id === currentFirebaseUser.uid;
+                    const item = document.createElement('div');
+                    item.className = `lb-item ${isMe ? 'user-highlight' : ''}`;
+                    const medal = index === 0 ? '🥇' : (index === 1 ? '🥈' : (index === 2 ? '🥉' : `#${index + 1}`));
+                    const safeName = String(user.name || 'Player')
+                        .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+                        .replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+
+                    item.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-weight: 900; width: 24px; text-align: center;">${medal}</span>
+                            <span>${safeName} ${isMe ? '(Jij)' : ''}</span>
+                        </div>
+                        <span style="color: var(--duo-green);">${Number(user.xp) || 0} XP</span>
+                    `;
+                    container.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Leaderboard error:', error);
+                container.innerHTML = '<div style="padding:20px;text-align:center;font-weight:800;color:#d32f2f;">Leaderboard kon niet worden geladen.</div>';
             }
-
-            if (!usersList.some(u => u.name === currentLoggedInUser)) {
-                usersList.push({ name: currentLoggedInUser || "You", xp: appData.points });
-            }
-
-            usersList.sort((a, b) => b.xp - a.xp);
-
-            usersList.forEach((user, index) => {
-                let item = document.createElement('div');
-                let isMe = user.name === currentLoggedInUser;
-                item.className = `lb-item ${isMe ? 'user-highlight' : ''}`;
-                
-                let medal = index === 0 ? "🥇" : (index === 1 ? "🥈" : (index === 2 ? "🥉" : `#${index + 1}`));
-                
-                item.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-weight: 900; width: 24px; text-align: center;">${medal}</span>
-                        <span>${user.name} ${isMe ? "(Jij)" : ""}</span>
-                    </div>
-                    <span style="color: var(--duo-green);">${user.xp} XP</span>
-                `;
-                container.appendChild(item);
-            });
         }
 
         function showNotification(title, text) {
