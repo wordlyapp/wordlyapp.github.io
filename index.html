@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordly - Ultimate Edition</title>
+    <title>Wordly - AI Ultimate Edition</title>
     <style>
         :root {
             --duo-green: #58cc02;
@@ -102,7 +102,6 @@
             align-items: center;
         }
 
-        /* Stats Balk & Taal Keuze Bovenin */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -151,7 +150,7 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
 
-        /* Het Kronkelende Groene Leerpad met Vloeiende Animatie */
+        /* Leerpad */
         .duo-path {
             display: flex;
             flex-direction: column;
@@ -279,7 +278,7 @@
             animation: fadeIn 0.2s ease-out;
         }
 
-        /* Eigen Custom Notificatie Popup (In plaats van lelijke browser alerts) */
+        /* Notificatie Modal */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -315,7 +314,7 @@
 </head>
 <body>
 
-    <!-- CUSTOM NOTIFICATIE POPUP (GUI) -->
+    <!-- CUSTOM NOTIFICATIE POPUP -->
     <div id="custom-notification" class="modal-overlay hidden">
         <div class="custom-modal">
             <h3 id="notif-title">Melding</h3>
@@ -327,9 +326,10 @@
     <!-- ZIJBALK -->
     <aside.sidebar id="app-sidebar">
         <div>
-            <div class="sidebar-logo">Wordly</div>
+            <div class="sidebar-logo">Wordly AI</div>
             <div class="sidebar-menu">
                 <a class="menu-item active" onclick="switchTab('learn')">🗺️ Leerpad</a>
+                <a class="menu-item" onclick="startAiLevelFinder()">🤖 AI Niveau Finder</a>
                 <a class="menu-item" onclick="switchTab('settings')">⚙️ Instellingen</a>
             </div>
         </div>
@@ -342,15 +342,21 @@
     <main.main-content class="main-content">
         <div class="content-container">
 
-            <!-- BOVENSTE BALK (Taal & Stats) -->
+            <!-- BOVENSTE BALK -->
             <div class="top-bar">
                 <div class="lang-selector-container">
-                    <span>Oefenertaal:</span>
+                    <span>Taal:</span>
                     <select id="target-lang-select" class="lang-select" onchange="changeTargetLanguage()">
                         <option value="en">Engels</option>
                         <option value="de">Duits</option>
                         <option value="es">Spaans</option>
-                        <option value="nl">Nederlands</option>
+                        <option value="fr">Frans</option>
+                        <option value="it">Italiaans</option>
+                        <option value="pt">Portugees</option>
+                        <option value="ru">Russisch</option>
+                        <option value="ja">Japans</option>
+                        <option value="zh">Chinees</option>
+                        <option value="tr">Turks</option>
                     </select>
                 </div>
                 <div class="top-stats-bar">
@@ -359,25 +365,21 @@
                 </div>
             </div>
 
-            <!-- PAGE: DASHBOARD (Leerpad) -->
+            <!-- DASHBOARD -->
             <div id="page-dashboard" class="page-section" style="width: 100%;">
                 <div id="view-learn" style="width: 100%;">
                     <div class="duo-path" id="path-container"></div>
                 </div>
 
                 <div id="view-settings" class="card hidden" style="max-width: 100%;">
-                    <h2>Instellingen</h2>
-                    <label style="font-weight: 700; font-size: 14px; color: #555; display: block; margin-bottom: 4px;">Niveau Selecteren</label>
-                    <select id="settings-level" onchange="updateLevel()" style="width:100%; padding:16px; border-radius:16px; border:2px solid var(--border); margin-top:8px; font-size:16px; background:#f7f9fa; outline:none;">
-                        <option value="beginner">Beginner (Basis)</option>
-                        <option value="intermediate">Intermediate (Alledaags)</option>
-                        <option value="advanced">Advanced (Uitgebreid)</option>
-                    </select>
-                    <p style="margin-top: 20px; font-size: 14px;">Alle voortgang, XP en streaks worden automatisch en veilig opgeslagen op jouw eigen apparaat (browser).</p>
+                    <h2>Instellingen & AI Niveau</h2>
+                    <p>Huidig vastgesteld niveau voor deze taal: <strong id="current-level-display" style="color: var(--duo-green);">Intermediate</strong></p>
+                    <button class="btn" onclick="startAiLevelFinder()">Start AI Niveau Bepaling Opnieuw</button>
+                    <p style="margin-top: 20px; font-size: 14px;">Alle voortgang en XP worden automatisch opgeslagen op jouw apparaat.</p>
                 </div>
             </div>
 
-            <!-- PAGE: LESSON -->
+            <!-- LES / AI TEST PAGINA -->
             <div id="page-lesson" class="card page-section hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <button class="btn" style="width: auto; padding: 8px 16px; margin:0; background:#e5e5e5; border-bottom-color:#cccccc; color:#777; box-shadow:none;" onclick="backToDashboard()">✕ Stoppen</button>
@@ -388,10 +390,10 @@
                 <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Doorgaan</button>
             </div>
 
-            <!-- PAGE: COMPLETE -->
+            <!-- LES VOLTOOID -->
             <div id="page-complete" class="card page-section hidden" style="text-align: center;">
                 <h2 style="font-size: 32px; color: var(--duo-green);">Les Voltooid! 🎉</h2>
-                <p>Geweldig gedaan! Je hebt deze les succesvol afgerond en extra XP verdiend.</p>
+                <p>Geweldig gedaan! Je hebt deze les succesvol afgerond en XP verdiend.</p>
                 <button class="btn" onclick="backToDashboard()">Doorgaan</button>
             </div>
 
@@ -399,7 +401,6 @@
     </main>
 
     <script>
-        // Custom Notificatie Systeem
         function showNotification(title, text) {
             document.getElementById('notif-title').innerText = title;
             document.getElementById('notif-text').innerText = text;
@@ -410,7 +411,6 @@
             document.getElementById('custom-notification').classList.add('hidden');
         }
 
-        // Audio Systeem
         let audioCtx = null;
         function playSound(type) {
             try {
@@ -434,63 +434,116 @@
             } catch(e) {}
         }
 
-        // Woordenlijsten per taal (Nederlands naar doelstaal)
+        // Woordenlijsten per taal (10 talen)
         const vocabData = {
             en: [
-                { nl: "Hallo", target: "Hello" }, { nl: "Goedemorgen", target: "Good morning" }, { nl: "Dank je wel", target: "Thank you" }, { nl: "Ja", target: "Yes" }, { nl: "Nee", target: "No" },
-                { nl: "Water", target: "Water" }, { nl: "Huis", target: "House" }, { nl: "Boek", target: "Book" }, { nl: "Melk", target: "Milk" }, { nl: "Brood", target: "Bread" },
-                { nl: "Appel", target: "Apple" }, { nl: "Kat", target: "Cat" }, { nl: "Hond", target: "Dog" }, { nl: "Auto", target: "Car" }, { nl: "Zon", target: "Sun" },
-                { nl: "Computer", target: "Computer" }, { nl: "Telefoon", target: "Phone" }, { nl: "Reizen", target: "Travel" }, { nl: "Stad", target: "City" }, { nl: "Vriend", target: "Friend" }
+                { nl: "Hallo", target: "Hello", diff: "beginner" }, { nl: "Goedemorgen", target: "Good morning", diff: "beginner" }, { nl: "Dank je wel", target: "Thank you", diff: "beginner" }, { nl: "Ja", target: "Yes", diff: "beginner" }, { nl: "Nee", target: "No", diff: "beginner" },
+                { nl: "Water", target: "Water", diff: "beginner" }, { nl: "Huis", target: "House", diff: "beginner" }, { nl: "Boek", target: "Book", diff: "beginner" }, { nl: "Melk", target: "Milk", diff: "beginner" }, { nl: "Brood", target: "Bread", diff: "beginner" },
+                { nl: "Computer", target: "Computer", diff: "intermediate" }, { nl: "Telefoon", target: "Phone", diff: "intermediate" }, { nl: "Reizen", target: "Travel", diff: "intermediate" }, { nl: "Stad", target: "City", diff: "intermediate" }, { nl: "Vriend", target: "Friend", diff: "intermediate" },
+                { nl: "Ontwikkeling", target: "Development", diff: "advanced" }, { nl: "Wetenschap", target: "Science", diff: "advanced" }, { nl: "Oplossing", target: "Solution", diff: "advanced" }
             ],
             de: [
-                { nl: "Hallo", target: "Hallo" }, { nl: "Goedemorgen", target: "Guten Morgen" }, { nl: "Dank je wel", target: "Danke schön" }, { nl: "Ja", target: "Ja" }, { nl: "Nee", target: "Nein" },
-                { nl: "Water", target: "Wasser" }, { nl: "Huis", target: "Haus" }, { nl: "Boek", target: "Buch" }, { nl: "Melk", target: "Milch" }, { nl: "Brood", target: "Brot" },
-                { nl: "Appel", target: "Apfel" }, { nl: "Kat", target: "Katze" }, { nl: "Hond", target: "Hund" }, { nl: "Auto", target: "Auto" }, { nl: "Zon", target: "Sonne" },
-                { nl: "Computer", target: "Computer" }, { nl: "Telefoon", target: "Telefon" }, { nl: "Reizen", target: "Reisen" }, { nl: "Stad", target: "Stadt" }, { nl: "Vriend", target: "Freund" }
+                { nl: "Hallo", target: "Hallo", diff: "beginner" }, { nl: "Goedemorgen", target: "Guten Morgen", diff: "beginner" }, { nl: "Dank je wel", target: "Danke schön", diff: "beginner" }, { nl: "Ja", target: "Ja", diff: "beginner" }, { nl: "Nee", target: "Nein", diff: "beginner" },
+                { nl: "Water", target: "Wasser", diff: "beginner" }, { nl: "Huis", target: "Haus", diff: "beginner" }, { nl: "Boek", target: "Buch", diff: "beginner" }, { nl: "Melk", target: "Milch", diff: "beginner" }, { nl: "Brood", target: "Brot", diff: "beginner" },
+                { nl: "Computer", target: "Computer", diff: "intermediate" }, { nl: "Telefoon", target: "Telefon", diff: "intermediate" }, { nl: "Reizen", target: "Reisen", diff: "intermediate" }, { nl: "Stad", target: "Stadt", diff: "intermediate" }, { nl: "Vriend", target: "Freund", diff: "intermediate" },
+                { nl: "Ontwikkeling", target: "Entwicklung", diff: "advanced" }, { nl: "Wetenschap", target: "Wissenschaft", diff: "advanced" }, { nl: "Oplossing", target: "Lösung", diff: "advanced" }
             ],
             es: [
-                { nl: "Hallo", target: "Hola" }, { nl: "Goedemorgen", target: "Buenos días" }, { nl: "Dank je wel", target: "Gracias" }, { nl: "Ja", target: "Sí" }, { nl: "Nee", target: "No" },
-                { nl: "Water", target: "Agua" }, { nl: "Huis", target: "Casa" }, { nl: "Boek", target: "Libro" }, { nl: "Melk", target: "Leche" }, { nl: "Brood", target: "Pan" },
-                { nl: "Appel", target: "Manzana" }, { nl: "Kat", target: "Gato" }, { nl: "Hond", target: "Perro" }, { nl: "Auto", target: "Coche" }, { nl: "Zon", target: "Sol" },
-                { nl: "Computer", target: "Computadora" }, { nl: "Telefoon", target: "Teléfono" }, { nl: "Reizen", target: "Viajar" }, { nl: "Stad", target: "Ciudad" }, { nl: "Vriend", target: "Amigo" }
+                { nl: "Hallo", target: "Hola", diff: "beginner" }, { nl: "Goedemorgen", target: "Buenos días", diff: "beginner" }, { nl: "Dank je wel", target: "Gracias", diff: "beginner" }, { nl: "Ja", target: "Sí", diff: "beginner" }, { nl: "Nee", target: "No", diff: "beginner" },
+                { nl: "Water", target: "Agua", diff: "beginner" }, { nl: "Huis", target: "Casa", diff: "beginner" }, { nl: "Boek", target: "Libro", diff: "beginner" }, { nl: "Melk", target: "Leche", diff: "beginner" }, { nl: "Brood", target: "Pan", diff: "beginner" },
+                { nl: "Computer", target: "Computadora", diff: "intermediate" }, { nl: "Telefoon", target: "Teléfono", diff: "intermediate" }, { nl: "Reizen", target: "Viajar", diff: "intermediate" }, { nl: "Stad", target: "Ciudad", diff: "intermediate" }, { nl: "Vriend", target: "Amigo", diff: "intermediate" },
+                { nl: "Ontwikkeling", target: "Desarrollo", diff: "advanced" }, { nl: "Wetenschap", target: "Ciencia", diff: "advanced" }, { nl: "Oplossing", target: "Solución", diff: "advanced" }
             ],
-            nl: [
-                { nl: "Hallo", target: "Hallo" }, { nl: "Goedemorgen", target: "Goedemorgen" }, { nl: "Dank je wel", target: "Dank je wel" }, { nl: "Ja", target: "Ja" }, { nl: "Nee", target: "Nee" },
-                { nl: "Water", target: "Water" }, { nl: "Huis", target: "Huis" }, { nl: "Boek", target: "Boek" }, { nl: "Melk", target: "Melk" }, { nl: "Brood", target: "Brood" },
-                { nl: "Appel", target: "Appel" }, { nl: "Kat", target: "Kat" }, { nl: "Hond", target: "Hond" }, { nl: "Auto", target: "Auto" }, { nl: "Zon", target: "Zon" },
-                { nl: "Computer", target: "Computer" }, { nl: "Telefoon", target: "Telefoon" }, { nl: "Reizen", target: "Reizen" }, { nl: "Stad", target: "Stad" }, { nl: "Vriend", target: "Vriend" }
+            fr: [
+                { nl: "Hallo", target: "Bonjour", diff: "beginner" }, { nl: "Goedemorgen", target: "Bonjour", diff: "beginner" }, { nl: "Dank je wel", target: "Merci", diff: "beginner" }, { nl: "Ja", target: "Oui", diff: "beginner" }, { nl: "Nee", target: "Non", diff: "beginner" },
+                { nl: "Water", target: "Eau", diff: "beginner" }, { nl: "Huis", target: "Maison", diff: "beginner" }, { nl: "Boek", target: "Livre", diff: "beginner" }, { nl: "Melk", target: "Lait", diff: "beginner" }, { nl: "Brood", target: "Pain", diff: "beginner" },
+                { nl: "Computer", target: "Ordinateur", diff: "intermediate" }, { nl: "Telefoon", target: "Téléphone", diff: "intermediate" }, { nl: "Reizen", target: "Voyager", diff: "intermediate" }, { nl: "Stad", target: "Ville", diff: "intermediate" }, { nl: "Vriend", target: "Ami", diff: "intermediate" },
+                { nl: "Ontwikkeling", target: "Développement", diff: "advanced" }, { nl: "Wetenschap", target: "Science", diff: "advanced" }, { nl: "Oplossing", target: "Solution", diff: "advanced" }
+            ],
+            it: [
+                { nl: "Hallo", target: "Ciao", diff: "beginner" }, { nl: "Goedemorgen", target: "Buongiorno", diff: "beginner" }, { nl: "Dank je wel", target: "Grazie", diff: "beginner" }, { nl: "Ja", target: "Sì", diff: "beginner" }, { nl: "Nee", target: "No", diff: "beginner" },
+                { nl: "Water", target: "Acqua", diff: "beginner" }, { nl: "Huis", target: "Casa", diff: "beginner" }, { nl: "Boek", target: "Libro", diff: "beginner" }, { nl: "Melk", target: "Latte", diff: "beginner" }, { nl: "Brood", target: "Pane", diff: "beginner" },
+                { nl: "Computer", target: "Computer", diff: "intermediate" }, { nl: "Telefoon", target: "Telefono", diff: "intermediate" }, { nl: "Reizen", target: "Viaggiare", diff: "intermediate" }, { nl: "Stad", target: "Città", diff: "intermediate" }, { nl: "Vriend", target: "Amico", diff: "intermediate" },
+                { nl: "Ontwikkeling", target: "Sviluppo", diff: "advanced" }, { nl: "Wetenschap", target: "Scienza", diff: "advanced" }, { nl: "Oplossing", target: "Soluzione", diff: "advanced" }
+            ],
+            pt: [
+                { nl: "Hallo", target: "Olá", diff: "beginner" }, { nl: "Goedemorgen", target: "Bom dia", diff: "beginner" }, { nl: "Dank je wel", target: "Obrigado", diff: "beginner" }, { nl: "Ja", target: "Sim", diff: "beginner" }, { nl: "Nee", target: "Não", diff: "beginner" },
+                { nl: "Water", target: "Água", diff: "beginner" }, { nl: "Huis", target: "Casa", diff: "beginner" }, { nl: "Boek", target: "Livro", diff: "beginner" }, { nl: "Melk", target: "Leite", diff: "beginner" }, { nl: "Brood", target: "Pão", diff: "beginner" },
+                { nl: "Computer", target: "Computador", diff: "intermediate" }, { nl: "Telefoon", target: "Telefone", diff: "intermediate" }, { nl: "Reizen", target: "Viajar", diff: "intermediate" }, { nl: "Stad", target: "Cidade", diff: "intermediate" }, { nl: "Vriend", target: "Amigo", diff: "intermediate" },
+                { nl: "Ontwikkeling", target: "Desenvolvimento", diff: "advanced" }, { nl: "Wetenschap", target: "Ciência", diff: "advanced" }, { nl: "Oplossing", target: "Solução", diff: "advanced" }
+            ],
+            ru: [
+                { nl: "Hallo", target: "Привет", diff: "beginner" }, { nl: "Goedemorgen", target: "Доброе утро", diff: "beginner" }, { nl: "Dank je wel", target: "Спасибо", diff: "beginner" }, { nl: "Ja", target: "Да", diff: "beginner" }, { nl: "Nee", target: "Нет", diff: "beginner" },
+                { nl: "Water", target: "Вода", diff: "beginner" }, { nl: "Huis", target: "Дом", diff: "beginner" }, { nl: "Boek", target: "Книга", diff: "beginner" }, { nl: "Melk", target: "Молоко", diff: "beginner" }, { nl: "Brood", target: "Хлеб", diff: "beginner" },
+                { nl: "Computer", target: "Компьютер", diff: "intermediate" }, { nl: "Telefoon", target: "Телефон", diff: "intermediate" }, { nl: "Reizen", target: "Путешествовать", diff: "intermediate" }, { nl: "Stad", target: "Город", diff: "intermediate" }, { nl: "Vriend", target: "Друг", diff: "intermediate" },
+                { nl: "Ontwikkeling", target: "Развитие", diff: "advanced" }, { nl: "Wetenschap", target: "Наука", diff: "advanced" }, { nl: "Oplossing", target: "Решение", diff: "advanced" }
+            ],
+            ja: [
+                { nl: "Hallo", target: "こんにちは", diff: "beginner" }, { nl: "Goedemorgen", target: "おはようございます", diff: "beginner" }, { nl: "Dank je wel", target: "ありがとう", diff: "beginner" }, { nl: "Ja", target: "はい", diff: "beginner" }, { nl: "Nee", target: "いいえ", diff: "beginner" },
+                { nl: "Water", target: "水", diff: "beginner" }, { nl: "Huis", target: "家", diff: "beginner" }, { nl: "Boek", target: "本", diff: "beginner" }, { nl: "Melk", target: "牛乳", diff: "beginner" }, { nl: "Brood", target: "パン", diff: "beginner" },
+                { nl: "Computer", target: "コンピューター", diff: "intermediate" }, { nl: "Telefoon", target: "電話", diff: "intermediate" }, { nl: "Reizen", target: "旅行", diff: "intermediate" }, { nl: "Stad", target: "都市", diff: "intermediate" }, { nl: "Vriend", target: "友達", diff: "intermediate" },
+                { nl: "Ontwikkeling", target: "開発", diff: "advanced" }, { nl: "Wetenschap", target: "科学", diff: "advanced" }, { nl: "Oplossing", target: "解決", diff: "advanced" }
+            ],
+            zh: [
+                { nl: "Hallo", target: "你好", diff: "beginner" }, { nl: "Goedemorgen", target: "早上好", diff: "beginner" }, { nl: "Dank je wel", target: "谢谢", diff: "beginner" }, { nl: "Ja", target: "是", diff: "beginner" }, { nl: "Nee", target: "不", diff: "beginner" },
+                { nl: "Water", target: "水", diff: "beginner" }, { nl: "Huis", target: "房子", diff: "beginner" }, { nl: "Boek", target: "书", diff: "beginner" }, { nl: "Melk", target: "牛奶", diff: "beginner" }, { nl: "Brood", target: "面包", diff: "beginner" },
+                { nl: "Computer", target: "电脑", diff: "intermediate" }, { nl: "Telefoon", target: "电话", diff: "intermediate" }, { nl: "Reizen", target: "旅游", diff: "intermediate" }, { nl: "Stad", target: "城市", diff: "intermediate" }, { nl: "Vriend", target: "朋友", diff: "intermediate" },
+                { nl: "Ontwikkeling", target: "发展", diff: "advanced" }, { nl: "Wetenschap", target: "科学", diff: "advanced" }, { nl: "Oplossing", target: "解决", diff: "advanced" }
+            ],
+            tr: [
+                { nl: "Hallo", target: "Merhaba", diff: "beginner" }, { nl: "Goedemorgen", target: "Günaydın", diff: "beginner" }, { nl: "Dank je wel", target: "Teşekkür ederim", diff: "beginner" }, { nl: "Ja", target: "Evet", diff: "beginner" }, { nl: "Nee", target: "Hayır", diff: "beginner" },
+                { nl: "Water", target: "Su", diff: "beginner" }, { nl: "Huis", target: "Ev", diff: "beginner" }, { nl: "Boek", target: "Kitap", diff: "beginner" }, { nl: "Melk", target: "Süt", diff: "beginner" }, { nl: "Brood", target: "Ekmek", diff: "beginner" },
+                { nl: "Computer", target: "Bilgisayar", diff: "intermediate" }, { nl: "Telefoon", target: "Telefon", diff: "intermediate" }, { nl: "Reizen", target: "Seyahat", diff: "intermediate" }, { nl: "Stad", target: "Şehir", diff: "intermediate" }, { nl: "Vriend", target: "Arkadaş", diff: "intermediate" },
+                { nl: "Ontwikkeling", target: "Gelişim", diff: "advanced" }, { nl: "Wetenschap", target: "Bilim", diff: "advanced" }, { nl: "Oplossing", target: "Çözüm", diff: "advanced" }
             ]
         };
 
-        // App State (Opgeslagen in localStorage)
-        let appData = JSON.parse(localStorage.getItem('wordly_local_data')) || {
+        // App State
+        let appData = JSON.parse(localStorage.getItem('wordly_ai_data')) || {
             points: 0,
             streak: 1,
-            completed: [],
-            level: "intermediate",
+            completed: {},
+            levels: {},
             targetLang: "en"
         };
 
         function saveData() {
-            localStorage.setItem('wordly_local_data', JSON.stringify(appData));
+            localStorage.setItem('wordly_ai_data', JSON.stringify(appData));
         }
 
         window.onload = function() {
-            document.getElementById('target-lang-select').value = appData.targetLang || "en";
-            document.getElementById('settings-level').value = appData.level || "intermediate";
+            let lang = appData.targetLang || "en";
+            document.getElementById('target-lang-select').value = lang;
             updateDashboardStats();
-            renderPath();
+            checkAndRunInitialFinder();
         };
 
         function updateDashboardStats() {
             document.getElementById('points-display').innerText = "⚡ " + appData.points + " XP";
             document.getElementById('streak-display').innerText = "🔥 " + appData.streak + " streak";
+            let lang = appData.targetLang || "en";
+            let lvl = appData.levels[lang] || "Niet getest";
+            document.getElementById('current-level-display').innerText = lvl.toUpperCase();
         }
 
         function changeTargetLanguage() {
             appData.targetLang = document.getElementById('target-lang-select').value;
             saveData();
-            renderPath();
+            updateDashboardStats();
+            checkAndRunInitialFinder();
+        }
+
+        function checkAndRunInitialFinder() {
+            let lang = appData.targetLang;
+            if(!appData.levels[lang]) {
+                showNotification("🤖 AI Niveau Finder", "Welkom! Omdat dit je eerste keer is in deze taal, start de AI nu een korte niveau-test om te kijken welke lessen bij jou passen!");
+                document.querySelector('.custom-modal .btn').onclick = function() {
+                    closeNotification();
+                    startAiLevelFinder();
+                };
+            } else {
+                renderPath();
+            }
         }
 
         function switchTab(tab) {
@@ -505,6 +558,95 @@
             if(activeBtn) activeBtn.classList.add('active');
         }
 
+        // --- AI NIVEAU FINDER LOGICA ---
+        let isAiFinding = false;
+        let aiTestScore = 0;
+        let aiTestQuestions = [];
+
+        function startAiLevelFinder() {
+            isAiFinding = true;
+            aiTestScore = 0;
+            let list = vocabData[appData.targetLang] || vocabData.en;
+            
+            // Pak 5 gemengde vragen voor de test
+            let shuffled = [...list].sort(() => 0.5 - Math.random()).slice(0, 5);
+            aiTestQuestions = shuffled.map(item => {
+                let wrongOpts = list.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.target);
+                wrongOpts.push(item.target);
+                wrongOpts.sort(() => 0.5 - Math.random());
+                return {
+                    prompt: `[AI Niveau Test] Vertaal: "${item.nl}"`,
+                    options: wrongOpts,
+                    correct: item.target
+                };
+            });
+
+            currentQIdx = 0;
+            document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-lesson').classList.remove('hidden');
+            loadAiQuestion();
+        }
+
+        function loadAiQuestion() {
+            if(currentQIdx >= aiTestQuestions.length) {
+                // Bereken niveau op basis van score (0 t/m 5)
+                let assignedLevel = "beginner";
+                if(aiTestScore >= 4) assignedLevel = "advanced";
+                else if(aiTestScore >= 2) assignedLevel = "intermediate";
+
+                appData.levels[appData.targetLang] = assignedLevel;
+                
+                // Ontgrendel automatisch lessen tot dat niveau
+                if(!appData.completed[appData.targetLang]) appData.completed[appData.targetLang] = [];
+                if(assignedLevel === "intermediate" || assignedLevel === "advanced") {
+                    for(let i=0; i<3; i++) {
+                        if(!appData.completed[appData.targetLang].includes(`lesson_${appData.targetLang}_${i+1}`)) {
+                            appData.completed[appData.targetLang].push(`lesson_${appData.targetLang}_${i+1}`);
+                        }
+                    }
+                }
+                saveData();
+                isAiFinding = false;
+
+                showNotification("🎉 AI Niveau Bepaald!", `De AI analyse is klaar! Jouw niveau is ingeschat als: ${assignedLevel.toUpperCase()}. Je leerpad is hierop aangepast.`);
+                document.querySelector('.custom-modal .btn').onclick = function() {
+                    closeNotification();
+                    backToDashboard();
+                };
+                return;
+            }
+
+            let q = aiTestQuestions[currentQIdx];
+            document.getElementById('lesson-progress-text').innerText = `AI Test Vraag ${currentQIdx + 1} van 5`;
+            document.getElementById('question-prompt').innerText = q.prompt;
+
+            let area = document.getElementById('answers-area');
+            area.innerHTML = "";
+            document.getElementById('next-btn').classList.add('hidden');
+
+            q.options.forEach(opt => {
+                let btn = document.createElement('button');
+                btn.className = "btn option-btn";
+                btn.innerText = opt;
+                btn.onclick = () => checkAiAnswer(opt, q.correct);
+                area.appendChild(btn);
+            });
+        }
+
+        function checkAiAnswer(given, correct) {
+            let area = document.getElementById('answers-area');
+            if(given.toLowerCase() === correct.toLowerCase()) {
+                playSound('correct');
+                aiTestScore++;
+                area.innerHTML = `<div class="feedback-box-correct">Juist! AI registreert punt.</div>`;
+            } else {
+                playSound('wrong');
+                area.innerHTML = `<div class="feedback-box-wrong">Onjuist. Juist was: <strong>${correct}</strong></div>`;
+            }
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        // --- NORMALE LESSEN ---
         function generateLessonsForCurrentLang() {
             let list = vocabData[appData.targetLang] || vocabData.en;
             const lessons = [];
@@ -540,6 +682,7 @@
             let lessons = generateLessonsForCurrentLang();
             let pattern = [1, 2, 1, 2, 1];
             let idx = 0, pIdx = 0;
+            let langCompleted = appData.completed[appData.targetLang] || [];
 
             while(idx < lessons.length) {
                 let count = pattern[pIdx % pattern.length];
@@ -548,8 +691,8 @@
 
                 for(let i = 0; i < count && idx < lessons.length; i++) {
                     let les = lessons[idx];
-                    let isDone = appData.completed.includes(les.id);
-                    let isUnlocked = idx === 0 || appData.completed.includes(lessons[idx-1].id);
+                    let isDone = langCompleted.includes(les.id);
+                    let isUnlocked = idx === 0 || langCompleted.includes(lessons[idx-1].id);
 
                     let node = document.createElement('button');
                     node.className = `duo-node ${isDone ? 'done' : (!isUnlocked ? 'locked' : 'current')}`;
@@ -570,6 +713,7 @@
 
         let activeQuestions = [], currentQIdx = 0, activeLesId = "";
         function startLesson(id, allLessons) {
+            isAiFinding = false;
             activeLesId = id;
             activeQuestions = allLessons.find(l => l.id === id).questions;
             currentQIdx = 0;
@@ -579,9 +723,17 @@
         }
 
         function loadQuestion() {
+            if(isAiFinding) {
+                loadAiQuestion();
+                return;
+            }
+
             if(currentQIdx >= activeQuestions.length) {
-                appData.points += 15;
-                if(!appData.completed.includes(activeLesId)) appData.completed.push(activeLesId);
+                appData.points += 20;
+                if(!appData.completed[appData.targetLang]) appData.completed[appData.targetLang] = [];
+                if(!appData.completed[appData.targetLang].includes(activeLesId)) {
+                    appData.completed[appData.targetLang].push(activeLesId);
+                }
                 saveData();
                 updateDashboardStats();
                 document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
@@ -606,6 +758,11 @@
         }
 
         function checkAnswer(given, correct) {
+            if(isAiFinding) {
+                checkAiAnswer(given, correct);
+                return;
+            }
+
             let area = document.getElementById('answers-area');
             if(given.toLowerCase() === correct.toLowerCase()) {
                 playSound('correct');
@@ -629,17 +786,11 @@
             document.getElementById('page-dashboard').classList.remove('hidden');
         }
 
-        function updateLevel() {
-            appData.level = document.getElementById('settings-level').value;
-            saveData();
-        }
-
         function resetProgressPrompt() {
-            showNotification("Voortgang resetten", "Weet je zeker dat je alle opgeslagen voortgang wilt wissen?");
-            // Voeg actie toe aan de knop of maak een simpele herbevestiging via eigen melding
+            showNotification("Voortgang resetten", "Weet je zeker dat je alle opgeslagen data wilt wissen?");
             let modalBtn = document.querySelector('.custom-modal .btn');
             modalBtn.onclick = function() {
-                localStorage.removeItem('wordly_local_data');
+                localStorage.removeItem('wordly_ai_data');
                 location.reload();
             };
         }
