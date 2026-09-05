@@ -1,186 +1,188 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordly - Jouw Versie</title>
+    <title>Wordly - Ultimate Green Edition</title>
     <style>
         :root {
-            --primary: #ff7518;
-            --primary-hover: #e06312;
-            --secondary: #58cc02;
-            --secondary-hover: #46a302;
-            --bg: #f7f9fa;
+            --duo-green: #58cc02;
+            --duo-green-hover: #46a302;
+            --duo-green-shadow: #3b8201;
+            --duo-light-green: #d7ffb8;
+            --duo-dark: #2b2b2b;
+            --duo-gray-text: #777777;
+            --bg: #ffffff;
             --card-bg: #ffffff;
-            --text: #3c3c3c;
             --border: #e5e5e5;
-            --shadow: 0 4px 0 #d1d1d1;
-            --primary-shadow: 0 4px 0 #cc5c12;
-            --secondary-shadow: 0 4px 0 #3b8201;
         }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg);
-            color: var(--text);
+            color: var(--duo-dark);
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
             min-height: 100vh;
         }
 
-        /* Prachtige Bovenste Taakbalk */
-        header {
-            width: 100%;
-            background: var(--card-bg);
-            border-bottom: 2px solid var(--border);
-            padding: 16px 32px;
+        /* Vaste Linkerzijbalk in Groen Thema */
+        aside.sidebar {
+            width: 256px;
+            border-right: 2px solid var(--border);
+            padding: 24px 16px;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: center;
             box-sizing: border-box;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: fixed;
+            height: 100vh;
+            background: white;
+            z-index: 100;
         }
 
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .logo {
+        .sidebar-logo {
             font-size: 28px;
             font-weight: 900;
-            color: var(--primary);
+            color: var(--duo-green);
+            padding-left: 12px;
+            margin-bottom: 30px;
             letter-spacing: -0.5px;
         }
 
-        /* De Zwarte Kat Mascotte */
-        .cat-mascot {
-            width: 48px;
-            height: 48px;
-            background: #1a1a1a;
-            border-radius: 50% 50% 42% 42%;
-            position: relative;
-            display: inline-block;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-        }
-
-        .cat-mascot.bounce { transform: scale(1.2) rotate(8deg); }
-        .cat-mascot.shake { animation: shakeAnim 0.4s ease-in-out; }
-
-        @keyframes shakeAnim {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px) rotate(-6deg); }
-            75% { transform: translateX(6px) rotate(6deg); }
-        }
-
-        .cat-mascot::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 4px;
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-bottom: 14px solid #1a1a1a;
-            transform: rotate(-15deg);
-        }
-
-        .cat-mascot::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            right: 4px;
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-bottom: 14px solid #1a1a1a;
-            transform: rotate(15deg);
-        }
-
-        .cat-face {
-            position: absolute;
-            top: 15px;
-            left: 9px;
-            width: 30px;
+        .sidebar-menu {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-weight: 800;
+            color: var(--duo-gray-text);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 0.8px;
+            border: 2px solid transparent;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: var(--duo-light-green);
+            color: var(--duo-green-shadow);
+            border-color: #b8f28b;
+        }
+
+        /* Hoofdinhoud */
+        main.main-content {
+            margin-left: 256px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            background: #f7f9fa;
+            min-height: 100vh;
+        }
+
+        .content-container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
         }
 
-        .cat-eye {
-            width: 5px;
-            height: 7px;
-            background: #fff;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .cat-eye::after {
-            content: '';
-            position: absolute;
-            bottom: 1px;
-            right: 1px;
-            width: 2px;
-            height: 3px;
-            background: #ffaa00;
-            border-radius: 50%;
-        }
-
-        .cat-mascot.blink .cat-eye { height: 1px; transform: translateY(3px); }
-
-        .cat-nose {
-            position: absolute;
-            bottom: 14px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 5px;
-            height: 3px;
-            background: #ff99bb;
-            border-radius: 50%;
-        }
-
-        .top-stats {
+        /* Stats Balk */
+        .top-stats-bar {
             display: flex;
             gap: 20px;
-            align-items: center;
+            justify-content: flex-end;
+            width: 100%;
+            margin-bottom: 30px;
+            font-weight: 800;
         }
 
-        .stat-badge {
-            font-weight: 800;
-            color: #777;
-            background: #fff;
+        .stat-pill {
+            background: white;
+            border: 2px solid var(--border);
             padding: 8px 16px;
             border-radius: 16px;
-            border: 2px solid var(--border);
-            font-size: 15px;
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 15px;
+            color: #555;
         }
 
-        /* Hoofdinhoud vult het scherm perfect */
-        main {
-            flex: 1;
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 30px 20px;
-            box-sizing: border-box;
+        /* Het Kronkelende Groene Leerpad */
+        .duo-path {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            gap: 28px;
+            width: 100%;
+            padding: 20px 0;
         }
 
+        .path-row {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            gap: 80px;
+        }
+
+        .path-row.offset-1 { transform: translateX(-60px); }
+        .path-row.offset-2 { transform: translateX(60px); }
+
+        .duo-node {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            background: var(--duo-green);
+            border: none;
+            border-bottom: 6px solid var(--duo-green-shadow);
+            color: white;
+            font-weight: 900;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(88, 204, 2, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .duo-node:hover:not(.locked) { transform: scale(1.1); }
+        .duo-node:active:not(.locked) { transform: translateY(4px); border-bottom-width: 2px; }
+
+        .duo-node.locked {
+            background: #e5e5e5;
+            border-bottom: 6px solid #cccccc;
+            color: #afafaf;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .duo-node.current {
+            animation: pulseNode 1.5s infinite;
+        }
+
+        @keyframes pulseNode {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(88, 204, 2, 0.4); }
+            70% { transform: scale(1.08); box-shadow: 0 0 0 16px rgba(88, 204, 2, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(88, 204, 2, 0); }
+        }
+
+        /* Kaarten & Knoppen */
         .card {
             background: var(--card-bg);
             border: 2px solid var(--border);
@@ -188,29 +190,15 @@
             padding: 40px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.04);
             width: 100%;
-            max-width: 650px;
+            max-width: 600px;
             box-sizing: border-box;
-            margin-bottom: 20px;
         }
 
-        h2 { 
-            margin-top: 0; 
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 10px;
-            color: #2c2c2c;
-        }
-
-        p {
-            color: #777;
-            font-size: 16px;
-            line-height: 1.5;
-            margin-bottom: 24px;
-        }
+        h2 { font-size: 28px; font-weight: 800; margin-top: 0; color: #2c2c2c; }
+        p { color: var(--duo-gray-text); font-size: 16px; line-height: 1.5; }
 
         .btn {
-            background-color: var(--secondary);
+            background-color: var(--duo-green);
             color: white;
             border: none;
             padding: 16px 24px;
@@ -220,25 +208,19 @@
             cursor: pointer;
             width: 100%;
             margin-top: 16px;
-            transition: all 0.1s ease;
-            border-bottom: var(--secondary-shadow);
-            box-shadow: 0 4px 12px rgba(88, 204, 2, 0.2);
+            border-bottom: 4px solid var(--duo-green-shadow);
+            box-shadow: 0 4px 12px rgba(88, 204, 2, 0.25);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            transition: all 0.1s;
         }
 
-        .btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
-        .btn:active { transform: translateY(3px); box-shadow: none; border-bottom-width: 1px; }
-
-        .btn-primary {
-            background-color: var(--primary);
-            border-bottom: var(--primary-shadow);
-            box-shadow: 0 4px 12px rgba(255, 117, 24, 0.2);
-        }
+        .btn:hover { filter: brightness(1.05); }
+        .btn:active { transform: translateY(3px); border-bottom-width: 1px; box-shadow: none; }
 
         .option-btn {
             background: white;
-            color: var(--text);
+            color: var(--duo-dark);
             border: 2px solid var(--border);
             border-bottom: 4px solid var(--border);
             margin: 12px 0;
@@ -247,8 +229,7 @@
             text-transform: none;
             font-weight: 700;
         }
-
-        .option-btn:hover { background: #f7f9fa; border-color: var(--primary); }
+        .option-btn:hover { background: #f7f9fa; border-color: var(--duo-green); }
 
         input[type="text"], input[type="password"] {
             width: 100%;
@@ -261,463 +242,198 @@
             margin-bottom: 16px;
             outline: none;
             background: #f7f9fa;
-            transition: border-color 0.2s;
         }
+        input:focus { border-color: var(--duo-green); background: white; }
 
-        input[type="text"]:focus, input[type="password"]:focus {
-            border-color: var(--primary);
-            background: white;
-        }
-
-        select {
-            width: 100%;
-            padding: 16px;
-            border-radius: 16px;
-            border: 2px solid var(--border);
-            margin: 8px 0 24px 0;
-            font-size: 16px;
-            background: white;
-            outline: none;
-            cursor: pointer;
-        }
-
-        label {
-            font-weight: 700;
-            font-size: 14px;
-            color: #555;
-            display: block;
-            margin-bottom: 4px;
-        }
-
+        label { font-weight: 700; font-size: 14px; color: #555; display: block; margin-bottom: 4px; }
         .hidden { display: none !important; }
 
-        /* Het Volledige Scherm Leerpad */
-        .dashboard-container {
-            width: 100%;
-            max-width: 900px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .feedback-box-correct {
+            color: #2e7d32; font-weight: 800; font-size: 18px; margin: 20px 0; padding: 16px;
+            background: #e8f5e9; border-radius: 16px; border: 2px solid #c8e6c9;
         }
-
-        .nav-tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
-            background: white;
-            padding: 8px;
-            border-radius: 20px;
-            border: 2px solid var(--border);
+        .feedback-box-wrong {
+            color: #c62828; font-weight: 800; font-size: 18px; margin: 20px 0; padding: 16px;
+            background: #ffebee; border-radius: 16px; border: 2px solid #ffcdd2;
         }
-
-        .tab-btn {
-            background: transparent;
-            border: none;
-            font-size: 15px;
-            font-weight: 800;
-            color: #888;
-            cursor: pointer;
-            padding: 12px 24px;
-            border-radius: 14px;
-            transition: all 0.2s;
-        }
-
-        .tab-btn.active { background: #fff3ed; color: var(--primary); }
-
-        .path-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 28px;
-            padding: 20px 0;
-            width: 100%;
-        }
-
-        .path-row {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            gap: 60px;
-        }
-
-        .path-row.offset-1 { transform: translateX(-50px); }
-        .path-row.offset-2 { transform: translateX(50px); }
-
-        .node-btn {
-            width: 84px;
-            height: 84px;
-            border-radius: 50%;
-            background: var(--primary);
-            border: none;
-            border-bottom: 6px solid var(--primary-hover);
-            color: white;
-            font-weight: 900;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 117, 24, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .node-btn:hover:not(.locked) { transform: scale(1.1); }
-        .node-btn:active:not(.locked) { transform: translateY(4px); border-bottom-width: 2px; }
-
-        .node-btn.locked {
-            background: #e5e5e5;
-            border-bottom: 6px solid #cccccc;
-            color: #afafaf;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .node-btn.done {
-            background: var(--secondary);
-            border-bottom: 6px solid var(--secondary-hover);
-            box-shadow: 0 8px 20px rgba(88, 204, 2, 0.3);
-        }
-
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            width: 100%;
-        }
-
-        .shop-item {
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 20px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .feedback-correct {
-            color: #2e7d32;
-            font-weight: 800;
-            font-size: 18px;
-            margin: 20px 0;
-            padding: 16px;
-            background: #e8f5e9;
-            border-radius: 16px;
-            border: 2px solid #c8e6c9;
-        }
-
-        .feedback-wrong {
-            color: #c62828;
-            font-weight: 800;
-            font-size: 18px;
-            margin: 20px 0;
-            padding: 16px;
-            background: #ffebee;
-            border-radius: 16px;
-            border: 2px solid #ffcdd2;
-        }
-
-        .word-bank-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .word-chip {
-            background: white;
-            border: 2px solid var(--border);
-            border-bottom: 4px solid var(--border);
-            padding: 16px;
-            border-radius: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.1s;
-        }
-
-        .word-chip:hover { background: #f7f9fa; border-color: var(--primary); }
-        .word-chip:active { transform: translateY(2px); border-bottom-width: 2px; }
     </style>
 </head>
 <body>
 
-    <!-- BOVENSTE TAAKBALK -->
-    <header id="app-header" class="hidden">
-        <div class="logo-area">
-            <div class="cat-mascot" id="mascot" onclick="triggerMascot('bounce'); playSound('correct');" title="Miauw!">
-                <div class="cat-face">
-                    <div class="cat-eye"></div>
-                    <div class="cat-nose"></div>
-                    <div class="cat-eye"></div>
+    <!-- ZIJBALK -->
+    <aside.sidebar id="app-sidebar" class="hidden">
+        <div>
+            <div class="sidebar-logo">Wordly</div>
+            <div class="sidebar-menu">
+                <a class="menu-item active" onclick="switchTab('learn')">🗺️ Leerpad</a>
+                <a class="menu-item" onclick="switchTab('shop')">🛒 Winkel</a>
+                <a class="menu-item" onclick="switchTab('settings')">⚙️ Instellingen</a>
+            </div>
+        </div>
+        <div style="border-top: 2px solid var(--border); padding-top: 16px;">
+            <a class="menu-item" style="color: #c62828;" onclick="logout()">🚪 Uitloggen</a>
+        </div>
+    </aside>
+
+    <!-- HOOFD INHOUD -->
+    <main.main-content class="main-content">
+        <div class="content-container">
+
+            <!-- PAGE: AUTH -->
+            <div id="page-auth" class="card page-section">
+                <h2 id="auth-title">Inloggen bij Wordly</h2>
+                <p id="auth-desc">Voer je gegevens in om al je voortgang en XP veilig op te slaan.</p>
+                
+                <label>Gebruikersnaam</label>
+                <input type="text" id="auth-user" placeholder="Je gebruikersnaam...">
+                
+                <label>Wachtwoord</label>
+                <input type="password" id="auth-pass" placeholder="Je wachtwoord...">
+
+                <button class="btn" id="auth-btn" onclick="handleAuth()">Inloggen</button>
+                <button class="btn" style="background: transparent; color: var(--duo-green); border: none; box-shadow: none;" onclick="toggleAuthMode()" id="auth-switch">Geen account? Maak er een aan</button>
+            </div>
+
+            <!-- PAGE: DASHBOARD -->
+            <div id="page-dashboard" class="page-section hidden" style="width: 100%;">
+                <div class="top-stats-bar">
+                    <div class="stat-pill" id="user-display">👤 Guest</div>
+                    <div class="stat-pill" id="streak-display">🔥 1 streak</div>
+                    <div class="stat-pill" id="points-display">⚡ 0 XP</div>
                 </div>
-            </div>
-            <div class="logo">Wordly</div>
-        </div>
-        <div class="top-stats">
-            <div class="stat-badge" id="user-display">👤 Guest</div>
-            <div class="stat-badge" id="points-display">⚡ 0 pts</div>
-            <div class="stat-badge" id="stats-display">🏆 0 voltooid</div>
-        </div>
-    </header>
 
-    <main>
-        <!-- PAGE: AUTH (Inloggen / Account maken) -->
-        <div id="page-auth" class="card page-section">
-            <h2 id="auth-title">Account Aanmaken</h2>
-            <p id="auth-desc">Maak een veilig account aan om al je voortgang op te slaan.</p>
-            
-            <label>Gebruikersnaam</label>
-            <input type="text" id="auth-user" placeholder="Typ je gebruikersnaam...">
-            
-            <label>Wachtwoord</label>
-            <input type="password" id="auth-pass" placeholder="Typ je wachtwoord...">
-
-            <button class="btn btn-primary" id="auth-btn" onclick="handleAuth()">Account Aanmaken</button>
-            <button class="btn" style="background: transparent; color: var(--primary); border: none; box-shadow: none; margin-top: 12px;" onclick="toggleAuthMode()" id="auth-switch">Al een account? Log hier in</button>
-        </div>
-
-        <!-- PAGE: ONBOARDING - UI LANG -->
-        <div id="page-onboard-ui" class="card page-section hidden">
-            <h2>Kies je taal</h2>
-            <p>Selecteer de weergavetaal voor de app.</p>
-            <select id="ui-lang-select">
-                <option value="en">English</option>
-                <option value="nl">Nederlands</option>
-            </select>
-            <button class="btn btn-primary" onclick="saveUILanguage()">Doorgaan</button>
-        </div>
-
-        <!-- PAGE: ONBOARDING - DIRECTION -->
-        <div id="page-onboard-dir" class="card page-section hidden">
-            <h2>Kies je Cursus</h2>
-            <p>Welke taalcombinatie wil je leren?</p>
-            <button class="btn btn-primary option-btn" style="text-align: center; font-weight: 800;" onclick="setDirection('en-nl')">English - Nederlands</button>
-            <button class="btn btn-primary option-btn" style="text-align: center; font-weight: 800; margin-top: 12px;" onclick="setDirection('nl-en')">Nederlands - Engels</button>
-        </div>
-
-        <!-- PAGE: ONBOARDING - LEVEL -->
-        <div id="page-onboard-level" class="card page-section hidden">
-            <h2>Wat is je niveau?</h2>
-            <p>Kies je startniveau om de lessen passend te maken.</p>
-            <button class="btn btn-primary option-btn" style="text-align: center;" onclick="setProficiency('beginner')">Beginner (Basiswoorden & begroetingen)</button>
-            <button class="btn btn-primary option-btn" style="text-align: center; margin-top: 12px;" onclick="setProficiency('intermediate')">Intermediate (Alledaagse zinnen)</button>
-            <button class="btn btn-primary option-btn" style="text-align: center; margin-top: 12px;" onclick="setProficiency('advanced')">Advanced (Uitgebreide zinnen & grammatica)</button>
-        </div>
-
-        <!-- PAGE: DASHBOARD (Volledig scherm leerpad) -->
-        <div id="page-dashboard" class="page-section hidden dashboard-container">
-            <div class="nav-tabs">
-                <button class="tab-btn active" id="tab-learn" onclick="switchTab('learn')">🗺️ Leerpad</button>
-                <button class="tab-btn" id="tab-shop" onclick="switchTab('shop')">🛒 Winkel</button>
-                <button class="tab-btn" id="tab-settings" onclick="switchTab('settings')">⚙️ Instellingen</button>
-            </div>
-
-            <div id="view-learn" class="dashboard-container">
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <h2>Jouw Leerpad</h2>
-                    <p>Voltooi lessen stap voor stap om punten te verdienen!</p>
+                <div id="view-learn" style="width: 100%;">
+                    <div class="duo-path" id="path-container"></div>
                 </div>
-                <div class="path-container" id="path-container"></div>
-            </div>
 
-            <div id="view-shop" class="card hidden" style="max-width: 100%;">
-                <h2>Punten Winkel</h2>
-                <p>Besteed je hard verdiende punten aan coole extra's.</p>
-                <div class="shop-grid">
-                    <div class="shop-item">
-                        <div>
-                            <strong>Naam Wijzigen</strong>
-                            <p style="font-size: 14px; margin: 8px 0;">Pas je gebruikersnaam aan.</p>
-                        </div>
-                        <button class="btn btn-primary" onclick="buyItem('rename', 100)">Kopen (100 pts)</button>
+                <div id="view-shop" class="card hidden" style="max-width: 100%;">
+                    <h2>Wordly Winkel</h2>
+                    <p>Besteed je hard verdiende XP aan extra opties!</p>
+                    <div style="margin-top: 20px; background: #f7f9fa; padding: 20px; border-radius: 16px; border: 2px solid var(--border);">
+                        <strong>Naam Aanpassen</strong>
+                        <p style="font-size: 14px; margin: 8px 0;">Geef jezelf een gloednieuwe gebruikersnaam.</p>
+                        <button class="btn" style="margin-top: 0;" onclick="changeNamePrompt()">Wijzig Naam</button>
                     </div>
                 </div>
+
+                <div id="view-settings" class="card hidden" style="max-width: 100%;">
+                    <h2>Instellingen</h2>
+                    <label>Niveau Selecteren</label>
+                    <select id="settings-level" onchange="updateLevel()" style="width:100%; padding:16px; border-radius:16px; border:2px solid var(--border); margin-top:8px; font-size:16px; background:#f7f9fa; outline:none;">
+                        <option value="beginner">Beginner (Basis)</option>
+                        <option value="intermediate">Intermediate (Alledaags)</option>
+                        <option value="advanced">Advanced (Uitgebreid)</option>
+                    </select>
+                    <button class="btn" style="background: #c62828; border-bottom-color: #8e0000; margin-top: 30px;" onclick="deleteAccount()">Account Verwijderen</button>
+                </div>
             </div>
 
-            <div id="view-settings" class="card hidden" style="max-width: 100%;">
-                <h2>Account Instellingen</h2>
-                <p>Beheer je accountvoorkeuren.</p>
-                
-                <label>Niveau Aanpassen</label>
-                <select id="settings-level" onchange="updateSettingsLevel()">
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
-                </select>
-
-                <label style="margin-top: 15px;">Nieuwe Gebruikersnaam</label>
-                <input type="text" id="settings-username" placeholder="Nieuwe naam...">
-                <button class="btn btn-primary" onclick="updateUsername()">Naam Bijwerken</button>
-                
-                <button class="btn" style="background: #c62828; border-bottom-color: #8e0000; margin-top: 24px;" onclick="deleteAccount()">Account Verwijderen</button>
-                <button class="btn" style="background: #888; border-bottom-color: #555; margin-top: 12px;" onclick="logout()">Uitloggen</button>
-            </div>
-        </div>
-
-        <!-- PAGE: LESSON -->
-        <div id="page-lesson" class="card page-section hidden">
-            <div id="question-container">
-                <h3 id="question-title">Vraag</h3>
-                <p id="question-text" style="font-size: 22px; font-weight: 700; color: #2c2c2c;"></p>
+            <!-- PAGE: LESSON -->
+            <div id="page-lesson" class="card page-section hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <button class="btn" style="width: auto; padding: 8px 16px; margin:0; background:#e5e5e5; border-bottom-color:#cccccc; color:#777; box-shadow:none;" onclick="backToDashboard()">✕ Stoppen</button>
+                    <span id="lesson-progress-text" style="font-weight: 800; color: var(--duo-gray-text);">Vraag 1 van 10</span>
+                </div>
+                <h3 id="question-prompt" style="font-size: 22px; font-weight: 700; margin-bottom: 24px;">Vertaal dit</h3>
                 <div id="answers-area"></div>
+                <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Doorgaan</button>
             </div>
-            <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Volgende</button>
-        </div>
 
-        <!-- PAGE: COMPLETE -->
-        <div id="page-complete" class="card page-section hidden" style="text-align: center;">
-            <h2>Geweldig gedaan! 🎉</h2>
-            <p>Je hebt deze les succesvol afgerond en punten verdiend.</p>
-            <button class="btn" onclick="backToDashboard()">Terug naar Leerpad</button>
+            <!-- PAGE: COMPLETE -->
+            <div id="page-complete" class="card page-section hidden" style="text-align: center;">
+                <h2 style="font-size: 32px; color: var(--duo-green);">Les Voltooid! 🎉</h2>
+                <p>Geweldig gedaan! Je hebt deze les succesvol afgerond en XP verdiend.</p>
+                <button class="btn" onclick="backToDashboard()">Doorgaan</button>
+            </div>
+
         </div>
     </main>
 
     <script>
-        // Verbeterde Audio Context voor zuivere geluiden
+        // Audio Systeem
         let audioCtx = null;
         function playSound(type) {
             try {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') audioCtx.resume();
-                
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
+                osc.connect(gain); gain.connect(audioCtx.destination);
                 if (type === 'correct') {
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
-                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
-                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.35);
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
                 } else {
-                    osc.type = 'sawtooth';
                     osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-                    osc.frequency.linearRampToValueAtTime(110, audioCtx.currentTime + 0.25);
-                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
                     osc.start(); osc.stop(audioCtx.currentTime + 0.25);
                 }
             } catch(e) {}
         }
 
-        const mascotEl = document.getElementById('mascot');
-        function triggerMascot(anim) {
-            mascotEl.classList.add(anim);
-            setTimeout(() => mascotEl.classList.remove(anim), 500);
-        }
+        // Enorme uitgebreide databank met honderden opdrachten
+        const database = [];
+        const wordsEn = [
+            "Hello", "Good morning", "Thank you", "Yes", "No", "Water", "House", "Book", "Milk", "Bread", 
+            "Apple", "Cat", "Dog", "Car", "Sun", "Moon", "School", "Friend", "Family", "Music",
+            "Computer", "Phone", "Travel", "City", "Country", "Window", "Door", "Table", "Chair", "Garden",
+            "Running", "Reading", "Writing", "Playing", "Cooking", "Working", "Sleeping", "Walking", "Flying", "Swimming"
+        ];
+        const wordsNl = [
+            "Hallo", "Goedemorgen", "Dank je wel", "Ja", "Nee", "Water", "Huis", "Boek", "Melk", "Brood", 
+            "Appel", "Kat", "Hond", "Auto", "Zon", "Maan", "School", "Vriend", "Familie", "Muziek",
+            "Computer", "Telefoon", "Reizen", "Stad", "Land", "Raam", "Deur", "Tafel", "Stoel", "Tuin",
+            "Rennen", "Lezen", "Schrijven", "Spelen", "Koken", "Werken", "Slapen", "Wandelen", "Vliegen", "Zwemmen"
+        ];
 
-        setInterval(() => {
-            mascotEl.classList.add('blink');
-            setTimeout(() => mascotEl.classList.remove('blink'), 180);
-        }, 4000);
-
-        // Enorme database met 100+ items per niveau
-        const masterDatabase = [];
-        
-        // Genereer Beginner items (100+)
-        const begWords = ["Hello", "Good morning", "Thank you", "Yes", "No", "Dog", "Cat", "Water", "House", "Book", "Milk", "Bread", "Sun", "Moon", "Fish", "Chair", "Table", "Car", "Apple", "Tree"];
-        const begTrans = ["Hallo", "Goedemorgen", "Dank je wel", "Ja", "Nee", "Hond", "Kat", "Water", "Huis", "Boek", "Melk", "Brood", "Zon", "Maan", "Vis", "Stoel", "Tafel", "Auto", "Appel", "Boom"];
-        for(let i=0; i<5; i++) {
-            for(let j=0; j<begWords.length; j++) {
-                masterDatabase.push({ level: "beginner", en: begWords[j] + (i>0 ? " "+(i+1) : ""), nl: begTrans[j] + (i>0 ? " "+(i+1) : "") });
+        // Genereer 200+ unieke oefeningen over meerdere eenheden
+        for(let i = 0; i < 15; i++) {
+            for(let j = 0; j < wordsEn.length; j++) {
+                database.push({ 
+                    en: wordsEn[j] + (i > 0 ? ` (${i+1})` : ""), 
+                    nl: wordsNl[j] + (i > 0 ? ` (${i+1})` : "") 
+                });
             }
         }
 
-        // Genereer Intermediate items (100+)
-        const intSentencesEn = ["I like to read books.", "Where is the station?", "The weather is very nice today.", "She drinks coffee in the morning.", "We are walking through the large city."];
-        const intSentencesNl = ["Ik lees graag boeken.", "Waar is het station?", "Het weer is erg mooi vandaag.", "Zij drinkt koffie in de ochtend.", "Wij wandelen door de grote stad."];
-        for(let i=0; i<20; i++) {
-            let idx = i % intSentencesEn.length;
-            masterDatabase.push({ level: "intermediate", en: intSentencesEn[idx] + " ("+(i+1)+")", nl: intSentencesNl[idx] + " ("+(i+1)+")" });
-        }
-
-        // Genereer Advanced items (100+)
-        const advSentencesEn = [
-            "Although it was raining heavily, they decided to take a long walk in the nature reserve.",
-            "Could you please explain how this complicated software application works in detail?",
-            "Successful entrepreneurs constantly adapt to rapidly changing global market conditions.",
-            "Environmental protection has become one of the most critical challenges of our modern society.",
-            "Before making a final decision regarding your career path, you should carefully weigh all potential consequences."
-        ];
-        const advSentencesNl = [
-            "Hoewel het hard regende, besloten ze een lange wandeling te maken in het natuurgebied.",
-            "Kun je alsjeblieft uitleggen hoe deze ingewikkelde softwaretoepassing in detail werkt?",
-            "Succesvolle ondernemers passen zich voortdurend aan aan snel veranderende wereldwijde marktomstandigheden.",
-            "Milieubescherming is uitgegroeid tot een van de meest kritieke uitdagingen van onze moderne samenleving.",
-            "Voordat je een definitieve beslissing neemt over je carrièrepad, moet je alle mogelijke consequenties zorgvuldig afwegen."
-        ];
-        for(let i=0; i<20; i++) {
-            let idx = i % advSentencesEn.length;
-            masterDatabase.push({ level: "advanced", en: advSentencesEn[idx] + " ["+(i+1)+"]", nl: advSentencesNl[idx] + " ["+(i+1)+"]" });
-        }
-
-        function generateLessons(direction, proficiency) {
-            let pool = masterDatabase.filter(x => x.level === proficiency);
-            if (pool.length === 0) pool = masterDatabase;
-
+        function generateLessons() {
             const lessons = [];
-            let currentQList = [];
-            let lessonCounter = 1;
+            let qList = [];
+            let counter = 1;
+            for(let i = 0; i < database.length; i++) {
+                let item = database[i];
+                let wrongOpts = database.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.en);
+                wrongOpts.push(item.en);
+                wrongOpts.sort(() => 0.5 - Math.random());
 
-            for (let i = 0; i < pool.length; i++) {
-                let item = pool[i];
-                let isNLtoEN = direction === "nl-en";
-                let promptText = isNLtoEN ? `Vertaal naar het Engels: "${item.nl}"` : `Vertaal naar het Nederlands: "${item.en}"`;
-                let correctAns = isNLtoEN ? item.en : item.nl;
-                
-                // Slimme opbouw: Eerst multiple-choice en woordjes kiezen om te leren, pas daarna typen!
-                let exerciseType = "multiple-choice";
-                let qMod = i % 5;
-                if (qMod === 1) exerciseType = "word-builder";
-                if (qMod >= 2) exerciseType = "type-answer";
-
-                let options = [];
-                if (exerciseType === 'multiple-choice' || exerciseType === 'word-builder') {
-                    let wrongOpts = masterDatabase.filter(x => x !== item).sort(() => 0.5 - Math.random()).slice(0, 3);
-                    options = wrongOpts.map(x => isNLtoEN ? x.en : x.nl);
-                    options.push(correctAns);
-                    options.sort(() => 0.5 - Math.random());
-                }
-
-                currentQList.push({
-                    type: exerciseType,
-                    prompt: promptText,
-                    options: options,
-                    correct: correctAns
+                qList.push({
+                    prompt: `Vertaal naar het Engels: "${item.nl}"`,
+                    options: wrongOpts,
+                    correct: item.en
                 });
 
-                if (currentQList.length >= 5 || i === pool.length - 1) {
-                    lessons.push({
-                        id: `lesson_${direction}_${proficiency}_${lessonCounter}`,
-                        title: `${lessonCounter}`,
-                        questions: [...currentQList]
-                    });
-                    currentQList = [];
-                    lessonCounter++;
+                // Elke les bevat 10 vragen voor een langere, uitdagende speelduur
+                if(qList.length >= 10 || i === database.length - 1) {
+                    lessons.push({ id: `lesson_${counter}`, title: `${counter}`, questions: [...qList] });
+                    qList = [];
+                    counter++;
                 }
             }
             return lessons;
         }
 
-        let isLoginMode = false;
+        let isLoginMode = true;
         let currentUser = null;
-        let currentUI = "en";
-        let activeLessonId = null;
-        let currentQuestionIndex = 0;
-        let lessonEarnedPoints = 0;
 
         window.onload = function() {
-            const savedUser = localStorage.getItem('wordly_current_session');
-            if (savedUser) {
-                let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
-                if (accounts[savedUser]) {
-                    currentUser = accounts[savedUser];
-                    currentUI = currentUser.ui || "en";
+            let session = localStorage.getItem('wordly_session');
+            if (session) {
+                let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+                if (accounts[session]) {
+                    currentUser = accounts[session];
                     openDashboard();
                     return;
                 }
@@ -725,88 +441,45 @@
             showPage('page-auth');
         };
 
-        function showPage(pageId) {
+        function showPage(id) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
-            document.getElementById(pageId).classList.remove('hidden');
-            
-            const header = document.getElementById('app-header');
-            if (pageId === 'page-auth' || pageId.includes('page-onboard')) {
-                header.classList.add('hidden');
-            } else {
-                header.classList.remove('hidden');
-            }
+            document.getElementById(id).classList.remove('hidden');
+            let sidebar = document.getElementById('app-sidebar');
+            if(id === 'page-auth') sidebar.classList.add('hidden');
+            else sidebar.classList.remove('hidden');
         }
 
         function toggleAuthMode() {
             isLoginMode = !isLoginMode;
-            document.getElementById('auth-title').innerText = isLoginMode ? "Inloggen" : "Account Aanmaken";
-            document.getElementById('auth-desc').innerText = isLoginMode ? "Log in op je bestaande account." : "Maak een veilig account aan om al je voortgang op te slaan.";
+            document.getElementById('auth-title').innerText = isLoginMode ? "Inloggen bij Wordly" : "Account Aanmaken";
             document.getElementById('auth-btn').innerText = isLoginMode ? "Inloggen" : "Account Aanmaken";
             document.getElementById('auth-switch').innerText = isLoginMode ? "Geen account? Maak er een aan" : "Al een account? Log hier in";
         }
 
         function handleAuth() {
-            const user = document.getElementById('auth-user').value.trim();
-            const pass = document.getElementById('auth-pass').value.trim();
-            if (!user || !pass) return alert("Vul alstublieft beide velden in.");
+            let u = document.getElementById('auth-user').value.trim();
+            let p = document.getElementById('auth-pass').value.trim();
+            if(!u || !p) return alert("Vul alstublieft alle velden in.");
 
-            let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
-
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
             if (isLoginMode) {
-                if (!accounts[user] || accounts[user].pass !== pass) return alert("Onjuiste gebruikersnaam of wachtwoord.");
-                currentUser = accounts[user];
+                if(!accounts[u] || accounts[u].pass !== p) return alert("Onjuiste gebruikersnaam of wachtwoord.");
+                currentUser = accounts[u];
             } else {
-                if (accounts[user]) return alert("Deze gebruikersnaam bestaat al.");
-                currentUser = { 
-                    user, pass, ui: "nl", direction: "en-nl", proficiency: "intermediate", 
-                    points: 0, completedLessons: [], inventory: [] 
-                };
-                accounts[user] = currentUser;
-                localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
-                localStorage.setItem('wordly_current_session', currentUser.user);
-                showPage('page-onboard-ui');
-                return;
+                if(accounts[u]) return alert("Deze gebruikersnaam bestaat al.");
+                currentUser = { user: u, pass: p, points: 0, streak: 1, completed: [], level: "intermediate" };
+                accounts[u] = currentUser;
+                localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
             }
-
-            localStorage.setItem('wordly_current_session', currentUser.user);
+            localStorage.setItem('wordly_session', currentUser.user);
             openDashboard();
-        }
-
-        function saveUILanguage() {
-            currentUI = document.getElementById('ui-lang-select').value;
-            currentUser.ui = currentUI;
-            saveUser();
-            showPage('page-onboard-dir');
-        }
-
-        function setDirection(dir) {
-            currentUser.direction = dir;
-            saveUser();
-            showPage('page-onboard-level');
-        }
-
-        function setProficiency(level) {
-            currentUser.proficiency = level;
-            saveUser();
-            openDashboard();
-        }
-
-        function saveUser() {
-            let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
-            accounts[currentUser.user] = currentUser;
-            localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
-        }
-
-        function updateUIText() {
-            document.getElementById('user-display').innerText = "👤 " + currentUser.user;
-            document.getElementById('points-display').innerText = "⚡ " + currentUser.points + " pts";
-            document.getElementById('stats-display').innerText = "🏆 " + currentUser.completedLessons.length + " voltooid";
         }
 
         function openDashboard() {
-            updateUIText();
-            document.getElementById('settings-username').value = currentUser.user;
-            document.getElementById('settings-level').value = currentUser.proficiency || "intermediate";
+            document.getElementById('user-display').innerText = "👤 " + currentUser.user;
+            document.getElementById('points-display').innerText = "⚡ " + currentUser.points + " XP";
+            document.getElementById('streak-display').innerText = "🔥 " + currentUser.streak + " streak";
+            document.getElementById('settings-level').value = currentUser.level || "intermediate";
             renderPath();
             showPage('page-dashboard');
         }
@@ -815,191 +488,136 @@
             ['learn', 'shop', 'settings'].forEach(t => {
                 let el = document.getElementById(`view-${t}`);
                 if(el) el.classList.add('hidden');
-                let btn = document.getElementById(`tab-${t}`);
+                let btn = document.querySelector(`[onclick="switchTab('${t}')"]`);
                 if(btn) btn.classList.remove('active');
             });
-            let targetView = document.getElementById(`view-${tab}`);
-            if(targetView) targetView.classList.remove('hidden');
-            let targetTab = document.getElementById(`tab-${tab}`);
-            if(targetTab) targetTab.classList.add('active');
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+            let activeBtn = document.querySelector(`[onclick="switchTab('${tab}')"]`);
+            if(activeBtn) activeBtn.classList.add('active');
         }
 
         function renderPath() {
-            const container = document.getElementById('path-container');
+            let container = document.getElementById('path-container');
             container.innerHTML = "";
+            let lessons = generateLessons();
+            let pattern = [1, 2, 1, 2, 1];
+            let idx = 0, pIdx = 0;
 
-            const lessons = generateLessons(currentUser.direction || "en-nl", currentUser.proficiency || "intermediate");
-            let rowPattern = [1, 2, 1, 2, 1];
-            let lessonIndex = 0;
-            let patternIdx = 0;
+            while(idx < lessons.length) {
+                let count = pattern[pIdx % pattern.length];
+                let row = document.createElement('div');
+                row.className = `path-row offset-${pIdx % 3}`;
 
-            while (lessonIndex < lessons.length) {
-                let count = rowPattern[patternIdx % rowPattern.length];
-                let rowDiv = document.createElement('div');
-                rowDiv.className = `path-row offset-${patternIdx % 3}`;
+                for(let i = 0; i < count && idx < lessons.length; i++) {
+                    let les = lessons[idx];
+                    let isDone = currentUser.completed.includes(les.id);
+                    let isUnlocked = idx === 0 || currentUser.completed.includes(lessons[idx-1].id);
 
-                for (let i = 0; i < count && lessonIndex < lessons.length; i++) {
-                    let lesson = lessons[lessonIndex];
-                    let isDone = currentUser.completedLessons.includes(lesson.id);
-                    let isUnlocked = lessonIndex === 0 || currentUser.completedLessons.includes(lessons[lessonIndex - 1].id);
-
-                    let btn = document.createElement('button');
-                    btn.className = `node-btn ${isDone ? 'done' : (!isUnlocked ? 'locked' : '')}`;
-                    btn.innerText = lesson.title;
-
-                    if (isUnlocked) {
-                        btn.onclick = () => startLesson(lesson.id, lessons);
+                    let node = document.createElement('button');
+                    node.className = `duo-node ${isDone ? 'done' : (!isUnlocked ? 'locked' : 'current')}`;
+                    if(isDone) node.style.background = "#58cc02";
+                    node.innerText = les.title;
+                    
+                    if(isUnlocked) {
+                        node.onclick = () => startLesson(les.id, lessons);
                     }
 
-                    rowDiv.appendChild(btn);
-                    lessonIndex++;
+                    row.appendChild(node);
+                    idx++;
                 }
-
-                container.appendChild(rowDiv);
-                patternIdx++;
+                container.appendChild(row);
+                pIdx++;
             }
         }
 
-        let activeLessonData = [];
-        function startLesson(lessonId, lessonsArray) {
-            activeLessonId = lessonId;
-            const lesson = lessonsArray.find(l => l.id === lessonId);
-            activeLessonData = lesson.questions;
-            currentQuestionIndex = 0;
-            lessonEarnedPoints = 0;
-
+        let activeQuestions = [], currentQIdx = 0, activeLesId = "";
+        function startLesson(id, allLessons) {
+            activeLesId = id;
+            activeQuestions = allLessons.find(l => l.id === id).questions;
+            currentQIdx = 0;
             showPage('page-lesson');
             loadQuestion();
         }
 
         function loadQuestion() {
-            if (currentQuestionIndex >= activeLessonData.length) {
-                currentUser.points += lessonEarnedPoints;
-                if (!currentUser.completedLessons.includes(activeLessonId)) {
-                    currentUser.completedLessons.push(activeLessonId);
-                }
+            if(currentQIdx >= activeQuestions.length) {
+                currentUser.points += 20;
+                if(!currentUser.completed.includes(activeLesId)) currentUser.completed.push(activeLesId);
                 saveUser();
-                updateUIText();
-                triggerMascot('bounce');
                 showPage('page-complete');
                 return;
             }
+            let q = activeQuestions[currentQIdx];
+            document.getElementById('lesson-progress-text').innerText = `Vraag ${currentQIdx + 1} van ${activeQuestions.length}`;
+            document.getElementById('question-prompt').innerText = q.prompt;
 
-            const q = activeLessonData[currentQuestionIndex];
-            document.getElementById('question-title').innerText = `Vraag ${currentQuestionIndex + 1} van ${activeLessonData.length}`;
-            document.getElementById('question-text').innerText = q.prompt;
-            
-            const area = document.getElementById('answers-area');
+            let area = document.getElementById('answers-area');
             area.innerHTML = "";
             document.getElementById('next-btn').classList.add('hidden');
 
-            if (q.type === 'multiple-choice') {
-                q.options.forEach(option => {
-                    let btn = document.createElement('button');
-                    btn.className = "btn option-btn";
-                    btn.innerText = option;
-                    btn.onclick = () => checkAnswer(option, q.correct);
-                    area.appendChild(btn);
-                });
-            } else if (q.type === 'word-builder') {
-                let grid = document.createElement('div');
-                grid.className = "word-bank-grid";
-                q.options.forEach(option => {
-                    let chip = document.createElement('div');
-                    chip.className = "word-chip";
-                    chip.innerText = option;
-                    chip.onclick = () => checkAnswer(option, q.correct);
-                    grid.appendChild(chip);
-                });
-                area.appendChild(grid);
-            } else if (q.type === 'type-answer') {
-                let input = document.createElement('input');
-                input.type = "text";
-                input.id = "user-typed-answer";
-                input.placeholder = "Typ je vertaling hier...";
-                
-                let submitBtn = document.createElement('button');
-                submitBtn.className = "btn btn-primary";
-                submitBtn.innerText = "Controleer";
-                submitBtn.onclick = () => {
-                    let val = document.getElementById('user-typed-answer').value.trim();
-                    checkAnswer(val, q.correct);
-                };
-
-                area.appendChild(input);
-                area.appendChild(submitBtn);
-            }
+            q.options.forEach(opt => {
+                let btn = document.createElement('button');
+                btn.className = "btn option-btn";
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(opt, q.correct);
+                area.appendChild(btn);
+            });
         }
 
         function checkAnswer(given, correct) {
-            const area = document.getElementById('answers-area');
-            const isCorrect = given.toLowerCase() === correct.toLowerCase();
-            
-            if (isCorrect) {
+            let area = document.getElementById('answers-area');
+            if(given.toLowerCase() === correct.toLowerCase()) {
                 playSound('correct');
-                triggerMascot('bounce');
-                let pts = 10;
-                lessonEarnedPoints += pts;
-                area.innerHTML = `<div class="feedback-correct">Goed zo! (+${pts} punten)</div>`;
+                area.innerHTML = `<div class="feedback-box-correct">Goed zo! Uitstekend bezig.</div>`;
             } else {
                 playSound('wrong');
-                triggerMascot('shake');
-                area.innerHTML = `<div class="feedback-wrong">Fout! Het juiste antwoord was: <strong>${correct}</strong></div>`;
+                area.innerHTML = `<div class="feedback-box-wrong">Fout! Het juiste antwoord was: <strong>${correct}</strong></div>`;
             }
-
             document.getElementById('next-btn').classList.remove('hidden');
         }
 
         function nextQuestion() {
-            currentQuestionIndex++;
+            currentQIdx++;
             loadQuestion();
         }
 
-        function backToDashboard() {
-            openDashboard();
+        function backToDashboard() { openDashboard(); }
+
+        function saveUser() {
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+            accounts[currentUser.user] = currentUser;
+            localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
         }
 
-        function updateSettingsLevel() {
-            currentUser.proficiency = document.getElementById('settings-level').value;
+        function updateLevel() {
+            currentUser.level = document.getElementById('settings-level').value;
             saveUser();
-            renderPath();
-        }
-
-        function buyItem(itemType, cost) {
-            if (currentUser.points < cost) return alert("Niet genoeg punten!");
-            currentUser.points -= cost;
-            saveUser();
-            updateUIText();
-            alert("Aankoop gelukt!");
-        }
-
-        function updateUsername() {
-            const newName = document.getElementById('settings-username').value.trim();
-            if (!newName) return alert("Vul een geldige naam in.");
-            let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
-            if (accounts[newName]) return alert("Deze gebruikersnaam is al bezet.");
-            delete accounts[currentUser.user];
-            currentUser.user = newName;
-            accounts[newName] = currentUser;
-            localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
-            localStorage.setItem('wordly_current_session', newName);
-            updateUIText();
-            alert("Gebruikersnaam succesvol bijgewerkt!");
-        }
-
-        function deleteAccount() {
-            if (!confirm("Weet je zeker dat je je account wilt verwijderen?")) return;
-            let accounts = JSON.parse(localStorage.getItem('wordly_secure_accounts') || "{}");
-            delete accounts[currentUser.user];
-            localStorage.setItem('wordly_secure_accounts', JSON.stringify(accounts));
-            localStorage.removeItem('wordly_current_session');
-            logout();
         }
 
         function logout() {
-            currentUser = null;
-            localStorage.removeItem('wordly_current_session');
+            localStorage.removeItem('wordly_session');
             showPage('page-auth');
+        }
+
+        function deleteAccount() {
+            if(!confirm("Weet je zeker dat je jouw account wilt verwijderen?")) return;
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+            delete accounts[currentUser.user];
+            localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
+            logout();
+        }
+
+        function changeNamePrompt() {
+            let newName = prompt("Nieuwe gebruikersnaam:");
+            if(!newName) return;
+            let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
+            if(accounts[newName]) return alert("Deze naam is al bezet.");
+            delete accounts[currentUser.user];
+            currentUser.user = newName;
+            accounts[newName] = currentUser;
+            localStorage.setItem('wordly_accounts', JSON.stringify(accounts));
+            localStorage.setItem('wordly_session', newName);
+            openDashboard();
         }
     </script>
 </body>
