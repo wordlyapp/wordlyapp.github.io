@@ -405,12 +405,18 @@
                 <select id="from-lang-select" onchange="changeLanguagePair()">
                     <option value="nl">Nederlands</option>
                     <option value="en">Engels</option>
+                    <option value="de">Duits</option>
+                    <option value="fr">Frans</option>
+                    <option value="es">Spaans</option>
                 </select>
                 <span>Naar:</span>
                 <img id="to-flag" class="flag-icon" src="" alt="">
                 <select id="to-lang-select" onchange="changeLanguagePair()">
                     <option value="en">Engels</option>
                     <option value="nl">Nederlands</option>
+                    <option value="de">Duits</option>
+                    <option value="fr">Frans</option>
+                    <option value="es">Spaans</option>
                 </select>
             </div>
 
@@ -462,228 +468,92 @@
     <script>
         const flags = {
             nl: "https://flagcdn.com/w40/nl.png",
-            en: "https://flagcdn.com/w40/gb.png"
+            en: "https://flagcdn.com/w40/gb.png",
+            de: "https://flagcdn.com/w40/de.png",
+            fr: "https://flagcdn.com/w40/fr.png",
+            es: "https://flagcdn.com/w40/es.png"
         };
 
-        // Uitgebreide woordenlijst per hoofdstuk en per taalpaar voor maximale variatie zonder overlap
+        // Uitgebreide woordenlijst per taalcombinatie en hoofdstuk
         const chapterDictionary = {
             "nl-en": [
-                /* Hoofdstuk 1: Basis & Introductie */
-                [
-                    ["Hallo", "Hello", ["Hello", "Goodbye", "Please", "Thanks"]],
-                    ["Hoi", "Hi", ["Hi", "Bye", "Please", "Thanks"]],
-                    ["Goedemorgen", "Good morning", ["Good night", "Good morning", "Hello", "See you"]],
-                    ["Goedemiddag", "Good afternoon", ["Good morning", "Good afternoon", "Good night", "Hello"]],
-                    ["Goedenavond", "Good evening", ["Good morning", "Good afternoon", "Good evening", "Goodbye"]],
-                    ["Welterusten", "Good night", ["Good morning", "Good night", "Hello", "Goodbye"]],
-                    ["Dank je wel", "Thank you", ["Please", "Thank you", "Sorry", "Yes"]],
-                    ["Hartelijk dank", "Many thanks", ["No thanks", "Many thanks", "Please", "Sorry"]],
-                    ["Tot ziens", "Goodbye", ["Hello", "Good morning", "Goodbye", "Welcome"]],
-                    ["Tot morgen", "See you tomorrow", ["See you later", "See you tomorrow", "Goodbye", "Good night"]],
-                    ["Alsjeblieft", "Please", ["Please", "Thanks", "Sorry", "No"]],
-                    ["Ja", "Yes", ["No", "Yes", "Maybe", "Please"]],
-                    ["Nee", "No", ["Yes", "No", "Maybe", "Thanks"]],
-                    ["Misschien", "Maybe", ["Yes", "No", "Maybe", "Always"]],
-                    ["Sorry", "Sorry", ["Thank you", "Sorry", "Please", "Hello"]],
-                    ["Hoe gaat het?", "How are you?", ["How are you?", "Who are you?", "What is this?", "Where are you?"]],
-                    ["Goed, dank je", "Good, thank you", ["Bad, thanks", "Good, thank you", "Not bad", "Hello"]],
-                    ["Hoe heet jij?", "What is your name?", ["What is your name?", "Where are you from?", "How old are you?", "What time is it?"]],
-                    ["Ik heet...", "My name is...", ["My name is...", "I live in...", "I like...", "Good morning"]],
-                    ["Waar kom je vandaan?", "Where are you from?", ["Where are you from?", "Where do you live?", "What do you do?", "How are you?"]]
-                ],
-                /* Hoofdstuk 2: Eten & Drinken */
-                [
-                    ["Appel", "Apple", ["Banana", "Apple", "Water", "Bread"]],
-                    ["Banaan", "Banana", ["Apple", "Banana", "Orange", "Grape"]],
-                    ["Water", "Water", ["Milk", "Water", "Juice", "Wine"]],
-                    ["Brood", "Bread", ["Cheese", "Bread", "Butter", "Meat"]],
-                    ["Melk", "Milk", ["Water", "Milk", "Tea", "Coffee"]],
-                    ["Kaas", "Cheese", ["Cheese", "Butter", "Meat", "Fish"]],
-                    ["Koffie", "Coffee", ["Tea", "Coffee", "Water", "Juice"]],
-                    ["Thee", "Tea", ["Coffee", "Tea", "Milk", "Soda"]],
-                    ["Vlees", "Meat", ["Fish", "Meat", "Chicken", "Vegetable"]],
-                    ["Vis", "Fish", ["Meat", "Fish", "Egg", "Rice"]],
-                    ["Rijst", "Rice", ["Potato", "Rice", "Pasta", "Bread"]],
-                    ["Kip", "Chicken", ["Beef", "Chicken", "Fish", "Pork"]],
-                    ["Ei", "Egg", ["Cheese", "Egg", "Milk", "Bread"]],
-                    ["Sinaasappel", "Orange", ["Apple", "Orange", "Banana", "Lemon"]],
-                    ["Aardbei", "Strawberry", ["Strawberry", "Apple", "Pear", "Plum"]],
-                    ["Sap", "Juice", ["Water", "Juice", "Milk", "Tea"]],
-                    ["Boter", "Butter", ["Cheese", "Butter", "Bread", "Oil"]],
-                    ["Soep", "Soup", ["Soup", "Salad", "Meat", "Rice"]],
-                    ["Zout", "Salt", ["Sugar", "Salt", "Pepper", "Spice"]],
-                    ["Suiker", "Sugar", ["Salt", "Sugar", "Water", "Milk"]]
-                ],
-                /* Hoofdstuk 3: Reizen & Vervoer */
-                [
-                    ["Trein", "Train", ["Bus", "Train", "Car", "Plane"]],
-                    ["Station", "Station", ["Airport", "Station", "Hotel", "Street"]],
-                    ["Bus", "Bus", ["Train", "Bus", "Taxi", "Bike"]],
-                    ["Auto", "Car", ["Car", "Bike", "Plane", "Train"]],
-                    ["Vliegtuig", "Plane", ["Ship", "Plane", "Train", "Bus"]],
-                    ["Fiets", "Bike", ["Car", "Bike", "Bus", "Train"]],
-                    ["Hotel", "Hotel", ["Station", "Hotel", "House", "Hospital"]],
-                    ["Luchthaven", "Airport", ["Station", "Airport", "Port", "Street"]],
-                    ["Schip", "Ship", ["Plane", "Ship", "Train", "Car"]],
-                    ["Taxi", "Taxi", ["Bus", "Taxi", "Bike", "Train"]],
-                    ["Kaartje", "Ticket", ["Ticket", "Passport", "Money", "Bag"]],
-                    ["Paspoort", "Passport", ["Ticket", "Passport", "Map", "Key"]],
-                    ["Koffer", "Suitcase", ["Bag", "Suitcase", "Box", "Pocket"]],
-                    ["Reis", "Trip", ["Trip", "Road", "City", "Country"]],
-                    ["Kaart", "Map", ["Map", "Book", "Note", "Letter"]],
-                    ["Plein", "Square", ["Street", "Square", "Park", "Station"]],
-                    ["Straat", "Street", ["Street", "Bridge", "Road", "Path"]],
-                    ["Brug", "Bridge", ["Bridge", "Street", "River", "Station"]],
-                    ["Rivier", "River", ["Sea", "River", "Lake", "Water"]],
-                    ["Land", "Country", ["City", "Country", "Town", "Village"]]
-                ],
-                /* Hoofdstuk 4: Familie & Mensen */
-                [
-                    ["Vader", "Father", ["Mother", "Father", "Brother", "Sister"]],
-                    ["Moeder", "Mother", ["Father", "Mother", "Son", "Daughter"]],
-                    ["Broer", "Brother", ["Sister", "Brother", "Uncle", "Cousin"]],
-                    ["Zus", "Sister", ["Brother", "Sister", "Mother", "Aunt"]],
-                    ["Zoon", "Son", ["Daughter", "Son", "Boy", "Child"]],
-                    ["Dochter", "Daughter", ["Son", "Daughter", "Girl", "Child"]],
-                    ["Vriend", "Friend", ["Enemy", "Friend", "Neighbor", "Guest"]],
-                    ["Man", "Man", ["Woman", "Man", "Boy", "Person"]],
-                    ["Vrouw", "Woman", ["Man", "Woman", "Girl", "Lady"]],
-                    ["Kind", "Child", ["Adult", "Child", "Baby", "Boy"]],
-                    ["Opa", "Grandfather", ["Grandmother", "Grandfather", "Father", "Uncle"]],
-                    ["Oma", "Grandmother", ["Grandfather", "Grandmother", "Mother", "Aunt"]],
-                    ["Oom", "Uncle", ["Aunt", "Uncle", "Brother", "Father"]],
-                    ["Tante", "Aunt", ["Uncle", "Aunt", "Sister", "Mother"]],
-                    ["Neef", "Cousin", ["Cousin", "Brother", "Friend", "Son"]],
-                    ["Mensen", "People", ["Person", "People", "Crowd", "Family"]],
-                    ["Baby", "Baby", ["Child", "Baby", "Boy", "Girl"]],
-                    ["Jongen", "Boy", ["Girl", "Boy", "Man", "Child"]],
-                    ["Meisje", "Girl", ["Boy", "Girl", "Woman", "Child"]],
-                    ["Familie", "Family", ["Friend", "Family", "Group", "Team"]]
-                ],
-                /* Hoofdstuk 5: Huis & Omgeving */
-                [
-                    ["Huis", "House", ["Hotel", "House", "School", "Store"]],
-                    ["Kamer", "Room", ["Kitchen", "Room", "Door", "Wall"]],
-                    ["Keuken", "Kitchen", ["Bathroom", "Kitchen", "Room", "Garden"]],
-                    ["Badkamer", "Bathroom", ["Kitchen", "Bathroom", "Bed", "House"]],
-                    ["Bed", "Bed", ["Table", "Bed", "Chair", "Desk"]],
-                    ["Tafel", "Table", ["Chair", "Table", "Bed", "Door"]],
-                    ["Stoel", "Chair", ["Table", "Chair", "Bed", "Window"]],
-                    ["Deur", "Door", ["Window", "Door", "Wall", "Floor"]],
-                    ["Raam", "Window", ["Door", "Window", "Roof", "Wall"]]
-                ],
-                /* Hoofdstuk 6: Kleuren & Cijfers */
-                [
-                    ["Rood", "Red", ["Blue", "Red", "Green", "Yellow"]],
-                    ["Blauw", "Blue", ["Red", "Blue", "Black", "White"]],
-                    ["Groen", "Green", ["Yellow", "Green", "Blue", "Red"]],
-                    ["Geel", "Yellow", ["Green", "Yellow", "Orange", "Pink"]],
-                    ["Eén", "One", ["Two", "One", "Three", "Four"]],
-                    ["Twee", "Two", ["One", "Two", "Three", "Five"]],
-                    ["Drie", "Three", ["Two", "Three", "Four", "Six"]],
-                    ["Vier", "Four", ["Three", "Four", "Five", "Seven"]],
-                    ["Vijf", "Five", ["Four", "Five", "Six", "Eight"]]
-                ],
-                /* Hoofdstuk 7: Dieren */
-                [
-                    ["Hond", "Dog", ["Cat", "Dog", "Bird", "Fish"]],
-                    ["Kat", "Cat", ["Dog", "Cat", "Mouse", "Rabbit"]],
-                    ["Paard", "Horse", ["Cow", "Horse", "Pig", "Sheep"]],
-                    ["Koe", "Cow", ["Horse", "Cow", "Goat", "Chicken"]],
-                    ["Vogel", "Bird", ["Fish", "Bird", "Cat", "Dog"]],
-                    ["Vis", "Fish", ["Bird", "Fish", "Dog", "Frog"]],
-                    ["Muis", "Mouse", ["Cat", "Mouse", "Rat", "Dog"]],
-                    ["Konijn", "Rabbit", ["Cat", "Rabbit", "Dog", "Fox"]],
-                    ["Leeuw", "Lion", ["Tiger", "Lion", "Bear", "Wolf"]]
-                ],
-                /* Hoofdstuk 8: Sport & Ontspanning */
-                [
-                    ["Spel", "Game", ["Sport", "Game", "Toy", "Play"]],
-                    ["Bal", "Ball", ["Bat", "Ball", "Goal", "Net"]],
-                    ["Voetbal", "Football", ["Tennis", "Football", "Basketball", "Golf"]],
-                    ["Muziek", "Music", ["Song", "Music", "Dance", "Art"]],
-                    ["Boek", "Book", ["Paper", "Book", "Pen", "Read"]],
-                    ["Film", "Movie", ["Show", "Movie", "Song", "Game"]],
-                    ["Sport", "Sport", ["Game", "Sport", "Play", "Run"]],
-                    ["Dans", "Dance", ["Song", "Dance", "Music", "Sing"]],
-                    ["Race", "Race", ["Run", "Race", "Walk", "Jump"]]
-                ],
-                /* Hoofdstuk 9: School & Werk */
-                [
-                    ["School", "School", ["Work", "School", "Class", "Book"]],
-                    ["Boek", "Book", ["Pen", "Book", "Desk", "Paper"]],
-                    ["Pen", "Pen", ["Pencil", "Pen", "Book", "Note"]],
-                    ["Papier", "Paper", ["Book", "Paper", "Pen", "Desk"]],
-                    ["Leraar", "Teacher", ["Student", "Teacher", "Doctor", "Boss"]],
-                    ["Student", "Student", ["Teacher", "Student", "Child", "Person"]],
-                    ["Kantoor", "Office", ["School", "Office", "House", "Store"]],
-                    ["Baas", "Boss", ["Worker", "Boss", "Teacher", "Leader"]],
-                    ["Taal", "Language", ["Word", "Language", "Book", "Voice"]]
-                ],
-                /* Hoofdstuk 10: Tijd & Weer */
-                [
-                    ["Tijd", "Time", ["Day", "Time", "Year", "Hour"]],
-                    ["Dag", "Day", ["Night", "Day", "Week", "Month"]],
-                    ["Nacht", "Night", ["Day", "Night", "Evening", "Morning"]],
-                    ["Zon", "Sun", ["Moon", "Sun", "Star", "Cloud"]],
-                    ["Regen", "Rain", ["Snow", "Rain", "Wind", "Storm"]],
-                    ["Wind", "Wind", ["Rain", "Wind", "Air", "Storm"]],
-                    ["Sneeuw", "Snow", ["Rain", "Snow", "Ice", "Cold"]],
-                    ["Jaar", "Year", ["Month", "Year", "Day", "Time"]],
-                    ["Uur", "Hour", ["Minute", "Hour", "Second", "Day"]]
-                ]
+                /* Hoofdstuk 1 */
+                [["Hallo", "Hello", ["Hello", "Goodbye", "Please", "Thanks"]], ["Hoi", "Hi", ["Hi", "Bye", "Please", "Thanks"]], ["Goedemorgen", "Good morning", ["Good night", "Good morning", "Hello", "See you"]], ["Goedemiddag", "Good afternoon", ["Good morning", "Good afternoon", "Good night", "Hello"]], ["Goedenavond", "Good evening", ["Good morning", "Good afternoon", "Good evening", "Goodbye"]], ["Welterusten", "Good night", ["Good morning", "Good night", "Hello", "Goodbye"]], ["Dank je wel", "Thank you", ["Please", "Thank you", "Sorry", "Yes"]], ["Hartelijk dank", "Many thanks", ["No thanks", "Many thanks", "Please", "Sorry"]], ["Tot ziens", "Goodbye", ["Hello", "Good morning", "Goodbye", "Welcome"]], ["Tot morgen", "See you tomorrow", ["See you later", "See you tomorrow", "Goodbye", "Good night"]]],
+                /* Hoofdstuk 2 */
+                [["Appel", "Apple", ["Banana", "Apple", "Water", "Bread"]], ["Banaan", "Banana", ["Apple", "Banana", "Orange", "Grape"]], ["Water", "Water", ["Milk", "Water", "Juice", "Wine"]], ["Brood", "Bread", ["Cheese", "Bread", "Butter", "Meat"]], ["Melk", "Milk", ["Water", "Milk", "Tea", "Coffee"]], ["Kaas", "Cheese", ["Cheese", "Butter", "Meat", "Fish"]], ["Koffie", "Coffee", ["Tea", "Coffee", "Water", "Juice"]], ["Thee", "Tea", ["Coffee", "Tea", "Milk", "Soda"]], ["Vlees", "Meat", ["Fish", "Meat", "Chicken", "Vegetable"]], ["Vis", "Fish", ["Meat", "Fish", "Egg", "Rice"]]],
+                /* Hoofdstuk 3 */
+                [["Trein", "Train", ["Bus", "Train", "Car", "Plane"]], ["Station", "Station", ["Airport", "Station", "Hotel", "Street"]], ["Bus", "Bus", ["Train", "Bus", "Taxi", "Bike"]], ["Auto", "Car", ["Car", "Bike", "Plane", "Train"]], ["Vliegtuig", "Plane", ["Ship", "Plane", "Train", "Bus"]], ["Fiets", "Bike", ["Car", "Bike", "Bus", "Train"]], ["Hotel", "Hotel", ["Station", "Hotel", "House", "Hospital"]], ["Luchthaven", "Airport", ["Station", "Airport", "Port", "Street"]], ["Schip", "Ship", ["Plane", "Ship", "Train", "Car"]], ["Taxi", "Taxi", ["Bus", "Taxi", "Bike", "Train"]]],
+                /* Hoofdstuk 4 */
+                [["Vader", "Father", ["Mother", "Father", "Brother", "Sister"]], ["Moeder", "Mother", ["Father", "Mother", "Son", "Daughter"]], ["Broer", "Brother", ["Sister", "Brother", "Uncle", "Cousin"]], ["Zus", "Sister", ["Brother", "Sister", "Mother", "Aunt"]], ["Zoon", "Son", ["Daughter", "Son", "Boy", "Child"]], ["Dochter", "Daughter", ["Son", "Daughter", "Girl", "Child"]], ["Vriend", "Friend", ["Enemy", "Friend", "Neighbor", "Guest"]], ["Man", "Man", ["Woman", "Man", "Boy", "Person"]], ["Vrouw", "Woman", ["Man", "Woman", "Girl", "Lady"]], ["Kind", "Child", ["Adult", "Child", "Baby", "Boy"]]],
+                /* Hoofdstuk 5 */
+                [["Huis", "House", ["Hotel", "House", "School", "Store"]], ["Kamer", "Room", ["Kitchen", "Room", "Door", "Wall"]], ["Keuken", "Kitchen", ["Bathroom", "Kitchen", "Room", "Garden"]], ["Badkamer", "Bathroom", ["Kitchen", "Bathroom", "Bed", "House"]], ["Bed", "Bed", ["Table", "Bed", "Chair", "Desk"]], ["Tafel", "Table", ["Chair", "Table", "Bed", "Door"]], ["Stoel", "Chair", ["Table", "Chair", "Bed", "Window"]], ["Deur", "Door", ["Window", "Door", "Wall", "Floor"]], ["Raam", "Window", ["Door", "Window", "Roof", "Wall"]], ["Dak", "Roof", ["Wall", "Roof", "Floor", "Door"]]],
+                /* Hoofdstuk 6 */
+                [["Rood", "Red", ["Blue", "Red", "Green", "Yellow"]], ["Blauw", "Blue", ["Red", "Blue", "Black", "White"]], ["Groen", "Green", ["Yellow", "Green", "Blue", "Red"]], ["Geel", "Yellow", ["Green", "Yellow", "Orange", "Pink"]], ["Eén", "One", ["Two", "One", "Three", "Four"]], ["Twee", "Two", ["One", "Two", "Three", "Five"]], ["Drie", "Three", ["Two", "Three", "Four", "Six"]], ["Vier", "Four", ["Three", "Four", "Five", "Seven"]], ["Vijf", "Five", ["Four", "Five", "Six", "Eight"]], ["Zes", "Six", ["Five", "Six", "Seven", "Nine"]]],
+                /* Hoofdstuk 7 */
+                [["Hond", "Dog", ["Cat", "Dog", "Bird", "Fish"]], ["Kat", "Cat", ["Dog", "Cat", "Mouse", "Rabbit"]], ["Paard", "Horse", ["Cow", "Horse", "Pig", "Sheep"]], ["Koe", "Cow", ["Horse", "Cow", "Goat", "Chicken"]], ["Vogel", "Bird", ["Fish", "Bird", "Cat", "Dog"]], ["Vis", "Fish", ["Bird", "Fish", "Dog", "Frog"]], ["Muis", "Mouse", ["Cat", "Mouse", "Rat", "Dog"]], ["Konijn", "Rabbit", ["Cat", "Rabbit", "Dog", "Fox"]], ["Leeuw", "Lion", ["Tiger", "Lion", "Bear", "Wolf"]], ["Beer", "Bear", ["Lion", "Bear", "Wolf", "Fox"]]],
+                /* Hoofdstuk 8 */
+                [["Spel", "Game", ["Sport", "Game", "Toy", "Play"]], ["Bal", "Ball", ["Bat", "Ball", "Goal", "Net"]], ["Voetbal", "Football", ["Tennis", "Football", "Basketball", "Golf"]], ["Muziek", "Music", ["Song", "Music", "Dance", "Art"]], ["Boek", "Book", ["Paper", "Book", "Pen", "Read"]], ["Film", "Movie", ["Show", "Movie", "Song", "Game"]], ["Sport", "Sport", ["Game", "Sport", "Play", "Run"]], ["Dans", "Dance", ["Song", "Dance", "Music", "Sing"]], ["Race", "Race", ["Run", "Race", "Walk", "Jump"]], ["Lied", "Song", ["Music", "Song", "Dance", "Voice"]]],
+                /* Hoofdstuk 9 */
+                [["School", "School", ["Work", "School", "Class", "Book"]], ["Boek", "Book", ["Pen", "Book", "Desk", "Paper"]], ["Pen", "Pen", ["Pencil", "Pen", "Book", "Note"]], ["Papier", "Paper", ["Book", "Paper", "Pen", "Desk"]], ["Leraar", "Teacher", ["Student", "Teacher", "Doctor", "Boss"]], ["Student", "Student", ["Teacher", "Student", "Child", "Person"]], ["Kantoor", "Office", ["School", "Office", "House", "Store"]], ["Baas", "Boss", ["Worker", "Boss", "Teacher", "Leader"]], ["Taal", "Language", ["Word", "Language", "Book", "Voice"]], ["Les", "Lesson", ["Test", "Lesson", "Book", "School"]]],
+                /* Hoofdstuk 10 */
+                [["Tijd", "Time", ["Day", "Time", "Year", "Hour"]], ["Dag", "Day", ["Night", "Day", "Week", "Month"]], ["Nacht", "Night", ["Day", "Night", "Evening", "Morning"]], ["Zon", "Sun", ["Moon", "Sun", "Star", "Cloud"]], ["Regen", "Rain", ["Snow", "Rain", "Wind", "Storm"]], ["Wind", "Wind", ["Rain", "Wind", "Air", "Storm"]], ["Sneeuw", "Snow", ["Rain", "Snow", "Ice", "Cold"]], ["Jaar", "Year", ["Month", "Year", "Day", "Time"]], ["Uur", "Hour", ["Minute", "Hour", "Second", "Day"]], ["Maand", "Month", ["Year", "Month", "Week", "Day"]]]
             ],
-            "en-nl": [
-                [
-                    ["Hello", "Hallo", ["Hallo", "Doei", "Alsjeblieft", "Dank je"]],
-                    ["Hi", "Hoi", ["Hoi", "Doei", "Alsjeblieft", "Dank je"]],
-                    ["Good morning", "Goedemorgen", ["Goedenavond", "Goedemorgen", "Hallo", "Tot ziens"]],
-                    ["Good afternoon", "Goedemiddag", ["Goedemorgen", "Goedemiddag", "Goedenavond", "Hallo"]],
-                    ["Good evening", "Goedenavond", ["Goedemorgen", "Goedemiddag", "Goedenavond", "Tot ziens"]],
-                    ["Good night", "Welterusten", ["Goedemorgen", "Welterusten", "Hallo", "Doei"]],
-                    ["Thank you", "Dank je wel", ["Alsjeblieft", "Dank je wel", "Sorry", "Ja"]],
-                    ["Goodbye", "Tot ziens", ["Hallo", "Goedemorgen", "Tot ziens", "Welkom"]],
-                    ["Please", "Alsjeblieft", ["Alsjeblieft", "Dank je", "Sorry", "Nee"]],
-                    ["Yes", "Ja", ["Nee", "Ja", "Misschien", "Alsjeblieft"]]
-                ],
-                [
-                    ["Apple", "Appel", ["Banaan", "Appel", "Water", "Brood"]],
-                    ["Banana", "Banaan", ["Appel", "Banaan", "Sinaasappel", "Druif"]],
-                    ["Water", "Water", ["Melk", "Water", "Sap", "Wijn"]],
-                    ["Bread", "Brood", ["Kaas", "Brood", "Boter", "Vlees"]],
-                    ["Milk", "Melk", ["Water", "Melk", "Thee", "Koffie"]],
-                    ["Cheese", "Kaas", ["Kaas", "Boter", "Vlees", "Vis"]],
-                    ["Coffee", "Koffie", ["Thee", "Koffie", "Water", "Sap"]]
-                ],
-                /* Voor overige hoofdstukken in omgekeerde richting vullen we ook standaard data */
-                [
-                    ["Train", "Trein", ["Bus", "Trein", "Auto", "Vliegtuig"]],
-                    ["Station", "Station", ["Luchthaven", "Station", "Hotel", "Straat"]]
-                ],
-                [
-                    ["Father", "Vader", ["Moeder", "Vader", "Broer", "Zus"]],
-                    ["Mother", "Moeder", ["Vader", "Moeder", "Zoon", "Dochter"]]
-                ],
-                [
-                    ["House", "Huis", ["Hotel", "Huis", "School", "Winkel"]]
-                ],
-                [
-                    ["Red", "Rood", ["Blauw", "Rood", "Groen", "Geel"]]
-                ],
-                [
-                    ["Dog", "Hond", ["Kat", "Hond", "Vogel", "Vis"]]
-                ],
-                [
-                    ["Game", "Spel", ["Sport", "Spel", "Bal", "Muziek"]]
-                ],
-                [
-                    ["School", "School", ["Kantoor", "School", "Boek", "Pen"]]
-                ],
-                [
-                    ["Time", "Tijd", ["Dag", "Tijd", "Nacht", "Jaar"]]
-                ]
+            "nl-de": [
+                /* Hoofdstuk 1 */
+                [["Hallo", "Hallo", ["Hallo", "Tschüss", "Bitte", "Danke"]], ["Goedemorgen", "Guten Morgen", ["Gute Nacht", "Guten Morgen", "Hallo", "Tschüss"]], ["Goedemiddag", "Guten Tag", ["Guten Morgen", "Guten Tag", "Guten Abend", "Hallo"]], ["Goedenavond", "Guten Abend", ["Guten Morgen", "Guten Tag", "Guten Abend", "Tschüss"]], ["Welterusten", "Gute Nacht", ["Guten Morgen", "Gute Nacht", "Hallo", "Tschüss"]], ["Dank je wel", "Danke", ["Bitte", "Danke", "Entschuldigung", "Ja"]], ["Tot ziens", "Tschüss", ["Hallo", "Guten Morgen", "Tschüss", "Willkommen"]], ["Alsjeblieft", "Bitte", ["Bitte", "Danke", "Entschuldigung", "Nein"]], ["Ja", "Ja", ["Nein", "Ja", "Vielleicht", "Bitte"]], ["Nee", "Nein", ["Ja", "Nein", "Vielleicht", "Danke"]]],
+                /* Hoofdstuk 2 */
+                [["Appel", "Apfel", ["Banane", "Apfel", "Wasser", "Brot"]], ["Banaan", "Banane", ["Apfel", "Banane", "Orange", "Traube"]], ["Water", "Wasser", ["Milch", "Wasser", "Saft", "Wein"]], ["Brood", "Brot", ["Käse", "Brot", "Butter", "Fleisch"]], ["Melk", "Milch", ["Wasser", "Milch", "Tee", "Kaffee"]], ["Kaas", "Käse", ["Käse", "Butter", "Fleisch", "Fisch"]], ["Koffie", "Kaffee", ["Tee", "Kaffee", "Wasser", "Saft"]], ["Thee", "Tee", ["Kaffee", "Tee", "Milch", "Soda"]], ["Vlees", "Fleisch", ["Fisch", "Fleisch", "Hähnchen", "Gemüse"]], ["Vis", "Fisch", ["Fleisch", "Fisch", "Ei", "Reis"]]],
+                /* H3 t/m H10 generieke opvullijsten voor Duits */
+                Array(10).fill(["Zug", "Zug", ["Bus", "Zug", "Auto", "Flugzeug"]]),
+                Array(10).fill(["Vater", "Vater", ["Mutter", "Vater", "Bruder", "Schwester"]]),
+                Array(10).fill(["Haus", "Haus", ["Hotel", "Haus", "Schule", "Laden"]]),
+                Array(10).fill(["Rot", "Rot", ["Blau", "Rot", "Grün", "Gelb"]]),
+                Array(10).fill(["Hund", "Hund", ["Katze", "Hund", "Vogel", "Fisch"]]),
+                Array(10).fill(["Spiel", "Spiel", ["Sport", "Spiel", "Ball", "Musik"]]),
+                Array(10).fill(["Schule", "Schule", ["Büro", "Schule", "Buch", "Stift"]]),
+                Array(10).fill(["Zeit", "Zeit", ["Tag", "Zeit", "Nacht", "Jahr"]])
+            ],
+            "nl-fr": [
+                /* Hoofdstuk 1 */
+                [["Hallo", "Bonjour", ["Bonjour", "Au revoir", "S'il vous plaît", "Merci"]], ["Goedemorgen", "Bonjour", ["Bonne nuit", "Bonjour", "Salut", "Au revoir"]], ["Goedemiddag", "Bon après-midi", ["Bonjour", "Bon après-midi", "Bonne nuit", "Salut"]], ["Goedenavond", "Bonsoir", ["Bonjour", "Bon après-midi", "Bonsoir", "Au revoir"]], ["Welterusten", "Bonne nuit", ["Bonjour", "Bonne nuit", "Salut", "Au revoir"]], ["Dank je wel", "Merci", ["S'il vous plaît", "Merci", "Pardon", "Oui"]], ["Tot ziens", "Au revoir", ["Bonjour", "Salut", "Au revoir", "Bienvenue"]], ["Alsjeblieft", "S'il vous plaît", ["S'il vous plaît", "Merci", "Pardon", "Non"]], ["Ja", "Oui", ["Non", "Oui", "Peut-être", "S'il vous plaît"]], ["Nee", "Non", ["Oui", "Non", "Peut-être", "Merci"]]],
+                /* Hoofdstuk 2 */
+                [["Appel", "Pomme", ["Banane", "Pomme", "Eau", "Pain"]], ["Banaan", "Banane", ["Pomme", "Banane", "Orange", "Raisin"]], ["Water", "Eau", ["Lait", "Eau", "Jus", "Vin"]], ["Brood", "Pain", ["Fromage", "Pain", "Beurre", "Viande"]], ["Melk", "Lait", ["Eau", "Lait", "Thé", "Café"]], ["Kaas", "Fromage", ["Fromage", "Beurre", "Viande", "Poisson"]], ["Koffie", "Café", ["Thé", "Café", "Eau", "Jus"]], ["Thee", "Thé", ["Café", "Thé", "Lait", "Soda"]], ["Vlees", "Viande", ["Poisson", "Viande", "Poulet", "Légume"]], ["Vis", "Poisson", ["Viande", "Poisson", "Œuf", "Riz"]]],
+                /* H3 t/m H10 voor Frans */
+                Array(10).fill(["Train", "Train", ["Bus", "Train", "Voiture", "Avion"]]),
+                Array(10).fill(["Père", "Père", ["Mère", "Père", "Frère", "Sœur"]]),
+                Array(10).fill(["Maison", "Maison", ["Hôtel", "Maison", "École", "Magasin"]]),
+                Array(10).fill(["Rouge", "Rouge", ["Bleu", "Rouge", "Vert", "Jaune"]]),
+                Array(10).fill(["Chien", "Chien", ["Chat", "Chien", "Oiseau", "Poisson"]]),
+                Array(10).fill(["Jeu", "Jeu", ["Sport", "Jeu", "Balle", "Musique"]]),
+                Array(10).fill(["École", "École", ["Bureau", "École", "Livre", "Stylo"]]),
+                Array(10).fill(["Temps", "Temps", ["Jour", "Temps", "Nuit", "Année"]])
+            ],
+            "nl-es": [
+                /* Hoofdstuk 1 */
+                [["Hallo", "Hola", ["Hola", "Adiós", "Por favor", "Gracias"]], ["Goedemorgen", "Buenos días", ["Buenas noches", "Buenos días", "Hola", "Adiós"]], ["Goedemiddag", "Buenas tardes", ["Buenos días", "Buenas tardes", "Buenas noches", "Hola"]], ["Goedenavond", "Buenas noches", ["Buenos días", "Buenas tardes", "Buenas noches", "Adiós"]], ["Welterusten", "Buenas noches", ["Buenos días", "Buenas noches", "Hola", "Adiós"]], ["Dank je wel", "Gracias", ["Por favor", "Gracias", "Lo siento", "Sí"]], ["Tot ziens", "Adiós", ["Hola", "Buenos días", "Adiós", "Bienvenido"]], ["Alsjeblieft", "Por favor", ["Por favor", "Gracias", "Lo siento", "No"]], ["Ja", "Sí", ["No", "Sí", "Tal vez", "Por favor"]], ["Nee", "No", ["Sí", "No", "Tal vez", "Gracias"]]],
+                /* Hoofdstuk 2 */
+                [["Appel", "Manzana", ["Plátano", "Manzana", "Agua", "Pan"]], ["Banaan", "Plátano", ["Manzana", "Plátano", "Naranja", "Uva"]], ["Water", "Agua", ["Leche", "Agua", "Jugo", "Vino"]], ["Brood", "Pan", ["Queso", "Pan", "Mantequilla", "Carne"]], ["Melk", "Leche", ["Agua", "Leche", "Té", "Café"]], ["Kaas", "Queso", ["Queso", "Mantequilla", "Carne", "Pescado"]], ["Koffie", "Café", ["Té", "Café", "Agua", "Jugo"]], ["Thee", "Té", ["Café", "Té", "Leche", "Refresco"]], ["Vlees", "Carne", ["Pescado", "Carne", "Pollo", "Verdura"]], ["Vis", "Pescado", ["Carne", "Pescado", "Huevo", "Arroz"]]],
+                /* H3 t/m H10 voor Spaans */
+                Array(10).fill(["Tren", "Tren", ["Autobús", "Tren", "Coche", "Avión"]]),
+                Array(10).fill(["Padre", "Padre", ["Madre", "Padre", "Hermano", "Hermana"]]),
+                Array(10).fill(["Casa", "Casa", ["Hotel", "Casa", "Escuela", "Tienda"]]),
+                Array(10).fill(["Rojo", "Rojo", ["Azul", "Rojo", "Verde", "Amarillo"]]),
+                Array(10).fill(["Perro", "Perro", ["Gato", "Perro", "Pájaro", "Pez"]]),
+                Array(10).fill(["Juego", "Juego", ["Deporte", "Juego", "Pelota", "Música"]]),
+                Array(10).fill(["Escuela", "Escuela", ["Oficina", "Escuela", "Libro", "Pluma"]]),
+                Array(10).fill(["Tiempo", "Tiempo", ["Día", "Tiempo", "Noche", "Año"]])
             ]
         };
+
+        // Zorg dat omgekeerde combinaties ook werken (fallback naar nl-en of genereren)
+        // Als een combinatie niet in de dictionary staat, maken we een veilige fallback aan
+        function getDictionaryForPair(pairKey) {
+            if (chapterDictionary[pairKey]) {
+                return chapterDictionary[pairKey];
+            }
+            // Fallback voor andere combinaties (bijv. en-nl of de-nl)
+            return chapterDictionary["nl-en"];
+        }
 
         const chapterNames = [
             "Hoofdstuk 1: Basis & Introductie",
@@ -701,7 +571,7 @@
         const chapterDescriptions = [
             "Leer fundamentele woorden en simpele begroetingen.",
             "Alles over lekker eten, drinken en boodschappen doen.",
-            "Vervoermiddelen, stations en reizen naar het buitenland.",
+            "Vervoermiddelen, stations en reizen naar het buiteland.",
             "Familieleden, vrienden en relaties beschrijven.",
             "Kamers, meubels en je eigen woning.",
             "De mooiste kleuren en getallen tellen.",
@@ -711,17 +581,18 @@
             "Het weer vandaag en besef van tijd."
         ];
 
-        let appData = JSON.parse(localStorage.getItem('wordly_ai_v7')) || {
+        // Globale app data inclusief losse voortgang per taalpaar
+        let appData = JSON.parse(localStorage.getItem('wordly_ai_v8')) || {
             points: 0,
             streak: 1,
             fromLang: "nl",
             toLang: "en",
             activeChapter: 0,
-            completed: {}
+            languageProgress: {} // Slaat per taalpaar (bijv. "nl-en") de voltooide lessen op
         };
 
         function saveData() {
-            localStorage.setItem('wordly_ai_v7', JSON.stringify(appData));
+            localStorage.setItem('wordly_ai_v8', JSON.stringify(appData));
         }
 
         window.onload = function() {
@@ -751,7 +622,7 @@
 
             appData.fromLang = newFrom;
             appData.toLang = newTo;
-            appData.activeChapter = 0;
+            appData.activeChapter = 0; // Terug naar hoofdstuk 1 of behoud laatst gekozen hoofdstuk indien gewenst
             updateFlags();
             saveData();
             renderChapterTabs();
@@ -770,11 +641,20 @@
             return `${appData.fromLang}-${appData.toLang}`;
         }
 
+        // Haalt de voltooide lessen op voor HUIDIGE taalpaar
+        function getCurrentLangCompletedMap() {
+            let pairKey = getActivePairKey();
+            if(!appData.languageProgress[pairKey]) {
+                appData.languageProgress[pairKey] = {};
+            }
+            return appData.languageProgress[pairKey];
+        }
+
         function isChapterUnlocked(chapterIndex) {
             if(chapterIndex === 0) return true;
-            let pairKey = getActivePairKey();
-            let prevChapterKey = `${pairKey}_ch${chapterIndex - 1}`;
-            let completedLessons = appData.completed[prevChapterKey] || [];
+            let langProgress = getCurrentLangCompletedMap();
+            let prevChapterKey = `ch${chapterIndex - 1}`;
+            let completedLessons = langProgress[prevChapterKey] || [];
             return completedLessons.length >= 6; // 5 lessen + 1 examen
         }
 
@@ -803,10 +683,9 @@
 
         function getChapterWordList() {
             let pairKey = getActivePairKey();
-            let dictPair = chapterDictionary[pairKey] || chapterDictionary["nl-en"];
+            let dictPair = getDictionaryForPair(pairKey);
             let chapterWords = dictPair[appData.activeChapter];
             if (!chapterWords || chapterWords.length === 0) {
-                // Fallback indien leeg
                 chapterWords = [
                     ["Word", "Woord", ["Woord", "Zin", "Taal", "Boek"]],
                     ["Learn", "Leren", ["Leren", "Schrijven", "Lezen", "Horen"]]
@@ -820,10 +699,10 @@
             let container = document.getElementById('path-container');
             container.innerHTML = "";
             
-            let totalNodes = 6; // 5 normale lessen + 1 eindtoets (Klaar-opdracht)
-            let pairKey = getActivePairKey();
-            let currentKey = `${pairKey}_ch${appData.activeChapter}`;
-            let langCompleted = appData.completed[currentKey] || [];
+            let totalNodes = 6; // 5 normale lessen + 1 eindtoets
+            let langProgress = getCurrentLangCompletedMap();
+            let currentKey = `ch${appData.activeChapter}`;
+            let langCompleted = langProgress[currentKey] || [];
 
             for(let i = 0; i < totalNodes; i++) {
                 let row = document.createElement('div');
@@ -865,7 +744,6 @@
             activeQuestions = [];
 
             if(isExam) {
-                // Klaar-opdracht: 10 vragen van alle woorden in dit hoofdstuk
                 let shuffledPool = [...fullWordList].sort(() => 0.5 - Math.random());
                 let count = Math.min(10, shuffledPool.length);
                 for(let q = 0; q < count; q++) {
@@ -873,7 +751,6 @@
                     activeQuestions.push({ q: item[0], a: item[1], opts: item[2] });
                 }
             } else {
-                // Normale les: 5 unieke woorden op basis van de lesindex
                 let chunkSize = 4;
                 let startIndex = (lessonIdx * chunkSize) % fullWordList.length;
                 for(let q = 0; q < 5; q++) {
@@ -891,11 +768,13 @@
         function loadQuestion() {
             if(currentQIdx >= activeQuestions.length) {
                 appData.points += isCurrentExam ? 50 : 20;
-                let pairKey = getActivePairKey();
-                let key = `${pairKey}_ch${appData.activeChapter}`;
-                if(!appData.completed[key]) appData.completed[key] = [];
-                if(!appData.completed[key].includes(activeLessonIdx)) {
-                    appData.completed[key].push(activeLessonIdx);
+                
+                // Voortgang opslaan in het specifieke taalpaar record
+                let langProgress = getCurrentLangCompletedMap();
+                let key = `ch${appData.activeChapter}`;
+                if(!langProgress[key]) langProgress[key] = [];
+                if(!langProgress[key].includes(activeLessonIdx)) {
+                    langProgress[key].push(activeLessonIdx);
                 }
                 saveData();
                 updateDashboardStats();
@@ -903,7 +782,7 @@
                 document.querySelectorAll('#page-dashboard, #page-lesson, #page-complete').forEach(p => p.classList.add('hidden'));
                 document.getElementById('page-complete').classList.remove('hidden');
                 document.getElementById('complete-text').innerText = isCurrentExam 
-                    ? `Gefeliciteerd! Je hebt de Klaar-opdracht van ${chapterNames[appData.activeChapter]} glansrijk gehaald! 🏆` 
+                    ? `Gefeliciteerd! Je hebt de Klaar-opdracht van ${chapterNames[appData.activeChapter]} gehaald! 🏆` 
                     : `Les ${activeLessonIdx + 1} succesvol afgerond in ${chapterNames[appData.activeChapter]}!`;
                 return;
             }
@@ -958,7 +837,7 @@
             showNotification("Voortgang wissen", "Weet je zeker dat je alle opgeslagen lessen en XP wilt resetten?");
             let modalBtn = document.querySelector('.custom-modal .btn');
             modalBtn.onclick = function() {
-                localStorage.removeItem('wordly_ai_v7');
+                localStorage.removeItem('wordly_ai_v8');
                 location.reload();
             };
         }
