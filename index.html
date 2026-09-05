@@ -620,12 +620,12 @@
             align-items: center;
             background: #fdfdfd;
             border: 2px solid var(--border);
-            padding: 10px 14px;
+            padding: 12px 16px;
             border-radius: var(--radius-sm);
             font-weight: 800;
-            font-size: 13px;
+            font-size: 14px;
         }
-        .lb-item.user-highlight { background: var(--duo-light-green); border-color: var(--duo-green); }
+        .lb-item.user-highlight { background: var(--duo-light-green); border-color: var(--duo-green); box-shadow: 0 4px 12px rgba(88,204,2,0.15); }
 
         .custom-modal {
             background: white;
@@ -968,7 +968,7 @@
         };
 
         const chapterDescriptionsMulti = {
-            nl: ["Leer fundamentele woorden en simpele begroetingen.", "Alles over lekker eten, drinken en boodschappen doen.", "Vervoermiddelen, stations en reizen naar het buiteland.", "Familieleden, vrienden en relaties beschrijven.", "Kamers, meubels en je eigen woning.", "De mooiste kleuren en getallen tellen.", "Dieren in het wild en huisdieren.", "Sporten, games spelen en ontspanning.", "Nuttige woorden voor op school en tijdens je werk.", "Het weer vandaag en besef van tijd."],
+            nl: ["Leer fundamentele woorden en simpele groetingen.", "Alles over lekker eten, drinken en boodschappen doen.", "Vervoermiddelen, stations en reizen naar het buiteland.", "Familieleden, vrienden en relaties beschrijven.", "Kamers, meubels en je eigen woning.", "De mooiste kleuren en getallen tellen.", "Dieren in het wild en huisdieren.", "Sporten, games spelen en ontspanning.", "Nuttige woorden voor op school en tijdens je werk.", "Het weer vandaag en besef van tijd."],
             en: ["Learn fundamental words and simple greetings.", "All about great food, drinks, and grocery shopping.", "Means of transport, stations, and traveling abroad.", "Describe family members, friends, and relationships.", "Rooms, furniture, and your own home.", "The most beautiful colors and counting numbers.", "Wild animals and pets.", "Sports, playing games, and relaxation.", "Useful words for school and during your work.", "The weather today and awareness of time."],
             de: ["Lerne grundlegende Wörter und einfache Begrüßungen.", "Alles über gutes Essen, Trinken und Einkaufen.", "Verkehrsmittel, Bahnhöfe und Auslandsreisen.", "Familienmitglieder, Freunde und Beziehungen beschreiben.", "Zimmer, Möbel und dein eigenes Zuhause.", "Die schönsten Farben und Zahlen zählen.", "Tiere in freier Wildbahn und Haustiere.", "Sport, Spiele spielen und Entspannung.", "Nützliche Wörter für Schule und Arbeit.", "Das Wetter heute und Zeitgefühl."],
             fr: ["Apprenez des mots fondamentaux et des salutations simples.", "Tout sur la nourriture, les boissons et les courses.", "Moyens de transport, gares et voyages à l'étranger.", "Décrire les membres de la famille.", "Pièces et meubles.", "Couleurs et nombres.", "Animaux sauvages.", "Sports et détente.", "Mots utiles pour l'école.", "La météo."],
@@ -1209,11 +1209,10 @@
         function startLesson(lessonIdx, isExam) {
             activeLessonIdx = lessonIdx;
             isCurrentExam = isExam;
-            catTriggeredThisLesson = false; // Zorg dat de kat precies 1 keer per les getoond wordt
+            catTriggeredThisLesson = false; 
             let fullWordList = getChapterWordList();
             activeQuestions = [];
 
-            // Aangepast: Meer vragen per les toegevoegd (10 vragen in plaats van 5)
             let count = isExam ? 10 : 10;
             for(let q = 0; q < count; q++) {
                 let item = fullWordList[q % fullWordList.length];
@@ -1239,7 +1238,6 @@
         }
 
         function loadQuestion() {
-            // Tussentijdse evaluatie precies bij vraag 7 (tussen vraag 1 en 10)
             if (currentQIdx === 6) {
                 showQuestionSevenFeedbackCheck();
                 return;
@@ -1259,7 +1257,6 @@
                 return;
             }
 
-            // Activeer de zwarte kat exact 1 keer per les (bijv. bij vraag 3)
             if (currentQIdx === 2) {
                 triggerCatMascotOnce();
             }
@@ -1288,7 +1285,6 @@
             });
         }
 
-        // Vraag 7 overzicht/evaluatie in de brontaal
         function showQuestionSevenFeedbackCheck() {
             let area = document.getElementById('answers-area');
             document.getElementById('question-prompt').innerText = "Vraag 7 van 10: Hoe vind je dat het tot nu toe gaat?";
@@ -1342,35 +1338,62 @@
             renderLeaderboardData(type);
         }
 
+        // --- HIER IS HET LEADERBOARD VOLLEDIG GEFIXEERD EN VERBETERD ---
         function renderLeaderboardData(type) {
             let container = document.getElementById('lb-list-container');
             container.innerHTML = "";
+            
             let accounts = JSON.parse(localStorage.getItem('wordly_accounts') || "{}");
             let usersList = [];
 
+            // 1. Zorg ervoor dat de huidige actieve data direct up-to-date ingesloten wordt
+            if (currentLoggedInUser && accounts[currentLoggedInUser]) {
+                accounts[currentLoggedInUser].data = appData;
+            }
+
+            // 2. Loop door alle geregistreerde accounts heen
             for (let username in accounts) {
-                let pnts = accounts[username].data.points || 0;
-                usersList.push({ name: username, xp: type === 'weekly' ? Math.floor(pnts * 0.4) : pnts });
+                let userPoints = accounts[username].data ? (accounts[username].data.points || 0) : 0;
+                let finalXp = type === 'weekly' ? Math.floor(userPoints * 0.4) : userPoints;
+                usersList.push({ name: username, xp: finalXp });
             }
 
-            if (!usersList.some(u => u.name === currentLoggedInUser)) {
-                usersList.push({ name: currentLoggedInUser || "Jij", xp: appData.points });
+            // 3. Als je om wat voor reden dan ook niet in de accounts staat, voeg jezelf toe als fallback
+            if (currentLoggedInUser && !usersList.some(u => u.name === currentLoggedInUser)) {
+                usersList.push({ name: currentLoggedInUser, xp: type === 'weekly' ? Math.floor(appData.points * 0.4) : appData.points });
             }
 
+            // 4. Voeg optionele AI-spelers toe zodat de lijst altijd leuk gevuld is als je de enige echte gebruiker bent
+            let dummyPlayers = [
+                { name: "Sophie_NL", xp: type === 'weekly' ? 140 : 380 },
+                { name: "DaanDuolingo", xp: type === 'weekly' ? 95 : 290 },
+                { name: "Emma_Learns", xp: type === 'weekly' ? 60 : 150 }
+            ];
+
+            // Voeg dummies alleen toe als ze nog niet bestaan in de echte lijst
+            dummyPlayers.forEach(dummy => {
+                if (!usersList.some(u => u.name.toLowerCase() === dummy.name.toLowerCase())) {
+                    usersList.push(dummy);
+                }
+            });
+
+            // 5. Sorteer op basis van de meeste XP (hoogste eerst)
             usersList.sort((a, b) => b.xp - a.xp);
 
+            // 6. Bouw de HTML elementen op voor de weergave
             usersList.forEach((user, index) => {
                 let item = document.createElement('div');
-                let isMe = user.name === currentLoggedInUser;
+                let isMe = (user.name === currentLoggedInUser);
                 item.className = `lb-item ${isMe ? 'user-highlight' : ''}`;
-                let medal = index === 0 ? "🥇" : (index === 1 ? "🥈" : (index === 2 ? "🥉" : `#${index + 1}`));
+                
+                let rankDisplay = index === 0 ? "🥇" : (index === 1 ? "🥈" : (index === 2 ? "🥉" : `#${index + 1}`));
                 
                 item.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-weight: 900; width: 24px; text-align: center;">${medal}</span>
-                        <span>${user.name} ${isMe ? "(Jij)" : ""}</span>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-weight: 900; width: 28px; text-align: center; font-size: 16px;">${rankDisplay}</span>
+                        <span style="color: var(--duo-dark);">${user.name} ${isMe ? "<strong>(Jij)</strong>" : ""}</span>
                     </div>
-                    <span style="color: var(--duo-green);">${user.xp} XP</span>
+                    <span style="color: var(--duo-green); font-weight: 900;">${user.xp} XP</span>
                 `;
                 container.appendChild(item);
             });
