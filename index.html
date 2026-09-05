@@ -769,29 +769,31 @@
     <div id="auth-modal" class="modal-overlay hidden">
         <div class="auth-modal" style="position:relative;">
             <button class="auth-close" onclick="closeAuthModal()" aria-label="Close">×</button>
-            <h2 id="auth-title">Inloggen bij Wordly</h2>
-            <p id="auth-subtitle">Je voortgang wordt online opgeslagen en werkt op al je apparaten.</p>
+            <h2 id="auth-title">Sign in to Wordly</h2>
+            <p id="auth-subtitle">Your progress is stored online and works on all your devices.</p>
 
             <div class="auth-switch">
-                <button id="auth-login-tab" class="active" onclick="setAuthMode('login')">Inloggen</button>
-                <button id="auth-register-tab" onclick="setAuthMode('register')">Account maken</button>
+                <button id="auth-login-tab" class="active" onclick="setAuthMode('login')">Sign in</button>
+                <button id="auth-register-tab" onclick="setAuthMode('register')">Create account</button>
             </div>
 
             <div id="auth-name-wrap" class="hidden">
-                <label style="font-size:12px;font-weight:900;">Naam</label>
-                <input id="auth-name" class="auth-input" type="text" autocomplete="name" placeholder="Bijv. Sam">
+                <label style="font-size:12px;font-weight:900;">Name</label>
+                <input id="auth-name" class="auth-input" type="text" autocomplete="name" placeholder="e.g. Sam">
             </div>
 
-            <label style="font-size:12px;font-weight:900;">E-mail</label>
+            <label style="font-size:12px;font-weight:900;">Email</label>
             <input id="auth-email" class="auth-input" type="email" autocomplete="email" placeholder="jij@email.com">
 
-            <label style="font-size:12px;font-weight:900;">Wachtwoord</label>
-            <input id="auth-password" class="auth-input" type="password" autocomplete="current-password" placeholder="Minimaal 6 tekens">
+            <label style="font-size:12px;font-weight:900;">Password</label>
+            <input id="auth-password" class="auth-input" type="password" autocomplete="current-password" placeholder="At least 6 characters">
 
             <div id="auth-error" class="auth-error"></div>
-            <button id="auth-submit" class="btn" style="width:100%;" onclick="submitAuth()">Inloggen</button>
-            <button id="forgot-password-btn" style="width:100%;margin-top:9px;border:0;background:transparent;color:var(--accent-blue);font-family:inherit;font-weight:900;cursor:pointer;" onclick="resetPassword()">Wachtwoord vergeten?</button>
-            <div class="auth-note">Je account en Wordly-voortgang worden in Firebase opgeslagen.</div>
+            <button id="auth-submit" class="btn" style="width:100%;" onclick="submitAuth()">Sign in</button>
+            <div style="display:flex;align-items:center;gap:10px;margin:12px 0;color:#888;font-size:12px;font-weight:800;"><span style="flex:1;border-top:1px solid #ddd;"></span>OR<span style="flex:1;border-top:1px solid #ddd;"></span></div>
+            <button type="button" class="btn" style="width:100%;background:#fff;color:#333;border:2px solid #ddd;border-bottom:4px solid #ccc;box-shadow:none;text-transform:none;" onclick="signInWithGoogle()">Continue with Google</button>
+            <button id="forgot-password-btn" style="width:100%;margin-top:9px;border:0;background:transparent;color:var(--accent-blue);font-family:inherit;font-weight:900;cursor:pointer;" onclick="resetPassword()">Password vergeten?</button>
+            <div class="auth-note">Your account and Wordly progress are stored securely online.</div>
         </div>
     </div>
 
@@ -800,7 +802,7 @@
         <div class="custom-modal" style="max-width: 400px;">
             <img src="https://wordlyapp.github.io/Gemini_Generated_Image_v65lbkv65lbkv65l.jpg" alt="Logo" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--duo-green); margin-bottom: 12px; object-fit: cover;">
             <h3>Choose your language</h3>
-            <p>Select your base language and the language you want to learn right now:</p>
+            <p>Choose your source language and the language you want to learn:</p>
             
             <div style="background: #f7f7f7; padding: 15px; border-radius: var(--radius-sm); border: 2px solid var(--border); display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; align-items: center;">
                 <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
@@ -808,7 +810,7 @@
                     <div class="custom-dropdown-container">
                         <button class="lang-dropdown-btn" onclick="toggleMenu('prompt-from-menu')">
                             <img id="prompt-from-flag" class="flag-icon" src="" alt="">
-                            <span id="prompt-from-label">Nederlands</span> ▾
+                            <span id="prompt-from-label">English</span> ▾
                         </button>
                         <div id="prompt-from-menu" class="lang-menu-content">
                             <div class="lang-option" onclick="selectPromptLanguage('from', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png"> Nederlands</div>
@@ -825,7 +827,7 @@
                     <div class="custom-dropdown-container">
                         <button class="lang-dropdown-btn" onclick="toggleMenu('prompt-to-menu')">
                             <img id="prompt-to-flag" class="flag-icon" src="" alt="">
-                            <span id="prompt-to-label">Engels</span> ▾
+                            <span id="prompt-to-label">Dutch</span> ▾
                         </button>
                         <div id="prompt-to-menu" class="lang-menu-content">
                             <div class="lang-option" onclick="selectPromptLanguage('to', 'nl', 'Nederlands')"><img class="flag-icon" src="https://flagcdn.com/w40/nl.png"> Nederlands</div>
@@ -967,7 +969,7 @@
                     <div></div>
                 </div>
                 <div class="leaderboard-container">
-                    <p style="font-size: 12px; font-weight: 700; color: var(--duo-gray-text); margin-bottom: 10px;">Ranglijst van echte gebruikers:</p>
+                    <p id="lb-subtitle" style="font-size: 12px; font-weight: 700; color: var(--duo-gray-text); margin-bottom: 10px;">Leaderboard of real users:</p>
                     <div id="lb-list-container" class="lb-list"></div>
                 </div>
             </div>
@@ -1000,6 +1002,7 @@
             firebase.initializeApp(firebaseConfig);
             auth = firebase.auth();
             db = firebase.firestore();
+            window.googleProvider = new firebase.auth.GoogleAuthProvider();
         } catch (error) {
             firebaseInitError = error;
             console.error('Firebase initialisatie mislukt:', error);
@@ -1023,14 +1026,14 @@
         function setAuthMode(mode) {
             authMode = mode;
             const register = mode === 'register';
-            document.getElementById('auth-title').innerText = register ? 'Maak je Wordly-account' : 'Inloggen bij Wordly';
+            document.getElementById('auth-title').innerText = register ? 'Create your Wordly account' : 'Sign in to Wordly';
             document.getElementById('auth-subtitle').innerText = register
-                ? 'Maak één account. Je XP en voortgang worden daarna online bewaard.'
-                : 'Log in om je online Wordly-voortgang op elk apparaat te gebruiken.';
+                ? 'Create one account. Your XP and progress will then be saved online.'
+                : 'Sign in to use your online Wordly progress on any device.';
             document.getElementById('auth-name-wrap').classList.toggle('hidden', !register);
             document.getElementById('auth-login-tab').classList.toggle('active', !register);
             document.getElementById('auth-register-tab').classList.toggle('active', register);
-            document.getElementById('auth-submit').innerText = register ? 'Account maken' : 'Inloggen';
+            document.getElementById('auth-submit').innerText = register ? 'Create account' : 'Sign in';
             document.getElementById('forgot-password-btn').classList.toggle('hidden', register);
             document.getElementById('auth-password').autocomplete = register ? 'new-password' : 'current-password';
             document.getElementById('auth-error').innerText = '';
@@ -1043,11 +1046,29 @@
                 'auth/weak-password': 'Je wachtwoord moet minimaal 6 tekens bevatten.',
                 'auth/user-not-found': 'Geen account gevonden met dit e-mailadres.',
                 'auth/wrong-password': 'Het wachtwoord is niet juist.',
-                'auth/invalid-credential': 'E-mailadres of wachtwoord is niet juist.',
+                'auth/invalid-credential': 'Emailadres of wachtwoord is niet juist.',
                 'auth/too-many-requests': 'Te veel pogingen. Probeer het later opnieuw.',
                 'auth/network-request-failed': 'Geen internetverbinding. Controleer je verbinding en probeer opnieuw.'
             };
             return map[error.code] || error.message || 'Er ging iets mis. Probeer opnieuw.';
+        }
+
+        async function signInWithGoogle() {
+            if (!auth) return;
+            try {
+                const result = await auth.signInWithPopup(window.googleProvider);
+                currentFirebaseUser = result.user;
+                currentLoggedInUser = result.user.displayName || result.user.email || 'Player';
+                await ensureUserDocument(result.user);
+                await loadDataFromFirebase();
+                closeAuthModal();
+                await initializeAppForUser();
+            } catch (error) {
+                console.error('Google sign-in error:', error);
+                if (error.code !== 'auth/popup-closed-by-user') {
+                    document.getElementById('auth-error').innerText = friendlyAuthError(error);
+                }
+            }
         }
 
         async function submitAuth() {
@@ -1091,7 +1112,7 @@
                     await ensureUserDocument(result.user);
                     await loadDataFromFirebase();
                     closeAuthModal();
-                    await initializeAppForUser();
+                    if (authMode === 'register') { showLangPromptModal(); } else { await initializeAppForUser(); }
                 } else {
                     const result = await auth.signInWithEmailAndPassword(email, password);
                     currentFirebaseUser = result.user;
@@ -1099,7 +1120,7 @@
                     await ensureUserDocument(result.user);
                     await loadDataFromFirebase();
                     closeAuthModal();
-                    await initializeAppForUser();
+                    if (authMode === 'register') { showLangPromptModal(); } else { await initializeAppForUser(); }
                 }
             } catch (error) {
                 console.error('Firebase auth error:', error);
@@ -1218,15 +1239,15 @@
         };
 
         const langNames = {
-            nl: "Nederlands",
-            en: "Engels",
-            de: "Duits",
-            fr: "Frans",
-            es: "Spaans"
+            nl: "Dutch",
+            en: "English",
+            de: "German",
+            fr: "French",
+            es: "Spanish"
         };
 
-        let promptTempFrom = "nl";
-        let promptTempTo = "en";
+        let promptTempFrom = "en";
+        let promptTempTo = "nl";
 
         function showLangPromptModal() {
             document.getElementById('landing-page').classList.add('hidden');
@@ -1499,8 +1520,8 @@
         let appData = {
             points: 0,
             streak: 1,
-            fromLang: "nl",
-            toLang: "en",
+            fromLang: "en",
+            toLang: "nl",
             activeChapter: 0,
             languageProgress: {},
             mistakes: []
@@ -1602,6 +1623,10 @@
             if (!appData.mistakes) appData.mistakes = [];
             if (!appData.languageProgress) appData.languageProgress = {};
 
+            if (!appData.fromLang || !appData.toLang) {
+                appData.fromLang = 'en';
+                appData.toLang = 'nl';
+            }
             updateUIStrings();
             renderChapterTabs();
             updateDashboardStats();
@@ -1633,6 +1658,10 @@
 
             appData.activeChapter = 0;
             saveData();
+            if (!appData.fromLang || !appData.toLang) {
+                appData.fromLang = 'en';
+                appData.toLang = 'nl';
+            }
             updateUIStrings();
             renderChapterTabs();
             updateDashboardStats();
@@ -1641,11 +1670,11 @@
         }
 
         function t(key) {
-            let lang = appData.fromLang;
+            let lang = appData.fromLang || "en";
             if (uiTranslations[lang] && uiTranslations[lang][key]) {
                 return uiTranslations[lang][key];
             }
-            return uiTranslations["nl"][key];
+            return uiTranslations["en"][key];
         }
 
         function updateUIStrings() {
@@ -1665,6 +1694,8 @@
 
             document.getElementById('lb-main-title').innerText = t("lbTitle");
             document.getElementById('lb-back-text').innerText = t("lbBack");
+            const lbSub = document.getElementById('lb-subtitle');
+            if (lbSub) lbSub.innerText = appData.fromLang === 'nl' ? 'Ranglijst van echte gebruikers:' : appData.fromLang === 'de' ? 'Rangliste echter Nutzer:' : appData.fromLang === 'fr' ? 'Classement des vrais utilisateurs :' : appData.fromLang === 'es' ? 'Clasificación de usuarios reales:' : 'Leaderboard of real users:';
         }
 
         function updateDashboardStats() {
@@ -2075,7 +2106,12 @@
                     const item = document.createElement('div');
                     item.className = `lb-item ${isMe ? 'user-highlight' : ''}`;
                     const medal = index === 0 ? '🥇' : (index === 1 ? '🥈' : (index === 2 ? '🥉' : `#${index + 1}`));
-                    const safeName = String(user.name || 'Player')
+                    let displayName = String(user.name || '').trim();
+                    // Verwijder oude/ongeldige "NaN"-tekst uit leaderboard-namen.
+                    displayName = displayName.replace(/^NaN(?:\s*[-:]?\s*)/i, '').trim();
+                    displayName = displayName.replace(/NaN/gi, '').trim();
+                    if (!displayName || displayName.toLowerCase() === 'nan') displayName = 'Player';
+                    const safeName = displayName
                         .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
                         .replaceAll('"', '&quot;').replaceAll("'", '&#039;');
 
